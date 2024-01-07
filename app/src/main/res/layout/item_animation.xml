@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/rallyCategory_animation_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/animation_1"
+        android:adjustViewBounds="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/rallyCategory_animation_text_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/animation_text"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="@id/rallyCategory_animation_iv"
+        app:layout_constraintStart_toStartOf="@id/rallyCategory_animation_iv"/>
+
+    <TextView
+        android:id="@+id/rallyCategory_animation_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="날씨의 아이"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/rallyCategory_animation_text_iv"
+        app:layout_constraintStart_toStartOf="@id/rallyCategory_animation_text_iv"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/rallyCategory_animation_progress_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/6"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/rallyCategory_animation_title_tv"
+        app:layout_constraintStart_toEndOf="@id/rallyCategory_animation_title_tv"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
