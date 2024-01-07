@@ -19,15 +19,6 @@ class RallyCategoryFragment : Fragment() {
     ): View? {
         binding=FragmentRallycategoryBinding.inflate(inflater,container,false)
 
-        binding.rallyCategorySortTv.setOnClickListener {
-            showPopup(binding.rallyCategorySortTv)
-        }
         return binding.root
-    }
-
-    private fun showPopup(v: View){
-        val popup=PopupMenu(this.context, v)
-        popup.menuInflater.inflate(R.menu.popup, popup.menu)
-        popup.show()
     }
 }

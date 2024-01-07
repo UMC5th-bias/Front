@@ -66,25 +66,14 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"/>
 
-            <TextView
-                android:id="@+id/rallyCategory_sort_tv"
+            <ImageView
+                android:id="@+id/rallyCategory_sort_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="최신 등록 순"
-                android:textColor="@color/black"
-                android:layout_marginEnd="5dp"
-                app:layout_constraintEnd_toStartOf="@id/rallyCategory_sort_button_tv"
-                app:layout_constraintTop_toTopOf="@id/rallyCategory_animation_tv"/>
-
-            <TextView
-                android:id="@+id/rallyCategory_sort_button_tv"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:text="⌄"
-                android:textColor="@color/black"
-                android:layout_marginTop="-3dp"
+                android:src="@drawable/lately_sort"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/rallyCategory_animation_tv"/>
+
 
 
 
