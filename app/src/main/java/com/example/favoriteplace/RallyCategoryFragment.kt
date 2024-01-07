@@ -20,6 +20,7 @@ class RallyCategoryFragment : Fragment() {
     ): View? {
         binding=FragmentRallycategoryBinding.inflate(inflater,container,false)
 
+        //더미데이터로 데이터 삽입. 서버에서 가져올 경우 삭제할 코드
         animationDatas.apply {
             add(Animation(R.drawable.animation_1, "날씨의 아이","0/6"))
             add(Animation(R.drawable.animation_2, "최애의 아이","0/10"))
@@ -27,6 +28,7 @@ class RallyCategoryFragment : Fragment() {
             add(Animation(R.drawable.animation_4, "주술회전","0/8"))
             add(Animation(R.drawable.animation_5, "러브라이브","0/10"))
         }
+        //
 
         val animationRVAdapter=AnimationRVAdapter(animationDatas)
         binding.rallyCategoryAnimationRv.adapter=animationRVAdapter
