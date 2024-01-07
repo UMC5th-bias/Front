@@ -5,95 +5,105 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
-        android:id="@+id/rallyCategory_sv"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/rallyCategory_nsv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/rallyCategory_rally_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="성지순례"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"/>
-
-            <ImageView
-                android:id="@+id/rallyCategory_notice_iv"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/notice"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/rallyCategory_rally_tv"
-                android:layout_marginTop="-5dp"/>
-
-            <ImageView
-                android:id="@+id/rallyCategory_search_bar_iv"
+            <ScrollView
+                android:id="@+id/rallyCategory_sv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/search_bar"
-                app:layout_constraintTop_toBottomOf="@id/rallyCategory_rally_tv"
-                app:layout_constraintStart_toStartOf="@id/rallyCategory_rally_tv"
-                app:layout_constraintEnd_toEndOf="@id/rallyCategory_notice_iv"
-                android:layout_marginTop="20dp"/>
-
-            <TextView
-                android:id="@+id/rallyCategory_animation_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="애니메이션별 랠리"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="15sp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                android:scrollbars="none"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rallyCategory_search_bar_iv"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"/>
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/rallyCategory_sort_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/lately_sort"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/rallyCategory_animation_tv"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rallyCategory_sort_iv">
+                    <TextView
+                        android:id="@+id/rallyCategory_rally_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="성지순례"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rallyCategory_animation_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_animation"
-                android:layout_gravity="center_horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rallyCategory_sort_iv"
-                android:layout_marginTop="20dp"/>
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/rallyCategory_notice_iv"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/notice"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/rallyCategory_rally_tv"
+                        android:layout_marginTop="-5dp"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/rallyCategory_search_bar_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/search_bar"
+                        app:layout_constraintTop_toBottomOf="@id/rallyCategory_rally_tv"
+                        app:layout_constraintStart_toStartOf="@id/rallyCategory_rally_tv"
+                        app:layout_constraintEnd_toEndOf="@id/rallyCategory_notice_iv"
+                        android:layout_marginTop="20dp"/>
 
-    </ScrollView>
+                    <TextView
+                        android:id="@+id/rallyCategory_animation_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="애니메이션별 랠리"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rallyCategory_search_bar_iv"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"/>
+
+                    <ImageView
+                        android:id="@+id/rallyCategory_sort_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/lately_sort"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/rallyCategory_animation_tv"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rallyCategory_animation_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_animation"
+                        android:layout_gravity="center_horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rallyCategory_sort_iv"
+                        android:layout_marginTop="20dp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
