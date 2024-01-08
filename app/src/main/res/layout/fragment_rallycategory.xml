@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -33,13 +33,13 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp">
 
                     <TextView
                         android:id="@+id/rallyCategory_rally_tv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="성지순례"
                         android:textStyle="bold"
@@ -59,15 +59,36 @@
                         app:layout_constraintTop_toTopOf="@id/rallyCategory_rally_tv"
                         android:layout_marginTop="-5dp"/>
 
-                    <ImageView
-                        android:id="@+id/rallyCategory_search_bar_iv"
+                    <RelativeLayout
+                        android:id="@+id/rallyCategory_search_bar_relative"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/search_bar"
+                        android:layout_height="50dp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/rallyCategory_rally_tv"
-                        app:layout_constraintStart_toStartOf="@id/rallyCategory_rally_tv"
-                        app:layout_constraintEnd_toEndOf="@id/rallyCategory_notice_iv"
-                        android:layout_marginTop="20dp"/>
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/edit_text_border">
+
+                        <EditText
+                            android:id="@+id/rallyCategory_search_bar_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="검색어를 입력해주세요"
+                            android:textColorHint="@color/strok_1"
+                            android:inputType="text"
+                            android:textSize="16sp"
+                            android:background="@null"
+                            android:layout_marginStart="10dp"/>
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/rallyCategory_search_icon_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:src="@drawable/search_bar_icon"
+                        app:layout_constraintEnd_toEndOf="@id/rallyCategory_search_bar_relative"
+                        app:layout_constraintTop_toTopOf="@id/rallyCategory_search_bar_relative"
+                        android:layout_marginEnd="10dp"/>
 
                     <TextView
                         android:id="@+id/rallyCategory_animation_tv"
@@ -78,9 +99,9 @@
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rallyCategory_search_bar_iv"
+                        app:layout_constraintTop_toBottomOf="@id/rallyCategory_search_bar_relative"
                         android:layout_marginStart="5dp"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="15dp"/>
 
                     <ImageView
                         android:id="@+id/rallyCategory_sort_iv"
