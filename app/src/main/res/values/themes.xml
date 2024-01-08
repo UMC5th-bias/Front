@@ -12,5 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <!--titlebar 없애기-->
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>
