@@ -5,29 +5,28 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home_no_select"
-        app:showAsAction="always"
         android:enabled="true"
         android:title="홈"
         tools:ignore="AlwaysShowAction" />
     <item
         android:id="@+id/rallyhomeFragment"
-        android:icon="@drawable/ic_rally_yes_select"
-        app:showAsAction="always"
+        android:icon="@drawable/baseline_beach_access_24"
+        android:enabled="true"
         android:title="성지순례" />
     <item
         android:id="@+id/communityFragment"
-        android:icon="@drawable/ic_community_no_select"
-        app:showAsAction="always"
+        android:icon="@drawable/ic_shop"
+        android:enabled="true"
         android:title="커뮤니티" />
     <item
         android:id="@+id/shopFragment"
-        android:icon="@drawable/ic_shop_no_select"
-        app:showAsAction="always"
+        android:icon="@drawable/ic_shop"
+        android:enabled="true"
         android:title="상점" />
     <item
         android:id="@+id/myFragment"
-        android:icon="@drawable/ic_mypage_no_select"
-        app:showAsAction="always"
+        android:icon="@drawable/ic_shop"
+        android:enabled="true"
         android:title="마이" />
 
 </menu>

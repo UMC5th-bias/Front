@@ -12,8 +12,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/item_album_cover_img_cardView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginLeft="20dp"
         app:cardCornerRadius="7dp"
         app:cardElevation="0dp"
@@ -26,41 +26,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
-            android:src="@drawable/item1"
+            android:src="@drawable/home_realtime_img1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.cardview.widget.CardView>
 
 
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="110dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/item_album_cover_img_cardView"
+
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/item_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="제목"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="13dp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_album_cover_img_cardView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/item_tag1_tv"
@@ -87,9 +87,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="179dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_gravity="top"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -98,40 +100,23 @@
                 android:layout_height="wrap_content"
                 android:text="시간"
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_marginRight="35dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/item_album_cover_img_cardView"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+                android:textSize="12sp" />
 
 
             <TextView
                 android:id="@+id/item_menu_tv"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="50dp"
                 android:background="@drawable/round"
                 android:backgroundTint="@color/gray"
-                android:text="자유게시판"
                 android:gravity="center"
+                android:text="자유게시판"
                 android:textColor="@color/white"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/item_time_tv"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="10sp" />
 
         </LinearLayout>
-        </LinearLayout>
 
+        </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
