@@ -31,12 +31,12 @@ class HomeItemRVAdapter (private val homeItemList: ArrayList<HomeItem>) : Recycl
 
     inner class viewHolder(val binding: ItemHomeRealTimeBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(homeItem: HomeItem){
-            binding.itemImgIv.setImageResource(homeItem.coverImage!!)
-            binding.itemTitleTv.text = homeItem.title
-            binding.itemTag1Tv.text =homeItem.tag1
-            binding.itemTag2Tv.text =homeItem.tag2
-            binding.itemTimeTv.text=homeItem.time
-            binding.itemMenuTv.text=homeItem.menu
+            binding.homeItemProfileIv.setImageResource(homeItem.coverImage!!)
+            binding.homeItemTitleTv.text = homeItem.title
+            binding.homeItemTag1Tv.text =homeItem.tag1
+            binding.homeItemTag2Tv.text =homeItem.tag2
+            binding.homeItemTimeTv.text=homeItem.time
+            binding.homeItemCategoryTv.text=homeItem.category
         }
     }
 

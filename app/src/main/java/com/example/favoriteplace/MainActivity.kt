@@ -16,15 +16,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         initBottomNavigation()
     }
 
 
     private fun initBottomNavigation(){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frm, HomeFragment())
+            .replace(R.id.main_frameLayout, HomeFragment())
             .commitAllowingStateLoss()
 
 
@@ -33,25 +31,13 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.homeFragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, HomeFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.rallyhomeFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, RallyFragment())
+                        .replace(R.id.main_frameLayout, HomeFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
 
 
-                R.id.myFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, MypageFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
+
 
 
             }

@@ -19,7 +19,7 @@ class BannerFragment(val imgRes : Int) :Fragment() {
     ): View? {
         binding = FragmentBannerBinding.inflate(inflater, container, false)
 
-        binding.bannerImageIv.setImageResource(imgRes)
+        binding.homeBannerIv.setImageResource(imgRes)
 
         return binding.root
     }
