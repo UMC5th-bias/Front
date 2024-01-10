@@ -68,8 +68,7 @@
             android:id="@+id/detail_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:padding="10dp"
             android:src="@drawable/ic_detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/profile_img_iv" />
@@ -102,23 +101,170 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/content_tv"
+        android:layout_height="200dp"
         android:layout_margin="20dp"
         android:text="코난 성지순례할 만한 지역이나 장소 있으면 추천해주세요!"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="@id/content_line_vw"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@id/content_line_vw"
-        app:layout_constraintTop_toBottomOf="@id/content_line_vw"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/content_line_vw"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
+    <View
+        android:id="@+id/status_topLine_vw"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/dark_gray"
+        app:layout_constraintBottom_toTopOf="@id/goodNum_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content_tv" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="20dp"
+        android:layout_height="13dp"
+        android:id="@+id/good_iv"
+        android:src="@drawable/ic_good_3x"
+        app:layout_constraintBottom_toBottomOf="@id/status_bottomLine_vw"
+        app:layout_constraintTop_toBottomOf="@id/status_topLine_vw"
+        app:layout_constraintStart_toStartOf="@id/status_topLine_vw" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="550dp" />
+        android:text="3"
+        android:id="@+id/goodNum_tv"
+        android:textColor="@color/pink"
+        app:layout_constraintStart_toEndOf="@id/good_iv"
+        app:layout_constraintTop_toTopOf="@id/status_topLine_vw"
+        app:layout_constraintBottom_toBottomOf="@id/status_bottomLine_vw"
+        android:textSize="10dp"
+        android:layout_marginStart="3dp" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="19dp"
+        android:layout_height="13dp"
+        android:layout_marginTop="2dp"
+        android:id="@+id/comment_iv"
+        android:src="@drawable/ic_comment_3x"
+        android:layout_marginStart="7dp"
+        app:layout_constraintBottom_toBottomOf="@id/status_bottomLine_vw"
+        app:layout_constraintTop_toTopOf="@id/status_topLine_vw"
+        app:layout_constraintStart_toEndOf="@id/goodNum_tv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2"
+        android:id="@+id/commentNum_tv"
+        android:textColor="@color/pink"
+        android:layout_marginStart="1dp"
+        app:layout_constraintStart_toEndOf="@id/comment_iv"
+        app:layout_constraintTop_toTopOf="@id/status_topLine_vw"
+        app:layout_constraintBottom_toBottomOf="@id/status_bottomLine_vw"
+        android:textSize="10dp" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="19dp"
+        android:layout_height="13dp"
+        android:layout_marginTop="2dp"
+        android:id="@+id/view_iv"
+        android:src="@drawable/ic_view"
+        android:layout_marginStart="7dp"
+        app:layout_constraintBottom_toBottomOf="@id/status_bottomLine_vw"
+        app:layout_constraintTop_toTopOf="@id/status_topLine_vw"
+        app:layout_constraintStart_toEndOf="@id/commentNum_tv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2"
+        android:id="@+id/viewNum_tv"
+        android:textColor="@color/string_gray"
+        android:layout_marginStart="1dp"
+        app:layout_constraintStart_toEndOf="@id/view_iv"
+        app:layout_constraintTop_toTopOf="@id/status_topLine_vw"
+        app:layout_constraintBottom_toBottomOf="@id/status_bottomLine_vw"
+        android:textSize="10dp" />
+
+    <View
+        android:id="@+id/status_bottomLine_vw"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/dark_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/goodNum_tv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_time_tv"
+        android:text="14:20"
+        android:textSize="8sp"
+        android:textColor="@color/string_gray"
+        app:layout_constraintTop_toTopOf="@id/status_topLine_vw"
+        app:layout_constraintBottom_toBottomOf="@id/status_bottomLine_vw"
+        app:layout_constraintEnd_toEndOf="@id/status_topLine_vw" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_date_tv"
+        android:text="2024.01.10"
+        android:textColor="@color/string_gray"
+        android:textSize="8sp"
+        android:layout_marginEnd="7dp"
+        app:layout_constraintTop_toTopOf="@id/status_topLine_vw"
+        app:layout_constraintEnd_toStartOf="@id/content_time_tv"
+        app:layout_constraintBottom_toBottomOf="@id/status_bottomLine_vw" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="60dp"
+        android:layout_height="23dp"
+        android:id="@+id/content_best_iv"
+        android:src="@drawable/ic_recommend_512h"
+        app:layout_constraintTop_toBottomOf="@id/status_bottomLine_vw"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_gray_background"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="댓글을 입력하세요.."
+        android:drawableEnd="@drawable/ic_register"
+        android:drawablePadding="5dp"
+        android:inputType="text"
+        android:padding="6dp"
+        android:paddingStart="12dp"
+        android:textColorHint="@color/string_gray"
+        android:textSize="11sp"
+        android:id="@+id/comment_register_et"
+        app:layout_constraintTop_toBottomOf="@id/content_best_iv"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/comment_rv"
+        app:layout_constraintTop_toBottomOf="@id/comment_register_et"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/item_comment"
+        android:layout_margin="20dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
