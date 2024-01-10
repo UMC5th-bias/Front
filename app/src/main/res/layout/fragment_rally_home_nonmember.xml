@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:scrollbars="none"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -317,7 +318,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_gray_right_arrow"
+                android:src="@drawable/ic_black_right_arrow"
                 app:layout_constraintBottom_toBottomOf="@id/interestedRally_title_tv"
                 app:layout_constraintEnd_toEndOf="@id/interestedRally_cl"
                 app:layout_constraintTop_toTopOf="@id/interestedRally_title_tv" />
@@ -366,7 +367,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_gray_right_arrow"
+                android:src="@drawable/ic_black_right_arrow"
                 app:layout_constraintBottom_toBottomOf="@id/certification_title_tv"
                 app:layout_constraintEnd_toEndOf="@id/certification_board_cl"
                 app:layout_constraintTop_toTopOf="@id/certification_title_tv" />

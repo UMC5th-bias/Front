@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/backButton_ib"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_black_left_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/freeBoard_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="자유게시판"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/backButton_ib"
+        app:layout_constraintStart_toEndOf="@id/backButton_ib"
+        app:layout_constraintTop_toTopOf="@id/backButton_ib" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profile_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toStartOf="@id/backButton_ib"
+        app:layout_constraintTop_toBottomOf="@id/backButton_ib">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profile_img_iv"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:src="@drawable/profile_512h"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profile_tag_iv"
+            android:layout_width="35dp"
+            android:layout_height="12dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/profile_tag_512h"
+            app:layout_constraintBottom_toTopOf="@id/profile_nickname_tv"
+            app:layout_constraintStart_toEndOf="@id/profile_img_iv"
+            app:layout_constraintTop_toTopOf="@id/profile_img_iv" />
+
+        <TextView
+            android:id="@+id/profile_nickname_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내이름은코난"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/profile_tag_iv"
+            app:layout_constraintTop_toBottomOf="@id/profile_tag_iv" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/detail_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/profile_img_iv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/content_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="코난 성지순례 가보신 분?"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/profile_cl"
+        app:layout_constraintStart_toStartOf="@id/profile_cl"
+        app:layout_constraintTop_toBottomOf="@id/profile_cl" />
+
+    <View
+        android:id="@+id/content_line_vw"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/dark_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content_title_tv" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="코난 성지순례할 만한 지역이나 장소 있으면 추천해주세요!"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="@id/content_line_vw"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/content_line_vw"
+        app:layout_constraintTop_toBottomOf="@id/content_line_vw"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="550dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
