@@ -67,9 +67,9 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:clickable="true"
+            android:elevation="2dp"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:elevation="2dp"
             app:cardCornerRadius="10dp"
             app:cardPreventCornerOverlap="false"
             app:layout_constraintDimensionRatio="H,16:9"
@@ -132,10 +132,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@drawable/rounded_black_background"
-            android:padding="16dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/weather_cv">
@@ -212,10 +212,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@drawable/rounded_black_background"
-            android:padding="16dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/animationRally_blackBox_cl">
@@ -345,7 +345,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/banner_cl"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/interestedRally_cl">
@@ -384,6 +384,46 @@
                 app:layout_constraintTop_toBottomOf="@id/certification_title_tv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/banner_cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:background="@drawable/rounded_pink_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/certification_board_cl"
+            app:layout_constraintStart_toStartOf="@id/certification_board_cl"
+            app:layout_constraintTop_toBottomOf="@id/certification_board_cl">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/banner_adv_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_notice_img"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="20dp"/>
+
+            <TextView
+                android:id="@+id/banner_adv_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="새로운 성지순례 장소를\n추가하고 싶다면?"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="15sp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
