@@ -17,7 +17,7 @@
 
     <item
         android:id="@+id/communityFragment"
-        android:icon="@drawable/ic_bottom_commu"
+        android:icon="@drawable/ic_bottom_community"
         android:enabled="true"
         android:title="커뮤니티" />
 
