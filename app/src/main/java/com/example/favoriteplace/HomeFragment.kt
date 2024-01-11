@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
 
         // 로그인 버튼
         binding.homeLoginBtn.setOnClickListener {
-            startActivity(Intent(activity,LoginActivity::class.java))
+//            startActivity(Intent(activity, LoginActivity::class.java))
         }
 
 

@@ -80,7 +80,6 @@
         app:layout_constraintTop_toBottomOf="@+id/text_tv"
         tools:ignore="MissingConstraints">
         <TextView
-            android:id="@+id/dialog_nickname_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="추가 포인트 "
