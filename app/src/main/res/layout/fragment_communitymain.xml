@@ -102,6 +102,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="나고야 주변 성지순례 리스트 모음집.zip"/>
             </LinearLayout>
             <LinearLayout
@@ -123,6 +125,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="2024 새해 이 사진 보면 돈 들어옴 공감 눌러주세요"/>
             </LinearLayout>
             <LinearLayout
@@ -144,6 +148,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="도쿄 주변 맛집 &amp; 성지순례 추천 해주세요!"/>
             </LinearLayout>
             <LinearLayout
@@ -165,6 +171,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="흑발 vs 금발 투표 ㄱㄱㄱ"/>
             </LinearLayout>
             <LinearLayout
@@ -185,6 +193,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="가볍게 볼 애니 추천 해주실 분 ?"/>
             </LinearLayout>
 
@@ -233,6 +243,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="나고야 주변 성지순례 리스트 모음집.zip"/>
             </LinearLayout>
             <LinearLayout
@@ -254,6 +266,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="날씨의아이 성지순례 언제 가는게 좋은지 추천 해주세요"/>
             </LinearLayout>
             <LinearLayout
@@ -275,6 +289,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="8월 말 도쿄타워 투어하고 주변 다니면서 성지순례 한 후기"/>
             </LinearLayout>
 
