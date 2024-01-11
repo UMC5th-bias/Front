@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //fragment 테스트용
-        val rallyPlaceFragment = RallyPlaceFragment()
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, rallyPlaceFragment).commit()
+        val communityMainFragment = CommunityMainFragment()
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, communityMainFragment).commit()
     }
 }

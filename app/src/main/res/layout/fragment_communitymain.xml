@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rallyPlaceContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="커뮤니티"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="14.14dp"
+            android:layout_marginStart="16.5dp"/>
+
+        <EditText
+            android:id="@+id/searchTextView"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="검색어를 입력해주세요"
+            android:paddingStart="27dp"
+            android:paddingEnd="8.59dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="34.5dp"
+            android:layout_marginHorizontal="15.5dp"
+            android:textSize="12sp"
+            android:letterSpacing="0.06"
+            android:textColor="#CCCCCC"
+            android:background="@drawable/search_bar_border"
+            android:drawableEnd="@drawable/search_icon"
+            android:maxLines="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘의 화제글 🔥"
+            android:textSize="15sp"
+            android:textColor="#1D1D1F"
+            android:layout_marginTop="42.47dp"
+            android:layout_marginStart="15.28dp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="자유게시판"
+                android:textSize="12sp"
+                android:textColor="#F73D93"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="15.59dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="성지순례인증"
+                android:textSize="12sp"
+                android:textColor="#CFCFCF"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="17.47dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="15dp"
+            android:paddingVertical="13.19dp"
+            android:paddingHorizontal="18.8dp"
+            android:background="@drawable/communitymain_articlelist_background"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comminitymain_article_background"
+                android:paddingTop="9.51dp"
+                android:paddingBottom="7.56dp"
+                android:paddingEnd="8.77dp"
+                android:paddingStart="10.21dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="14.65dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/communitymain_black_number_1"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="나고야 주변 성지순례 리스트 모음집.zip"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comminitymain_article_background"
+                android:paddingTop="9.51dp"
+                android:paddingBottom="7.56dp"
+                android:paddingEnd="8.77dp"
+                android:paddingStart="10.21dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="14.65dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/communitymain_black_number_2"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2024 새해 이 사진 보면 돈 들어옴 공감 눌러주세요"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comminitymain_article_background"
+                android:paddingTop="9.51dp"
+                android:paddingBottom="7.56dp"
+                android:paddingEnd="8.77dp"
+                android:paddingStart="10.21dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="14.65dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/communitymain_black_number_3"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="도쿄 주변 맛집 &amp; 성지순례 추천 해주세요!"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comminitymain_article_background"
+                android:paddingTop="9.51dp"
+                android:paddingBottom="7.56dp"
+                android:paddingEnd="8.77dp"
+                android:paddingStart="10.21dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="14.65dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/communitymain_black_number_4"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="흑발 vs 금발 투표 ㄱㄱㄱ"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comminitymain_article_background"
+                android:paddingTop="9.51dp"
+                android:paddingBottom="7.56dp"
+                android:paddingEnd="8.77dp"
+                android:paddingStart="10.21dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="14.65dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/communitymain_black_number_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="가볍게 볼 애니 추천 해주실 분 ?"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="월간 화제글 👑"
+            android:textSize="15sp"
+            android:textColor="#1D1D1F"
+            android:layout_marginTop="42.47dp"
+            android:layout_marginStart="15.28dp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.28dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="180dp"
+            android:paddingVertical="13.19dp"
+            android:paddingHorizontal="18.8dp"
+            android:background="@drawable/communitymain_articlelist_background"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comminitymain_article_background"
+                android:paddingTop="9.51dp"
+                android:paddingBottom="7.56dp"
+                android:paddingEnd="8.77dp"
+                android:paddingStart="10.21dp"
+                android:layout_marginBottom="25dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="14.65dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/communitymain_pink_number_1"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="나고야 주변 성지순례 리스트 모음집.zip"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comminitymain_article_background"
+                android:paddingTop="9.51dp"
+                android:paddingBottom="7.56dp"
+                android:paddingEnd="8.77dp"
+                android:paddingStart="10.21dp"
+                android:layout_marginBottom="25dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="14.65dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/communitymain_pink_number_2"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="날씨의아이 성지순례 언제 가는게 좋은지 추천 해주세요"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comminitymain_article_background"
+                android:paddingTop="9.51dp"
+                android:paddingBottom="7.56dp"
+                android:paddingEnd="8.77dp"
+                android:paddingStart="10.21dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="14.65dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/communitymain_pink_number_3"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8월 말 도쿄타워 투어하고 주변 다니면서 성지순례 한 후기"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</ScrollView>

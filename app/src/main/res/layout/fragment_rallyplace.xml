@@ -59,7 +59,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rallyplace_blackbackground"
+            android:background="@drawable/rallyplace_black_background"
             android:paddingHorizontal="26.8dp"
             android:paddingVertical="11.88dp"
             android:layout_marginHorizontal="15dp"
@@ -71,7 +71,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rallyplace_blackbackground"
+            android:background="@drawable/rallyplace_black_background"
             android:paddingHorizontal="26.8dp"
             android:paddingVertical="11.88dp"
             android:layout_marginHorizontal="15dp"
@@ -83,7 +83,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rallyplace_blackbackground"
+            android:background="@drawable/rallyplace_black_background"
             android:paddingHorizontal="26.8dp"
             android:paddingVertical="11.88dp"
             android:layout_marginHorizontal="15dp"
@@ -95,7 +95,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rallyplace_blackbackground"
+            android:background="@drawable/rallyplace_black_background"
             android:paddingHorizontal="26.8dp"
             android:paddingVertical="11.88dp"
             android:layout_marginHorizontal="15dp"
