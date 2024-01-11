@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:scrollbars="none"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="성지순례"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/searchEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/round_gray_background"
+            android:drawableEnd="@drawable/main_rally_search"
+            android:drawablePadding="10dp"
+            android:hint="검색어를 입력해주세요."
+            android:inputType="text"
+            android:padding="15dp"
+            android:paddingStart="30dp"
+            android:textColorHint="#CCCCCC"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/recommend_rally_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <TextView
+            android:id="@+id/recommend_rally_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="20dp"
+            android:text="이 달의 추천 랠리"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchEditText" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/weather_cv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:clickable="true"
+            android:elevation="2dp"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardCornerRadius="10dp"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintDimensionRatio="H,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recommend_rally_tv">
+
+            <ImageView
+                android:id="@+id/weather_iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/weathering_with_you" />
+
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/weather_vw"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="@drawable/rounded_overlay"
+            android:elevation="3dp"
+            app:layout_constraintBottom_toBottomOf="@id/weather_cv"
+            app:layout_constraintEnd_toEndOf="@id/weather_cv"
+            app:layout_constraintStart_toStartOf="@id/weather_cv" />
+
+        <TextView
+            android:id="@+id/weather_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:elevation="4dp"
+            android:text="날씨의 아이"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/weather_vw"
+            app:layout_constraintStart_toStartOf="@id/weather_vw"
+            app:layout_constraintTop_toTopOf="@id/weather_vw" />
+
+        <TextView
+            android:id="@+id/weather_rally_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:elevation="4dp"
+            android:text="0/6"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/weather_vw"
+            app:layout_constraintStart_toEndOf="@id/weather_title_tv"
+            app:layout_constraintTop_toTopOf="@id/weather_vw" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/animationRally_blackBox_cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/rounded_black_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/weather_cv">
+
+            <!-- 분홍색 태그 -->
+            <TextView
+                android:id="@+id/pink_tag_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/pink_tag_background"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="#애니"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/animation_right_arrow_civ"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_white_right_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 사진 -->
+            <ImageView
+                android:id="@+id/photo_iv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_mainrally_animationrally"
+                app:layout_constraintBottom_toBottomOf="@id/animationRally_blackBox_cl"
+                app:layout_constraintEnd_toStartOf="@+id/animation_right_arrow_civ"
+                app:layout_constraintTop_toTopOf="@+id/animationRally_blackBox_cl" />
+
+            <!-- 텍스트 -->
+            <TextView
+                android:id="@+id/animationRally_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="애니메이션 랠리"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/pink_tag_tv"
+                app:layout_constraintTop_toBottomOf="@id/pink_tag_tv" />
+
+            <!-- 텍스트 -->
+            <TextView
+                android:id="@+id/animationRally_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="좋아하는 최애의 장소를 찾아보세요. 👀"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@id/animationRally_blackBox_cl"
+                app:layout_constraintStart_toStartOf="@id/animationRally_title_tv"
+                app:layout_constraintTop_toBottomOf="@id/animationRally_title_tv" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rallyPlace_blackBox_cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/rounded_black_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/animationRally_blackBox_cl">
+
+            <!-- 분홍색 태그 -->
+            <TextView
+                android:id="@+id/blue_tag_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/blue_tag_background"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="#지역"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/place_right_arrow_civ"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_white_right_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 사진 -->
+            <ImageView
+                android:id="@+id/rallyPlace_iv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_mainrally_rallyplace"
+                app:layout_constraintBottom_toBottomOf="@id/rallyPlace_blackBox_cl"
+                app:layout_constraintEnd_toStartOf="@+id/place_right_arrow_civ"
+                app:layout_constraintTop_toTopOf="@+id/rallyPlace_blackBox_cl" />
+
+            <!-- 텍스트 -->
+            <TextView
+                android:id="@+id/placeRally_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="성지순례 장소"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/blue_tag_tv"
+                app:layout_constraintTop_toBottomOf="@id/blue_tag_tv" />
+
+            <!-- 텍스트 -->
+            <TextView
+                android:id="@+id/placeRally_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="지역마다 숨은 장소가 궁금하시다면 ✨"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@id/rallyPlace_blackBox_cl"
+                app:layout_constraintStart_toStartOf="@id/placeRally_title_tv"
+                app:layout_constraintTop_toBottomOf="@id/placeRally_title_tv" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/interestedRally_cl"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/round_gray_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:layout_constraintBottom_toTopOf="@id/certification_board_cl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rallyPlace_blackBox_cl">
+
+            <TextView
+                android:id="@+id/interestedRally_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="관심있는 랠리 모아보기"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_black_right_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/interestedRally_title_tv"
+                app:layout_constraintEnd_toEndOf="@id/interestedRally_cl"
+                app:layout_constraintTop_toTopOf="@id/interestedRally_title_tv" />
+
+            <TextView
+                android:id="@+id/interestedRally_error_msg_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="관심있는 랠리가 아직 존재하지 않아요."
+                android:textColor="#969696"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/interestedRally_title_tv" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/certification_board_cl"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/round_white_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:layout_constraintBottom_toTopOf="@id/banner_cl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/interestedRally_cl">
+
+            <TextView
+                android:id="@+id/certification_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="성지순례 인증글 모아보기"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_black_right_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/certification_title_tv"
+                app:layout_constraintEnd_toEndOf="@id/certification_board_cl"
+                app:layout_constraintTop_toTopOf="@id/certification_title_tv" />
+
+            <TextView
+                android:id="@+id/certification_error_msg_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증글이 아직 존재하지 않아요."
+                android:textColor="#969696"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/certification_title_tv" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/banner_cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:background="@drawable/rounded_pink_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/certification_board_cl"
+            app:layout_constraintStart_toStartOf="@id/certification_board_cl"
+            app:layout_constraintTop_toBottomOf="@id/certification_board_cl">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/banner_adv_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_notice_img"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="20dp"/>
+
+            <TextView
+                android:id="@+id/banner_adv_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="새로운 성지순례 장소를\n추가하고 싶다면?"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="15sp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
