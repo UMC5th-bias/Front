@@ -43,6 +43,15 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
+                //지금 상태에서 fragment_community_free.xml을 볼 수가 없어서 CommunityFreeFragment와 연결.
+                //나중에 CommunityHome 클래스 작성하면 CommunityFreeFragmentFragment()를 해당 클래스 이름으로 변경.
+                R.id.communityFragment->{
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, CommunityFreeFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
 
 
 
