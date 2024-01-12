@@ -33,6 +33,13 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
+                R.id.rallyhomeFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, RallyCategoryFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
 
 
 
