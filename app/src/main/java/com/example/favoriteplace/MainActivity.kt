@@ -34,9 +34,23 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
+                R.id.rallyhomeFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, RallyHomeFragment())
+                        .commitAllowingStateLoss()
+                }
 
+                R.id.communityFragment -> {
 
+                }
 
+                R.id.shopFragment -> {
+
+                }
+
+                R.id.myFragment -> {
+
+                }
 
             }
             false
