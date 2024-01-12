@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
+                //지금 상태에서 fragment_rallycategory.xml을 볼 수가 없어서 RallyCategoryFragment와 연결.
+                //나중에 RallyMain 클래스 작성하면 RallyCategoryFragment()를 해당 클래스 이름으로 변경.
                 R.id.rallyhomeFragment -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, RallyCategoryFragment())
