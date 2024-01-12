@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <!-- 상단 -->
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/find_pwd_back_ib"
+            android:id="@+id/reset_pwd_back_ib"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="비밀번호 찾기"
+            android:text="비밀번호 재설정"
             android:textColor="#000000"
             android:textSize="23dp" />
     </LinearLayout>
@@ -39,7 +39,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:orientation="vertical"
@@ -51,11 +51,82 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="계정을 설정할 때 입력한 \n이메일 주소를 입력해주세요."
+            android:text="새로운 비밀번호를\n입력해주세요."
             android:textColor="#000000"
             android:lineSpacingExtra="5dp"
             android:textSize="23dp"
             android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="새 비밀번호"
+            android:textColor="@color/black"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                android:id="@+id/reset_pwd_newpwd_et"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edge"
+                android:paddingStart="15dp"
+                android:hint="새로운 비밀번호를 입력해주세요."/>
+
+
+            <!-- error시 이미지-->
+            <ImageView
+                android:id="@+id/reset_pwd_error_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_error"
+                android:layout_alignTop="@id/reset_pwd_newpwd_et"
+                android:layout_alignEnd="@id/reset_pwd_newpwd_et"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                android:gravity="center"/>
+
+            <!-- okay시 이미지-->
+            <ImageView
+                android:id="@+id/reset_pwd_ok_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/reset_pwd_newpwd_et"
+                android:layout_alignEnd="@id/reset_pwd_newpwd_et"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="13dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/ic_okay" />
+
+
+        </RelativeLayout>
+
+        <!-- 처음에 안보이게 -->
+        <TextView
+            android:id="@+id/reset_pwd_error_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="비밀번호는 특수문자와 숫자를 포함해야 합니다."
+            android:visibility="gone"
+            android:textColor="@color/main"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="비밀번호 확인"
+            android:textColor="@color/black"/>
 
 
         <RelativeLayout
@@ -63,74 +134,56 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/find_id_phonenumber_et"
+                android:id="@+id/reset_pwd_checkpwd_et"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edge"
                 android:paddingStart="15dp"
-                android:hint="이메일 주소를 입력해주세요."/>
+                android:hint="비밀번호 재확인"/>
 
-            <TextView
-                android:id="@+id/find_id_time_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/find_id_phonenumber_et"
-                android:layout_alignEnd="@id/find_id_phonenumber_et"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:visibility="gone"
-                android:gravity="center"
-                android:text="00:00" />
 
+            <!-- error시 이미지-->
             <ImageView
-                android:id="@+id/find_pwd_email_error_iv"
+                android:id="@+id/reset_pwd_checkerror_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_error"
-                android:layout_alignTop="@id/find_id_phonenumber_et"
-                android:layout_alignEnd="@id/find_id_phonenumber_et"
+                android:layout_alignTop="@id/reset_pwd_checkpwd_et"
+                android:layout_alignEnd="@id/reset_pwd_checkpwd_et"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:visibility="gone"
                 android:gravity="center"/>
+
+
+            <!-- okay시 이미지-->
+            <ImageView
+                android:id="@+id/reset_pwd_checkok_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/reset_pwd_checkpwd_et"
+                android:layout_alignEnd="@id/reset_pwd_checkpwd_et"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="13dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/ic_okay" />
+
         </RelativeLayout>
 
 
-        <!--초기에 안보이게 설정-->
+        <!-- 처음에 안보이게 -->
         <TextView
-            android:id="@+id/find_pwd_email_error_tv"
+            android:id="@+id/reset_pwd_notpwd_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="해당 이메일로 가입된 계정이 존재하지 않습니다."
-            android:textColor="@color/main"
+            android:layout_marginTop="5dp"
+            android:text="비밀번호 확인이 일치하지 않습니다."
             android:visibility="gone"
-            android:textSize="12dp" />
-
-        <TextView
-            android:id="@+id/find_pwd_number_error_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="인증 번호가 틀렸습니다."
-            android:textColor="@color/main"
-            android:visibility="gone"
-            android:textSize="12dp" />
-
-
-
-        <EditText
-            android:id="@+id/find_pwd_checknumber_et"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edge"
-            android:paddingStart="15dp"
-            android:visibility="gone"
-            android:hint="인증번호를 입력해주세요." />
+            android:textColor="@color/main"/>
 
 
         <LinearLayout
@@ -138,8 +191,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:visibility="gone"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -151,7 +203,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  입력하신 이메일 주소로 메일을 발송하였습니다."
+                android:text="  비밀번호는 8자 이상이어야 합니다."
                 android:textColor="@color/dark_gray"
                 android:textSize="12dp" />
         </LinearLayout>
@@ -162,7 +214,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="3dp"
-            android:visibility="gone"
             android:orientation="horizontal">
 
             <ImageView
@@ -170,63 +221,34 @@
                 android:layout_height="6dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_ellipse"/>
-            <!--초기에 안보이게 설정-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  메일이 도착하기까지 시간이 소요될 수 있습니다."
+                android:text="  비밀번호는 특수문자와 숫자를 모두 포함해야 합니다."
                 android:textColor="@color/dark_gray"
                 android:textSize="12dp" />
         </LinearLayout>
 
-
-
-        <!-- 클릭시 '확인'으로 변경은 kt에서-->
         <Button
-            android:id="@+id/search_id_getnumber_btn"
+            android:id="@+id/reset_pwd_ok_btn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="70dp"
             android:background="@drawable/edge"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:clickable="false"
-            android:backgroundTint="@color/dark_gray"
-            android:text="인증 번호 받기"/>
+            android:backgroundTint="@color/main"
+            android:text="확인"/>
 
 
-        <LinearLayout
-            android:id="@+id/linearlayout_text3"
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/reset_pwd_nextreset_tv"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:visibility="gone"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/dark_gray"
-                android:text="인증 번호를 받지 못하셨나요?"/>
-
-
-            <TextView
-                android:id="@+id/find_pwd_resend_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:textColor="@color/black"
-                android:text="재전송"/>
-
-
-
-
-        </LinearLayout>
-
-
-
+            android:text="비밀번호는 다음에 변경할래요."
+            android:textColor="@color/main"
+            android:textSize="12dp" />
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
