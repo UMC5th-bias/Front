@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#F73D93"/> <!-- 분홍색 배경 -->
+    <corners android:radius="20dp"/> <!-- 모서리 둥근 정도를 20dp로 설정 -->
+</shape>

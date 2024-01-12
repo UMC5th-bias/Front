@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.favoriteplace.databinding.ActivityMainBinding
