@@ -53,7 +53,7 @@
         android:text="15:10"
         android:layout_marginTop="0.5dp"
         android:textSize="8sp"
-        android:textColor="@color/string_gray"
+        android:textColor="@color/gray"
         app:layout_constraintStart_toEndOf="@id/comment_time_iv"
         app:layout_constraintTop_toTopOf="@id/comment_time_iv" />
 
