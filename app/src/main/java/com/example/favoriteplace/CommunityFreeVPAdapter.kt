@@ -9,6 +9,7 @@ class CommunityFreeVPAdapter(fragment: Fragment):FragmentStateAdapter(fragment){
     override fun createFragment(position: Int): Fragment {
         return when(position){
             0->CommunityFreeLatelyFragment()
+            1->CommunityFreeRecommendFragment()
             else->CommunityFreeLatelyFragment()
         }
     }

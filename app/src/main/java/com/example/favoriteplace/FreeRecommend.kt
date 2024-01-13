@@ -1,8 +1,6 @@
 package com.example.favoriteplace
 
-import android.icu.text.CaseMap.Title
-
-data class LatelyWrite(
+data class FreeRecommend(
     var title: String?="",
     var writer: String?="",
     var eye: Int?=0,

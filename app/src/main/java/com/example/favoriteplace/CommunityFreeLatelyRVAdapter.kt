@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemCommunityFreeLatelyBinding
 import java.util.ArrayList
 
-class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<LatelyWrite>): RecyclerView.Adapter<CommunityFreeLatelyRVAdapter.ViewHolder>() {
+class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<FreeLatelyWrite>): RecyclerView.Adapter<CommunityFreeLatelyRVAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -24,7 +24,7 @@ class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<LatelyWrit
 
     inner class ViewHolder(val binding: ItemCommunityFreeLatelyBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(latelywrite: LatelyWrite){
+        fun bind(latelywrite: FreeLatelyWrite){
             binding.itemCommunityFreeLatelyTitleTv.text=latelywrite.title
             binding.itemCommunityFreeLatelyWriterTv.text=latelywrite.writer
             binding.itemCommunityFreeLatelyEyeTv.text= latelywrite.eye.toString()
