@@ -28,8 +28,8 @@ class CommunityFreeRecommendRVAdapter (private val freeRecommendList: ArrayList<
             binding.itemCommunityFreeRecommendWriterTv.text=freeRecommend.writer
             binding.itemCommunityFreeRecommendEyeTv.text= freeRecommend.eye.toString()
             binding.itemCommunityFreeRecommendLikeTv.text=freeRecommend.like.toString()
-            binding.itemCommunityFreeRecommendClockTv.text= freeRecommend.clock
-            binding.itemCommunityFreeRecommendCommentNumTv.text= freeRecommend.comment_num.toString()
+            binding.itemCommunityFreeRecommendClockTv.text= freeRecommend.time
+            binding.itemCommunityFreeRecommendCommentNumTv.text= freeRecommend.commentNum.toString()
         }
 
     }

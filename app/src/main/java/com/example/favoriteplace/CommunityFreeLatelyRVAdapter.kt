@@ -29,8 +29,8 @@ class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<FreeLately
             binding.itemCommunityFreeLatelyWriterTv.text=latelywrite.writer
             binding.itemCommunityFreeLatelyEyeTv.text= latelywrite.eye.toString()
             binding.itemCommunityFreeLatelyLikeTv.text= latelywrite.like.toString()
-            binding.itemCommunityFreeLatelyClockTv.text= latelywrite.clock
-            binding.itemCommunityFreeLatelyCommentNumTv.text= latelywrite.comment_num.toString()
+            binding.itemCommunityFreeLatelyClockTv.text= latelywrite.time
+            binding.itemCommunityFreeLatelyCommentNumTv.text= latelywrite.commentNum.toString()
         }
 
     }

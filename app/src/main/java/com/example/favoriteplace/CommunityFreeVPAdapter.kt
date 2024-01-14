@@ -11,6 +11,7 @@ class CommunityFreeVPAdapter(fragment: Fragment):FragmentStateAdapter(fragment){
             0->CommunityFreeLatelyFragment()
             1->CommunityFreeRecommendFragment()
             2->CommunityFreeMyFragment()
+            3->CommunityFreeCommendFragment()
             else->CommunityFreeLatelyFragment()
         }
     }

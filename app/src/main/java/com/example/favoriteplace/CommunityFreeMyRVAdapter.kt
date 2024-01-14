@@ -25,8 +25,8 @@ class CommunityFreeMyRVAdapter(private val freeMyWriteList: ArrayList<FreeMyWrit
             binding.itemCommunityFreeMyWriterTv.text=freeRecommend.writer
             binding.itemCommunityFreeMyEyeTv.text= freeRecommend.eye.toString()
             binding.itemCommunityFreeMyLikeTv.text=freeRecommend.like.toString()
-            binding.itemCommunityFreeMyClockTv.text= freeRecommend.clock
-            binding.itemCommunityFreeMyCommentNumTv.text= freeRecommend.comment_num.toString()
+            binding.itemCommunityFreeMyClockTv.text= freeRecommend.time
+            binding.itemCommunityFreeMyCommentNumTv.text= freeRecommend.commentNum.toString()
         }
 
     }

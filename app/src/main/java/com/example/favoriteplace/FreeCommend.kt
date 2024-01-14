@@ -1,6 +1,9 @@
 package com.example.favoriteplace
 
-data class FreeMyWrite(
+data class FreeCommend(
+    var day: String?="",
+    var commendTime: String?="",
+    var commend: String?="",
     var title: String?="",
     var writer: String?="",
     var eye: Int?=0,
