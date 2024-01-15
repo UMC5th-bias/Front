@@ -14,14 +14,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-
+            android:background="@drawable/rallyplace_location_img_background"
+            android:clipToOutline="true"
             android:src="@drawable/rallyplace_example_image_1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_gravity="bottom"
-            android:background="@drawable/rallyplace_location_background"
+            android:background="@drawable/rallyplace_location_txt_background"
             android:gravity="center_vertical"
             android:orientation="horizontal">
             <TextView
