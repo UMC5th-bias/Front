@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12.2dp">
+
+        <ImageView
+            android:id="@+id/rallyplace_location_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+
+            android:src="@drawable/rallyplace_example_image_1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/rallyplace_location_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/rallyplace_location_ani"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="날씨의 아이"
+                android:textSize="15sp"
+                android:textColor="#FFFFFF"
+                android:letterSpacing="0.06"
+                android:layout_marginStart="14.26dp"
+                android:layout_marginEnd="31dp"/>
+            <TextView
+                android:id="@+id/rallyplace_location_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="도쿄도 시부야구"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:letterSpacing="0.06"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+</LinearLayout>
