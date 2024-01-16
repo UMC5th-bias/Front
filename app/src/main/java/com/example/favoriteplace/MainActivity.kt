@@ -34,13 +34,7 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.main_frameLayout, HomeFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
-                }
-
-
-
-
-
-            }
+                }}
             false
         }
     }

@@ -318,9 +318,9 @@
             android:id="@+id/rallydetail_like_btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
             android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
             android:background="@drawable/edge"
             android:src="@drawable/ic_like_off" />
     </LinearLayout>
