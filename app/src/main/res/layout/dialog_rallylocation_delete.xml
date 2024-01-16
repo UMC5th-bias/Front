@@ -4,6 +4,8 @@
     android:layout_height="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
     android:background="@drawable/dialog_round">
 
 
@@ -36,10 +38,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="성지순례 인증글을\n 삭제 하시겠어요?"
+        android:lineSpacingExtra="3dp"
         android:textSize="18dp"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:letterSpacing="0000.1"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="70dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout1"

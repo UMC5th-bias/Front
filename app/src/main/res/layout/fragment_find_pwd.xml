@@ -52,52 +52,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="계정을 설정할 때 입력한 \n이메일 주소를 입력해주세요."
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:lineSpacingExtra="5dp"
             android:textSize="23dp"
             android:textStyle="bold" />
 
-
-        <RelativeLayout
+        <EditText
+            android:id="@+id/find_pwd_email_et"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/find_id_phonenumber_et"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/edge"
-                android:paddingStart="15dp"
-                android:hint="이메일 주소를 입력해주세요."/>
-
-            <TextView
-                android:id="@+id/find_id_time_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/find_id_phonenumber_et"
-                android:layout_alignEnd="@id/find_id_phonenumber_et"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:visibility="gone"
-                android:gravity="center"
-                android:text="00:00" />
-
-            <ImageView
-                android:id="@+id/find_pwd_email_error_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_error"
-                android:layout_alignTop="@id/find_id_phonenumber_et"
-                android:layout_alignEnd="@id/find_id_phonenumber_et"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:visibility="gone"
-                android:gravity="center"/>
-        </RelativeLayout>
-
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edge"
+            android:paddingStart="15dp"
+            android:hint="이메일 주소를 입력해주세요."/>
 
         <!--초기에 안보이게 설정-->
         <TextView
@@ -110,6 +77,50 @@
             android:visibility="gone"
             android:textSize="12dp" />
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                android:id="@+id/find_pwd_checknumber_et"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edge"
+                android:paddingStart="15dp"
+                android:visibility="gone"
+                android:hint="인증번호를 입력해주세요."/>
+
+            <TextView
+                android:id="@+id/find_pwd_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/find_pwd_checknumber_et"
+                android:layout_alignEnd="@id/find_pwd_checknumber_et"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="00:00" />
+
+            <ImageView
+                android:id="@+id/find_pwd_email_error_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_error"
+                android:layout_alignTop="@id/find_pwd_checknumber_et"
+                android:layout_alignEnd="@id/find_pwd_checknumber_et"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                android:gravity="center"/>
+        </RelativeLayout>
+
+
         <TextView
             android:id="@+id/find_pwd_number_error_tv"
             android:layout_width="wrap_content"
@@ -120,17 +131,6 @@
             android:visibility="gone"
             android:textSize="12dp" />
 
-
-
-        <EditText
-            android:id="@+id/find_pwd_checknumber_et"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edge"
-            android:paddingStart="15dp"
-            android:visibility="gone"
-            android:hint="인증번호를 입력해주세요." />
 
 
         <LinearLayout
@@ -183,7 +183,7 @@
 
         <!-- 클릭시 '확인'으로 변경은 kt에서-->
         <Button
-            android:id="@+id/search_id_getnumber_btn"
+            android:id="@+id/find_pwd_getnumber_btn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="70dp"
@@ -219,14 +219,8 @@
                 android:textColor="@color/black"
                 android:text="재전송"/>
 
-
-
-
         </LinearLayout>
 
-
-
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
