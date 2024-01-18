@@ -1,0 +1,132 @@
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="15dp">
+
+
+            <!-- 회원 프로필 -->
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="70dp">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/comment_profile_civ"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:civ_border_width="1dp"
+                    app:civ_border_overlay="true"
+                    android:src="@drawable/memberimg"
+                    app:civ_border_color="@color/gray"/>
+
+
+                <!--아이콘 크기 통일 시 변경하기-->
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:elevation="3dp"
+                    android:layout_gravity="bottom|right">
+
+                    <ImageView
+                        android:id="@+id/comment_icon_civ"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/membericon" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp">
+
+
+                <ImageView
+                    android:id="@+id/comment_badge_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/user_title2"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/comment_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="아이"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"/>
+
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_time"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center"/>
+
+
+                    <TextView
+                        android:id="@+id/comment_time_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15:10"
+                        android:textColor="@color/dark_gray"
+                        android:layout_gravity="center"
+                        android:textSize="10dp"/>
+
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_cricle_more"/>
+
+    </LinearLayout>
+</LinearLayout>

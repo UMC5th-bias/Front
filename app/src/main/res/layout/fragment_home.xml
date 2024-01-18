@@ -91,48 +91,37 @@
 
                 <!-- 회원 프로필 -->
                 <FrameLayout
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
+                    android:layout_width="120dp"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center">
+
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/home_member_profile_civ"
+                        android:layout_width="104dp"
+                        android:layout_height="104dp"
+                        app:civ_border_width="1dp"
+                        app:civ_border_overlay="true"
+                        android:src="@drawable/memberimg"
+                        app:civ_border_color="@color/gray"/>
 
 
                     <!--아이콘 크기 통일 시 변경하기-->
                     <LinearLayout
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:orientation="horizontal"
-                        android:elevation="2dp"
+                        android:elevation="3dp"
                         android:layout_gravity="bottom|right">
 
                         <ImageView
                             android:id="@+id/home_member_icon_iv"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:scaleType="fitXY"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             app:srcCompat="@drawable/membericon" />
 
                     </LinearLayout>
 
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        app:cardCornerRadius="100dp"
-                        android:layout_gravity="center"
-                        app:cardElevation = "1dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginEnd="15dp">
-
-                        <ImageView
-                            android:id="@+id/home_member_profile_iv"
-                            android:layout_width="110dp"
-                            android:layout_height="100dp"
-                            android:scaleType="centerCrop"
-                            android:layout_gravity="center"
-                            android:padding="3dp"
-                            app:srcCompat="@drawable/memberimg" />
-                    </androidx.cardview.widget.CardView>
                 </FrameLayout>
 
                 <LinearLayout
@@ -194,9 +183,10 @@
                 <!--비회원 추천 랠리-->
                 <RelativeLayout
                     android:id="@+id/non_members_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp">
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:gravity="center"
+                    android:layout_marginStart="10dp">
 
                     <ImageView
                         android:id="@+id/home_recommend_iv"
@@ -237,9 +227,10 @@
                 <!-- 회원 랠리 -->
                 <RelativeLayout
                     android:id="@+id/members_rally_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:gravity="center"
+                    android:layout_marginStart="10dp"
                     android:visibility="gone">
 
                     <androidx.cardview.widget.CardView
@@ -318,23 +309,24 @@
                     </androidx.cardview.widget.CardView>
                 </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp" />
-
-
-                <RelativeLayout
-                    android:id="@+id/newitemlayout"
+                <View
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp">
+                    android:layout_weight="1"/>
+
+
+                <!-- 신규 아이템 -->
+                <RelativeLayout
+                    android:id="@+id/newitemlayout"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:gravity="center"
+                    android:layout_marginEnd="6dp">
 
                     <ImageView
                         android:id="@+id/home_new_item_iv"
-                        android:layout_width="170dp"
-                        android:layout_height="170dp"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
                         android:background="@drawable/round"
                         android:src="@drawable/img2" />
 
@@ -345,6 +337,8 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="신규 아이템"
+                        android:layout_alignStart="@+id/home_new_item_iv"
+                        android:layout_alignTop="@+id/home_new_item_iv"
                         android:textColor="@color/white" />
 
                     <ImageButton
@@ -352,6 +346,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignEnd="@+id/home_new_item_iv"
+                        android:layout_alignTop="@+id/home_new_item_iv"
                         android:layout_marginTop="3dp"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_more" />
@@ -399,26 +394,44 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_rank_1" />
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/home_item_cv1"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_marginLeft="20dp"
-                        app:cardCornerRadius="7dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    <!-- 회원 프로필 -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="15dp">
 
-                        <ImageView
-                            android:id="@+id/home_item_profile_iv1"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/home_realtime_img1"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.cardview.widget.CardView>
+                        <FrameLayout
+                            android:layout_width="75dp"
+                            android:layout_height="75dp">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/home_item_civ1"
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                app:civ_border_width="1dp"
+                                app:civ_border_overlay="true"
+                                android:src="@drawable/memberimg"
+                                app:civ_border_color="@color/gray"/>
+
+
+                            <!--아이콘 크기 통일 시 변경하기-->
+                            <LinearLayout
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:orientation="horizontal"
+                                android:layout_gravity="bottom|right">
+                                <ImageView
+                                    android:id="@+id/home_member_icon_iv1"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:scaleType="fitXY"
+                                    app:srcCompat="@drawable/membericon" />
+                            </LinearLayout>
+
+                        </FrameLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/linearLayout1"
@@ -511,24 +524,43 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_rank_2" />
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/home_item_cv2"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_marginLeft="20dp"
-                        app:cardCornerRadius="7dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="15dp">
 
-                        <ImageView
-                            android:id="@+id/home_item_profile_iv2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/home_realtime_img1" />
-                    </androidx.cardview.widget.CardView>
+                        <FrameLayout
+                            android:layout_width="75dp"
+                            android:layout_height="75dp">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/home_item_civ2"
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                app:civ_border_width="1dp"
+                                app:civ_border_overlay="true"
+                                android:src="@drawable/memberimg"
+                                app:civ_border_color="@color/gray"/>
+
+
+                            <!--아이콘 크기 통일 시 변경하기-->
+                            <LinearLayout
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:orientation="horizontal"
+                                android:layout_gravity="bottom|right">
+                                <ImageView
+                                    android:id="@+id/home_item_profile_iv2"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:scaleType="fitXY"
+                                    app:srcCompat="@drawable/membericon" />
+                            </LinearLayout>
+
+                        </FrameLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/linearLayout2"
@@ -622,26 +654,43 @@
                         android:src="@drawable/ic_rank_3" />
 
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/home_item_cv3"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_marginLeft="20dp"
-                        app:cardCornerRadius="7dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="15dp">
 
-                        <ImageView
-                            android:id="@+id/home_item_profile_iv3"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/home_realtime_img1"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.cardview.widget.CardView>
+                        <FrameLayout
+                            android:layout_width="75dp"
+                            android:layout_height="75dp">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/home_item_civ3"
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                app:civ_border_width="1dp"
+                                app:civ_border_overlay="true"
+                                android:src="@drawable/memberimg"
+                                app:civ_border_color="@color/gray"/>
+
+
+                            <!--아이콘 크기 통일 시 변경하기-->
+                            <LinearLayout
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:orientation="horizontal"
+                                android:layout_gravity="bottom|right">
+                                <ImageView
+                                    android:id="@+id/home_item_profile_iv3"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:scaleType="fitXY"
+                                    app:srcCompat="@drawable/membericon" />
+                            </LinearLayout>
+
+                        </FrameLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/linearLayout3"

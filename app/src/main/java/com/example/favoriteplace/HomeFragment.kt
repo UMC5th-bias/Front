@@ -15,8 +15,6 @@ import com.example.favoriteplace.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
 
-    private var homeItemDatas = ArrayList<HomeItem>()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
