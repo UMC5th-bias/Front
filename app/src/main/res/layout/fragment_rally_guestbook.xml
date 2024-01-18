@@ -119,52 +119,8 @@
                 app:cardElevation="0dp"
                 app:cardUseCompatPadding="true">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
 
-                    <ImageView
-                        android:id="@+id/rally_guestbook_ani_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/rally_locationdetail_img" />
-
-
-                    <ImageView
-                        android:id="@+id/rally_guestbook_blackbar_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_rally_location_black" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginBottom="6dp">
-
-                        <TextView
-                            android:id="@+id/rally_guestbook_name_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:text="날씨의 아이"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/rally_guestbook_place_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50dp"
-                            android:text="시부야 스크램블교차로"
-                            android:textColor="@color/white" />
-                    </LinearLayout>
-                </FrameLayout>
             </androidx.cardview.widget.CardView>
          </RelativeLayout>
 
@@ -246,50 +202,62 @@
                     android:textSize="15dp"/>
             </LinearLayout>
 
+            <!--서버에 태그 넘길때는 '#' 텍스트를 파라미터로 추가-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
                 android:orientation="horizontal">
 
                 <EditText
+                    android:id="@+id/rally_guestbook_tag1_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
-                    android:hint="#태그 입력"
+                    android:hint="태그 입력"
+                    android:text="#"
                     android:padding="2dp"
                     android:textColor="@color/main"
                     android:textColorHint="@color/main"
                     android:background="@drawable/maincolor_edge"
                     android:layout_marginEnd="15dp"
                     android:textSize="13dp"/>
+
+
                 <EditText
+                    android:id="@+id/rally_guestbook_tag2_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:hint="#태그 입력"
+                    android:text="#"
                     android:padding="2dp"
                     android:textColor="@color/main"
                     android:textColorHint="@color/main"
                     android:background="@drawable/maincolor_edge"
                     android:layout_marginEnd="15dp"
                     android:textSize="13dp"/>
+
                 <EditText
+                    android:id="@+id/rally_guestbook_tag3_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:hint="#태그 입력"
+                    android:text="#"
                     android:padding="2dp"
                     android:textColor="@color/main"
                     android:textColorHint="@color/main"
                     android:background="@drawable/maincolor_edge"
                     android:textSize="13dp"/>
             </LinearLayout>
+
 
             <Button
                 android:layout_width="match_parent"
