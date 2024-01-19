@@ -14,6 +14,7 @@ class ShopBannerNewFragment : Fragment() {
     private var limitedFameData=ArrayList<LimitedFame>()
     private var unlimitedFameData=ArrayList<UnlimitedFame>()
     private var limitedIconData=ArrayList<LimitedIcon>()
+    private var unlimitedIconData=ArrayList<UnlimitedIcon>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +41,12 @@ class ShopBannerNewFragment : Fragment() {
             add(LimitedIcon(R.drawable.limited_icon_1,"유닝이","20000P"))
         }
 
+        unlimitedIconData.apply {
+            add(UnlimitedIcon(R.drawable.unlimited_icon_1,"별행성","10000P"))
+            add(UnlimitedIcon(R.drawable.unlimited_icon_2,"새턴","10000P"))
+            add(UnlimitedIcon(R.drawable.unlimited_icon_3,"초승달","10000P"))
+        }
+
         val limitedFameRVAdapter=ShopBannerNewLimitedFameRVAdapter(limitedFameData)
         binding.shopBannerNewFameLimitedRv.adapter=limitedFameRVAdapter
         binding.shopBannerNewFameLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -51,6 +58,10 @@ class ShopBannerNewFragment : Fragment() {
         val limitedIconRVAdapter=ShopBannerNewLimitedIconRVAdapter(limitedIconData)
         binding.shopBannerNewIconLimitedRv.adapter=limitedIconRVAdapter
         binding.shopBannerNewIconLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        val unlimitedIconRVAdapter=ShopBannerNewUnlimitedIconRVAdapter(unlimitedIconData)
+        binding.shopBannerNewIconUnlimitedRv.adapter=unlimitedIconRVAdapter
+        binding.shopBannerNewIconUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         return binding.root
     }
