@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="geustbook_popup">
+        <item name="수정하기"></item>
+        <item name="삭제하기"></item>
+    </string-array>
+</resources>

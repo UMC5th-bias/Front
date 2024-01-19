@@ -100,7 +100,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-        <!-- 배너 -->
+        <!-- 애니 정보 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -269,6 +269,13 @@
                     android:layout_marginEnd="15dp"
                 android:src="@drawable/ic_cricle_more"/>
 
+            <Spinner
+                android:id="@+id/my_guestbook_menu_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
 
@@ -361,13 +368,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <!--추천-->
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_eye"/>
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_cmm_rmm"/>
             <TextView
                 android:id="@+id/my_guestbook_recommend_cnt_tv"
                 android:layout_width="wrap_content"
@@ -378,10 +387,10 @@
 
             <!--댓글-->
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="15dp"
-                android:src="@drawable/ic_eye"/>
+                android:src="@drawable/ic_cmm_cmm"/>
             <TextView
                 android:id="@+id/my_guestbook_comment_cnt_tv"
                 android:layout_width="wrap_content"
@@ -392,8 +401,8 @@
 
             <!--조회수-->
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="15dp"
                 android:src="@drawable/ic_eye"/>
             <TextView
