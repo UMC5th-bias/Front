@@ -5,6 +5,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/shop_banner_new_nsv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <ScrollView
+        android:id="@+id/shop_banner_new_sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     <ImageButton
         android:id="@+id/shop_banner_new_ib"
         android:layout_width="wrap_content"
@@ -78,7 +110,7 @@
         android:layout_marginTop="25dp">
 
         <TextView
-            android:id="@+id/shop_banner_new_limited_tv"
+            android:id="@+id/shop_banner_new_fame_limited_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="한정판매"
@@ -111,7 +143,7 @@
         app:layout_constraintTop_toBottomOf="@id/shop_banner_new_fame_limited_rv"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp">
+        android:layout_marginTop="30dp">
 
         <TextView
             android:id="@+id/shop_banner_new_unlimited_tv"
@@ -127,5 +159,102 @@
             android:layout_marginEnd="15dp"
             android:layout_marginTop="3dp"/>
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shop_banner_new_fame_unlimited_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shop_banner_new_fame_unlimited_ll"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        tools:listitem="@layout/item_shop_banner_new_fame"/>
+
+        <LinearLayout
+            android:id="@+id/shop_banner_new_icon_ll"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@drawable/shop_banner_new_fame_icon"
+            app:layout_constraintTop_toBottomOf="@id/shop_banner_new_fame_unlimited_rv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="60dp">
+
+            <TextView
+                android:id="@+id/shop_banner_new_icon_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="최애의장소 아이콘"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shop_banner_new_icon_limited_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@drawable/shop_banner_new_limited"
+            app:layout_constraintTop_toBottomOf="@id/shop_banner_new_icon_ll"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/shop_banner_new_icon_limited_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="한정판매"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="3dp"/>
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/shop_banner_new_icon_limited_hs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shop_banner_new_icon_limited_ll">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/shop_banner_new_icon_limited_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="15dp"
+                tools:listitem="@layout/item_shop_banner_new_icon"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"/>
+        </LinearLayout>
+        </HorizontalScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
     
 </androidx.constraintlayout.widget.ConstraintLayout>
