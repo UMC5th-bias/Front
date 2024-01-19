@@ -36,13 +36,7 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.myFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, MyGuestbookFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
 
-                }
             }
             false
         }
