@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemShopBannerNewFameBinding
 
-class ShopBannerVewUnlimitedFameRVAdapter (private val unlimitedFameList: ArrayList<UnlimitedFame>):RecyclerView.Adapter<ShopBannerVewUnlimitedFameRVAdapter.ViewHolder>() {
+class ShopBannerNewUnlimitedFameRVAdapter (private val unlimitedFameList: ArrayList<UnlimitedFame>):RecyclerView.Adapter<ShopBannerNewUnlimitedFameRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ): ShopBannerVewUnlimitedFameRVAdapter.ViewHolder {
+    ): ShopBannerNewUnlimitedFameRVAdapter.ViewHolder {
         val binding: ItemShopBannerNewFameBinding= ItemShopBannerNewFameBinding.inflate(
             LayoutInflater.from(viewGroup.context),viewGroup,false)
 
