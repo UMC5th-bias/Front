@@ -31,15 +31,6 @@ class CommunityFreeRecommendFragment : Fragment() {
             add(FreeRecommend("방학 하니까 살 것 같다 ..","빵",15,15,"12:08",3))
             add(FreeRecommend("죄송합니다 교수님..근데 교수님도 저한테 죄송하 ..","에이쁠",15,11,"10:30",0))
             add(FreeRecommend("새해 복 많이 받어 다들 !!","빵",15,10,"10:15",5))
-            add(FreeRecommend("나고야 주변 성지순레 리스트 모음집.zip","내이름은코난",3,58,"20:10",10))
-            add(FreeRecommend("2024 새해 이 사진 보면 돈 들어옴 공감 눌러주세요","키미노나마에와",4,55,"20:08",7))
-            add(FreeRecommend("도쿄 주변 맛집 & 성지순례 추천 해주세요!","로이도삼",12,42,"19:07",8))
-            add(FreeRecommend("흑발 vs 금발 투표 ㄱㄱㄱ","알칼로이드",7,35,"19:00",3))
-            add(FreeRecommend("가볍게 볼 애니 추천해주실 분?","치아키상",20,22,"15:59",10))
-            add(FreeRecommend("저녁 메뉴 추천 받아요~!","일이삼",10,19,"13:50",2))
-            add(FreeRecommend("방학 하니까 살 것 같다 ..","빵",15,15,"12:08",3))
-            add(FreeRecommend("죄송합니다 교수님..근데 교수님도 저한테 죄송하 ..","에이쁠",15,11,"10:30",0))
-            add(FreeRecommend("새해 복 많이 받어 다들 !!","빵",15,10,"10:15",5))
         }
         //
 

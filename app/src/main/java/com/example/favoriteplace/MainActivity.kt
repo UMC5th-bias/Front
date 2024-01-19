@@ -3,6 +3,7 @@ package com.example.favoriteplace
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.replace
 import com.example.favoriteplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +49,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.communityFragment->{
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, CommunityFreeFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.shopFragment-> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, ShopBannerNewFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
