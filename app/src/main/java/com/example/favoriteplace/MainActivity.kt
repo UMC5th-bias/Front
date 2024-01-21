@@ -29,11 +29,16 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.homeFragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, RallyPlaceFragment())
+                        .replace(R.id.main_frameLayout, HomeFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
-
+                R.id.communityFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, CommunityMainFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
 
 
 
