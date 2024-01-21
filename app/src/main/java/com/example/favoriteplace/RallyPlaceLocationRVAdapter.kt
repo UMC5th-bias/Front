@@ -27,6 +27,7 @@ class RallyPlaceLocationRVAdapter(private val locationInfoList: List<RallyPlaceL
             binding.rallyplaceLocationAni.text = info.name
             binding.rallyplaceLocationLoc.text = info.location
             binding.rallyplaceLocationImg.setImageResource(info.src)
+            binding.rallyplaceLocationImg.clipToOutline = true
         }
     }
 
