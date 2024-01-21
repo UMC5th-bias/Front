@@ -80,13 +80,13 @@
             android:layout_marginHorizontal="15dp"
             android:paddingVertical="13.19dp"
             android:paddingHorizontal="18.8dp"
-            android:background="@drawable/communitymain_articlelist_background"
+            android:background="@drawable/community_main_articlelist_background"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/comminitymain_article_background"
+                android:background="@drawable/comminity_main_article_background"
                 android:paddingTop="9.51dp"
                 android:paddingBottom="7.56dp"
                 android:paddingEnd="8.77dp"
@@ -98,7 +98,7 @@
                     android:layout_height="13dp"
                     android:layout_marginEnd="14.65dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/communitymain_black_number_1"/>
+                    android:src="@drawable/community_main_black_number_1"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/comminitymain_article_background"
+                android:background="@drawable/comminity_main_article_background"
                 android:paddingTop="9.51dp"
                 android:paddingBottom="7.56dp"
                 android:paddingEnd="8.77dp"
@@ -121,7 +121,7 @@
                     android:layout_height="13dp"
                     android:layout_marginEnd="14.65dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/communitymain_black_number_2"/>
+                    android:src="@drawable/community_main_black_number_2"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/comminitymain_article_background"
+                android:background="@drawable/comminity_main_article_background"
                 android:paddingTop="9.51dp"
                 android:paddingBottom="7.56dp"
                 android:paddingEnd="8.77dp"
@@ -144,7 +144,7 @@
                     android:layout_height="13dp"
                     android:layout_marginEnd="14.65dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/communitymain_black_number_3"/>
+                    android:src="@drawable/community_main_black_number_3"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/comminitymain_article_background"
+                android:background="@drawable/comminity_main_article_background"
                 android:paddingTop="9.51dp"
                 android:paddingBottom="7.56dp"
                 android:paddingEnd="8.77dp"
@@ -167,7 +167,7 @@
                     android:layout_height="13dp"
                     android:layout_marginEnd="14.65dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/communitymain_black_number_4"/>
+                    android:src="@drawable/community_main_black_number_4"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/comminitymain_article_background"
+                android:background="@drawable/comminity_main_article_background"
                 android:paddingTop="9.51dp"
                 android:paddingBottom="7.56dp"
                 android:paddingEnd="8.77dp"
@@ -189,7 +189,7 @@
                     android:layout_height="13dp"
                     android:layout_marginEnd="14.65dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/communitymain_black_number_5"/>
+                    android:src="@drawable/community_main_black_number_5"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -221,13 +221,13 @@
             android:layout_marginBottom="180dp"
             android:paddingVertical="13.19dp"
             android:paddingHorizontal="18.8dp"
-            android:background="@drawable/communitymain_articlelist_background"
+            android:background="@drawable/community_main_articlelist_background"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/comminitymain_article_background"
+                android:background="@drawable/comminity_main_article_background"
                 android:paddingTop="9.51dp"
                 android:paddingBottom="7.56dp"
                 android:paddingEnd="8.77dp"
@@ -239,7 +239,7 @@
                     android:layout_height="13dp"
                     android:layout_marginEnd="14.65dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/communitymain_pink_number_1"/>
+                    android:src="@drawable/community_main_pink_number_1"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -250,7 +250,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/comminitymain_article_background"
+                android:background="@drawable/comminity_main_article_background"
                 android:paddingTop="9.51dp"
                 android:paddingBottom="7.56dp"
                 android:paddingEnd="8.77dp"
@@ -262,7 +262,7 @@
                     android:layout_height="13dp"
                     android:layout_marginEnd="14.65dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/communitymain_pink_number_2"/>
+                    android:src="@drawable/community_main_pink_number_2"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -273,7 +273,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/comminitymain_article_background"
+                android:background="@drawable/comminity_main_article_background"
                 android:paddingTop="9.51dp"
                 android:paddingBottom="7.56dp"
                 android:paddingEnd="8.77dp"
@@ -285,7 +285,7 @@
                     android:layout_height="13dp"
                     android:layout_marginEnd="14.65dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/communitymain_pink_number_3"/>
+                    android:src="@drawable/community_main_pink_number_3"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
