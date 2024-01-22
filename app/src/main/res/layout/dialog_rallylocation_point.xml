@@ -104,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:textColor="@color/white"
-        android:background="@color/main"
+        android:background="@drawable/dialog_ok"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="확인" />
 

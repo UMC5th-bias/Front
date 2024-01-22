@@ -141,7 +141,7 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:background="@color/light_gray"
+            android:background="@drawable/dialog_no"
             android:text="다음에 쓸게요" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -149,7 +149,7 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:background="@color/main"
+            android:background="@drawable/dialog_yes"
             android:text="바로 쓸게요"
             android:textColor="@color/white" />
 
