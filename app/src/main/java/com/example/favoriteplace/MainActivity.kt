@@ -33,7 +33,12 @@ class MainActivity : AppCompatActivity() {
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
-
+                R.id.communityFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, CommunityMainFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
 
 
 

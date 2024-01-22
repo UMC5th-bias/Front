@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="15dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="8.5dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_black_left_arrow"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19.75dp"
+            android:text="회원가입"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="35dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="63.29dp">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="16.46dp"
+                    android:layout_height="16.46dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/signup_progress_pink"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="11.91sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3.97dp">
+                <ImageView
+                    android:layout_width="16.46dp"
+                    android:layout_height="16.46dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/signup_progress_pink"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:textSize="11.91sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3.97dp">
+                <ImageView
+                    android:layout_width="16.46dp"
+                    android:layout_height="16.46dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/signup_progress_gray"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textSize="11.91sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3.97dp">
+                <ImageView
+                    android:layout_width="16.46dp"
+                    android:layout_height="16.46dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/signup_progress_gray"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:textSize="11.91sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31.47dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="6sp"
+            android:textColor="@color/black"
+            android:text="이메일을 입력해주세요."/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="이메일 주소를 입력해주세요."
+            android:background="@drawable/signup_edittext_background"
+            android:layout_marginTop="62.66dp"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="15dp"
+            android:drawableEnd="@drawable/signup_error_icon"
+            android:textColor="@color/black"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16.19dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/main"
+                android:textSize="11sp"
+                android:text="올바른 이메일 형식이 아닙니다."/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_marginTop="78.14dp"
+                android:background="@drawable/signup_confirmbutton_background_darkgray"
+                android:text="인증코드 받기"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
