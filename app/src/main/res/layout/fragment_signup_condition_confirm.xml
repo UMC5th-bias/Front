@@ -236,11 +236,12 @@
                 android:text="(선택)"/>
         </LinearLayout>
 
-        <Button
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:gravity="center"
             android:layout_marginTop="78.14dp"
-            android:background="@drawable/signup_confirmbutton_background"
+            android:background="@drawable/signup_confirmbutton_background_darkgray"
             android:text="다음"
             android:textSize="20sp"
             android:textColor="@color/white"
