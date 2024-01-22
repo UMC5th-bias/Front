@@ -2,9 +2,6 @@ package com.example.favoriteplace
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
-import androidx.collection.arraySetOf
 import com.example.favoriteplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.myFragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, ExampleFragment())
+                        .replace(R.id.main_frameLayout, CscFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
