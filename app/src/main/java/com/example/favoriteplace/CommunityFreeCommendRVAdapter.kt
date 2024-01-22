@@ -3,12 +3,12 @@ package com.example.favoriteplace
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.favoriteplace.databinding.ItemCommunityFreeCommendBinding
+import com.example.favoriteplace.databinding.ItemCommunityCommendBinding
 import com.example.favoriteplace.databinding.ItemCommunityFreeLatelyBinding
 
 class CommunityFreeCommendRVAdapter (private val commendList: ArrayList<FreeCommend>):RecyclerView.Adapter<CommunityFreeCommendRVAdapter.ViewHolder>() {
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemCommunityFreeCommendBinding=ItemCommunityFreeCommendBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
+        val binding: ItemCommunityCommendBinding=ItemCommunityCommendBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
 
         return ViewHolder(binding)
     }
@@ -19,7 +19,7 @@ class CommunityFreeCommendRVAdapter (private val commendList: ArrayList<FreeComm
         holder.bind(commendList[position])
     }
 
-    inner class ViewHolder(val binding: ItemCommunityFreeCommendBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(val binding: ItemCommunityCommendBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(commend: FreeCommend){
             binding.itemCommunityFreeCommendDayTv.text=commend.day
             binding.itemCommunityFreeCommendTimeTv.text=commend.commendTime

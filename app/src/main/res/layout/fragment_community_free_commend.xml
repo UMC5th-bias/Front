@@ -32,7 +32,7 @@
                     android:id="@+id/community_free_commend_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_community_free_commend"
+                    tools:listitem="@layout/item_community_commend"
                     android:layout_gravity="center_horizontal"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteplace.databinding.FragmentCommunityFreeCommendBinding
-import com.example.favoriteplace.databinding.ItemCommunityFreeCommendBinding
+import com.example.favoriteplace.databinding.ItemCommunityCommendBinding
 
 class CommunityFreeCommendFragment : Fragment() {
 
