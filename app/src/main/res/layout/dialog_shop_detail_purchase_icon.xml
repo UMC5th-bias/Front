@@ -185,7 +185,8 @@
             android:layout_height="45dp"
             android:layout_weight="1"
             android:background="@drawable/dialog_no_button_round"
-            android:text="조금 더 둘러볼게요!" />
+            android:text="조금 더 둘러볼게요!"
+            android:textColor="@color/dark_gray"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/dialog_shop_detail_purchase_yes_btn"
