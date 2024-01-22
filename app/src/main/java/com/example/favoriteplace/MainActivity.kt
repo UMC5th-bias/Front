@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 //나중에 CommunityHome 클래스 작성하면 CommunityFreeFragmentFragment()를 해당 클래스 이름으로 변경.
                 R.id.communityFragment->{
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, CommunityFreeFragment())
+                        .replace(R.id.main_frameLayout, CommunityRallyFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
