@@ -121,7 +121,7 @@
                         android:id="@+id/community_free_tb"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:tabSelectedTextColor="@color/pink"
+                        app:tabSelectedTextColor="@color/main"
                         app:tabIndicatorFullWidth="false"
                         app:tabRippleColor="#00ff0000"
                         app:layout_constraintTop_toBottomOf="@id/community_free_tv"

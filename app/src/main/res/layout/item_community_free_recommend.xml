@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:text="58"
         android:textSize="10sp"
-        android:textColor="@color/pink"
+        android:textColor="@color/main"
         app:layout_constraintTop_toTopOf="@id/item_community_free_recommend_eye_iv"
         app:layout_constraintStart_toEndOf="@id/item_community_free_recommend_like_iv"
         android:layout_marginStart="4dp"

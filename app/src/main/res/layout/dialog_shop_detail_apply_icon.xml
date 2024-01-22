@@ -103,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="구입한 아이템은 설정에서 확인 가능해요."
-        android:textColor="@color/pink"
+        android:textColor="@color/main"
         app:layout_constraintTop_toBottomOf="@id/dialog_shop_detail_apply_icon_finish_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
