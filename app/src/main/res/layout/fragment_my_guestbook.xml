@@ -187,7 +187,7 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/my_guestbook_profile_civ"
-                        android:layout_width="70dp"
+                        android:layout_width="80dp"
                         android:layout_height="70dp"
                         app:civ_border_width="1dp"
                         app:civ_border_overlay="true"
@@ -195,20 +195,19 @@
                         app:civ_border_color="@color/gray"/>
 
 
-                    <!--아이콘 크기 통일 시 변경하기-->
                     <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="80dp"
+                        android:layout_height="70dp"
                         android:orientation="horizontal"
                         android:elevation="3dp"
-                        android:layout_gravity="bottom|right">
+                        android:layout_gravity="center">
 
                         <ImageView
                             android:id="@+id/my_guestbook_icon_civ"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="80dp"
+                            android:layout_height="70dp"
                             android:scaleType="fitXY"
-                            app:srcCompat="@drawable/membericon" />
+                            app:srcCompat="@drawable/ic_shop2" />
 
                     </LinearLayout>
 
@@ -263,18 +262,13 @@
 
             <ImageView
                 android:id="@+id/my_guestbook_menu_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
+                android:layout_marginEnd="15dp"
                 android:src="@drawable/ic_cricle_more"/>
 
-            <Spinner
-                android:id="@+id/my_guestbook_menu_sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"/>
+
 
         </LinearLayout>
 

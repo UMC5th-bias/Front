@@ -92,17 +92,17 @@
 
                                 <!--아이콘 크기 통일 시 변경하기-->
                                 <LinearLayout
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
+                                    android:layout_width="110dp"
+                                    android:layout_height="110dp"
                                     android:orientation="horizontal"
                                     android:elevation="3dp"
-                                    android:layout_gravity="bottom|right">
+                                    android:layout_gravity="center">
 
                                     <ImageView
                                         android:id="@+id/my_icon_iv"
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        app:srcCompat="@drawable/membericon" />
+                                        android:layout_width="110dp"
+                                        android:layout_height="110dp"
+                                        app:srcCompat="@drawable/ic_shop2" />
 
                                 </LinearLayout>
 

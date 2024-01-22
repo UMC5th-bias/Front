@@ -37,6 +37,7 @@
         android:gravity="center"
         android:layout_marginTop="30dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/dialog_ok_btn"
         app:layout_constraintTop_toBottomOf="@+id/dialog_point_title_tv">
 
 
@@ -83,11 +84,17 @@
                 android:textColor="@color/black" />
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_point"/>
-
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_point"/>
+        </LinearLayout>
     </LinearLayout>
 
 
