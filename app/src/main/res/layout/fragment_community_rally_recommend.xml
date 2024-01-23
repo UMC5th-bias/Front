@@ -35,7 +35,7 @@
                     tools:listitem="@layout/item_community_rally_lately_recommend"
                     android:layout_gravity="center_horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </ScrollView>
         </LinearLayout>
