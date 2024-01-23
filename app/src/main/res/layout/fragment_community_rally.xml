@@ -126,6 +126,11 @@
                         app:tabSelectedTextColor="@color/main"
                         app:tabIndicatorFullWidth="false"
                         app:tabRippleColor="#00ff0000"
+                        app:tabIndicator="@null"
+                        app:tabMaxWidth="380dp"
+                        app:tabMinWidth="50dp"
+                        app:tabMode="scrollable"
+                        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
                         app:layout_constraintTop_toBottomOf="@id/community_rally_tv"
                         app:layout_constraintStart_toStartOf="@id/community_rally_tv"/>
 
