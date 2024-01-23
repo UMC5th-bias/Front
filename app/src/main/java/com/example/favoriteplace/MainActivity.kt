@@ -48,7 +48,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.shopFragment -> {
-
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, ShopMainFragment())
+                        .commitAllowingStateLoss()
                 }
 
                 R.id.myFragment -> {
