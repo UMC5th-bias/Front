@@ -1,10 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="false">
-        <shape android:dither="true" android:shape="rectangle" android:useLevel="false" android:visible="true">
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="30dp" />
             <solid android:color="@color/black" />
-            <corners android:radius="50dp" />
-            <size android:width="200dp" android:height="40dp" /> <!-- `thumb`의 크기를 명시적으로 지정합니다. -->
+            <size android:height="36dp" android:width="181dp" />
+        </shape>
+    </item>
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="30dp" />
+            <solid android:color="@color/black" />
+            <size android:height="36dp" android:width="181dp" />
         </shape>
     </item>
 </selector>

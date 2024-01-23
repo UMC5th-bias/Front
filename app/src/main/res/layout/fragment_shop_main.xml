@@ -63,7 +63,9 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <RelativeLayout
+            android:id="@+id/shopMain_switch_rl"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_centerHorizontal="true"
@@ -71,20 +73,20 @@
             android:layout_marginVertical="20dp"
             android:background="@drawable/bg_switch"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/shopMain_notLogin_cl"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shopMain_notLogin_cl">
 
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchOnOff"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:id="@+id/shopMain_switchOnOff_sc"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:checked="true"
                 android:textColor="@color/white"
                 android:thumb="@drawable/thumb_selector"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
                 app:track="@drawable/track_selector" />
 
             <LinearLayout
@@ -94,7 +96,7 @@
                 android:weightSum="2">
 
                 <TextView
-                    android:id="@+id/tvSwitchYes"
+                    android:id="@+id/shopMain_switchLimited_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -102,25 +104,69 @@
                     android:gravity="center"
                     android:text="한정판매"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvSwitchNo"
+                    android:id="@+id/shopMain_switchRegular_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="상시판매"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
 
         </RelativeLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/shopMain_Banner_vp2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shopMain_switch_rl" />
+
+
+        <!-- 한정판매 컨테이너 -->
+        <FrameLayout
+            android:id="@+id/limitedSaleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shopMain_Banner_vp2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="한정판매" />
+            <!-- 한정판매 관련 뷰들 -->
+        </FrameLayout>
+
+        <!-- 상시판매 컨테이너 -->
+        <FrameLayout
+            android:id="@+id/regularSaleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shopMain_Banner_vp2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="상시판매" />
+
+
+            <!-- 상시판매 관련 뷰들 -->
+        </FrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
