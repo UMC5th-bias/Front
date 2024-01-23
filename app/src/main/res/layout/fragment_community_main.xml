@@ -215,6 +215,7 @@
 
 
         <ImageView
+            android:id="@+id/community_free_iv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -223,6 +224,7 @@
             android:src="@drawable/community_main_free_board"/>
 
         <ImageView
+            android:id="@+id/community_rally_iv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
