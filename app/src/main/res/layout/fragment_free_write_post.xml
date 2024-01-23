@@ -102,7 +102,7 @@
         android:id="@+id/writePost_layoutLine_vw"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/strok_1"
+        android:background="@color/gray"
         app:layout_constraintBottom_toTopOf="@id/writePost_registerLayout_cl"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -111,7 +111,7 @@
         android:id="@+id/writePost_registerLayout_cl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_1"
+        android:background="@color/light_gray"
         android:paddingTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
