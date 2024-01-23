@@ -1,6 +1,5 @@
 package com.example.favoriteplace
 
-import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,12 +10,13 @@ import com.example.favoriteplace.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//        setContentView(R.layout.fragment_free_write_post)
         initBottomNavigation()
     }
 
@@ -36,6 +36,11 @@ class MainActivity : AppCompatActivity() {
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
+                R.id.rallyhomeFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, RallyHomeFragment())
+                        .commitAllowingStateLoss()
+                }
                 R.id.communityFragment -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, CommunityMainFragment())
@@ -43,13 +48,18 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
+                R.id.shopFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, ShopMainFragment())
+                        .commitAllowingStateLoss()
+                }
 
+                R.id.myFragment -> {
 
+                }
 
             }
             false
         }
     }
-
-
 }

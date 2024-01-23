@@ -73,7 +73,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:hint="검색어를 입력해주세요"
-                            android:textColorHint="@color/strok_1"
+                            android:textColorHint="@color/gray"
                             android:inputType="text"
                             android:textSize="16sp"
                             android:background="@null"
@@ -103,14 +103,6 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="20dp"/>
 
-                    <ImageView
-                        android:id="@+id/rallyCategory_sort_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/lately_sort"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/rallyCategory_animation_tv"/>
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rallyCategory_animation_rv"
                         android:layout_width="match_parent"
@@ -118,7 +110,7 @@
                         tools:listitem="@layout/item_animation"
                         android:layout_gravity="center_horizontal"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rallyCategory_sort_iv"
+                        app:layout_constraintTop_toBottomOf="@id/rallyCategory_animation_tv"
                         android:layout_marginTop="20dp"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
