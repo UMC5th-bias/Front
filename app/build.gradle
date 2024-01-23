@@ -6,8 +6,12 @@ plugins {
 android {
     namespace 'com.example.favoriteplace'
     compileSdk 34
-    //뷰바인딩 추가
-    viewBinding {
+
+//    buildFeatures{
+//        dataBinding = true
+//    }
+
+    viewBinding{
         enabled true
     }
 
