@@ -121,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:src="@drawable/ic_camera"
+            android:src="@drawable/ic_post_camera"
             app:layout_constraintBottom_toTopOf="@id/writePost_register_btn"
             app:layout_constraintStart_toStartOf="parent" />
 
