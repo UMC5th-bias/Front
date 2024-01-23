@@ -2,6 +2,9 @@ package com.example.favoriteplace
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import androidx.collection.arraySetOf
 import com.example.favoriteplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -33,18 +36,16 @@ class MainActivity : AppCompatActivity() {
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
-
                 R.id.rallyhomeFragment -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, RallyHomeFragment())
                         .commitAllowingStateLoss()
                 }
-
                 R.id.communityFragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, FreeWritePostFragment())
+                        .replace(R.id.main_frameLayout, CommunityMainFragment())
                         .commitAllowingStateLoss()
-
+                    return@setOnItemSelectedListener true
                 }
 
                 R.id.shopFragment -> {
