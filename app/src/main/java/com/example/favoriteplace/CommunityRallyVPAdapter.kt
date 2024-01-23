@@ -8,9 +8,10 @@ class CommunityRallyVPAdapter(fragment: Fragment):FragmentStateAdapter(fragment)
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
+            0->CommunityRallyLatelyFragment()
+            1->CommunityRallyRecommendFragment()
             2->CommunityRallyMyFragment()
-            3->CommunityRallyCommendFragment()
-            else->CommunityFreeLatelyFragment()
+            else->CommunityRallyCommendFragment()
         }
     }
 

@@ -4,6 +4,19 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <Button
+        android:id="@+id/community_free_write_bn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="+ 글쓰기"
+        android:textStyle="bold"
+        app:backgroundTint="@color/black"
+        android:background="@drawable/community_free_button_border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="15dp"/>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/community_free_nsv"
         android:layout_width="match_parent"
