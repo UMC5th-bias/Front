@@ -69,8 +69,10 @@ class ShopMainFragment : Fragment() {
 
         // 초기 상태 설정
         binding.shopMainSwitchOnOffSc.isChecked = false
-        binding.limitedSaleContainer.visibility = View.VISIBLE
-        binding.regularSaleContainer.visibility = View.GONE
+        binding.limitedSaleFrameContainerCl.visibility = View.VISIBLE
+        binding.regularSaleFrameContainerCl.visibility = View.GONE
+        binding.limitedSaleIconContainerCl.visibility = View.VISIBLE
+        binding.regularSaleIconContainerCl.visibility = View.GONE
         binding.shopMainSwitchLimitedTv.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
@@ -88,8 +90,11 @@ class ShopMainFragment : Fragment() {
         binding.shopMainSwitchOnOffSc.setOnCheckedChangeListener { _, isChecked ->
             Handler(Looper.getMainLooper()).postDelayed({
                 if (isChecked) {
-                    binding.limitedSaleContainer.visibility = View.GONE
-                    binding.regularSaleContainer.visibility = View.VISIBLE
+                    binding.limitedSaleFrameContainerCl.visibility = View.GONE
+                    binding.regularSaleFrameContainerCl.visibility = View.VISIBLE
+                    binding.limitedSaleIconContainerCl.visibility = View.GONE
+                    binding.regularSaleIconContainerCl.visibility = View.VISIBLE
+
                     binding.shopMainSwitchLimitedTv.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
@@ -103,8 +108,11 @@ class ShopMainFragment : Fragment() {
                         )
                     )
                 } else {
-                    binding.limitedSaleContainer.visibility = View.VISIBLE
-                    binding.regularSaleContainer.visibility = View.GONE
+                    binding.limitedSaleFrameContainerCl.visibility = View.VISIBLE
+                    binding.regularSaleFrameContainerCl.visibility = View.GONE
+                    binding.limitedSaleIconContainerCl.visibility = View.VISIBLE
+                    binding.regularSaleIconContainerCl.visibility = View.GONE
+
                     binding.shopMainSwitchLimitedTv.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
