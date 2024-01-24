@@ -14,7 +14,7 @@
         android:text="필터"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:id="@+id/bottom_sheet_filter_tv"
+        android:id="@+id/userFilter_bottom_sheet_filter_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginBottom="16dp"/>
@@ -22,7 +22,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bottom_sheet_cancel_iv"
+        android:id="@+id/userFilter_bottom_sheet_cancel_iv"
         android:src="@drawable/ic_cancel"
         android:layout_margin="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,37 +30,30 @@
 "
 
     <RadioGroup
-        android:id="@+id/sort_options_rg"
+        android:id="@+id/userFilter_options_rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_filter_tv"
+        app:layout_constraintTop_toBottomOf="@id/userFilter_bottom_sheet_filter_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <RadioButton
             android:buttonTint="@color/pink"
-            android:id="@+id/sort_by_title_rb"
+            android:id="@+id/userFilter_block_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="제목" />
+            android:text="차단하기" />
 
         <RadioButton
             android:buttonTint="@color/pink"
-            android:id="@+id/sort_by_content_rb"
+            android:id="@+id/userFilter_complaint_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="내용" />
-
-        <RadioButton
-            android:buttonTint="@color/pink"
-            android:id="@+id/sort_by_nickname_rb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="닉네임" />
+            android:text="신고하기" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
