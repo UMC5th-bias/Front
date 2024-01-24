@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.example.favoriteplace.databinding.FragmentCommunityFreeBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -33,6 +34,11 @@ class CommunityFreeFragment : Fragment() {
         binding.communityFreeWriteBn.setOnClickListener {
             val intent = Intent(activity, FreeWritePostActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.communityFreeSortIb.setOnClickListener {
+            val sortBottomSheet = SortBottomSheetFragment()
+            sortBottomSheet.show(parentFragmentManager, sortBottomSheet.tag)
         }
 
         return binding.root
