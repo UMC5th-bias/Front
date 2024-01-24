@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class CommunityFreeFragment : Fragment() {
 
     lateinit var binding: FragmentCommunityFreeBinding
+
     private val information= arrayListOf("최신 글","추천 많은 글","내가 작성한 글","내 댓글")
 
     override fun onCreateView(
@@ -28,6 +30,12 @@ class CommunityFreeFragment : Fragment() {
             tab.text=information[position]
         }.attach()
 
+        binding.communityFreeWriteBn.setOnClickListener {
+            val intent = Intent(activity, FreeWritePostActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
     }
+
 }
