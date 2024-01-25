@@ -127,10 +127,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/checkbox_1"
                 android:layout_marginEnd="15.45dp"
                 android:layout_width="22.32dp"
                 android:layout_height="22.32dp"
-                android:button="@drawable/signup_checkbox"/>
+                android:button="@android:color/transparent"
+                android:background="@drawable/signup_checkbox"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,10 +153,12 @@
             android:layout_marginTop="18.08dp"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/checkbox_2"
                 android:layout_marginEnd="15.45dp"
                 android:layout_width="22.32dp"
                 android:layout_height="22.32dp"
-                android:button="@drawable/signup_checkbox"/>
+                android:button="@android:color/transparent"
+                android:background="@drawable/signup_checkbox"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,10 +180,12 @@
             android:layout_marginTop="18.08dp"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/checkbox_3"
                 android:layout_marginEnd="15.45dp"
                 android:layout_width="22.32dp"
                 android:layout_height="22.32dp"
-                android:button="@drawable/signup_checkbox"/>
+                android:button="@android:color/transparent"
+                android:background="@drawable/signup_checkbox"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -201,10 +207,12 @@
             android:layout_marginTop="18.08dp"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/checkbox_4"
                 android:layout_marginEnd="15.45dp"
                 android:layout_width="22.32dp"
                 android:layout_height="22.32dp"
-                android:button="@drawable/signup_checkbox"/>
+                android:button="@android:color/transparent"
+                android:background="@drawable/signup_checkbox"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
