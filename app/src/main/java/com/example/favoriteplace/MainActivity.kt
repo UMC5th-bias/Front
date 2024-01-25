@@ -2,9 +2,6 @@ package com.example.favoriteplace
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
-import androidx.collection.arraySetOf
 import com.example.favoriteplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -13,10 +10,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
         setContentView(binding.root)
 
-//        setContentView(R.layout.fragment_free_write_post)
+
         initBottomNavigation()
     }
 
@@ -55,7 +52,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.myFragment -> {
-
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, MyProfileCardFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
 
             }

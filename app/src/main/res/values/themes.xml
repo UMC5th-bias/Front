@@ -15,5 +15,7 @@
 
         <!--titlebar 없애기-->
         <item name="windowNoTitle">true</item>
+
     </style>
+
 </resources>
