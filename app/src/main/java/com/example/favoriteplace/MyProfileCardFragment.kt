@@ -24,12 +24,6 @@ class MyProfileCardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyProfileCardBinding.inflate(inflater, container, false)
-
-
-
-
-
-
         return binding.root
     }
 
@@ -46,13 +40,13 @@ class MyProfileCardFragment : Fragment() {
         badge()
 
 
-        binding.shopMainSwitchLimitedTv.setTextColor(
+        binding.myProfileCardSwitchLimitedTv.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.white
             )
         )
-        binding.shopMainSwitchRegularTv.setTextColor(
+        binding.myProfileCardSwitchRegularTv.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.black
@@ -65,13 +59,13 @@ class MyProfileCardFragment : Fragment() {
                 if (isChecked) {
                     binding.limitedSaleContainer.visibility = View.GONE
                     binding.regularSaleContainer.visibility = View.VISIBLE
-                    binding.shopMainSwitchLimitedTv.setTextColor(
+                    binding.myProfileCardSwitchLimitedTv.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
                             R.color.black
                         )
                     )
-                    binding.shopMainSwitchRegularTv.setTextColor(
+                    binding.myProfileCardSwitchRegularTv.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
                             R.color.white
@@ -82,13 +76,13 @@ class MyProfileCardFragment : Fragment() {
                 } else {
                     binding.limitedSaleContainer.visibility = View.VISIBLE
                     binding.regularSaleContainer.visibility = View.GONE
-                    binding.shopMainSwitchLimitedTv.setTextColor(
+                    binding.myProfileCardSwitchLimitedTv.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
                             R.color.white
                         )
                     )
-                    binding.shopMainSwitchRegularTv.setTextColor(
+                    binding.myProfileCardSwitchRegularTv.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
                             R.color.black
@@ -116,12 +110,12 @@ class MyProfileCardFragment : Fragment() {
         }
 
         val limitedIconRVAdapter=ShopBannerNewLimitedIconRVAdapter(limitedIconData)
-        binding.shopBannerNewIconLimitedRv.adapter=limitedIconRVAdapter
-        binding.shopBannerNewIconLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.myProfileCardIconLimitedRv.adapter=limitedIconRVAdapter
+        binding.myProfileCardIconLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         val unlimitedIconRVAdapter=ShopBannerNewUnlimitedIconRVAdapter(unlimitedIconData)
-        binding.shopBannerNewIconUnlimitedRv.adapter=unlimitedIconRVAdapter
-        binding.shopBannerNewIconUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.myProfileCardIconUnlimitedRv.adapter=unlimitedIconRVAdapter
+        binding.myProfileCardIconUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
 
@@ -138,12 +132,12 @@ class MyProfileCardFragment : Fragment() {
             add(UnlimitedFame(R.drawable.unlimited_fame_3, "100000P"))
         }
         val limitedFameRVAdapter=ShopBannerNewLimitedFameRVAdapter(limitedFameData)
-        binding.shopBannerNewFameLimitedRv.adapter=limitedFameRVAdapter
-        binding.shopBannerNewFameLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.myProfileCardFameLimitedRv.adapter=limitedFameRVAdapter
+        binding.myProfileCardFameLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         val unlimitedFameRVAdapter=ShopBannerNewUnlimitedFameRVAdapter(unlimitedFameData)
-        binding.shopBannerNewFameUnlimitedRv.adapter=unlimitedFameRVAdapter
-        binding.shopBannerNewFameUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.myProfileCardFameUnlimitedRv.adapter=unlimitedFameRVAdapter
+        binding.myProfileCardFameUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
 
