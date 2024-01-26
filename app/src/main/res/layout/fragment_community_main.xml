@@ -218,12 +218,18 @@
             android:id="@+id/community_free_iv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:adjustViewBounds="true"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="50dp"
             android:src="@drawable/community_main_free_board"/>
 
         <ImageView
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/community_rally_iv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

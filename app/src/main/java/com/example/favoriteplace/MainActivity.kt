@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.collection.arraySetOf
+import androidx.fragment.app.DialogFragment
 import com.example.favoriteplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.communityFragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, CommunityMainFragment())
+                        .replace(R.id.main_frameLayout, CommunityRallyFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
@@ -62,4 +63,5 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
+
 }

@@ -96,7 +96,6 @@ class CommunityMainFragment: Fragment() {
             }
         }
 
-
         return binding.root
     }
 
