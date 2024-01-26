@@ -36,12 +36,22 @@ class CommunityFreeFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.communityFreeSortIb.setOnClickListener {
-            val sortBottomSheet = SortBottomSheetFragment()
-            sortBottomSheet.show(parentFragmentManager, sortBottomSheet.tag)
-        }
 
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.communityFreeSortIb.setOnClickListener {
+            modalWithRoundCorner()
+        }
+    }
+
+    private fun modalWithRoundCorner() {
+        val modal = SortBottomSheetFragment().apply {
+            setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
+        }
+        modal.show(childFragmentManager, SortBottomSheetFragment.TAG)
+    }
 }

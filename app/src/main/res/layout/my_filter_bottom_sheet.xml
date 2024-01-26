@@ -42,6 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <RadioButton
+            android:padding="10dp"
             android:buttonTint="@color/pink"
             android:id="@+id/myFilter_modify_rb"
             android:layout_width="match_parent"
@@ -49,6 +50,7 @@
             android:text="수정하기" />
 
         <RadioButton
+            android:padding="10dp"
             android:buttonTint="@color/pink"
             android:id="@+id/myFilter_delete_rb"
             android:layout_width="match_parent"

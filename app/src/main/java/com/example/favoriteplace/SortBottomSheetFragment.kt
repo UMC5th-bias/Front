@@ -41,5 +41,9 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    companion object {
+        const val TAG = "SortBottomModalSheet"
+    }
+
 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.collection.arraySetOf
+import androidx.fragment.app.DialogFragment
 import com.example.favoriteplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -62,4 +63,5 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
+
 }
