@@ -34,8 +34,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp">
 
                     <TextView
                         android:id="@+id/rallyCategory_rally_tv"
@@ -47,8 +47,7 @@
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="15dp"/>
 
                     <ImageView
                         android:id="@+id/rallyCategory_notice_iv"
@@ -57,38 +56,28 @@
                         android:src="@drawable/notice"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/rallyCategory_rally_tv"
-                        android:layout_marginTop="-5dp"/>
-
-                    <RelativeLayout
-                        android:id="@+id/rallyCategory_search_bar_relative"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rallyCategory_rally_tv"
-                        android:layout_marginTop="30dp"
-                        android:background="@drawable/edit_text_border">
+                        app:layout_constraintBottom_toBottomOf="@id/rallyCategory_rally_tv" />
+>
 
                         <EditText
                             android:id="@+id/rallyCategory_search_bar_et"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="45dp"
                             android:hint="검색어를 입력해주세요"
                             android:textColorHint="@color/gray"
                             android:inputType="text"
-                            android:textSize="16sp"
-                            android:background="@null"
-                            android:layout_marginStart="10dp"/>
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:paddingHorizontal="20dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/rallyCategory_rally_tv"
+                            android:layout_marginTop="30dp"
+                            android:drawableEnd="@drawable/search_icon"
+                            android:paddingStart="30dp"
+                            android:paddingEnd="8dp"
+                            android:background="@drawable/edit_text_border"/>
 
-                    </RelativeLayout>
-
-                    <ImageView
-                        android:id="@+id/rallyCategory_search_icon_bt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:src="@drawable/search_bar_icon"
-                        app:layout_constraintEnd_toEndOf="@id/rallyCategory_search_bar_relative"
-                        app:layout_constraintTop_toTopOf="@id/rallyCategory_search_bar_relative"
-                        android:layout_marginEnd="10dp"/>
 
                     <TextView
                         android:id="@+id/rallyCategory_animation_tv"
@@ -99,7 +88,7 @@
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rallyCategory_search_bar_relative"
+                        app:layout_constraintTop_toBottomOf="@id/rallyCategory_search_bar_et"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="20dp"/>
 
