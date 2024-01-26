@@ -26,6 +26,8 @@ class RallyHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        updateLoginStatusView()
+
         binding.interestedRallyCl.setOnClickListener {
             showToast("로그인 후 이용 가능한 메뉴입니다.")
         }
@@ -33,6 +35,22 @@ class RallyHomeFragment : Fragment() {
         binding.certificationBoardCl.setOnClickListener {
             showToast("로그인 후 이용 가능한 메뉴입니다.")
         }
+    }
+
+    private fun updateLoginStatusView() {
+        if (isLoggedIn()) {
+            binding.rallyHomeYesLoginCl.visibility = View.VISIBLE
+            binding.rallyHomeNotLoginCl.visibility = View.GONE
+        } else {
+            binding.rallyHomeYesLoginCl.visibility = View.GONE
+            binding.rallyHomeNotLoginCl.visibility = View.VISIBLE
+        }
+    }
+
+    private fun isLoggedIn(): Boolean {
+        // 로그인 상태 확인 로직 구현
+        // 예를 들어, SharedPreferences, 사용자 세션 확인 등
+        return true // 임시로 true 반환
     }
 
     private fun showToast(message: String) {

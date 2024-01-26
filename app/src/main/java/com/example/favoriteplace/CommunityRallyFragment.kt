@@ -28,6 +28,11 @@ class CommunityRallyFragment : Fragment() {
             tab.text=information[position]
         }.attach()
 
+        binding.communityRallySortIb.setOnClickListener {
+            val sortBottomSheet = SortBottomSheetFragment()
+            sortBottomSheet.show(parentFragmentManager, sortBottomSheet.tag)
+        }
+
         return binding.root
     }
 }

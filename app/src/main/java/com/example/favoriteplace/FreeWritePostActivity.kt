@@ -9,62 +9,55 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
-import androidx.fragment.app.Fragment
-import com.example.favoriteplace.databinding.FragmentFreeWritePostBinding
+import com.example.favoriteplace.databinding.ActivityFreeWritePostBinding
 
-class FreeWritePostFragment : Fragment() {
-    lateinit var binding: FragmentFreeWritePostBinding
+class FreeWritePostActivity : AppCompatActivity() {
+    lateinit var binding: ActivityFreeWritePostBinding
 
     private val REQUEST_CODE_GALLERY = 100
     private val REQUEST_IMAGE_CAPTURE = 1
     private val selectedImages = mutableListOf<Uri>()
     private val selectedBitmaps = mutableListOf<Bitmap>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentFreeWritePostBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityFreeWritePostBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.writePostGalleryIv.setOnClickListener {
             openGallery()
         }
 
         binding.writePostCameraIv.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED
             ) {
-                // 권한이 없다면, 권한 요청
                 ActivityCompat.requestPermissions(
-                    requireActivity(),
+                    this,
                     arrayOf(Manifest.permission.CAMERA),
                     REQUEST_IMAGE_CAPTURE
                 )
             } else {
-                // 권한이 있다면, 카메라 앱 시작
                 dispatchTakePictureIntent()
             }
+        }
+
+        binding.writePostArrowIv.setOnClickListener {
+            finish()
         }
     }
 
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
+            takePictureIntent.resolveActivity(this.packageManager)?.also {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
         }
@@ -72,17 +65,19 @@ class FreeWritePostFragment : Fragment() {
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<out String>,
+        permissions: Array<String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         when (requestCode) {
             REQUEST_IMAGE_CAPTURE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // 권한이 부여되면, 카메라 앱 시작
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 권한이 부여되었으면 카메라 앱 시작
                     dispatchTakePictureIntent()
                 }
-                return
             }
+            // 필요한 경우 다른 requestCode에 대한 처리 추가
         }
     }
 
@@ -125,7 +120,7 @@ class FreeWritePostFragment : Fragment() {
     private fun addImageToLayout(uri: Uri) {
         if (selectedImages.size >= 5) return // 이미 5개의 이미지가 선택된 경우 추가하지 않음
 
-        val frameLayout = FrameLayout(requireContext()).apply {
+        val frameLayout = FrameLayout(this).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -134,13 +129,13 @@ class FreeWritePostFragment : Fragment() {
             }
         }
 
-        val imageView = ImageView(requireContext()).apply {
+        val imageView = ImageView(this).apply {
             layoutParams = FrameLayout.LayoutParams(100, 100)
             scaleType = ImageView.ScaleType.CENTER_CROP
             setImageURI(uri)
         }
 
-        val deleteButton = ImageButton(requireContext()).apply {
+        val deleteButton = ImageButton(this).apply {
             layoutParams = FrameLayout.LayoutParams(
                 50, // 버튼 크기 조정
                 50
@@ -164,7 +159,7 @@ class FreeWritePostFragment : Fragment() {
     private fun addImageToLayout(bitmap: Bitmap) {
         if (selectedBitmaps.size >= 5) return // 이미 5개의 이미지가 선택된 경우 추가하지 않음
 
-        val frameLayout = FrameLayout(requireContext()).apply {
+        val frameLayout = FrameLayout(this).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -173,13 +168,13 @@ class FreeWritePostFragment : Fragment() {
             }
         }
 
-        val imageView = ImageView(requireContext()).apply {
+        val imageView = ImageView(this).apply {
             layoutParams = FrameLayout.LayoutParams(100, 100)
             scaleType = ImageView.ScaleType.CENTER_CROP
             setImageBitmap(bitmap) // Bitmap 설정
         }
 
-        val deleteButton = ImageButton(requireContext()).apply {
+        val deleteButton = ImageButton(this).apply {
             layoutParams = FrameLayout.LayoutParams(
                 50, // 버튼 크기 조정
                 50
