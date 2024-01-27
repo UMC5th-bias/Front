@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.myFragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, MyProfileCardFragment())
+                        .replace(R.id.main_frameLayout, BlockUserFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
