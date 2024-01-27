@@ -44,7 +44,7 @@
             android:id="@+id/userFilter_block_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/pink"
+            android:button="@drawable/bottomsheet_radiobutton"
             android:padding="10dp"
             android:text="차단하기" />
 
@@ -52,7 +52,7 @@
             android:id="@+id/userFilter_complaint_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/pink"
+            android:button="@drawable/bottomsheet_radiobutton"
             android:padding="10dp"
             android:text="신고하기" />
     </RadioGroup>

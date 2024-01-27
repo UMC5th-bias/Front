@@ -43,7 +43,7 @@
 
         <RadioButton
             android:padding="10dp"
-            android:buttonTint="@color/pink"
+            android:button="@drawable/bottomsheet_radiobutton"
             android:id="@+id/myFilter_modify_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
 
         <RadioButton
             android:padding="10dp"
-            android:buttonTint="@color/pink"
+            android:button="@drawable/bottomsheet_radiobutton"
             android:id="@+id/myFilter_delete_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
