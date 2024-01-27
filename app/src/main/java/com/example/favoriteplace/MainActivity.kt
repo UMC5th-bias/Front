@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, RallyHomeFragment())
                         .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
                 R.id.communityFragment -> {
                     supportFragmentManager.beginTransaction()
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, ShopMainFragment())
                         .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
 
                 R.id.myFragment -> {
