@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.communityFragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, CommunityRallyFragment())
+                        .replace(R.id.main_frameLayout, CommunityFreeFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }

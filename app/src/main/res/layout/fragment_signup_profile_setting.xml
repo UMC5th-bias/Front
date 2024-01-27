@@ -117,12 +117,14 @@
             android:lineSpacingExtra="6sp"
             android:textColor="@color/black"
             android:text="프로필을 설정해주세요."/>
-
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="53.13dp"
-            android:paddingBottom="28.84dp"
+            android:paddingBottom="10dp"
             android:layout_gravity="center">
             <ImageView
                 android:id="@+id/profile_background"
@@ -182,11 +184,12 @@
                 android:text="(0/10)"/>
         </RelativeLayout>
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:textSize="12sp"
+            android:layout_marginTop="10dp"
             android:text="한줄소개"
             android:textColor="@color/black"/>
         <RelativeLayout
@@ -216,7 +219,8 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="62dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/signup_confirmbutton_background_darkgray"
             android:text="다음 단계"
             android:textSize="20sp"

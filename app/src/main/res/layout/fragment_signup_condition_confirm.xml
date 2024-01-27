@@ -116,17 +116,23 @@
             android:textColor="@color/black"
             android:text="최애의 장소에 오신것을 \n환영합니다!"/>
 
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="164.66dp"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/checkbox_1"
                 android:layout_marginEnd="15.45dp"
                 android:layout_width="22.32dp"
                 android:layout_height="22.32dp"
-                android:button="@drawable/signup_checkbox"/>
+                android:button="@android:color/transparent"
+                android:background="@drawable/signup_checkbox"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -147,10 +153,12 @@
             android:layout_marginTop="18.08dp"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/checkbox_2"
                 android:layout_marginEnd="15.45dp"
                 android:layout_width="22.32dp"
                 android:layout_height="22.32dp"
-                android:button="@drawable/signup_checkbox"/>
+                android:button="@android:color/transparent"
+                android:background="@drawable/signup_checkbox"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -172,10 +180,12 @@
             android:layout_marginTop="18.08dp"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/checkbox_3"
                 android:layout_marginEnd="15.45dp"
                 android:layout_width="22.32dp"
                 android:layout_height="22.32dp"
-                android:button="@drawable/signup_checkbox"/>
+                android:button="@android:color/transparent"
+                android:background="@drawable/signup_checkbox"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -197,10 +207,12 @@
             android:layout_marginTop="18.08dp"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/checkbox_4"
                 android:layout_marginEnd="15.45dp"
                 android:layout_width="22.32dp"
                 android:layout_height="22.32dp"
-                android:button="@drawable/signup_checkbox"/>
+                android:button="@android:color/transparent"
+                android:background="@drawable/signup_checkbox"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -241,6 +253,7 @@
             android:layout_height="50dp"
             android:gravity="center"
             android:layout_marginTop="78.14dp"
+            android:layout_marginBottom="60dp"
             android:background="@drawable/signup_confirmbutton_background_darkgray"
             android:text="다음"
             android:textSize="20sp"
