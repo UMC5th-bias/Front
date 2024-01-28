@@ -14,6 +14,9 @@ import com.example.favoriteplace.databinding.FragmentShopMainBinding
 class ShopMainFragment : Fragment() {
     lateinit var binding: FragmentShopMainBinding
 
+    private lateinit var yesLoginView: View
+    private lateinit var notLoginView: View
+
     private val handler = Handler(Looper.getMainLooper())
     private val imageResIds = listOf(R.drawable.shop_banner1, R.drawable.shop_banner2)
     private lateinit var slideRunnable: Runnable
@@ -25,6 +28,13 @@ class ShopMainFragment : Fragment() {
     ): View? {
         binding = FragmentShopMainBinding.inflate(inflater, container, false)
 
+        // 뷰 초기화
+        yesLoginView = binding.shopMainYesLoginCl
+        notLoginView = binding.shopMainNotLoginCl
+
+        // 로그인 상태에 따라 뷰 업데이트
+        updateLoginStatusView()
+
         slideRunnable = Runnable {
             if (isAdded) {
                 binding.shopMainBannerVp2.currentItem = (binding.shopMainBannerVp2.currentItem + 1) % imageResIds.size
@@ -33,6 +43,23 @@ class ShopMainFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun updateLoginStatusView() {
+        if (isLoggedIn()) {
+            yesLoginView.visibility = View.VISIBLE
+            notLoginView.visibility = View.GONE
+        } else {
+            yesLoginView.visibility = View.GONE
+            notLoginView.visibility = View.VISIBLE
+        }
+    }
+
+    // 사용자의 로그인 상태를 확인하는 메소드
+    private fun isLoggedIn(): Boolean {
+        // 로그인 상태 확인 로직 구현
+        // 예를 들어, SharedPreferences, 데이터베이스 조회 등
+        return true // 임시로 false 반환
     }
 
     private fun setupBannerViewPager() {
@@ -69,8 +96,10 @@ class ShopMainFragment : Fragment() {
 
         // 초기 상태 설정
         binding.shopMainSwitchOnOffSc.isChecked = false
-        binding.limitedSaleContainer.visibility = View.VISIBLE
-        binding.regularSaleContainer.visibility = View.GONE
+        binding.limitedSaleFrameContainerCl.visibility = View.VISIBLE
+        binding.regularSaleFrameContainerCl.visibility = View.GONE
+        binding.limitedSaleIconContainerCl.visibility = View.VISIBLE
+        binding.regularSaleIconContainerCl.visibility = View.GONE
         binding.shopMainSwitchLimitedTv.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
@@ -88,8 +117,11 @@ class ShopMainFragment : Fragment() {
         binding.shopMainSwitchOnOffSc.setOnCheckedChangeListener { _, isChecked ->
             Handler(Looper.getMainLooper()).postDelayed({
                 if (isChecked) {
-                    binding.limitedSaleContainer.visibility = View.GONE
-                    binding.regularSaleContainer.visibility = View.VISIBLE
+                    binding.limitedSaleFrameContainerCl.visibility = View.GONE
+                    binding.regularSaleFrameContainerCl.visibility = View.VISIBLE
+                    binding.limitedSaleIconContainerCl.visibility = View.GONE
+                    binding.regularSaleIconContainerCl.visibility = View.VISIBLE
+
                     binding.shopMainSwitchLimitedTv.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
@@ -103,8 +135,11 @@ class ShopMainFragment : Fragment() {
                         )
                     )
                 } else {
-                    binding.limitedSaleContainer.visibility = View.VISIBLE
-                    binding.regularSaleContainer.visibility = View.GONE
+                    binding.limitedSaleFrameContainerCl.visibility = View.VISIBLE
+                    binding.regularSaleFrameContainerCl.visibility = View.GONE
+                    binding.limitedSaleIconContainerCl.visibility = View.VISIBLE
+                    binding.regularSaleIconContainerCl.visibility = View.GONE
+
                     binding.shopMainSwitchLimitedTv.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),

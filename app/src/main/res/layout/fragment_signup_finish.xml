@@ -100,14 +100,17 @@
         </FrameLayout>
 
 
-
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
 
         <TextView
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="188.28dp"
+            android:layout_marginBottom="60dp"
             android:background="@drawable/signup_confirmbutton_background_pink"
             android:text="시작하기"
             android:textSize="20sp"

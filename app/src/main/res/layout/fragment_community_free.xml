@@ -46,8 +46,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp">
 
                     <TextView
                         android:id="@+id/community_tv"
@@ -59,8 +59,7 @@
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="15dp"/>
 
                     <ImageButton
                         android:id="@+id/community_free_sort_ib"
@@ -86,36 +85,25 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="-8dp"/>
 
-                    <RelativeLayout
-                        android:id="@+id/community_free_search_bar_relative"
+                    <EditText
+                        android:id="@+id/searchTextView"
+                        android:inputType="text"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
+                        android:hint="검색어를 입력해주세요."
+                        android:textColorHint="@color/gray"
+                        android:paddingStart="27dp"
+                        android:paddingEnd="13.67dp"
+                        android:paddingVertical="12dp"
+                        android:layout_marginTop="34.5dp"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.06"
+                        android:textColor="@color/black"
+                        android:background="@drawable/search_bar_border"
+                        android:drawableEnd="@drawable/search_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/community_free_sort_ib"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/edit_text_border">
-
-                        <EditText
-                            android:id="@+id/community_free_search_bar_et"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:hint="검색어를 입력해주세요"
-                            android:textColorHint="@color/gray"
-                            android:inputType="text"
-                            android:textSize="16sp"
-                            android:background="@null"
-                            android:layout_marginStart="10dp"/>
-
-                    </RelativeLayout>
-
-                    <ImageView
-                        android:id="@+id/community_free_search_icon_bt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:src="@drawable/search_bar_icon"
-                        app:layout_constraintEnd_toEndOf="@id/community_free_search_bar_relative"
-                        app:layout_constraintTop_toTopOf="@id/community_free_search_bar_relative"
-                        android:layout_marginEnd="10dp"/>
+                        android:maxLines="1"/>
 
                     <TextView
                         android:id="@+id/community_free_tv"
@@ -126,7 +114,7 @@
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="@id/community_tv"
-                        app:layout_constraintTop_toBottomOf="@id/community_free_search_bar_relative"
+                        app:layout_constraintTop_toBottomOf="@id/searchTextView"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="20dp"/>
 

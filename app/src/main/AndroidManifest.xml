@@ -36,6 +36,9 @@
             android:exported="true">
         </activity>
 
+        <activity android:name=".FreeWritePostActivity">
+        </activity>
+
     </application>
 
 </manifest>

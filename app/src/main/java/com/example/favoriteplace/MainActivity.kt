@@ -2,6 +2,9 @@ package com.example.favoriteplace
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import androidx.collection.arraySetOf
 import com.example.favoriteplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
         setContentView(binding.root)
 
-
+//        setContentView(R.layout.fragment_free_write_post)
         initBottomNavigation()
     }
 
@@ -49,17 +52,16 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, ShopMainFragment())
                         .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
 
                 R.id.myFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, BlockUserFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
+
                 }
 
             }
             false
         }
     }
+
 }
