@@ -1,8 +1,8 @@
 package com.example.favoriteplace
 
 data class BlockUser(
-    var profileImageUrl: String?=null,
-    var profileIconUrl: String?=null,
+    var profileImg: Int?=null,
+    var icon: Int?=null,
     var badge:Int?=null,
     var name: String?=""
 )
