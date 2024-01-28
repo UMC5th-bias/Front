@@ -4,9 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemBlockUserBinding
-import com.example.favoriteplace.databinding.ItemShopBannerNewFameBinding
 
-class BlockUserRVAdapter (private val userList: ArrayList<User>): RecyclerView.Adapter<BlockUserRVAdapter.ViewHolder>(){
+class BlockUserRVAdapter (private val blockUserList: ArrayList<BlockUser>): RecyclerView.Adapter<BlockUserRVAdapter.ViewHolder>(){
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -16,19 +15,19 @@ class BlockUserRVAdapter (private val userList: ArrayList<User>): RecyclerView.A
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = userList.size
+    override fun getItemCount(): Int = blockUserList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(userList[position])
+        holder.bind(blockUserList[position])
     }
 
 
     inner class ViewHolder(val binding: ItemBlockUserBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(User: User){
-            binding.itemBlockUserProfileCiv.setImageResource(User.profileImg!!)
-            binding.itemBlockUserIconCiv.setImageResource(User.icon!!)
-            binding.itemBlockUserBadgeIv.setImageResource(User.badge!!)
-            binding.itemBlockUserNameTv.text=User.name
+        fun bind(BlockUser: BlockUser){
+            binding.itemBlockUserProfileCiv.setImageResource(BlockUser.profileImg!!)
+            binding.itemBlockUserIconCiv.setImageResource(BlockUser.icon!!)
+            binding.itemBlockUserBadgeIv.setImageResource(BlockUser.badge!!)
+            binding.itemBlockUserNameTv.text=BlockUser.name
         }
 
     }
