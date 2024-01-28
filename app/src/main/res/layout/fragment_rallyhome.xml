@@ -2,9 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:scrollbars="none"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:padding="15dp"
             android:text="성지순례"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -28,9 +28,9 @@
             android:id="@+id/searchEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/round_gray_background"
             android:drawableEnd="@drawable/main_rally_search"
@@ -42,7 +42,6 @@
             android:textColorHint="#CCCCCC"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/recommend_rally_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
@@ -52,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:padding="20dp"
+            android:padding="15dp"
             android:text="이 달의 추천 랠리"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -65,8 +64,8 @@
             android:id="@+id/weather_cv"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:clickable="true"
             android:elevation="2dp"
             android:focusable="true"
@@ -131,7 +130,9 @@
             android:id="@+id/animationRally_blackBox_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/rounded_black_background"
             android:clickable="true"
             android:focusable="true"
@@ -139,7 +140,7 @@
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/weather_cv">
+            app:layout_constraintTop_toBottomOf="@id/weather_rally_tv">
 
             <!-- 분홍색 태그 -->
             <TextView
@@ -211,7 +212,7 @@
             android:id="@+id/rallyPlace_blackBox_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="15dp"
             android:background="@drawable/rounded_black_background"
             android:clickable="true"
             android:focusable="true"
@@ -289,10 +290,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/interestedRally_cl"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginStart="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="15dp"
             android:background="@drawable/round_gray_background"
             android:clickable="true"
             android:focusable="true"
@@ -323,25 +324,80 @@
                 app:layout_constraintEnd_toEndOf="@id/interestedRally_cl"
                 app:layout_constraintTop_toTopOf="@id/interestedRally_title_tv" />
 
-            <TextView
-                android:id="@+id/interestedRally_error_msg_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="관심있는 랠리가 아직 존재하지 않아요."
-                android:textColor="#969696"
-                android:textSize="12sp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/interestedRally_notLogin_cl"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/interestedRally_title_tv" />
+                app:layout_constraintTop_toBottomOf="@id/interestedRally_title_tv">
+
+                <TextView
+                    android:id="@+id/interestedRally_error_msg_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="관심있는 랠리가 아직 존재하지 않아요."
+                    android:textColor="#969696"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/interestedRally_yesLogin_cl"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/interestedRally_title_tv">
+
+
+                <HorizontalScrollView
+                    android:id="@+id/rallyHome_interestedRally_hs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rallyHome_interestedRally_rv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:listitem="@layout/item_rallyhome_interestedrally" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/certification_board_cl"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:background="@drawable/round_white_background"
             android:clickable="true"
             android:focusable="true"
@@ -372,17 +428,62 @@
                 app:layout_constraintEnd_toEndOf="@id/certification_board_cl"
                 app:layout_constraintTop_toTopOf="@id/certification_title_tv" />
 
-            <TextView
-                android:id="@+id/certification_error_msg_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="인증글이 아직 존재하지 않아요."
-                android:textColor="#969696"
-                android:textSize="12sp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/certificatedRally_notLogin_cl"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/certification_title_tv" />
+                app:layout_constraintTop_toBottomOf="@id/certification_title_tv">
+
+                <TextView
+                    android:id="@+id/certification_error_msg_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:text="인증글이 아직 존재하지 않아요."
+                    android:textColor="#969696"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/certificatedRally_yesLogin_cl"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/certification_title_tv">
+
+                <LinearLayout
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rallyHome_certificatedRally_rv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_rallyhome_certificatedrally" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -390,11 +491,11 @@
             android:id="@+id/banner_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/rounded_pink_background"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:background="@drawable/rounded_pink_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/certification_board_cl"
             app:layout_constraintStart_toStartOf="@id/certification_board_cl"
@@ -404,24 +505,24 @@
                 android:id="@+id/banner_adv_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:src="@drawable/ic_notice_img"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_margin="20dp"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/banner_adv_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:text="새로운 성지순례 장소를\n추가하고 싶다면?"
                 android:textColor="@color/white"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_margin="20dp"
-                android:textSize="15sp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

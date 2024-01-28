@@ -11,11 +11,11 @@
 
 
     <TextView
-        android:id="@+id/dialog_delete_title_tv"
+        android:id="@+id/dialog_csc_inquiry_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="인증글 삭제하기"
+        android:text="문의하기"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
 
 
     <ImageView
-        android:id="@+id/dialog_delete_line_iv"
+        android:id="@+id/dialog_csc_inquiry_line_iv"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:src="@drawable/line"
@@ -31,13 +31,13 @@
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dialog_delete_title_tv"/>
+        app:layout_constraintTop_toBottomOf="@id/dialog_csc_inquiry_title_tv"/>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="성지순례 인증글을\n삭제 하시겠어요?"
+        android:text="해당 요청사항을\n문의하시겠어요?"
         android:gravity="center"
         android:lineSpacingExtra="3dp"
         android:textSize="18dp"
@@ -51,7 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout1"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_delete_line_iv"/>
+        app:layout_constraintTop_toBottomOf="@+id/dialog_csc_inquiry_line_iv"/>
 
 
     <LinearLayout
@@ -68,7 +68,7 @@
             android:layout_height="45dp"
             android:layout_weight="1"
             android:background="@drawable/dialog_no"
-            android:text="아니오" />
+            android:text="다음에 쓸게요" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/dialog_yes_btn"
@@ -77,7 +77,7 @@
             android:layout_weight="1"
             android:textColor="@color/white"
             android:background="@drawable/dialog_yes"
-            android:text="삭제하기" />
+            android:text="완료하기" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

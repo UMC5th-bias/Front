@@ -38,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="성지순례 장소를\n문의하시겠어요?"
+        android:gravity="center"
         android:lineSpacingExtra="3dp"
         android:textSize="18dp"
         android:textColor="@color/black"

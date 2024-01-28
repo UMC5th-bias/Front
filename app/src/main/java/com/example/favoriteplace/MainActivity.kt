@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
         setContentView(binding.root)
 
 //        setContentView(R.layout.fragment_free_write_post)
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, ShopMainFragment())
                         .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
 
                 R.id.myFragment -> {
@@ -62,4 +63,5 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
+
 }
