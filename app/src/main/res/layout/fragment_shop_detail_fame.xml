@@ -30,7 +30,7 @@
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/shop_banner_detail_fame_ib"
             app:layout_constraintTop_toTopOf="@id/shop_banner_detail_fame_ib"
-            android:layout_marginTop="7dp"/>
+            app:layout_constraintBottom_toBottomOf="@id/shop_banner_detail_fame_ib"/>
 
         <TextView
             android:id="@+id/shop_banner_detail_fame_umc_tv"
