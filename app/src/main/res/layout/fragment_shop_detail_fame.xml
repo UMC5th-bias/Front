@@ -24,7 +24,7 @@
             android:id="@+id/shop_banner_detail_fame_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아이콘"
+            android:text="칭호"
             android:textStyle="normal"
             android:textSize="20sp"
             android:textColor="@color/black"

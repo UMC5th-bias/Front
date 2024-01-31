@@ -51,6 +51,14 @@ class ShopBannerNewFragment : Fragment() {
         binding.shopBannerNewFameLimitedRv.adapter=limitedFameRVAdapter
         binding.shopBannerNewFameLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        limitedFameRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedFameRVAdapter.MyItemClickListener{
+            override fun onItemClick() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, ShopLimitedFameFragment())
+                    .commitAllowingStateLoss()
+            }
+        })
+
         val unlimitedFameRVAdapter=ShopBannerNewUnlimitedFameRVAdapter(unlimitedFameData)
         binding.shopBannerNewFameUnlimitedRv.adapter=unlimitedFameRVAdapter
         binding.shopBannerNewFameUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
