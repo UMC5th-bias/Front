@@ -5,19 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.favoriteplace.databinding.FragmentShopDetailIconBinding
+import com.example.favoriteplace.databinding.FragmentShopDetailFameBinding
 
-class ShopLimitedIconFragment : Fragment() {
-    lateinit var binding: FragmentShopDetailIconBinding
+class ShopBannerUnlimitedFameFragment: Fragment() {
+    lateinit var binding: FragmentShopDetailFameBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentShopDetailIconBinding.inflate(inflater,container,false)
+        binding= FragmentShopDetailFameBinding.inflate(inflater,container,false)
 
-        binding.shopBannerDetailIconIb.setOnClickListener{
+        binding.shopBannerDetailFameIb.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frameLayout, ShopBannerNewFragment())
                 .commitAllowingStateLoss()

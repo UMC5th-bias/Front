@@ -54,7 +54,7 @@ class ShopBannerNewFragment : Fragment() {
         limitedFameRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedFameRVAdapter.MyItemClickListener{
             override fun onItemClick() {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frameLayout, ShopLimitedFameFragment())
+                    .replace(R.id.main_frameLayout, ShopBannerLimitedFameFragment())
                     .commitAllowingStateLoss()
             }
         })
@@ -63,6 +63,14 @@ class ShopBannerNewFragment : Fragment() {
         binding.shopBannerNewFameUnlimitedRv.adapter=unlimitedFameRVAdapter
         binding.shopBannerNewFameUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        unlimitedFameRVAdapter.setMyItemClickListener(object :ShopBannerNewUnlimitedFameRVAdapter.MyItemClickListener{
+            override fun onItemClick() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, ShopBannerUnlimitedFameFragment())
+                    .commitAllowingStateLoss()
+            }
+        })
+
         val limitedIconRVAdapter=ShopBannerNewLimitedIconRVAdapter(limitedIconData)
         binding.shopBannerNewIconLimitedRv.adapter=limitedIconRVAdapter
         binding.shopBannerNewIconLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -70,11 +78,10 @@ class ShopBannerNewFragment : Fragment() {
         limitedIconRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedIconRVAdapter.MyItemClickListener{
             override fun onItemClick() {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frameLayout, ShopLimitedIconFragment())
+                    .replace(R.id.main_frameLayout, ShopBannerLimitedIconFragment())
                     .commitAllowingStateLoss()
             }
         })
-
 
         val unlimitedIconRVAdapter=ShopBannerNewUnlimitedIconRVAdapter(unlimitedIconData)
         binding.shopBannerNewIconUnlimitedRv.adapter=unlimitedIconRVAdapter
