@@ -63,8 +63,15 @@ class ShopMainFragment : Fragment() {
     }
 
     private fun setupBannerViewPager() {
-        val adapter = ShopBannerVPAdapter(imageResIds)
+// BannerItem 리스트 생성
+        val items = listOf(
+            BannerItem(R.drawable.shop_banner1, false), // "보러가기" 버튼 없음
+            BannerItem(R.drawable.shop_banner2, true)   // "보러가기" 버튼 포함
+        )
+        // 어댑터에 FragmentActivity와 items 리스트 전달
+        val adapter = ShopBannerVPAdapter(requireActivity(), items)
         binding.shopMainBannerVp2.adapter = adapter
+
 
         // 자동 슬라이딩 시작
         startAutoSlide()
