@@ -23,6 +23,15 @@ class ShopBannerLimitedIconFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
+        binding.shopBannerDetailIconPurchaseBn.setOnClickListener {
+            popupIconPurchaseClick()
+        }
+
         return binding.root
+    }
+
+    //아이콘 구매 팝업창 띄우기
+    private fun popupIconPurchaseClick() {
+        IconPurchaseDialog().show(parentFragmentManager, "")
     }
 }
