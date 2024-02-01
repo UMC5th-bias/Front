@@ -19,6 +19,7 @@ class FamePurchaseDialog : DialogFragment(){
         binding=DialogShopDetailPurchaseFameBinding.inflate(inflater,container,false)
         val view=binding.root
 
+        //팝업창 모서리 둥글게 만들기
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return view
     }

@@ -1,16 +1,10 @@
 package com.example.favoriteplace
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.app.Dialog
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.fragment.app.Fragment
 import com.example.favoriteplace.databinding.FragmentShopDetailUnlimitedFameBinding
 
@@ -32,19 +26,14 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
         }
 
         binding.shopBannerDetailFamePurchaseBn.setOnClickListener{
-
             popupFamePurchaseClick()
-
-//            val mDialogView=LayoutInflater.from(this.context).inflate(R.layout.dialog_shop_detail_purchase_fame, null)
-//            val mBuilder=AlertDialog.Builder(this.context).setView(mDialogView)
-//
-//            mBuilder.show()
         }
 
         return binding.root
     }
 
+    //칭호 구매 팝업창 띄우기
     private fun popupFamePurchaseClick() {
-        FamePurchaseDialog().show(parentFragmentManager,"123456")
+        FamePurchaseDialog().show(parentFragmentManager,"")
     }
 }
