@@ -30,7 +30,7 @@ class ShopBannerUnlimitedIconFragment : Fragment() {
         return binding.root
     }
 
-    //칭호 구매 팝업창 띄우기
+    //아이콘 구매 팝업창 띄우기
     private fun popupIconPurchaseClick() {
         IconPurchaseDialog().show(parentFragmentManager, "")
     }
