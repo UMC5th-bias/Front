@@ -6,35 +6,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import com.example.favoriteplace.databinding.DialogShopDetailPurchaseFameBinding
+import com.example.favoriteplace.databinding.DialogShopDetailApplyFameBinding
 
-class FamePurchaseDialog : DialogFragment(){
-    private lateinit var binding: DialogShopDetailPurchaseFameBinding
+class FameApplyDialog : DialogFragment(){
+    private lateinit var binding: DialogShopDetailApplyFameBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding=DialogShopDetailPurchaseFameBinding.inflate(inflater,container,false)
+        binding= DialogShopDetailApplyFameBinding.inflate(inflater,container,false)
         val view=binding.root
 
         //팝업창 모서리 둥글게 만들기
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        binding.dialogShopDetailPurchaseNoBtn.setOnClickListener{
+        binding.dialogShopDetailApplyNoBtn.setOnClickListener{
+            Toast.makeText(requireContext(),"취소되었습니다",Toast.LENGTH_SHORT).show()
             dismiss()
         }
 
-        binding.dialogShopDetailPurchaseYesBtn.setOnClickListener {
-            popupFameApplyClick()
+        binding.dialogShopDetailApplyYesBtn.setOnClickListener {
+            Toast.makeText(requireContext(),"적용되었습니다", Toast.LENGTH_SHORT).show()
             dismiss()
         }
 
         return view
-    }
-
-    private fun popupFameApplyClick() {
-        FameApplyDialog().show(parentFragmentManager,"")
     }
 }
