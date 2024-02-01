@@ -15,14 +15,23 @@ class ShopBannerUnlimitedIconFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentShopDetailUnlimitedIconBinding.inflate(inflater,container,false)
+        binding = FragmentShopDetailUnlimitedIconBinding.inflate(inflater, container, false)
 
-        binding.shopBannerDetailIconIb.setOnClickListener{
+        binding.shopBannerDetailIconIb.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frameLayout, ShopBannerNewFragment())
                 .commitAllowingStateLoss()
         }
 
+        binding.shopBannerDetailIconPurchaseBn.setOnClickListener {
+            popupIconPurchaseClick()
+        }
+
         return binding.root
+    }
+
+    //칭호 구매 팝업창 띄우기
+    private fun popupIconPurchaseClick() {
+        IconPurchaseDialog().show(parentFragmentManager, "")
     }
 }

@@ -1,6 +1,5 @@
 package com.example.favoriteplace
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import com.example.favoriteplace.databinding.FragmentShopDetailUnlimitedFameBind
 class ShopBannerUnlimitedFameFragment: Fragment() {
     lateinit var binding: FragmentShopDetailUnlimitedFameBinding
 
-    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
