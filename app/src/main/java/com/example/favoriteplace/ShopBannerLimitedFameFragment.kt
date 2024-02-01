@@ -23,6 +23,16 @@ class ShopBannerLimitedFameFragment: Fragment() {
                 .commitAllowingStateLoss()
         }
 
+        binding.shopBannerDetailFamePurchaseBn.setOnClickListener{
+            popupFamePurchaseClick()
+        }
+
         return binding.root
     }
+
+    //칭호 구매 팝업창 띄우기
+    private fun popupFamePurchaseClick() {
+        FamePurchaseDialog().show(parentFragmentManager,"")
+    }
 }
+
