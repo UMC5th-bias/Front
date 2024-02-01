@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp"
+    android:background="@drawable/bottom_sheet_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="필터"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginTop="17.71dp"
+        android:layout_marginStart="27dp"
+        android:id="@+id/bottom_sheet_filter_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="16dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_sheet_cancel_iv"
+        android:src="@drawable/ic_cancel"
+        android:layout_marginTop="15.21dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <RadioGroup
+        android:id="@+id/sort_options_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_filter_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <RadioButton
+            android:padding="10dp"
+            android:button="@drawable/bottomsheet_radiobutton"
+            android:id="@+id/sort_by_title_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="제목" />
+
+        <RadioButton
+            android:padding="10dp"
+            android:button="@drawable/bottomsheet_radiobutton"
+            android:id="@+id/sort_by_content_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="내용" />
+
+        <RadioButton
+            android:padding="10dp"
+            android:button="@drawable/bottomsheet_radiobutton"
+            android:id="@+id/sort_by_nickname_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="닉네임" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

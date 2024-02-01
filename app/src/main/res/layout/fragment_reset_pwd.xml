@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <!-- 상단 -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/reset_pwd_back_ib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="비밀번호 재설정"
+            android:textColor="#000000"
+            android:textSize="23dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="새로운 비밀번호를\n입력해주세요."
+            android:textColor="#000000"
+            android:lineSpacingExtra="5dp"
+            android:textSize="23dp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="새 비밀번호"
+            android:textColor="@color/black"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                android:id="@+id/reset_pwd_newpwd_et"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edge"
+                android:paddingStart="15dp"
+                android:hint="새로운 비밀번호를 입력해주세요."/>
+
+
+            <!-- error시 이미지-->
+            <ImageView
+                android:id="@+id/reset_pwd_error_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_error"
+                android:layout_alignTop="@id/reset_pwd_newpwd_et"
+                android:layout_alignEnd="@id/reset_pwd_newpwd_et"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                android:gravity="center"/>
+
+            <!-- okay시 이미지-->
+            <ImageView
+                android:id="@+id/reset_pwd_ok_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/reset_pwd_newpwd_et"
+                android:layout_alignEnd="@id/reset_pwd_newpwd_et"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="13dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/ic_okay" />
+
+
+        </RelativeLayout>
+
+        <!-- 처음에 안보이게 -->
+        <TextView
+            android:id="@+id/reset_pwd_error_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="비밀번호는 특수문자와 숫자를 포함해야 합니다."
+            android:visibility="gone"
+            android:textColor="@color/main"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="비밀번호 확인"
+            android:textColor="@color/black"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/reset_pwd_checkpwd_et"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edge"
+                android:paddingStart="15dp"
+                android:hint="비밀번호 재확인"/>
+
+
+            <!-- error시 이미지-->
+            <ImageView
+                android:id="@+id/reset_pwd_checkerror_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_error"
+                android:layout_alignTop="@id/reset_pwd_checkpwd_et"
+                android:layout_alignEnd="@id/reset_pwd_checkpwd_et"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                android:gravity="center"/>
+
+
+            <!-- okay시 이미지-->
+            <ImageView
+                android:id="@+id/reset_pwd_checkok_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/reset_pwd_checkpwd_et"
+                android:layout_alignEnd="@id/reset_pwd_checkpwd_et"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="13dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/ic_okay" />
+
+        </RelativeLayout>
+
+
+        <!-- 처음에 안보이게 -->
+        <TextView
+            android:id="@+id/reset_pwd_notpwd_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="비밀번호 확인이 일치하지 않습니다."
+            android:visibility="gone"
+            android:textColor="@color/main"/>
+
+
+        <LinearLayout
+            android:id="@+id/linearlayout_text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_ellipse"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  비밀번호는 8자 이상이어야 합니다."
+                android:textColor="@color/dark_gray"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout_text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_ellipse"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  비밀번호는 특수문자와 숫자를 모두 포함해야 합니다."
+                android:textColor="@color/dark_gray"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/reset_pwd_ok_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/edge"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/main"
+            android:text="확인"/>
+
+
+
+        <TextView
+            android:id="@+id/reset_pwd_nextreset_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="비밀번호는 다음에 변경할래요."
+            android:textColor="@color/main"
+            android:textSize="12dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

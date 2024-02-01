@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/community_free_write_border"
+    android:layout_marginBottom="15dp">
+
+    <ImageView
+        android:id="@+id/item_community_rally_iv"
+        android:layout_width="170dp"
+        android:layout_height="100dp"
+        android:src="@drawable/community_rally_place_1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:background="@drawable/community_rally_num_border"
+        app:layout_constraintTop_toTopOf="@id/item_community_rally_iv"
+        app:layout_constraintStart_toStartOf="@id/item_community_rally_iv"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/item_community_rally_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/item_community_rally_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="도쿄타워 #러브라이브 성지순례!"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@id/item_community_rally_iv"
+        app:layout_constraintTop_toTopOf="@id/item_community_rally_iv"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/item_community_rally_writer_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="zi존이다"
+        android:textSize="13sp"
+        android:textStyle="normal"
+        android:textColor="@color/dark_gray"
+        android:layout_marginTop="2dp"
+        app:layout_constraintTop_toBottomOf="@id/item_community_rally_title_tv"
+        app:layout_constraintStart_toStartOf="@id/item_community_rally_title_tv"/>
+
+    <TextView
+        android:id="@+id/item_community_rally_tag1_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#러브라이브"
+        android:textSize="12sp"
+        android:textColor="@color/main"
+        app:layout_constraintTop_toBottomOf="@id/item_community_rally_writer_tv"
+        app:layout_constraintStart_toStartOf="@id/item_community_rally_writer_tv"
+        android:layout_marginTop="7dp"/>
+
+    <TextView
+        android:id="@+id/item_community_rally_tag2_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#도쿄"
+        android:textSize="12sp"
+        android:textColor="@color/main"
+        app:layout_constraintTop_toBottomOf="@id/item_community_rally_writer_tv"
+        app:layout_constraintStart_toEndOf="@id/item_community_rally_tag1_tv"
+        android:layout_marginTop="7dp"
+        android:layout_marginStart="5dp"/>
+
+    <ImageView
+        android:id="@+id/item_community_rally_eye_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/community_free_eye"
+        app:layout_constraintTop_toBottomOf="@id/item_community_rally_tag2_tv"
+        app:layout_constraintStart_toStartOf="@id/item_community_rally_title_tv"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/item_community_rally_eye_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="70"
+        android:textSize="10sp"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintTop_toTopOf="@id/item_community_rally_eye_iv"
+        app:layout_constraintBottom_toBottomOf="@id/item_community_rally_eye_iv"
+        app:layout_constraintStart_toEndOf="@id/item_community_rally_eye_iv"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"/>
+
+    <ImageView
+        android:id="@+id/item_community_rally_like_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/community_free_like"
+        app:layout_constraintStart_toEndOf="@id/item_community_rally_eye_tv"
+        app:layout_constraintTop_toTopOf="@id/item_community_rally_eye_iv"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/item_community_rally_like_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="52"
+        android:textSize="10sp"
+        android:textColor="@color/main"
+        app:layout_constraintTop_toTopOf="@id/item_community_rally_eye_iv"
+        app:layout_constraintBottom_toBottomOf="@id/item_community_rally_eye_iv"
+        app:layout_constraintStart_toEndOf="@id/item_community_rally_like_iv"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"/>
+
+    <TextView
+        android:id="@+id/item_community_rally_clock_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5분전"
+        android:textSize="10sp"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintTop_toTopOf="@id/item_community_rally_eye_iv"
+        app:layout_constraintBottom_toBottomOf="@id/item_community_rally_eye_iv"
+        app:layout_constraintStart_toEndOf="@id/item_community_rally_like_tv"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="1dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_community_rally_commend_comment_cl"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:background="@drawable/community_free_write_comment_border"
+        app:layout_constraintTop_toTopOf="@id/item_community_rally_eye_iv"
+        app:layout_constraintBottom_toBottomOf="@id/item_community_rally_eye_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/item_community_rally_comment_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="댓글"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/item_community_rally_comment_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="@id/item_community_rally_comment_num_tv"
+            app:layout_constraintStart_toEndOf="@id/item_community_rally_comment_num_tv"
+            android:layout_marginStart="2dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
