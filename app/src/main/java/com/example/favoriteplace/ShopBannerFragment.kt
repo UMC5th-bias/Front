@@ -42,8 +42,9 @@ class ShopBannerFragment : Fragment() {
         if (arguments?.getBoolean(ARG_SHOW_BUTTON) == true) {
             binding.shopGoToCl.visibility = View.VISIBLE
             binding.shopGoToCl.setOnClickListener {
-                // 여기에 로그 메시지를 출력
-                Log.d("ShopBannerFragment", "보러가기 클릭됨")
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, ShopBannerNewFragment())
+                    .commitAllowingStateLoss()
             }
         } else {
             binding.shopGoToCl.visibility = View.GONE

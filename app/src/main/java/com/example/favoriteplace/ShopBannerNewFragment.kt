@@ -95,6 +95,12 @@ class ShopBannerNewFragment : Fragment() {
             }
         })
 
+        binding.shopBannerNewIb.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frameLayout, ShopMainFragment())
+                .commitAllowingStateLoss()
+        }
+
         return binding.root
     }
 }
