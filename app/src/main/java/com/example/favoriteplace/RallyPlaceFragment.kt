@@ -60,16 +60,11 @@ class RallyPlaceFragment: Fragment(){
                 "도쿄" to mapOf(
                     "도쿄도 시부야구" to listOf(
                         RallyPlaceLocationItem(name = "날씨의 아이", location = "시부야 스크램블 교차로", R.drawable.rallyplace_example_image_1),
-                        RallyPlaceLocationItem(name = "주술회전", location = "우다가와초 주차장 옆", R.drawable.rallyplace_example_image_1),
-                        RallyPlaceLocationItem(name = "주술회전", location = "하라주쿠역 앞 계단", R.drawable.rallyplace_example_image_1),
-                        RallyPlaceLocationItem(name = "주술회전", location = "패밀리마트 시부야 1초매점", R.drawable.rallyplace_example_image_1),
-                        RallyPlaceLocationItem(name = "주술회전", location = "미야사타 제 1육교", R.drawable.rallyplace_example_image_1),
+                        RallyPlaceLocationItem(name = "주술회전", location = "우다가와초 주차장 옆", R.drawable.rallyplace_example_image_2),
                     ),
                     "도쿄도 신주쿠구" to listOf(
-                        RallyPlaceLocationItem(name = "날씨의 아이", location = "맥도날드 신주쿠 역전점", R.drawable.rallyplace_example_image_1),
-                        RallyPlaceLocationItem(name = "너의 이름은", location = "스가신사 잎구 계단", R.drawable.rallyplace_example_image_1),
-                        RallyPlaceLocationItem(name = "너의 이름은", location = "요츠야 초등학교 골목길", R.drawable.rallyplace_example_image_1),
-                        RallyPlaceLocationItem(name = "주술회전", location = "신주쿠역 신주쿠의 눈", R.drawable.rallyplace_example_image_1),
+                        RallyPlaceLocationItem(name = "날씨의 아이", location = "맥도날드 신주쿠 역전점", R.drawable.rallyplace_example_image_3),
+                        RallyPlaceLocationItem(name = "너의 이름은", location = "스가신사 잎구 계단", R.drawable.rallyplace_example_image_4),
                     ),
                     "도쿄도 분쿄구" to emptyList(),
                     "도쿄도 지요다구" to emptyList(),
