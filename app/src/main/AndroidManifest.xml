@@ -40,8 +40,8 @@
             android:exported="true">
         </activity>
 
-        <activity android:name=".FreeWritePostActivity">
-        </activity>
+        <activity android:name=".FreeWritePostActivity"/>
+        <activity android:name=".PostDetailActivity"/>
 
     </application>
 
