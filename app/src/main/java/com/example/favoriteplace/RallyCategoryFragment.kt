@@ -30,7 +30,7 @@ class RallyCategoryFragment : Fragment() {
         }
         //
 
-        val animationRVAdapter=AnimationRVAdapter(animationDatas)
+        val animationRVAdapter=AnimationRVAdapter(animationDatas, context as MainActivity)
         binding.rallyCategoryAnimationRv.adapter=animationRVAdapter
         binding.rallyCategoryAnimationRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         return binding.root

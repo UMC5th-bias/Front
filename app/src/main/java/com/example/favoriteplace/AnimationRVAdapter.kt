@@ -1,12 +1,13 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemAnimationBinding
 import java.util.ArrayList
 
-class AnimationRVAdapter(private val animationList: ArrayList<Animation>): RecyclerView.Adapter<AnimationRVAdapter.ViewHolder>() {
+class AnimationRVAdapter(private val animationList: ArrayList<Animation>, val context: Context): RecyclerView.Adapter<AnimationRVAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -28,6 +29,12 @@ class AnimationRVAdapter(private val animationList: ArrayList<Animation>): Recyc
             binding.rallyCategoryAnimationIv.setImageResource(animation.coverImg!!)
             binding.rallyCategoryAnimationTitleTv.text=animation.title
             binding.rallyCategoryAnimationProgressTv.text=animation.progress
+            binding.rallyCategoryAnimationIv.setOnClickListener {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, RallyDetailFragment())
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+            }
         }
 
     }
