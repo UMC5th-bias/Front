@@ -11,6 +11,6 @@ class SignUpFinishActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivitySignupFinishBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_signup_finish)
+        setContentView(binding.root)
     }
 }

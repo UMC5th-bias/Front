@@ -11,6 +11,6 @@ class SignUpPwdInputActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivitySignupPwdInputBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_signup_pwd_input)
+        setContentView(binding.root)
     }
 }

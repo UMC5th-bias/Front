@@ -40,8 +40,6 @@ class HomeFragment : Fragment() {
             startActivity(Intent(activity, LoginActivity::class.java))
         }
 
-
-
         return binding.root
 
     }

@@ -11,6 +11,6 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivitySignupProfileSettingBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_signup_profile_setting)
+        setContentView(binding.root)
     }
 }

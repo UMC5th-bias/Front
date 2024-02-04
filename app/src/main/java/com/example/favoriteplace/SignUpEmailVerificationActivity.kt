@@ -11,6 +11,6 @@ class SignUpEmailVerificationActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivitySignupEmailVerificationBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_signup_email_verification)
+        setContentView(binding.root)
     }
 }

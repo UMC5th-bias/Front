@@ -11,6 +11,6 @@ class SignUpConditionConfirmActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivitySignupConditionConfirmBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_signup_email_input)
+        setContentView(binding.root)
     }
 }

@@ -12,6 +12,6 @@ class SignUpEmailInputActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivitySignupEmailInputBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_signup_email_input)
+        setContentView(binding.root)
     }
 }
