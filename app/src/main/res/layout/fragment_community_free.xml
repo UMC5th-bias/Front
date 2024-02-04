@@ -4,18 +4,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Button
-        android:id="@+id/community_free_write_bn"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="+ 글쓰기"
-        android:textStyle="bold"
-        app:backgroundTint="@color/black"
-        android:background="@drawable/community_free_button_border"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="50dp"
-        android:layout_marginEnd="15dp"/>
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/community_free_moving_bn"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:src="@drawable/moving_top_bn"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/community_free_write_bn"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/community_free_write_bn"-->
+    <!--        android:layout_marginBottom="20dp"/>-->
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/community_free_nsv"
@@ -146,5 +142,18 @@
             </ScrollView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ImageButton
+        android:id="@+id/community_free_write_bn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/writing_bn"
+        android:textStyle="bold"
+        app:backgroundTint="@color/black"
+        android:background="@drawable/community_free_button_border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="15dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
