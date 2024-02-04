@@ -56,6 +56,13 @@ class RallyHomeFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rallyHomeInterestedRallyRv.adapter = interestedAdapter
 
+        binding.rallyPlaceBlackBoxCl.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frameLayout, RallyPlaceFragment())
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
+        }
+
         return binding.root
     }
 
