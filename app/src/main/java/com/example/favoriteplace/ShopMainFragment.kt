@@ -50,6 +50,8 @@ class ShopMainFragment : Fragment() {
             }
         }
 
+        // 한정판매 칭호
+
         val limitedFrameData = listOf(
             LimitedFame(R.drawable.limited_frame_1, "10000P"),
             LimitedFame(R.drawable.limited_frame_2, "30000P"),
@@ -80,6 +82,8 @@ class ShopMainFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.shopMainLimitedFrameUMCRv.adapter = limitedUMCFrameAdapter
 
+        // 한정판매 아이콘
+
         val limitedNewIconData = listOf(
             LimitedIcon(R.drawable.limited_icon_new_1, "산타 모자", "10000P"),
             LimitedIcon(R.drawable.limited_icon_new_2, "컨페티", "10000P"),
@@ -102,6 +106,52 @@ class ShopMainFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.shopMainLimitedIconUMCRv.adapter = limitedUMCIconnAdapter
 
+
+        // 상시판매 칭호
+
+        val regularFrameData = listOf(
+            UnlimitedFame(R.drawable.regular_frame_new_1, "5000P"),
+            UnlimitedFame(R.drawable.regular_frame_new_2, "10000P"),
+            UnlimitedFame(R.drawable.regular_frame_new_3, "100000P")
+        )
+
+        val regularFrameAdapter = ShopBannerUnlimitedFameRVAdapter(regularFrameData)
+        binding.shopMainRegularFrameRv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.shopMainRegularFrameRv.adapter = regularFrameAdapter
+
+        val regularFrameNormalData = listOf(
+            UnlimitedFame(R.drawable.regular_frame_normal_1, "50P"),
+            UnlimitedFame(R.drawable.regular_frame_normal_2, "10000P"),
+            UnlimitedFame(R.drawable.regular_frame_normal_3, "500000P")
+        )
+        val regularFrameNormalAdapter = ShopBannerUnlimitedFameRVAdapter(regularFrameNormalData)
+        binding.shopMainRegularFrameNormalRv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.shopMainRegularFrameNormalRv.adapter = regularFrameNormalAdapter
+
+        // 상시판매 아이콘
+        val regularNewIconData = listOf(
+            UnlimitedIcon(R.drawable.regular_icon_new_1, "별행성", "10000P"),
+            UnlimitedIcon(R.drawable.regular_icon_new_2, "새턴", "10000P"),
+            UnlimitedIcon(R.drawable.regular_icon_new_3, "초승달", "10000P")
+        )
+
+        val regularNewIconAdapter = ShopBannerUnlimitedIconRVAdapter(regularNewIconData)
+        binding.shopMainRegularIconNewRv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.shopMainRegularIconNewRv.adapter = regularNewIconAdapter
+
+        val regularNormalIconData = listOf(
+            UnlimitedIcon(R.drawable.regular_icon_normal_1, "스포트라이트", "20000P"),
+            UnlimitedIcon(R.drawable.regular_icon_normal_2, "하트", "20000P"),
+            UnlimitedIcon(R.drawable.regular_icon_normal_3, "시그니처 별", "10000P")
+        )
+
+        val regularNormalIconAdapter = ShopBannerUnlimitedIconRVAdapter(regularNormalIconData)
+        binding.shopMainRegularIconNormalRv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.shopMainRegularIconNormalRv.adapter = regularNormalIconAdapter
 
         return binding.root
     }
