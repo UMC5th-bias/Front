@@ -169,14 +169,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:counterEnabled="true"
-                    app:counterMaxLength="10">
+                    app:counterMaxLength="50">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/my_setting_oneliner_tet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/white"
-                        android:maxLength="10"
+                        android:maxLength="50"
                         android:inputType="text"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
