@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@id/searchEditText" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/weather_cv"
+            android:id="@+id/recommend_rally_cv"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="15dp"
@@ -78,7 +78,7 @@
             app:layout_constraintTop_toBottomOf="@id/recommend_rally_tv">
 
             <ImageView
-                android:id="@+id/weather_iv"
+                android:id="@+id/recommend_rally_iv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -87,17 +87,17 @@
         </androidx.cardview.widget.CardView>
 
         <View
-            android:id="@+id/weather_vw"
+            android:id="@+id/recommend_rally_vw"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:background="@drawable/rounded_overlay"
             android:elevation="3dp"
-            app:layout_constraintBottom_toBottomOf="@id/weather_cv"
-            app:layout_constraintEnd_toEndOf="@id/weather_cv"
-            app:layout_constraintStart_toStartOf="@id/weather_cv" />
+            app:layout_constraintBottom_toBottomOf="@id/recommend_rally_cv"
+            app:layout_constraintEnd_toEndOf="@id/recommend_rally_cv"
+            app:layout_constraintStart_toStartOf="@id/recommend_rally_cv" />
 
         <TextView
-            android:id="@+id/weather_title_tv"
+            android:id="@+id/recommend_rally_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -106,12 +106,12 @@
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/weather_vw"
-            app:layout_constraintStart_toStartOf="@id/weather_vw"
-            app:layout_constraintTop_toTopOf="@id/weather_vw" />
+            app:layout_constraintBottom_toBottomOf="@id/recommend_rally_vw"
+            app:layout_constraintStart_toStartOf="@id/recommend_rally_vw"
+            app:layout_constraintTop_toTopOf="@id/recommend_rally_vw" />
 
         <TextView
-            android:id="@+id/weather_rally_tv"
+            android:id="@+id/recommend_rally_progress_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -120,9 +120,9 @@
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/weather_vw"
-            app:layout_constraintStart_toEndOf="@id/weather_title_tv"
-            app:layout_constraintTop_toTopOf="@id/weather_vw" />
+            app:layout_constraintBottom_toBottomOf="@id/recommend_rally_vw"
+            app:layout_constraintStart_toEndOf="@id/recommend_rally_title_tv"
+            app:layout_constraintTop_toTopOf="@id/recommend_rally_vw" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -140,7 +140,7 @@
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/weather_rally_tv">
+            app:layout_constraintTop_toBottomOf="@id/recommend_rally_progress_tv">
 
             <!-- 분홍색 태그 -->
             <TextView
