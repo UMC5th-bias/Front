@@ -80,6 +80,28 @@ class ShopMainFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.shopMainLimitedFrameUMCRv.adapter = limitedUMCFrameAdapter
 
+        val limitedNewIconData = listOf(
+            LimitedIcon(R.drawable.limited_icon_new_1, "산타 모자", "10000P"),
+            LimitedIcon(R.drawable.limited_icon_new_2, "컨페티", "10000P"),
+            LimitedIcon(R.drawable.limited_icon_new_3, "브이", "10000P")
+        )
+
+        val limitedNewIconAdapter = ShopBannerLimitedIconRVAdapter(limitedNewIconData)
+        binding.shopMainLimitedIconNewRv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.shopMainLimitedIconNewRv.adapter = limitedNewIconAdapter
+
+        val limitedUMCIconData = listOf(
+            LimitedIcon(R.drawable.limited_icon_umc_1, "유닝이", "20000P"),
+            LimitedIcon(R.drawable.limited_icon_umc_2, "UMC 5기", "20000P"),
+            LimitedIcon(R.drawable.limited_icon_umc_3, "Developer", "10000P")
+        )
+
+        val limitedUMCIconnAdapter = ShopBannerLimitedIconRVAdapter(limitedUMCIconData)
+        binding.shopMainLimitedIconUMCRv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.shopMainLimitedIconUMCRv.adapter = limitedUMCIconnAdapter
+
 
         return binding.root
     }
