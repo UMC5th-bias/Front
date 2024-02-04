@@ -70,6 +70,13 @@ class RallyHomeFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
+        binding.recommendRallyCv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frameLayout, RallyDetailFragment())
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
+        }
+
         return binding.root
     }
 
