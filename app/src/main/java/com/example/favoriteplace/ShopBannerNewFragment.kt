@@ -1,12 +1,19 @@
 package com.example.favoriteplace
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteplace.databinding.FragmentShopBannerNewBinding
+import com.google.gson.annotations.SerializedName
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.create
+import retrofit2.http.Url
 
 class ShopBannerNewFragment : Fragment() {
 
@@ -22,6 +29,8 @@ class ShopBannerNewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=FragmentShopBannerNewBinding.inflate(inflater,container,false)
+
+        getNewItem()
 
         limitedFameData.apply{
             add(LimitedFame(R.drawable.limited_fame_1,"5000P"))
@@ -103,4 +112,52 @@ class ShopBannerNewFragment : Fragment() {
 
         return binding.root
     }
+
+    //서버에서 받을 데이터 클래스
+    data class JSON_data(
+        @SerializedName("titles") val titles: List<titles_data>,
+        @SerializedName("icons") val icons: List<icons_data>
+    )
+
+    data class titles_data(
+        @SerializedName("status") val status: String,
+        @SerializedName("itemList") val itemList: List<titles_itemList>
+    )
+
+    data class titles_itemList(
+        @SerializedName("id") val id: Int,
+        @SerializedName("name") val name:String,
+        @SerializedName("imageUrl") val imageUrl: String,
+        @SerializedName("point") val point:Int
+    )
+
+    data class icons_data(
+        @SerializedName("status") val status: String,
+        @SerializedName("itemList") val itemList: List<icons_itemList>
+    )
+
+    data class icons_itemList(
+        @SerializedName("id") val id: Int,
+        @SerializedName("name") val name:String,
+        @SerializedName("imageUrl") val imageUrl: String,
+        @SerializedName("point") val point:Int
+    )
+
+    //서버에서 데이터를 가져오는 함수
+    private fun getNewItem(){
+        val authService= getRetrofit().create(AuthRetrofitInterface::class.java)
+        authService.getNewItem().enqueue(object: Callback<JSON_data>{
+
+            override fun onResponse(call: Call<JSON_data>, response: Response<JSON_data>) {
+                Log.d("API 연동","SUCCESS")
+            }
+
+            override fun onFailure(call: Call<JSON_data>, t: Throwable) {
+                Log.d("API 연동", t.message.toString())
+            }
+
+        })
+    }
+
+
 }
