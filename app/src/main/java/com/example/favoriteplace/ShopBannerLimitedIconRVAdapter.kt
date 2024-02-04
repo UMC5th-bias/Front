@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemShopBannerNewIconBinding
 
-class ShopBannerNewLimitedIconRVAdapter (private val limitedIconList: ArrayList<LimitedIcon>):RecyclerView.Adapter<ShopBannerNewLimitedIconRVAdapter.ViewHolder>() {
+class ShopBannerLimitedIconRVAdapter(private val limitedIconList: List<LimitedIcon>):RecyclerView.Adapter<ShopBannerLimitedIconRVAdapter.ViewHolder>() {
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
     interface MyItemClickListener : ShopBannerNewLimitedFameRVAdapter.MyItemClickListener {
@@ -18,14 +18,14 @@ class ShopBannerNewLimitedIconRVAdapter (private val limitedIconList: ArrayList<
         mItemClickListener=itemClickListener
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ShopBannerNewLimitedIconRVAdapter.ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ShopBannerLimitedIconRVAdapter.ViewHolder {
         val binding: ItemShopBannerNewIconBinding=ItemShopBannerNewIconBinding.inflate(
             LayoutInflater.from(viewGroup.context),viewGroup,false)
 
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int=limitedIconList.size
+    override fun getItemCount(): Int=3
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(limitedIconList[position])

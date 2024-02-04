@@ -51,17 +51,55 @@ class ShopBannerNewFragment : Fragment() {
         binding.shopBannerNewFameLimitedRv.adapter=limitedFameRVAdapter
         binding.shopBannerNewFameLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        limitedFameRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedFameRVAdapter.MyItemClickListener{
+            override fun onItemClick() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, ShopBannerLimitedFameFragment())
+                    .commitAllowingStateLoss()
+            }
+        })
+
         val unlimitedFameRVAdapter=ShopBannerNewUnlimitedFameRVAdapter(unlimitedFameData)
         binding.shopBannerNewFameUnlimitedRv.adapter=unlimitedFameRVAdapter
         binding.shopBannerNewFameUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+        unlimitedFameRVAdapter.setMyItemClickListener(object :ShopBannerNewUnlimitedFameRVAdapter.MyItemClickListener{
+            override fun onItemClick() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, ShopBannerUnlimitedFameFragment())
+                    .commitAllowingStateLoss()
+            }
+        })
 
         val limitedIconRVAdapter=ShopBannerNewLimitedIconRVAdapter(limitedIconData)
         binding.shopBannerNewIconLimitedRv.adapter=limitedIconRVAdapter
         binding.shopBannerNewIconLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
+        limitedIconRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedIconRVAdapter.MyItemClickListener{
+            override fun onItemClick() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, ShopBannerLimitedIconFragment())
+                    .commitAllowingStateLoss()
+            }
+        })
+
         val unlimitedIconRVAdapter=ShopBannerNewUnlimitedIconRVAdapter(unlimitedIconData)
         binding.shopBannerNewIconUnlimitedRv.adapter=unlimitedIconRVAdapter
         binding.shopBannerNewIconUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        unlimitedIconRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedIconRVAdapter.MyItemClickListener{
+            override fun onItemClick() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, ShopBannerUnlimitedIconFragment())
+                    .commitAllowingStateLoss()
+            }
+        })
+
+        binding.shopBannerNewIb.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frameLayout, ShopMainFragment())
+                .commitAllowingStateLoss()
+        }
 
         return binding.root
     }

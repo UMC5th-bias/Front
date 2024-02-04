@@ -30,7 +30,7 @@
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/shop_banner_detail_icon_ib"
                 app:layout_constraintTop_toTopOf="@id/shop_banner_detail_icon_ib"
-                android:layout_marginTop="7dp"/>
+                app:layout_constraintBottom_toBottomOf="@id/shop_banner_detail_icon_ib" />
 
             <TextView
                 android:id="@+id/shop_banner_detail_icon_umc_tv"
@@ -74,7 +74,7 @@
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/shop_detail_limited_mark"
+                    android:src="@drawable/shop_limited_mark"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="5dp"

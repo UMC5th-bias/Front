@@ -24,13 +24,13 @@
             android:id="@+id/shop_banner_detail_fame_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아이콘"
+            android:text="칭호"
             android:textStyle="normal"
             android:textSize="20sp"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/shop_banner_detail_fame_ib"
             app:layout_constraintTop_toTopOf="@id/shop_banner_detail_fame_ib"
-            android:layout_marginTop="7dp"/>
+            app:layout_constraintBottom_toBottomOf="@id/shop_banner_detail_fame_ib"/>
 
         <TextView
             android:id="@+id/shop_banner_detail_fame_umc_tv"
@@ -55,42 +55,17 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/shop_banner_new_icon_border">
 
-                <TextView
-                    android:id="@+id/shop_banner_detail_fame_limited_time_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:background="@drawable/shop_banner_detail_limited_time"
-                    android:text="~2024.02.00"
-                    android:textStyle="normal"
-                    android:textSize="15dp"
-                    android:textColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="10dp"
-                    android:paddingHorizontal="5dp"/>
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/limited_fame_1" />
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/shop_limited_mark"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"/>
-
-                    <ImageView
-                        android:layout_width="300dp"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="15dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/limited_fame_1" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/shop_banner_detail_fame_apply_cl"
