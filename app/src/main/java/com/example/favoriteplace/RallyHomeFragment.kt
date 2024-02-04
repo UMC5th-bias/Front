@@ -63,6 +63,13 @@ class RallyHomeFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
+        binding.animationRallyBlackBoxCl.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frameLayout, RallyCategoryFragment())
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
+        }
+
         return binding.root
     }
 
