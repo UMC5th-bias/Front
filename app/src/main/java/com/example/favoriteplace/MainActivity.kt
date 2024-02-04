@@ -2,10 +2,12 @@ package com.example.favoriteplace
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.collection.arraySetOf
 import com.example.favoriteplace.databinding.ActivityMainBinding
+import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -16,9 +18,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
         setContentView(binding.root)
 
-//        setContentView(R.layout.fragment_free_write_post)
+
+
+        //바텀네비게이션
         initBottomNavigation()
     }
+
+
+
 
 
     private fun initBottomNavigation(){
@@ -40,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, RallyHomeFragment())
                         .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
                 R.id.communityFragment -> {
                     supportFragmentManager.beginTransaction()

@@ -36,6 +36,7 @@
 
             <!--비회원 로그인 화면-->
             <androidx.cardview.widget.CardView
+                android:id="@+id/un_user_layout"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:layout_marginStart="3dp"
@@ -78,6 +79,7 @@
 
             <!--회원 로그인 화면-->
             <LinearLayout
+                android:id="@+id/user_layout"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:orientation="horizontal"

@@ -117,28 +117,28 @@
             android:lineSpacingExtra="6sp"
             android:textColor="@color/black"
             android:text="프로필을 설정해주세요."/>
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:paddingBottom="10dp"
+            android:layout_marginTop="30dp"
             android:layout_gravity="center">
             <ImageView
                 android:id="@+id/profile_background"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/signup_profile_background"/>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/profile_background"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/signup_default_profile_image"/>
             <androidx.cardview.widget.CardView
+                android:id="@+id/profile_edit_cv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/profile_background"
@@ -164,24 +164,24 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/nickname_input"
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:hint="닉네임을 입력해주세요."
-                android:background="@drawable/signup_edittext_background"
-                android:layout_marginTop="6.63dp"
-                android:paddingVertical="15dp"
-                android:paddingHorizontal="15dp"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/nickname_count"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/nickname_input"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="14.71dp"
-                android:text="(0/10)"/>
+                android:layout_marginTop="10dp"
+                app:boxBackgroundMode="none"
+                app:counterEnabled="true"
+                app:counterMaxLength="10">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edge"
+                    android:maxLength="10"
+                    android:inputType="text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
 
 
@@ -195,33 +195,33 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/description_input"
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:hint="닉네임을 입력해주세요."
-                android:background="@drawable/signup_edittext_background"
-                android:layout_marginTop="6.63dp"
-                android:paddingVertical="15dp"
-                android:paddingHorizontal="15dp"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/description_count"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/description_input"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="14.71dp"
-                android:text="(0/50)"/>
+                android:layout_marginTop="10dp"
+                app:boxBackgroundMode="none"
+                app:counterEnabled="true"
+                app:counterMaxLength="50">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/introduction_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edge"
+                    android:maxLength="50"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
 
-        <TextView
+        <Button
+            android:id="@+id/next_btn"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="25dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/signup_confirmbutton_background_darkgray"
+            android:backgroundTint="@color/gray"
             android:text="다음 단계"
             android:textSize="20sp"
             android:textColor="@color/white"

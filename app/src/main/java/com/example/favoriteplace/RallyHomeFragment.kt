@@ -8,11 +8,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.favoriteplace.databinding.FragmentRallydetailBinding
 import com.example.favoriteplace.databinding.FragmentRallyhomeBinding
 
 class RallyHomeFragment : Fragment() {
 
     lateinit var binding: FragmentRallyhomeBinding
+    lateinit var rallybinding : FragmentRallydetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,6 +22,7 @@ class RallyHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRallyhomeBinding.inflate(inflater, container, false)
+
 
         val interestedRallyItems = listOf(
             InterestedRallyItem("시간을 달리는 소녀", R.drawable.interested_rally_img),
