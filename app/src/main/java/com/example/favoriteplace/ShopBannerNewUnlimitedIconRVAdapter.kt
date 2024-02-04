@@ -7,6 +7,18 @@ import com.example.favoriteplace.databinding.ItemShopBannerNewIconBinding
 
 class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayList<UnlimitedIcon>):
     RecyclerView.Adapter<ShopBannerNewUnlimitedIconRVAdapter.ViewHolder>(){
+
+    //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
+    interface MyItemClickListener : ShopBannerNewLimitedFameRVAdapter.MyItemClickListener {
+        override fun onItemClick()
+    }
+
+    //전달받은 리스너 객체를 저장하는 변수
+    private lateinit var mItemClickListener: ShopBannerNewLimitedFameRVAdapter.MyItemClickListener
+    fun setMyItemClickListener(itemClickListener: ShopBannerNewLimitedIconRVAdapter.MyItemClickListener){
+        mItemClickListener=itemClickListener
+    }
+
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -24,6 +36,9 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
         position: Int
     ) {
         holder.bind(unlimitedIconList[position])
+        holder.itemView.setOnClickListener{
+            mItemClickListener.onItemClick()
+        }
     }
 
     inner class ViewHolder(val binding: ItemShopBannerNewIconBinding): RecyclerView.ViewHolder(binding.root){

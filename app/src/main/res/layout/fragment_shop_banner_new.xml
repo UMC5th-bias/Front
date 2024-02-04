@@ -175,7 +175,7 @@
                         app:layout_constraintTop_toBottomOf="@id/shop_banner_new_icon_tv"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="15dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="20dp"
                         android:paddingVertical="3dp"
                         android:paddingHorizontal="15dp" />
 
@@ -203,7 +203,7 @@
                                 android:layout_height="wrap_content"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                android:layout_marginEnd="15dp"
+                                android:layout_marginStart="15dp"
                                 tools:listitem="@layout/item_shop_banner_new_icon"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 android:orientation="horizontal"/>
@@ -251,7 +251,7 @@
                                 android:layout_height="wrap_content"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                android:layout_marginEnd="15dp"
+                                android:layout_marginStart="15dp"
                                 tools:listitem="@layout/item_shop_banner_new_icon"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 android:orientation="horizontal"/>

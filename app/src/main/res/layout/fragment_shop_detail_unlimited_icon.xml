@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/shop_banner_detail_icon_ib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/shop_back_arrow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="15dp"
+            android:background="@null"/>
+
+        <TextView
+            android:id="@+id/shop_banner_detail_icon_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이콘"
+            android:textStyle="normal"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@id/shop_banner_detail_icon_ib"
+            app:layout_constraintTop_toTopOf="@id/shop_banner_detail_icon_ib"
+            app:layout_constraintBottom_toBottomOf="@id/shop_banner_detail_icon_ib" />
+
+        <TextView
+            android:id="@+id/shop_banner_detail_icon_umc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UMC"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_icon_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="15dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/shop_banner_detail_icon_icon_cl"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_icon_umc_tv"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shop_banner_new_icon_border">
+
+            <ImageView
+                android:id="@+id/shop_banner_detail_icon_icon_iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/limited_icon_detail_1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/shop_banner_detail_icon_apply_cl"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_icon_icon_cl"
+            app:layout_constraintStart_toStartOf="@id/shop_banner_detail_icon_icon_cl"
+            android:background="@drawable/shop_banner_detail_limited_border"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:id="@+id/shop_banner_detail_icon_profile_iv"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/shop_banner_new_icon_profile"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="20dp"/>
+
+            <ImageView
+                android:id="@+id/shop_banner_detail_icon_apply_icon_iv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/limited_icon_1"
+                app:layout_constraintBottom_toBottomOf="@id/shop_banner_detail_icon_profile_iv"
+                android:layout_marginTop="-40dp"
+                app:layout_constraintEnd_toEndOf="@id/shop_banner_detail_icon_profile_iv"
+                android:layout_marginEnd="-10dp"/>
+            <TextView
+                android:id="@+id/shop_banner_detail_icon_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="유닝이"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/shop_banner_detail_icon_profile_iv"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="50dp"/>
+            <TextView
+                android:id="@+id/shop_banner_detail_icon_cost_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20000"
+                android:textStyle="bold"
+                android:textColor="@color/main"
+                android:textSize="13sp"
+                app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_icon_title_tv"
+                app:layout_constraintStart_toStartOf="@id/shop_banner_detail_icon_title_tv"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/shop_banner_detail_fame_cost_point_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="P"
+                android:textStyle="bold"
+                android:textColor="@color/main"
+                android:textSize="13sp"
+                app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_icon_title_tv"
+                app:layout_constraintStart_toEndOf="@id/shop_banner_detail_icon_cost_tv"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="1dp"/>
+
+            <TextView
+                android:id="@+id/shop_banner_detail_icon_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2024.02.00"
+                android:textStyle="normal"
+                android:textColor="@color/dark_gray"
+                android:textSize="10sp"
+                app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_icon_cost_tv"
+                app:layout_constraintStart_toStartOf="@id/shop_banner_detail_icon_cost_tv"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/shop_banner_detail_icon_time_notice_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="까지 판매"
+                android:textStyle="normal"
+                android:textColor="@color/dark_gray"
+                android:textSize="10sp"
+                app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_icon_cost_tv"
+                app:layout_constraintStart_toEndOf="@id/shop_banner_detail_icon_time_tv"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="1dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/shop_banner_detail_icon_body_cl"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_icon_apply_cl"
+            app:layout_constraintStart_toStartOf="@id/shop_banner_detail_icon_icon_cl"
+            android:background="@drawable/shop_banner_detail_limited_border"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="10dp">
+
+            <TextView
+                android:id="@+id/shop_banner_detail_icon_body_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UMC X 최애의 장소가 데모데이를 맞이하여 유니 메이커스 챌린지의 마스코트인 '유닝이' 캐릭터를 최애의 장소의 아이덴티티를 더해 새로운 모습으로 선보였습니다."
+                android:textStyle="normal"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/shop_banner_detail_icon_purchase_bn"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:text="구매하기"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:background="@drawable/shop_banner_new_icon_border"
+            app:backgroundTint="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_icon_body_cl"
+            android:layout_marginTop="50dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
