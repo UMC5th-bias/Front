@@ -3,12 +3,16 @@ package com.example.favoriteplace
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import com.example.favoriteplace.databinding.FragmentShopMainBinding
 
 class ShopMainFragment : Fragment() {
@@ -20,6 +24,10 @@ class ShopMainFragment : Fragment() {
     private val handler = Handler(Looper.getMainLooper())
     private val imageResIds = listOf(R.drawable.shop_banner1, R.drawable.shop_banner2)
     private lateinit var slideRunnable: Runnable
+
+    private var limitedNewIconData=ArrayList<LimitedIcon>()
+    private var limitedUMCIconData=ArrayList<LimitedIcon>()
+    private var unlimitedIconData=ArrayList<UnlimitedIcon>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +49,37 @@ class ShopMainFragment : Fragment() {
                 handler.postDelayed(slideRunnable, 3000)
             }
         }
+
+        val limitedFrameData = listOf(
+            LimitedFame(R.drawable.limited_frame_1, "10000P"),
+            LimitedFame(R.drawable.limited_frame_2, "30000P"),
+            LimitedFame(R.drawable.limited_frame_3, "300000P")
+        )
+
+        val limitedFrameAdapter = ShopBannerLimitedFameRVAdapter(limitedFrameData)
+        binding.shopMainLimitedFrameRv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.shopMainLimitedFrameRv.adapter = limitedFrameAdapter
+
+//        limitedFrameAdapter.setMyItemClickListener(object :ShopBannerLimitedFameRVAdapter.MyItemClickListener{
+//            override fun onItemClick() {
+//                (context as MainActivity).supportFragmentManager.beginTransaction()
+//                    .replace(R.id.main_frameLayout, ShopBannerLimitedFameFragment())
+//                    .commitAllowingStateLoss()
+//            }
+//        })
+
+        val limitedUMCFrameData = listOf(
+            LimitedFame(R.drawable.limited_frame_umc_1, "5000P"),
+            LimitedFame(R.drawable.limited_frame_umc_2, "5000P"),
+            LimitedFame(R.drawable.limited_frame_umc_3, "5000P")
+        )
+
+        val limitedUMCFrameAdapter = ShopBannerLimitedFameRVAdapter(limitedUMCFrameData)
+        binding.shopMainLimitedFrameUMCRv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.shopMainLimitedFrameUMCRv.adapter = limitedUMCFrameAdapter
+
 
         return binding.root
     }
@@ -100,6 +139,10 @@ class ShopMainFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
         setupBannerViewPager()
+
+        // 한정 판매 목록 로드
+        fetchLimitedSales()
+
 
         // 초기 상태 설정
         binding.shopMainSwitchOnOffSc.isChecked = false
@@ -164,5 +207,29 @@ class ShopMainFragment : Fragment() {
         }
     }
 
+    // 한정 판매 목록 로드 메서드
+    private fun fetchLimitedSales() {
+        // RetrofitClient.shopService.getLimitedSales("Bearer YOUR_AUTH_TOKEN") 호출 구현 필요
+        // 예시를 위한 가상 코드입니다. 실제로는 YOUR_AUTH_TOKEN을 적절한 토큰으로 대체해야 합니다.
+        RetrofitClient.shopService.getLimitedSales("Bearer YOUR_AUTH_TOKEN").enqueue(object : Callback<LimitedSalesResponse> {
+            override fun onResponse(call: Call<LimitedSalesResponse>, response: Response<LimitedSalesResponse>) {
+                if (response.isSuccessful) {
+                    // 성공적으로 데이터를 받음. 여기서 UI 업데이트 로직을 구현합니다.
+                    val limitedSalesResponse = response.body()
 
+                    // 받아온 데이터를 로그로 출력
+                    Log.d("ShopMainFragment", "Limited sales data received: $limitedSalesResponse")
+
+                    // 예: 받아온 데이터를 기반으로 UI 업데이트
+                } else {
+                    Log.d("ShopMainFragment", "API Error: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<LimitedSalesResponse>, t: Throwable) {
+                // 네트워크 오류 등의 실패 처리
+                Log.d("ShopMainFragment", "Network Error: ${t.message}")
+            }
+        })
+    }
 }

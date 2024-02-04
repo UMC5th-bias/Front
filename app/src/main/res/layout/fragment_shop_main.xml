@@ -316,6 +316,26 @@
                     app:layout_constraintTop_toBottomOf="@id/limitedFrameNew_tv"
                     tools:listitem="@layout/item_shop_banner_new_fame" />
 
+                <TextView
+                    android:id="@+id/limitedFrameUMC_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="UMC"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/shopMain_limitedFrame_rv"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/shopMain_limitedFrameUMC_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/limitedFrameUMC_tv"
+                    tools:listitem="@layout/item_shop_banner_new_fame" />
+
 
                 <!-- 한정판매 관련 뷰들 -->
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -347,6 +367,26 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/regularFrameNew_tv"
+                    tools:listitem="@layout/item_shop_banner_new_fame" />
+
+                <TextView
+                    android:id="@+id/regularFrameUMC_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="UMC"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/shopMain_regularFrame_rv"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/shopMain_regularFrameUMC_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/regularFrameUMC_tv"
                     tools:listitem="@layout/item_shop_banner_new_fame" />
 
 
