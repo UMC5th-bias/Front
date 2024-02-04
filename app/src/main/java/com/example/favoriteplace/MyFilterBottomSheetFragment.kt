@@ -40,5 +40,9 @@ class MyFilterBottomSheetFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    companion object {
+        const val TAG = "MyFilterBottomModalSheet"
+    }
+
 
 }

@@ -12,7 +12,6 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.favoriteplace.databinding.FragmentCommunityMainBinding
 import com.example.favoriteplace.databinding.FragmentRallyplaceBinding
 import com.example.favoriteplace.databinding.FragmentSignupConditionConfirmBinding

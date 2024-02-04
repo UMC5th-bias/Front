@@ -1,17 +1,17 @@
 package com.example.favoriteplace
 
-import android.content.Context
 import android.content.Intent
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.os.PersistableBundle
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.example.favoriteplace.databinding.ActivityLoginBinding
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -29,8 +29,6 @@ class LoginActivity :AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
 
         binding.logoinBtn.setOnClickListener {
             //Login()

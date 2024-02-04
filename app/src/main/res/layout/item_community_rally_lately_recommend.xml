@@ -103,7 +103,6 @@
         app:layout_constraintTop_toTopOf="@id/item_community_rally_eye_iv"
         app:layout_constraintBottom_toBottomOf="@id/item_community_rally_eye_iv"
         app:layout_constraintStart_toEndOf="@id/item_community_rally_eye_iv"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="2dp"/>
 
     <ImageView
@@ -113,7 +112,7 @@
         android:src="@drawable/community_free_like"
         app:layout_constraintStart_toEndOf="@id/item_community_rally_eye_tv"
         app:layout_constraintTop_toTopOf="@id/item_community_rally_eye_iv"
-        android:layout_marginStart="15dp"/>
+        android:layout_marginStart="10dp"/>
 
     <TextView
         android:id="@+id/item_community_rally_like_tv"
@@ -125,12 +124,11 @@
         app:layout_constraintTop_toTopOf="@id/item_community_rally_eye_iv"
         app:layout_constraintBottom_toBottomOf="@id/item_community_rally_eye_iv"
         app:layout_constraintStart_toEndOf="@id/item_community_rally_like_iv"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="2dp"/>
 
     <TextView
         android:id="@+id/item_community_rally_clock_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:text="5분전"
         android:textSize="10sp"
@@ -138,7 +136,7 @@
         app:layout_constraintTop_toTopOf="@id/item_community_rally_eye_iv"
         app:layout_constraintBottom_toBottomOf="@id/item_community_rally_eye_iv"
         app:layout_constraintStart_toEndOf="@id/item_community_rally_like_tv"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="1dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -148,8 +146,8 @@
         android:background="@drawable/community_free_write_comment_border"
         app:layout_constraintTop_toTopOf="@id/item_community_rally_eye_iv"
         app:layout_constraintBottom_toBottomOf="@id/item_community_rally_eye_iv"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="10dp">
+        app:layout_constraintStart_toEndOf="@id/item_community_rally_clock_tv"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"

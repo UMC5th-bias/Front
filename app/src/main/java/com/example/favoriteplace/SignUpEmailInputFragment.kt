@@ -6,26 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.runtime.Composable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.favoriteplace.databinding.FragmentCommunityMainBinding
-import com.example.favoriteplace.databinding.FragmentRallyplaceBinding
-import com.example.favoriteplace.databinding.FragmentSignupConditionConfirmBinding
 import com.example.favoriteplace.databinding.FragmentSignupEmailInputBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
-import java.util.regex.Pattern
 
 class SignUpEmailInputFragment: Fragment() {
 

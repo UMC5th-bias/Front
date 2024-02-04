@@ -67,9 +67,9 @@ class HomeFragment : Fragment() {
 //                binding.userLayout.visibility = View.VISIBLE
 //                binding.unUserLayout.visibility = View.GONE
 //            }
-
-
+            startActivity(Intent(activity, LoginActivity::class.java))
         }
+
         return binding.root
     }
 
