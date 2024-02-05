@@ -30,12 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity android:name=".SignUpConditionConfirmActivity"/>-->
-<!--        <activity android:name=".SignUpEmailInputActivity"/>-->
-<!--        <activity android:name=".SignUpEmailVerificationActivity"/>-->
-<!--        <activity android:name=".SignUpFinishActivity"/>-->
-<!--        <activity android:name=".SignUpProfileSettingActivity"/>-->
-<!--        <activity android:name=".SignUpPwdInputActivity"/>-->
+        <activity android:name=".SignUpConditionConfirmActivity"/>
+        <activity android:name=".SignUpEmailInputActivity"/>
+        <activity android:name=".SignUpEmailVerificationActivity"/>
+        <activity android:name=".SignUpFinishActivity"/>
+        <activity android:name=".SignUpProfileSettingActivity"/>
+        <activity android:name=".SignUpPwdInputActivity"/>
         <activity android:name=".FreeWritePostActivity"/>
         <activity android:name=".PostDetailActivity"/>
 
