@@ -27,13 +27,14 @@
 
         <ImageView
             android:id="@+id/item_shop_banner_new_icon_iv"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="7dp"
             android:src="@drawable/limited_icon_1"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="55dp"
-            android:layout_marginEnd="5dp"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/item_shop_banner_new_icon_title_tv"
