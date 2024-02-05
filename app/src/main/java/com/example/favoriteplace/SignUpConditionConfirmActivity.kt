@@ -10,8 +10,9 @@ class SignUpConditionConfirmActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivitySignupConditionConfirmBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
 
     }
 

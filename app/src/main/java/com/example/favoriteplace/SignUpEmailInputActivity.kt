@@ -11,8 +11,8 @@ class SignUpEmailInputActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-
         binding = ActivitySignupEmailInputBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
     }
