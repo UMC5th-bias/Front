@@ -29,40 +29,7 @@ class RallyHomeFragment : Fragment() {
         binding = FragmentRallyhomeBinding.inflate(inflater, container, false)
 
 
-        val interestedRallyItems = listOf(
-            InterestedRallyItem("시간을 달리는 소녀", R.drawable.interested_rally_img),
-            InterestedRallyItem("센과 치히로의 행방불명", R.drawable.interested_rally_img2),
-            InterestedRallyItem("주술회전", R.drawable.interested_rally_img3)
-        )
 
-        // 데이터 리스트 생성
-        val certificationRallyItems = listOf(
-            CertifiedRallyItem(
-                "날씨의 아이 덕후 투어 다녀왔어요:)",
-                "#날씨의아이",
-                "#도쿄",
-                R.drawable.certificated_rally_img,
-                "1시간 전"
-            ),
-            CertifiedRallyItem(
-                "시타 가쿠슈인역에 다녀왔습니..",
-                "#시간을달리는소녀",
-                "#도쿄",
-                R.drawable.certificated_rally_img2,
-                "어제"
-            )
-            // 추가 데이터...
-        )
-
-        // 어댑터 생성 및 설정
-        val certifiedAdapter = RallyHomeCertificationRVAdapter(certificationRallyItems)
-        binding.rallyHomeCertificatedRallyRv.layoutManager = LinearLayoutManager(context)
-        binding.rallyHomeCertificatedRallyRv.adapter = certifiedAdapter
-
-        val interestedAdapter = RallyHomeInterestedRVAdapter(interestedRallyItems)
-        binding.rallyHomeInterestedRallyRv.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.rallyHomeInterestedRallyRv.adapter = interestedAdapter
 
         binding.rallyPlaceBlackBoxCl.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -93,6 +60,39 @@ class RallyHomeFragment : Fragment() {
                 .into(binding.recommendRallyIv)
         }
 
+        fun setMyRally(rallyHomeResponseMyRally: RallyHomeResponseMyRally) {
+            // 관심있는 렐리 모아보기 데이터 연동
+            val interestedRallyItems = mutableListOf<InterestedRallyItem>()
+            rallyHomeResponseMyRally.likedRally.forEach {
+                interestedRallyItems.add(InterestedRallyItem(it.name, it.image))
+            }
+            val interestedAdapter = RallyHomeInterestedRVAdapter(interestedRallyItems, context as MainActivity)
+            binding.rallyHomeInterestedRallyRv.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.rallyHomeInterestedRallyRv.adapter = interestedAdapter
+
+            // 내 성지순례 인증글 모아보기 데이터 연동
+            // 데이터 리스트 생성
+            val certificationRallyItems = mutableListOf<CertifiedRallyItem>()
+            rallyHomeResponseMyRally.guestBook.forEach {
+                certificationRallyItems.add(
+                    CertifiedRallyItem(
+                        title = it.title,
+                        tag1 = it.hashTag.first(),
+                        tag2 = it.hashTag.first(),
+                        imageResId = it.image,
+                        time = it.createdAt
+
+                    )
+                )
+            }
+
+            // 어댑터 생성 및 설정
+            val certifiedAdapter = RallyHomeCertificationRVAdapter(certificationRallyItems, context as MainActivity)
+            binding.rallyHomeCertificatedRallyRv.layoutManager = LinearLayoutManager(context)
+            binding.rallyHomeCertificatedRallyRv.adapter = certifiedAdapter
+        }
+
         RetrofitAPI.rallyHomeService.getTrending().enqueue(object: Callback<RallyHomeTrending> {
             override fun onResponse(call: Call<RallyHomeTrending>, response: Response<RallyHomeTrending>) {
                 if(response.isSuccessful) {
@@ -109,6 +109,26 @@ class RallyHomeFragment : Fragment() {
 
             override fun onFailure(call: Call<RallyHomeTrending>, t: Throwable) {
                 Log.e("Retrofit:getTrending()", "onFailure: $t")
+            }
+
+        })
+
+        RetrofitAPI.rallyHomeService.getMyRally().enqueue(object: Callback<RallyHomeResponseMyRally> {
+            override fun onResponse(call: Call<RallyHomeResponseMyRally>, response: Response<RallyHomeResponseMyRally>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.d("Retrofit:getMyRally()", "Response: ${responseData}")
+                        setMyRally(responseData)
+                    }
+                }
+                else {
+                    Log.e("Retrofit:getMyRally()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<RallyHomeResponseMyRally>, t: Throwable) {
+                Log.e("Retrofit:getMyRally()", "onFailure: $t")
             }
 
         })

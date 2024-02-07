@@ -30,42 +30,24 @@ class RallyPlaceFragment: Fragment(){
 
         var regionList: List<Region> = emptyList()
 
-        val placeInfo: Map<String, Map<String, List<RallyPlaceLocationItem>>> =
-            mapOf(
-                "도쿄" to mapOf(
-                    "도쿄도 시부야구" to listOf(
-                        RallyPlaceLocationItem(name = "날씨의 아이", location = "시부야 스크램블 교차로", R.drawable.rallyplace_example_image_1),
-                        RallyPlaceLocationItem(name = "주술회전", location = "우다가와초 주차장 옆", R.drawable.rallyplace_example_image_2),
-                    ),
-                    "도쿄도 신주쿠구" to listOf(
-                        RallyPlaceLocationItem(name = "날씨의 아이", location = "맥도날드 신주쿠 역전점", R.drawable.rallyplace_example_image_3),
-                        RallyPlaceLocationItem(name = "너의 이름은", location = "스가신사 잎구 계단", R.drawable.rallyplace_example_image_4),
-                    ),
-                    "도쿄도 분쿄구" to emptyList(),
-                    "도쿄도 지요다구" to emptyList(),
-                    "도쿄도 미나토구" to emptyList(),
-                    "도쿄도 주오구" to emptyList(),
-                    "도쿄도 고토구" to emptyList(),
-                    "도쿄도 메구로구" to emptyList(),
-                ),
-                "오사카" to emptyMap(),
-                "쿄토" to emptyMap(),
-                "훗카이도" to emptyMap(),
-            )
 
         fun setRegionRV() {
             //도쿄
             val tempTyoko = regionList.filter {it.state == "도쿄도" }
-            binding.tyokoBT.setOnClickListener {
-                if(binding.tokyoRV.isVisible) binding.tokyoRV.visibility = View.GONE
-                else binding.tokyoRV.visibility = View.VISIBLE
+            if(tempTyoko.isNotEmpty()) {
+                binding.tyokoBT.visibility = View.VISIBLE
+                binding.tyokoBT.setOnClickListener {
+                    if(binding.tokyoRV.isVisible) binding.tokyoRV.visibility = View.GONE
+                    else binding.tokyoRV.visibility = View.VISIBLE
+                }
+                binding.tokyoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempTyoko.first().detail)
+                binding.tokyoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
             }
-            binding.tokyoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempTyoko.first().detail)
-            binding.tokyoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
 
             //오사카
             val tempOsaka = regionList.filter {it.state == "오사카" }
             if(tempOsaka.isNotEmpty()) {
+                binding.osakaBT.visibility = View.VISIBLE
                 binding.osakaBT.setOnClickListener {
                     if(binding.osakaRV.isVisible) binding.osakaRV.visibility = View.GONE
                     else binding.osakaRV.visibility = View.VISIBLE
@@ -77,6 +59,7 @@ class RallyPlaceFragment: Fragment(){
             //쿄토
             val tempKyoto = regionList.filter {it.state == "쿄토" }
             if(tempKyoto.isNotEmpty()) {
+                binding.kyotoBT.visibility = View.VISIBLE
                 binding.kyotoBT.setOnClickListener {
                     if(binding.kyotoRV.isVisible) binding.kyotoRV.visibility = View.GONE
                     else binding.kyotoRV.visibility = View.VISIBLE
@@ -89,6 +72,7 @@ class RallyPlaceFragment: Fragment(){
             //훗카이도
             val tempHokkaido = regionList.filter {it.state == "훗카이도" }
             if(tempHokkaido.isNotEmpty()) {
+                binding.hokkaidoBT.visibility = View.VISIBLE
                 binding.hokkaidoBT.setOnClickListener {
                     if(binding.hokkaidoRV.isVisible) binding.hokkaidoRV.visibility = View.GONE
                     else binding.hokkaidoRV.visibility = View.VISIBLE
