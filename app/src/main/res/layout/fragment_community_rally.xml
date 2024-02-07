@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/community_rally_nsv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ScrollView
+                android:id="@+id/community_rally_sv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp">
+
+                    <TextView
+                        android:id="@+id/community_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="커뮤니티"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="15dp"/>
+
+                    <ImageButton
+                        android:id="@+id/community_rally_sort_ib"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/btn_sort_arrow"
+                        android:background="@null"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/community_tv"
+                        android:layout_marginTop="45dp"
+                        android:layout_marginStart="10dp"/>
+
+                    <TextView
+                        android:id="@+id/community_rally_sort_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="제목"
+                        android:textStyle="normal"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toEndOf="@id/community_rally_sort_ib"
+                        app:layout_constraintTop_toTopOf="@id/community_rally_sort_ib"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="-8dp"/>
+
+                    <EditText
+                        android:id="@+id/searchTextView"
+                        android:inputType="text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="검색어를 입력해주세요."
+                        android:textColorHint="@color/gray"
+                        android:paddingStart="27dp"
+                        android:paddingEnd="13.67dp"
+                        android:paddingVertical="12dp"
+                        android:layout_marginTop="34.5dp"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.06"
+                        android:textColor="@color/black"
+                        android:background="@drawable/search_bar_border"
+                        android:drawableEnd="@drawable/search_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/community_rally_sort_ib"
+                        android:maxLines="1"/>
+
+
+                    <TextView
+                        android:id="@+id/community_rally_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="성지순례인증"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="@id/community_tv"
+                        app:layout_constraintTop_toBottomOf="@id/searchTextView"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="20dp"/>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/community_rally_tb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabSelectedTextColor="@color/main"
+                        app:tabIndicatorFullWidth="false"
+                        app:tabRippleColor="#00ff0000"
+                        app:tabIndicator="@null"
+                        app:tabMaxWidth="380dp"
+                        app:tabMinWidth="50dp"
+                        app:tabMode="scrollable"
+                        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+                        app:layout_constraintTop_toBottomOf="@id/community_rally_tv"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/community_rally_vp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintVertical_bias="1.0"
+                        app:layout_constraintTop_toBottomOf="@id/community_rally_tb"
+                        app:layout_constraintStart_toStartOf="@id/community_rally_tb"
+                        app:layout_constraintEnd_toEndOf="@id/community_rally_tb" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
