@@ -43,15 +43,35 @@ class HomeFragment : Fragment() {
 
 
 
+        binding.homeItemTitleTv1.text = "8월 말 도쿄타워 투어하고 주변 다 .."
+        binding.homeItemTimeTv.text="1시간전"
+        binding.homeItemCategoryTv1.text="성지순례 인증"
+        binding.homeItemTag1Tv1.visibility=View.GONE
+        binding.homeItemTag2Tv1.visibility=View.GONE
+
+        binding.homeItemTitleTv2.text = "나고야 주변 성지순례 리스트 모음 .."
+        binding.homeItemTimeTv2.text="1시간전"
+        binding.homeItemCategoryTv2.text="자유게시판"
+        binding.homeItemCiv2.setImageResource(R.drawable.homepro)
+        binding.homeItemTag1Tv2.visibility=View.GONE
+        binding.homeItemTag2Tv2.visibility=View.GONE
+
+        binding.homeItemTitleTv3.text = "날씨의아이 성지순례 언제 가는게 .."
+        binding.homeItemTimeTv3.text="2시간전"
+        binding.homeItemCategoryTv3.text="자유게시판"
+        binding.homeItemCiv2.setImageResource(R.drawable.homepro)
+        binding.homeItemTag1Tv3.visibility=View.GONE
+        binding.homeItemTag2Tv3.visibility=View.GONE
+
 
         //로그인 버튼
         binding.homeLoginBtn.setOnClickListener {
-//            val intent = Intent(requireActivity(), LoginActivity::class.java)
-//            try {
-//                startActivityForResult(intent, LOGIN_REQUEST_CODE)
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            try {
+                startActivityForResult(intent, LOGIN_REQUEST_CODE)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
 
 
             // SharedPreferences에서 토큰 읽어오기

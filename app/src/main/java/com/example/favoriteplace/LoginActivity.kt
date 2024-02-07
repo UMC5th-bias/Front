@@ -63,28 +63,28 @@ class LoginActivity :AppCompatActivity() {
         val password = binding.logoinInputPwdEt.text.toString()
 
         // 로그인 함수 호출
-        login(email, password)
+//        login(email, password)
     }
 
-    private fun login(email: String, password: String) {
-        // Retrofit API 호출
-        lifecycleScope.launch {
-            try {
-                val loginService = RetrofitAPI.loginService
-                val response = loginService.login(email,password)
-
-                if(response.isSuccessful){
-                    loginResponse = response.body()
-                }
-                // 서버 응답 처리
-                handleLoginResponse(response)
-            }catch (e:Exception){
-                // 예외 처리
-                Log.d("Login", "Error during login: ${e.message}")
-            }
-        }
-
-    }
+//    private fun login(email: String, password: String) {
+//        // Retrofit API 호출
+//        lifecycleScope.launch {
+//            try {
+//                val loginService = RetrofitAPI.loginService
+//                val response = loginService.login(email,password)
+//
+//                if(response.isSuccessful){
+//                    loginResponse = response.body()
+//                }
+//                // 서버 응답 처리
+//                handleLoginResponse(response)
+//            }catch (e:Exception){
+//                // 예외 처리
+//                Log.d("Login", "Error during login: ${e.message}")
+//            }
+//        }
+//
+//    }
 
     private fun handleLoginResponse(response: Response<LoginResponse>) {
         if (response.isSuccessful){

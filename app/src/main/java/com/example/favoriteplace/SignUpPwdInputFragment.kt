@@ -9,12 +9,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.favoriteplace.databinding.FragmentSignupEmailInputBinding
 import com.example.favoriteplace.databinding.FragmentSignupPwdInputBinding
-import com.google.firebase.auth.FirebaseAuth
+
 
 class SignUpPwdInputFragment: Fragment() {
 
     lateinit var binding: FragmentSignupPwdInputBinding
-    private val auth = FirebaseAuth.getInstance()
+//    private val auth = FirebaseAuth.getInstance()
 
 
     lateinit var email : FragmentSignupEmailInputBinding

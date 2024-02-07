@@ -119,7 +119,7 @@ class SignUpFinishFragment: Fragment() {
     ) {
 
         try {
-            val signUpService= RetrofitAPI.signUpService
+//            val signUpService= RetrofitAPI.signUpService
 
 
             // Prepare user data
@@ -142,10 +142,10 @@ class SignUpFinishFragment: Fragment() {
 
 
             // Retrofit call
-            val response = signUpService.addSignup(userDataRequestBody, images)
+//            val response = signUpService.addSignup(userDataRequestBody, images)
 
             // 서버 응답 처리
-            handleResponse(response)
+//            handleResponse(response)
 
 
         } catch (e:Exception){
