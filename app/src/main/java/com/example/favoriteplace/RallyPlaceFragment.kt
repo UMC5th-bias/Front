@@ -25,35 +25,10 @@ class RallyPlaceFragment: Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://favoriteplace.store:8080/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val apiService = retrofit.create(ApiService::class.java)
-
-        apiService.getRegion().enqueue(object: Callback<List<Region>> {
-            override fun onResponse(call: Call<List<Region>>, response: Response<List<Region>>) {
-                if(response.isSuccessful) {
-                    val responseData = response.body()
-                    if(responseData != null) {
-                        Log.w("Retrofit:getRegion()", "Response: ${response}")
-                    }
-                }
-                else {
-                    Log.e("Retrofit:getRegion()", "notSuccessful: ${response.code()}")
-                }
-            }
-
-            override fun onFailure(call: Call<List<Region>>, t: Throwable) {
-                Log.e("Retrofit:getRegion()", "onFailure: $t")
-            }
-
-        })
-
-//        Log.w("test", "받아온 데이터: ${apiService.getRegion()}")
 
         binding = FragmentRallyplaceBinding.inflate(inflater,container,false)
+
+        var regionList: List<Region> = emptyList()
 
         val placeInfo: Map<String, Map<String, List<RallyPlaceLocationItem>>> =
             mapOf(
@@ -78,37 +53,76 @@ class RallyPlaceFragment: Fragment(){
                 "훗카이도" to emptyMap(),
             )
 
-        //도쿄
-        binding.tyokoBT.setOnClickListener {
-            if(binding.tokyoRV.isVisible) binding.tokyoRV.visibility = View.GONE
-            else binding.tokyoRV.visibility = View.VISIBLE
-        }
-        binding.tokyoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), placeInfo["도쿄"] ?: emptyMap())
-        binding.tokyoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
+        fun setRegionRV() {
+            //도쿄
+            val tempTyoko = regionList.filter {it.state == "도쿄도" }
+            binding.tyokoBT.setOnClickListener {
+                if(binding.tokyoRV.isVisible) binding.tokyoRV.visibility = View.GONE
+                else binding.tokyoRV.visibility = View.VISIBLE
+            }
+            binding.tokyoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempTyoko.first().detail)
+            binding.tokyoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
 
-        //오사카
-        binding.osakaBT.setOnClickListener {
-            if(binding.osakaRV.isVisible) binding.osakaRV.visibility = View.GONE
-            else binding.osakaRV.visibility = View.VISIBLE
-        }
-        binding.osakaRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), placeInfo["오사카"] ?: emptyMap())
-        binding.osakaRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
+            //오사카
+            val tempOsaka = regionList.filter {it.state == "오사카" }
+            if(tempOsaka.isNotEmpty()) {
+                binding.osakaBT.setOnClickListener {
+                    if(binding.osakaRV.isVisible) binding.osakaRV.visibility = View.GONE
+                    else binding.osakaRV.visibility = View.VISIBLE
+                }
+                binding.osakaRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempOsaka.first().detail)
+                binding.osakaRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
+            }
 
-        //쿄토
-        binding.kyotoBT.setOnClickListener {
-            if(binding.kyotoRV.isVisible) binding.kyotoRV.visibility = View.GONE
-            else binding.kyotoRV.visibility = View.VISIBLE
-        }
-        binding.kyotoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), placeInfo["쿄토"] ?: emptyMap())
-        binding.kyotoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
+            //쿄토
+            val tempKyoto = regionList.filter {it.state == "쿄토" }
+            if(tempKyoto.isNotEmpty()) {
+                binding.kyotoBT.setOnClickListener {
+                    if(binding.kyotoRV.isVisible) binding.kyotoRV.visibility = View.GONE
+                    else binding.kyotoRV.visibility = View.VISIBLE
+                }
+                binding.kyotoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempKyoto.first().detail)
+                binding.kyotoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
 
-        //훗카이도
-        binding.hokkaidoBT.setOnClickListener {
-            if(binding.hokkaidoRV.isVisible) binding.hokkaidoRV.visibility = View.GONE
-            else binding.hokkaidoRV.visibility = View.VISIBLE
+            }
+
+            //훗카이도
+            val tempHokkaido = regionList.filter {it.state == "훗카이도" }
+            if(tempHokkaido.isNotEmpty()) {
+                binding.hokkaidoBT.setOnClickListener {
+                    if(binding.hokkaidoRV.isVisible) binding.hokkaidoRV.visibility = View.GONE
+                    else binding.hokkaidoRV.visibility = View.VISIBLE
+                }
+                binding.hokkaidoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempHokkaido.first().detail)
+                binding.hokkaidoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
+            }
         }
-        binding.hokkaidoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), placeInfo["훗카이도"] ?: emptyMap())
-        binding.hokkaidoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
+
+
+
+        RetrofitAPI.rallyPlaceService.getRegion().enqueue(object: Callback<List<Region>> {
+            override fun onResponse(call: Call<List<Region>>, response: Response<List<Region>>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.w("Retrofit:getRegion()", "Response: ${responseData}")
+                        regionList = responseData
+                        regionList.forEach { region ->
+                            region.detail.sortedBy { it.id }
+                        }
+                    }
+                    setRegionRV()
+                }
+                else {
+                    Log.e("Retrofit:getRegion()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Region>>, t: Throwable) {
+                Log.e("Retrofit:getRegion()", "onFailure: $t")
+            }
+
+        })
 
         return binding.root
     }

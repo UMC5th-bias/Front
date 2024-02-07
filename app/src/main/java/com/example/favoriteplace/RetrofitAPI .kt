@@ -30,6 +30,7 @@ object RetrofitAPI {
     val signUpService: SignUpService = retrofit.create(SignUpService::class.java)
 
     val loginService: LoginService = retrofit.create(LoginService::class.java)
+    val rallyPlaceService: RallyPlaceService = retrofit.create(RallyPlaceService::class.java)
 }
 
 
