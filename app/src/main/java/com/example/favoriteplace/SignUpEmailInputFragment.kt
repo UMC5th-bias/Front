@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.favoriteplace.databinding.FragmentSignupEmailInputBinding
+import com.example.favoriteplace.databinding.ActivitySignupEmailInputBinding
 
 
 class SignUpEmailInputFragment: Fragment() {
 
-    lateinit var binding: FragmentSignupEmailInputBinding
+    lateinit var binding: ActivitySignupEmailInputBinding
 
 
     override fun onCreateView(
@@ -22,7 +22,7 @@ class SignUpEmailInputFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentSignupEmailInputBinding.inflate(inflater, container,false)
+        binding = ActivitySignupEmailInputBinding.inflate(inflater, container,false)
 
         val checkboxValue  = arguments?.getBoolean("checkbox", true)
         Log.d("SignUp", "Value received: $checkboxValue ")

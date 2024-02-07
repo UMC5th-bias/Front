@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.favoriteplace.databinding.ActivitySignupFinishBinding
 import com.example.favoriteplace.databinding.FragmentSignupFinishBinding
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
@@ -20,7 +21,7 @@ import java.io.File
 
 class SignUpFinishFragment: Fragment() {
 
-    lateinit var binding: FragmentSignupFinishBinding
+    lateinit var binding: ActivitySignupFinishBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +29,7 @@ class SignUpFinishFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentSignupFinishBinding.inflate(inflater, container,false)
+        binding = ActivitySignupFinishBinding.inflate(inflater, container,false)
 
 
 
@@ -88,13 +89,13 @@ class SignUpFinishFragment: Fragment() {
 
         //뒤로가기
         binding.backIv.setOnClickListener {
-            val profileFragment = SignUpProfileSettingFragment()
-            val transaction = parentFragmentManager.beginTransaction()
+            /*val profileFragment = SignUpProfileSettingFragment()*/
+/*            val transaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.main_frameLayout, profileFragment)
             transaction.addToBackStack(null)
             val currentFragment = parentFragmentManager.findFragmentById(R.id.main_frameLayout)
             currentFragment?.let { transaction.hide(it) }
-            transaction.commit()
+            transaction.commit()*/
         }
     }
 

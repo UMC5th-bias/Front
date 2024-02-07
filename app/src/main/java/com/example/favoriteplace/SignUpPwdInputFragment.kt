@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,17 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.favoriteplace.databinding.ActivitySignupEmailInputBinding
+import com.example.favoriteplace.databinding.ActivitySignupPwdInputBinding
 import com.example.favoriteplace.databinding.FragmentSignupEmailInputBinding
 import com.example.favoriteplace.databinding.FragmentSignupPwdInputBinding
 
 
 class SignUpPwdInputFragment: Fragment() {
 
-    lateinit var binding: FragmentSignupPwdInputBinding
+    lateinit var binding: ActivitySignupPwdInputBinding
 //    private val auth = FirebaseAuth.getInstance()
 
 
-    lateinit var email : FragmentSignupEmailInputBinding
+    lateinit var email : ActivitySignupEmailInputBinding
 
 
     override fun onCreateView(
@@ -26,9 +29,9 @@ class SignUpPwdInputFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentSignupPwdInputBinding.inflate(inflater, container,false)
+        binding = ActivitySignupPwdInputBinding.inflate(inflater, container,false)
 
-        email = FragmentSignupEmailInputBinding.inflate(inflater,container,false)
+        email = ActivitySignupEmailInputBinding.inflate(inflater,container,false)
 
         return binding.root
     }
@@ -76,28 +79,20 @@ class SignUpPwdInputFragment: Fragment() {
                     }
 
 
-                    val profileFragment = SignUpProfileSettingFragment()
-                    profileFragment.arguments=bundle
-
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout,profileFragment)
-                        .addToBackStack(null)
-                        .commit()
+//                    val profileFragment = SignUpProfileSettingActivity()
+//                    profileFragment.arguments=bundle
+//
+//                    parentFragmentManager.beginTransaction()
+//                        .replace(R.id.main_frameLayout,profileFragment)
+//                        .addToBackStack(null)
+//                        .commit()
 
                     // 다음 단계 클릭 활성화
                     binding.nextBtn.setOnClickListener {
-                        val profileFragment = SignUpProfileSettingFragment()
-                        val transaction = parentFragmentManager.beginTransaction()
-                        transaction.replace(R.id.main_frameLayout, profileFragment)
-                        transaction.addToBackStack(null)
-                        transaction.commit()
-
+                        val intent = Intent(requireContext(), SignUpProfileSettingActivity::class.java)
+                        startActivity(intent)
                     }
 
-
-                    //test
-//                    val retrofitWork = RetrofitWork(userData)
-//                    retrofitWork.work()
 
 
                 }

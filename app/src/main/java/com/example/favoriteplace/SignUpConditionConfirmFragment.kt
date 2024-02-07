@@ -8,19 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-//import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.favoriteplace.databinding.FragmentCommunityMainBinding
-import com.example.favoriteplace.databinding.FragmentRallyplaceBinding
-import com.example.favoriteplace.databinding.FragmentSignupConditionConfirmBinding
+import com.example.favoriteplace.databinding.ActivitySignupConditionConfirmBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SignUpConditionConfirmFragment: Fragment() {
 
-    lateinit var binding: FragmentSignupConditionConfirmBinding
+    lateinit var binding: ActivitySignupConditionConfirmBinding
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
@@ -31,7 +26,7 @@ class SignUpConditionConfirmFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentSignupConditionConfirmBinding.inflate(inflater, container,false)
+        binding = ActivitySignupConditionConfirmBinding.inflate(inflater, container,false)
 
         bottomNavigationView = requireActivity().findViewById(R.id.main_bnv)
         bottomNavigationView.visibility=View.
