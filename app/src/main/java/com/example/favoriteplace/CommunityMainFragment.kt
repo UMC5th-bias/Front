@@ -96,6 +96,18 @@ class CommunityMainFragment: Fragment() {
             }
         }
 
+        binding.communityFreeIv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frameLayout, CommunityFreeFragment())
+                .commitAllowingStateLoss()
+        }
+
+        binding.communityRallyIv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frameLayout, CommunityRallyFragment())
+                .commitAllowingStateLoss()
+        }
+
         return binding.root
     }
 
