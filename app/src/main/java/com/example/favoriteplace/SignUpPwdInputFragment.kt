@@ -10,8 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.favoriteplace.databinding.ActivitySignupEmailInputBinding
 import com.example.favoriteplace.databinding.ActivitySignupPwdInputBinding
-import com.example.favoriteplace.databinding.FragmentSignupEmailInputBinding
-import com.example.favoriteplace.databinding.FragmentSignupPwdInputBinding
 
 
 class SignUpPwdInputFragment: Fragment() {

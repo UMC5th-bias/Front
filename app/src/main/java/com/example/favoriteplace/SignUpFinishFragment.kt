@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.favoriteplace.databinding.ActivitySignupFinishBinding
-import com.example.favoriteplace.databinding.FragmentSignupFinishBinding
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
