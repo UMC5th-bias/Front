@@ -105,7 +105,7 @@ class RallyPlaceFragment: Fragment(){
                 if(response.isSuccessful) {
                     val responseData = response.body()
                     if(responseData != null) {
-                        Log.w("Retrofit:getRegion()", "Response: ${responseData}")
+                        Log.d("Retrofit:getRegion()", "Response: ${responseData}")
                         regionList = responseData
                         regionList.forEach { region ->
                             region.detail.sortedBy { it.id }

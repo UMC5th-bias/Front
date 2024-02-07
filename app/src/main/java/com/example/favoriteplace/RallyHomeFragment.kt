@@ -1,6 +1,7 @@
 package com.example.favoriteplace
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.FragmentRallydetailBinding
 import com.example.favoriteplace.databinding.FragmentRallyhomeBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RallyHomeFragment : Fragment() {
 
@@ -79,6 +84,34 @@ class RallyHomeFragment : Fragment() {
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
         }
+
+        fun setTrendingRally(rallyHomeTrending: RallyHomeTrending) {
+            binding.recommendRallyTitleTv.text = rallyHomeTrending.name
+            binding.recommendRallyProgressTv.text = "${rallyHomeTrending.myPilgrimageNumber}/${rallyHomeTrending.pilgrimageNumber}"
+            Glide.with(this)
+                .load(rallyHomeTrending.image)
+                .into(binding.recommendRallyIv)
+        }
+
+        RetrofitAPI.rallyHomeService.getTrending().enqueue(object: Callback<RallyHomeTrending> {
+            override fun onResponse(call: Call<RallyHomeTrending>, response: Response<RallyHomeTrending>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.d("Retrofit:getTrending()", "Response: ${responseData}")
+                        setTrendingRally(responseData)
+                    }
+                }
+                else {
+                    Log.e("Retrofit:getTrending()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<RallyHomeTrending>, t: Throwable) {
+                Log.e("Retrofit:getTrending()", "onFailure: $t")
+            }
+
+        })
 
         return binding.root
     }
