@@ -307,6 +307,7 @@
                         android:layout_marginBottom="20dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
+
                     <TextView
                             android:id="@+id/limitedFrameNew_tv"
                             android:layout_width="wrap_content"
@@ -380,6 +381,7 @@
                         android:layout_marginBottom="20dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
+
                     <TextView
                             android:id="@+id/regularFrameNew_tv"
                             android:layout_width="wrap_content"
@@ -528,7 +530,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/limited_icon_umc_cl"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/limited_icon_new_cl">
+                        app:layout_constraintTop_toTopOf="parent">
+
                     <TextView
                             android:id="@+id/limitedIconUMC_tv"
                             android:layout_width="wrap_content"
@@ -573,8 +576,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
                 <!-- 한정판매 관련 뷰들 -->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -591,6 +592,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
