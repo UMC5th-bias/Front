@@ -4,10 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemAnimationBinding
 import java.util.ArrayList
 
-class AnimationRVAdapter(private val animationList: ArrayList<Animation>, val context: Context): RecyclerView.Adapter<AnimationRVAdapter.ViewHolder>() {
+class AnimationRVAdapter(private val animationList: MutableList<Animation>, val context: Context): RecyclerView.Adapter<AnimationRVAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -26,8 +27,10 @@ class AnimationRVAdapter(private val animationList: ArrayList<Animation>, val co
     inner class ViewHolder(val binding: ItemAnimationBinding): RecyclerView.ViewHolder(binding.root){
 
         fun bind(animation: Animation){
-            binding.rallyCategoryAnimationIv.setImageResource(animation.coverImg!!)
             binding.rallyCategoryAnimationTitleTv.text=animation.title
+            Glide.with(context)
+                .load(animation.coverImg)
+                .into(binding.rallyCategoryAnimationIv)
             binding.rallyCategoryAnimationProgressTv.text=animation.progress
             binding.rallyCategoryAnimationIv.setOnClickListener {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
