@@ -24,5 +24,4 @@ data class SignUpBody(
     // images 필드 추가
     @SerializedName("images")
     val images: List<MultipartBody.Part>?
-
 )

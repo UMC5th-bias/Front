@@ -7,30 +7,30 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-//object RetrofitAPI {
+object RetrofitAPI {
+/*//
+   private const val BASE_URL = "http://favoriteplace.store:8080"
 //
-//    private const val BASE_URL = "http://favoriteplace.store:8080"
+    val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
 //
-//    val loggingInterceptor = HttpLoggingInterceptor().apply {
-//        level = HttpLoggingInterceptor.Level.BODY
-//    }
-//
-//    val okHttpClient = OkHttpClient.Builder()
-//        .addInterceptor(loggingInterceptor)
-//        .build()
-//
-//
-//    private val retrofit = Retrofit.Builder()
-//        .baseUrl(BASE_URL)
-//        .addConverterFactory(GsonConverterFactory.create())
-//        .client(okHttpClient)
-//        .build()
+    val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .build()
 //
 //
-//    val signUpService: SignUpService = retrofit.create(SignUpService::class.java)
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(okHttpClient)
+        .build()
 //
-//    val loginService: LoginService = retrofit.create(LoginService::class.java)
-//}
+//
+    val signUpService: SignUpService = retrofit.create(SignUpService::class.java)
+//
+   val loginService: LoginService = retrofit.create(LoginService::class.java)*/
+}
 
 
 

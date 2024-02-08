@@ -118,6 +118,7 @@
             android:text="인증코드를 입력해주세요."/>
 
         <EditText
+            android:id="@+id/email_et"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="abcde@gmail.com"
@@ -127,16 +128,50 @@
             android:paddingHorizontal="15dp"
             android:drawableEnd="@drawable/signup_checked_icon"
             android:textColor="@color/black"/>
-        <EditText
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="인증 코드를 입력해주세요."
-            android:background="@drawable/signup_edittext_background"
-            android:layout_marginTop="15dp"
-            android:paddingVertical="15dp"
-            android:paddingHorizontal="15dp"
-            android:drawableEnd="@drawable/signup_error_icon"
-            android:textColor="@color/black"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+
+            <EditText
+                android:id="@+id/codenum_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="인증 코드를 입력해주세요."
+                android:background="@drawable/signup_edittext_background"
+                android:layout_marginTop="15dp"
+                android:paddingVertical="15dp"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:id="@+id/codenum_error_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/codenum_et"
+                android:layout_alignEnd="@id/codenum_et"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"
+                android:src="@drawable/ic_error" />
+
+            <ImageView
+                android:id="@+id/codenum_check_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/codenum_et"
+                android:layout_alignEnd="@id/codenum_et"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="14dp"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"
+                android:src="@drawable/signup_checked_icon" />
+        </RelativeLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -150,7 +185,26 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/codenum_error_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/main"
+                        android:textSize="11sp"
+                        android:text="인증 코드가 올바르지 않습니다."
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -162,8 +216,10 @@
                         android:textSize="9sp"
                         android:layout_marginStart="7.25dp"
                         android:text="입력하신 이메일 주소로 메일을 전송하였습니다."/>
+
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/text2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
@@ -182,15 +238,7 @@
                 </LinearLayout>
             </LinearLayout>
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16.19dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/main"
-                android:textSize="11sp"
-                android:text="인증 코드가 올바르지 않습니다."
-                android:visibility="gone"/>
-            <TextView
+                android:id="@+id/next_tv"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
