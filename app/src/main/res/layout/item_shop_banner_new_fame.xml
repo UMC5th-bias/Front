@@ -16,11 +16,11 @@
         <ImageView
             android:id="@+id/item_shop_banner_new_fame_iv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="18dp"
             android:src="@drawable/limited_fame_1"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
