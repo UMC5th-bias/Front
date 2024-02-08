@@ -70,14 +70,12 @@ class ShopBannerLimitedIconRVAdapter(private val limitedIconList: ArrayList<Shop
                 // 이미지 로딩이 성공한 경우에만 아래 코드 실행
                 binding.itemShopBannerNewIconTitleTv.text = limitedIcon.title
                 binding.itemShopBannerNewIconCostTv.text = limitedIcon.cost
+
             } catch (e: Exception) {
                 // Glide에서 발생하는 예외 처리
                 Log.e("ViewHolder", "Error loading image: ${e.message}")
                 e.printStackTrace()
 
-                // 이미지 로딩에 실패한 경우 기본 이미지를 설정하거나 다른 조치를 취할 수 있습니다.
-                // 예를 들어, 다른 이미지로 대체하거나 오류 메시지를 표시할 수 있습니다.
-                // binding.itemShopBannerNewIconIv.setImageResource(R.drawable.default_image)
             }
         }
 

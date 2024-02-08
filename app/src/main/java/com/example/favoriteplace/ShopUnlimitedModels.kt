@@ -1,18 +1,18 @@
 package com.example.favoriteplace
 
-data class LimitedSalesResponse(
+data class UnlimitedSalesResponse(
     val isLoggedIn: Boolean,
     val userInfo: Any?, // 사용자 정보에 대한 더 구체적인 모델이 필요할 수 있음
-    val titles: List<Category>,
-    val icons: List<Category>
+    val titles: List<UnlimitedCategory>,
+    val icons: List<UnlimitedCategory>
 )
 
-data class Category(
+data class UnlimitedCategory(
     val category: String,
-    val itemList: List<Item>
+    val itemList: List<UnlimitedItem>
 )
 
-data class Item(
+data class UnlimitedItem(
     val id: Int,
     val name: String,
     val imageUrl: String,

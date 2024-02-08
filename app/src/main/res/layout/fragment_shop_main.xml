@@ -373,47 +373,65 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                        android:id="@+id/regularFrameNew_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="New!"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/shopMain_regularFrame_rv"
+                <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/unlimited_frame_new_cl"
+                        android:layout_marginBottom="20dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/regularFrameNew_tv"
-                        tools:listitem="@layout/item_shop_banner_new_fame"/>
+                        app:layout_constraintTop_toTopOf="parent">
+                    <TextView
+                            android:id="@+id/regularFrameNew_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New!"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
-                <TextView
-                        android:id="@+id/regularFrameNormal_tv"
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/shopMain_regularFrame_rv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/regularFrameNew_tv"
+                            tools:listitem="@layout/item_shop_banner_new_fame"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/unlimited_frame_normal_cl"
                         android:layout_marginTop="20dp"
-                        android:text="Normal"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/shopMain_regularFrame_rv"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@id/unlimited_frame_new_cl"
+                        app:layout_constraintStart_toStartOf="parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/shopMain_regularFrameNormal_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/regularFrameNormal_tv"
-                        tools:listitem="@layout/item_shop_banner_new_fame"/>
+                    <TextView
+                            android:id="@+id/regularFrameNormal_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Normal"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/shopMain_regularFrameNormal_rv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/regularFrameNormal_tv"
+                            tools:listitem="@layout/item_shop_banner_new_fame"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                <!-- 상시판매 관련 뷰들 -->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -511,50 +529,50 @@
                         android:id="@+id/limited_icon_umc_cl"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/limited_icon_new_cl">
+                    <TextView
+                            android:id="@+id/limitedIconUMC_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="UMC"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
 
+                    <HorizontalScrollView
+                            android:id="@+id/shopMain_limitedIconUMC_hs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:orientation="horizontal"
+                            android:overScrollMode="never"
+                            android:scrollbars="none"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/limitedIconUMC_tv">
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/shopMain_limitedIconUMC_rv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="15dp"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:listitem="@layout/item_shop_banner_new_icon"/>
+                        </LinearLayout>
+                    </HorizontalScrollView>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                        android:id="@+id/limitedIconUMC_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="UMC"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
 
-                <HorizontalScrollView
-                        android:id="@+id/shopMain_limitedIconUMC_hs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        android:scrollbars="none"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/limitedIconUMC_tv">
-
-                    <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/shopMain_limitedIconUMC_rv"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="15dp"
-                                android:orientation="horizontal"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:listitem="@layout/item_shop_banner_new_icon"/>
-                    </LinearLayout>
-                </HorizontalScrollView>
 
 
                 <!-- 한정판매 관련 뷰들 -->
@@ -573,90 +591,106 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                        android:id="@+id/regularIconNew_tv"
-                        android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="New!"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                <HorizontalScrollView
-                        android:id="@+id/shopMain_regularIconNew_hs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:id="@+id/unlimited_icon_new_cl"
                         android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        android:scrollbars="none"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/regularIconNew_tv">
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
+                    <TextView
+                            android:id="@+id/regularIconNew_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:text="New!"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/shopMain_regularIconNew_rv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="15dp"
-                                android:orientation="horizontal"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:listitem="@layout/item_shop_banner_new_icon"/>
-                    </LinearLayout>
-                </HorizontalScrollView>
-
-                <TextView
-                        android:id="@+id/regularIconNormal_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="Normal"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/shopMain_regularIconNew_hs"/>
-
-                <HorizontalScrollView
-                        android:id="@+id/shopMain_regularIconNormal_hs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        android:scrollbars="none"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/regularIconNormal_tv">
-
-                    <LinearLayout
+                    <HorizontalScrollView
+                            android:id="@+id/shopMain_regularIconNew_hs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:orientation="horizontal"
+                            android:overScrollMode="never"
+                            android:scrollbars="none"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/regularIconNew_tv">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/shopMain_regularIconNormal_rv"
+                        <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="15dp"
-                                android:orientation="horizontal"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:listitem="@layout/item_shop_banner_new_icon"/>
-                    </LinearLayout>
-                </HorizontalScrollView>
+                                android:orientation="horizontal">
 
+                            <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/shopMain_regularIconNew_rv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="15dp"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:listitem="@layout/item_shop_banner_new_icon"/>
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/unlimited_icon_normal_cl"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/unlimited_icon_new_cl">
+
+                    <TextView
+                            android:id="@+id/regularIconNormal_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Normal"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                    <HorizontalScrollView
+                            android:id="@+id/shopMain_regularIconNormal_hs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:orientation="horizontal"
+                            android:overScrollMode="never"
+                            android:scrollbars="none"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/regularIconNormal_tv">
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/shopMain_regularIconNormal_rv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="15dp"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:listitem="@layout/item_shop_banner_new_icon"/>
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!-- 상시판매 관련 뷰들 -->
             </androidx.constraintlayout.widget.ConstraintLayout>
