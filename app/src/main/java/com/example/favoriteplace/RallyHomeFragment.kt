@@ -45,19 +45,26 @@ class RallyHomeFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
-        binding.recommendRallyCv.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frameLayout, RallyDetailFragment())
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
-        }
-
         fun setTrendingRally(rallyHomeTrending: RallyHomeTrending) {
             binding.recommendRallyTitleTv.text = rallyHomeTrending.name
             binding.recommendRallyProgressTv.text = "${rallyHomeTrending.myPilgrimageNumber}/${rallyHomeTrending.pilgrimageNumber}"
             Glide.with(this)
                 .load(rallyHomeTrending.image)
                 .into(binding.recommendRallyIv)
+
+            //랠리 id전달
+            val rallyDetailFragment = RallyDetailFragment()
+            val bundle = Bundle().apply {
+                putString("rallyId", rallyHomeTrending.id.toString())
+            }
+            rallyDetailFragment.arguments = bundle
+
+            binding.recommendRallyCv.setOnClickListener {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, rallyDetailFragment)
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+            }
         }
 
         fun setMyRally(rallyHomeResponseMyRally: RallyHomeResponseMyRally) {
@@ -93,6 +100,7 @@ class RallyHomeFragment : Fragment() {
             binding.rallyHomeCertificatedRallyRv.adapter = certifiedAdapter
         }
 
+        //이달의 추천 랠리 불러오기
         RetrofitAPI.rallyHomeService.getTrending().enqueue(object: Callback<RallyHomeTrending> {
             override fun onResponse(call: Call<RallyHomeTrending>, response: Response<RallyHomeTrending>) {
                 if(response.isSuccessful) {
@@ -113,6 +121,7 @@ class RallyHomeFragment : Fragment() {
 
         })
 
+        //관심있는 랠리, 성지순레 인증글 모아보기 불러오기
         RetrofitAPI.rallyHomeService.getMyRally().enqueue(object: Callback<RallyHomeResponseMyRally> {
             override fun onResponse(call: Call<RallyHomeResponseMyRally>, response: Response<RallyHomeResponseMyRally>) {
                 if(response.isSuccessful) {
