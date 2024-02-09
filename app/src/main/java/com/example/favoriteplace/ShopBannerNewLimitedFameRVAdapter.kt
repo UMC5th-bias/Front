@@ -34,7 +34,6 @@ class ShopBannerNewLimitedFameRVAdapter(private val limitedFameList: ArrayList<L
         val binding: ItemShopBannerNewFameBinding=ItemShopBannerNewFameBinding.inflate(
             LayoutInflater.from(viewGroup.context),viewGroup,false)
 
-        Log.d("실행이 되는가",limitedFameList.size.toString())
         return ViewHolder(binding)
     }
 
@@ -61,9 +60,9 @@ class ShopBannerNewLimitedFameRVAdapter(private val limitedFameList: ArrayList<L
 
                 val imageRequest = ImageRequest.Builder(binding.root.context)
                     .crossfade(true)
-                    .crossfade(300)
+                    .crossfade(300)  //애니메이션 처리
                     .data(limitedFame.fameImg)
-                    .target(binding.itemShopBannerNewFameIv)
+                    .target(binding.itemShopBannerNewFameIv)  //해당 이미지뷰를 타겟으로 svg 삽입
                     .build()
                 imageLoader.enqueue(imageRequest)
 

@@ -47,13 +47,12 @@ class ShopBannerNewLimitedIconRVAdapter (private val limitedIconList: ArrayList<
 
                 val imageRequest = ImageRequest.Builder(binding.root.context)
                     .crossfade(true)
-                    .crossfade(300)
+                    .crossfade(300) //애니메이션 처리
                     .data(limitedIcon.iconImg)
-                    .target(binding.itemShopBannerNewIconIv)
+                    .target(binding.itemShopBannerNewIconIv) //해당 이미지뷰를 타겟으로 svg 삽입
                     .build()
                 imageLoader.enqueue(imageRequest)
 
-                Log.d("cost",limitedIcon.toString())
                 binding.itemShopBannerNewIconCostTv.text = limitedIcon.cost
                 binding.itemShopBannerNewIconTitleTv.text=limitedIcon.title
 

@@ -97,6 +97,7 @@ class MyProfileCardFragment : Fragment() {
 
 
     private fun icon() {
+        //LimitedIcon, UnLimitedIcon 데이터 클래스의 자료형을 수정함에 따라 에러가 발생
 //        limitedIconData.apply {
 //            add(LimitedIcon(R.drawable.limited_icon_1,"유닝이","20000P"))
 //            add(LimitedIcon(R.drawable.limited_icon_1,"Developer","10000P"))
@@ -120,6 +121,7 @@ class MyProfileCardFragment : Fragment() {
 
 
     private fun badge() {
+        //LimitedFame, UnLimitedFame 데이터 클래스의 자료형을 수정함에 따라 에러가 발생
 //        limitedFameData.apply{
 //            add(LimitedFame(R.drawable.limited_fame_1,"5000P"))
 //            add(LimitedFame(R.drawable.limited_fame_2,"30000P"))
@@ -134,10 +136,10 @@ class MyProfileCardFragment : Fragment() {
 //        val limitedFameRVAdapter=ShopBannerNewLimitedFameRVAdapter(limitedFameData)
 //        binding.myProfileCardFameLimitedRv.adapter=limitedFameRVAdapter
 //        binding.myProfileCardFameLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-        val unlimitedFameRVAdapter=ShopBannerNewUnlimitedFameRVAdapter(unlimitedFameData)
-        binding.myProfileCardFameUnlimitedRv.adapter=unlimitedFameRVAdapter
-        binding.myProfileCardFameUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//
+//        val unlimitedFameRVAdapter=ShopBannerNewUnlimitedFameRVAdapter(unlimitedFameData)
+//        binding.myProfileCardFameUnlimitedRv.adapter=unlimitedFameRVAdapter
+//        binding.myProfileCardFameUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
 

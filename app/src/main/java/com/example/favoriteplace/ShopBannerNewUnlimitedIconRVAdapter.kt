@@ -56,14 +56,13 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
 
                 val imageRequest = ImageRequest.Builder(binding.root.context)
                     .crossfade(true)
-                    .crossfade(300)
+                    .crossfade(300)  //애니메이션 처리
                     .data(unlimitedIcon.iconImg)
-                    .target(binding.itemShopBannerNewIconIv)
+                    .target(binding.itemShopBannerNewIconIv) //해당 이미지뷰를 타겟으로 svg 삽입
                     .build()
                 imageLoader.enqueue(imageRequest)
 
-                Log.d("cost",unlimitedIcon.toString())
-                binding.itemShopBannerNewIconCostTv.text = unlimitedIcon.cost
+                binding.itemShopBannerNewIconCostTv.text=unlimitedIcon.cost
                 binding.itemShopBannerNewIconTitleTv.text=unlimitedIcon.title
 
             } catch (e: Exception) {

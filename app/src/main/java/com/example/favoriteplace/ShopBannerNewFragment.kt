@@ -23,7 +23,6 @@ class ShopBannerNewFragment : Fragment() {
     private var limitedIconData = ArrayList<LimitedIcon>()
     private var unlimitedIconData = ArrayList<UnlimitedIcon>()
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,6 +30,7 @@ class ShopBannerNewFragment : Fragment() {
     ): View? {
         binding = FragmentShopBannerNewBinding.inflate(inflater, container, false)
 
+        //돌아가기 버튼 눌렀을 때
         binding.shopBannerNewIb.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frameLayout, ShopMainFragment())
@@ -43,11 +43,11 @@ class ShopBannerNewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fetchLimitedSales()
-        fetchUnimitedSales()
+        fetchLimitedSales()  //서버에서 한정판매 데이터를 가져오는 함수
+        fetchUnimitedSales()  //서버에서 상시판매 데이터를 가져오는 함수
     }
 
-    //서버에서 데이터를 가져오는 함수
+    //서버에서 한정판매 데이터를 가져오는 함수
     private fun fetchLimitedSales() {
         RetrofitClient.shopService.getNewLimitedSales()
             .enqueue(object : Callback<NewLimitedSalesResponse> {
@@ -55,6 +55,7 @@ class ShopBannerNewFragment : Fragment() {
                     call: Call<NewLimitedSalesResponse>,
                     response: Response<NewLimitedSalesResponse>
                 ) {
+                    //서버에서 데이터를 가져오는 걸 성공할 경우
                     if (response.isSuccessful) {
                         val newlimitedSalesResponse = response.body()
 
@@ -62,6 +63,7 @@ class ShopBannerNewFragment : Fragment() {
                             limitedFameData.clear()
                             limitedIconData.clear()
 
+                            //칭호의 status가 LIMITED_SALE일 때 LimitedFame에 imageUrl, point를 저장함
                             it.titles.forEach { status ->
                                 when (status.status) {
                                     "LIMITED_SALE" -> {
@@ -72,6 +74,7 @@ class ShopBannerNewFragment : Fragment() {
                                 }
                             }
 
+                            //아이콘의 status가 LIMITED_SALE일 때 LimitedIcon에 imageUrl, point, name을 저장함
                             it.icons.forEach { status ->
                                 when (status.status) {
                                     "LIMITED_SALE" -> {
@@ -85,7 +88,7 @@ class ShopBannerNewFragment : Fragment() {
                                     }
                                 }
                             }
-                            updateLimitedSalesUI()
+                            updateLimitedSalesUI() //한정판매 데이터를 반영하여 보여주는 함수
                         }
                     }
                 }
@@ -96,6 +99,7 @@ class ShopBannerNewFragment : Fragment() {
             })
     }
 
+    //서버에서 상시판매 데이터를 가져오는 함수
     private fun fetchUnimitedSales() {
         RetrofitClient.shopService.getNewUnlimitedSales()
             .enqueue(object : Callback<NewUnlimitedSalesResponse> {
@@ -110,6 +114,7 @@ class ShopBannerNewFragment : Fragment() {
                             unlimitedFameData.clear()
                             unlimitedIconData.clear()
 
+                            //칭호의 status가 LIMITED_SALE일 때 LimitedFame에 imageUrl, point를 저장함
                             it.titles.forEach { status ->
                                 when (status.status) {
                                     "ALWAYS_ON_SALE" -> {
@@ -120,6 +125,7 @@ class ShopBannerNewFragment : Fragment() {
                                 }
                             }
 
+                            //아이콘의 status가 LIMITED_SALE일 때 LimitedIcon에 imageUrl, point, name을 저장함
                             it.icons.forEach { status ->
                                 when (status.status) {
                                     "ALWAYS_ON_SALE" -> {
@@ -133,7 +139,7 @@ class ShopBannerNewFragment : Fragment() {
                                     }
                                 }
                             }
-                            updateUnlimitedSalesUI()
+                            updateUnlimitedSalesUI() //상시판매 데이터를 반영하여 보여주는 함수
                         }
                     }
                 }
@@ -145,11 +151,15 @@ class ShopBannerNewFragment : Fragment() {
             })
     }
 
+    //한정판매 데이터를 반영하여 보여주는 함수
     private fun updateLimitedSalesUI() {
         try {
+            //한정 판매 칭호 RVAdapter 실행
             val limitedNewFameRVAdapter = ShopBannerNewLimitedFameRVAdapter(limitedFameData)
             binding.shopBannerNewFameLimitedRv.adapter = limitedNewFameRVAdapter
             binding.shopBannerNewFameLimitedRv.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+
+            //한정 판매 칭호 아이템을 눌렀을 때 상세페이지로 넘어감
             limitedNewFameRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedFameRVAdapter.MyItemClickListener{
                 override fun onItemClick() {
                     (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -158,11 +168,13 @@ class ShopBannerNewFragment : Fragment() {
                 }
             })
 
+            //한정 판매 아이콘 RVAdapter 실행
             val limitedIconRVAdapter = ShopBannerNewLimitedIconRVAdapter(limitedIconData)
             binding.shopBannerNewIconLimitedRv.adapter = limitedIconRVAdapter
             binding.shopBannerNewIconLimitedRv.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
+            //한정 판매 아이콘 아이템을 눌렀을 때 상세페이지로 넘어감
             limitedIconRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedIconRVAdapter.MyItemClickListener{
                 override fun onItemClick() {
                     (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -175,13 +187,16 @@ class ShopBannerNewFragment : Fragment() {
             Log.d("ShopBannerNewUpdate", "Error in update(): ${e.message}")
         }
     }
+
+    //상시 판매 데이터를 반영하여 보여주는 함수
     private fun updateUnlimitedSalesUI(){
         try{
+            //상시 판매 칭호 RVAdapter 실행
             val unlimitedFameRVAdapter=ShopBannerNewUnlimitedFameRVAdapter(unlimitedFameData)
-            Log.d("LIMITEDFAME",unlimitedFameData.toString())
             binding.shopBannerNewFameUnlimitedRv.adapter=unlimitedFameRVAdapter
             binding.shopBannerNewFameUnlimitedRv.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
 
+            //상시 판매 칭호 아이템을 눌렀을 때 상세페이지로 넘어감
             unlimitedFameRVAdapter.setMyItemClickListener(object :ShopBannerNewUnlimitedFameRVAdapter.MyItemClickListener{
                 override fun onItemClick() {
                     (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -190,10 +205,12 @@ class ShopBannerNewFragment : Fragment() {
                 }
             })
 
+            //상시 판매 아이콘 RVAdapter 실행
             val unlimitedIconRVAdapter=ShopBannerNewUnlimitedIconRVAdapter(unlimitedIconData)
             binding.shopBannerNewIconUnlimitedRv.adapter=unlimitedIconRVAdapter
             binding.shopBannerNewIconUnlimitedRv.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
+            //상시 판매 아이콘 아이템을 눌렀을 때 상세페이지로 넘어감
             unlimitedIconRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedIconRVAdapter.MyItemClickListener{
                 override fun onItemClick() {
                     (context as MainActivity).supportFragmentManager.beginTransaction()
