@@ -1,6 +1,6 @@
 package com.example.favoriteplace
 
 data class LimitedFame(
-    var fameImg: Int?=null,
+    var fameImg: String ="",
     var cost: String?=""
 )

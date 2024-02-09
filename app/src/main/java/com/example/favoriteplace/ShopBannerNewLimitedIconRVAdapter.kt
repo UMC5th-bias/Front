@@ -1,8 +1,12 @@
 package com.example.favoriteplace
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import com.example.favoriteplace.databinding.ItemShopBannerNewIconBinding
 
 class ShopBannerNewLimitedIconRVAdapter (private val limitedIconList: ArrayList<LimitedIcon>):RecyclerView.Adapter<ShopBannerNewLimitedIconRVAdapter.ViewHolder>() {
@@ -21,7 +25,6 @@ class ShopBannerNewLimitedIconRVAdapter (private val limitedIconList: ArrayList<
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ShopBannerNewLimitedIconRVAdapter.ViewHolder {
         val binding: ItemShopBannerNewIconBinding=ItemShopBannerNewIconBinding.inflate(
             LayoutInflater.from(viewGroup.context),viewGroup,false)
-
         return ViewHolder(binding)
     }
 
@@ -35,9 +38,29 @@ class ShopBannerNewLimitedIconRVAdapter (private val limitedIconList: ArrayList<
     }
     inner class ViewHolder(val binding: ItemShopBannerNewIconBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(limitedIcon: LimitedIcon){
-            binding.itemShopBannerNewIconIv.setImageResource(limitedIcon.iconImg!!)
-            binding.itemShopBannerNewIconTitleTv.text=limitedIcon.title
-            binding.itemShopBannerNewIconCostTv.text=limitedIcon.cost
+            try {
+                val imageLoader = ImageLoader.Builder(binding.root.context)
+                    .componentRegistry {
+                        add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                    }
+                    .build()
+
+                val imageRequest = ImageRequest.Builder(binding.root.context)
+                    .crossfade(true)
+                    .crossfade(300)
+                    .data(limitedIcon.iconImg)
+                    .target(binding.itemShopBannerNewIconIv)
+                    .build()
+                imageLoader.enqueue(imageRequest)
+
+                Log.d("cost",limitedIcon.toString())
+                binding.itemShopBannerNewIconCostTv.text = limitedIcon.cost
+                binding.itemShopBannerNewIconTitleTv.text=limitedIcon.title
+
+            } catch (e: Exception) {
+                Log.e("ViewHolder", "Error loading image: ${e.message}")
+                e.printStackTrace()
+            }
         }
 
     }

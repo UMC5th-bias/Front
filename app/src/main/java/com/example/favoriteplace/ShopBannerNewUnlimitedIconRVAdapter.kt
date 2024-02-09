@@ -1,8 +1,12 @@
 package com.example.favoriteplace
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import com.example.favoriteplace.databinding.ItemShopBannerNewIconBinding
 
 class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayList<UnlimitedIcon>):
@@ -43,9 +47,29 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
 
     inner class ViewHolder(val binding: ItemShopBannerNewIconBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(unlimitedIcon: UnlimitedIcon){
-            binding.itemShopBannerNewIconIv.setImageResource(unlimitedIcon.iconImg!!)
-            binding.itemShopBannerNewIconTitleTv.text=unlimitedIcon.title
-            binding.itemShopBannerNewIconCostTv.text=unlimitedIcon.cost
+            try {
+                val imageLoader = ImageLoader.Builder(binding.root.context)
+                    .componentRegistry {
+                        add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                    }
+                    .build()
+
+                val imageRequest = ImageRequest.Builder(binding.root.context)
+                    .crossfade(true)
+                    .crossfade(300)
+                    .data(unlimitedIcon.iconImg)
+                    .target(binding.itemShopBannerNewIconIv)
+                    .build()
+                imageLoader.enqueue(imageRequest)
+
+                Log.d("cost",unlimitedIcon.toString())
+                binding.itemShopBannerNewIconCostTv.text = unlimitedIcon.cost
+                binding.itemShopBannerNewIconTitleTv.text=unlimitedIcon.title
+
+            } catch (e: Exception) {
+                Log.e("ViewHolder", "Error loading image: ${e.message}")
+                e.printStackTrace()
+            }
         }
     }
 }

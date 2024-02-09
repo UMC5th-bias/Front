@@ -14,4 +14,10 @@ interface ShopService {
     fun getUnlimitedSales(
         @Header("Authorization") authorization: String? = null
     ): Call<UnlimitedSalesResponse>
+
+    @GET("/shop/new")
+    fun getNewLimitedSales():Call<NewLimitedSalesResponse>
+
+    @GET("/shop/new")
+    fun getNewUnlimitedSales():Call<NewUnlimitedSalesResponse>
 }
