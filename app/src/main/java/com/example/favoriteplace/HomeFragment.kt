@@ -29,11 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     lateinit var retrofit: Retrofit
-    private val userViewModel: UserViewModel by viewModels()
     private lateinit var homeService: HomeService
-    private var userToken: String? = null
-
-
 
     companion object{
         const val LOGIN_REQUEST_CODE=101
@@ -95,7 +91,7 @@ class HomeFragment : Fragment() {
             val userToken = data?.getStringExtra("accessToken")
             if (!userToken.isNullOrEmpty()) {
                 Log.d("HomeFragment", ">> Home Login userToken : $userToken")
-                // Retrofit 요청을 보내어 사용자 정보를 가져옵니다.
+                // Retrofit 요청 -> 사용자 정보 가져옴
                 getUserInfo(userToken)
             }
         }
@@ -107,7 +103,7 @@ class HomeFragment : Fragment() {
                 val response: Response<HomeService.LoginResponse> = homeService.getUserInfo("Bearer $userToken")
                 if(response.isSuccessful){
                     // 로그인 상태인 경우
-                    // 서버로부터 사용자 정보를 성공적으로 받아왔을 때 UI를 업데이트합니다.
+                    // 서버로부터 사용자 정보를 성공적으로 받아왔을 때 UI 업데이트
                     val loginResponse: HomeService.LoginResponse? = response.body()
                     if(loginResponse != null && loginResponse.isLoggedIn){
                         updateUI(loginResponse)
@@ -142,17 +138,17 @@ class HomeFragment : Fragment() {
 
             // 사용자 아이콘
             Glide.with(this)
-                .load(userInfo.profileIconUrl.toString()) // 서버에 저장된 이미지 URI
-                .placeholder(R.drawable.signup_profile_background) // 이미지를 불러오는 동안 보여줄 임시 이미지
-                .error(R.drawable.signup_profile_background) // 이미지 로드 실패 시 보여줄 이미지
-                .into(binding.homeMemberIconIv) // 이미지를 설정할 ImageView
+                .load(userInfo.profileIconUrl.toString())
+                .placeholder(R.drawable.signup_profile_background)
+                .error(R.drawable.signup_profile_background)
+                .into(binding.homeMemberIconIv)
 
             // 사용자 뱃지
             Glide.with(this)
-                .load(userInfo.profileTitleUrl.toString()) // 서버에 저장된 이미지 URI
-                .placeholder(R.drawable.user_title) // 이미지를 불러오는 동안 보여줄 임시 이미지
-                .error(R.drawable.user_title) // 이미지 로드 실패 시 보여줄 이미지
-                .into(binding.homeMemberIconIv) // 이미지를 설정할 ImageView
+                .load(userInfo.profileTitleUrl.toString())
+                .placeholder(R.drawable.user_title)
+                .error(R.drawable.user_title)
+                .into(binding.homeMemberIconIv)
 
             // 사용자 닉네임
             binding.homeMemberNameTv.text = userInfo.nickname
@@ -161,10 +157,10 @@ class HomeFragment : Fragment() {
 
         // 비회원 랠리 텍스트
         Glide.with(this)
-            .load(homeData.rally?.backgroundImageUrl) // 서버에 저장된 이미지 URI
-            .placeholder(R.drawable.community_rally_place_7) // 이미지를 불러오는 동안 보여줄 임시 이미지
-            .error(R.drawable.community_rally_place_7) // 이미지 로드 실패 시 보여줄 이미지
-            .into(binding.homeRecommendIv) // 이미지를 설정할 ImageView
+            .load(homeData.rally?.backgroundImageUrl)
+            .placeholder(R.drawable.community_rally_place_7)
+            .error(R.drawable.community_rally_place_7)
+            .into(binding.homeRecommendIv)
 
 
 
