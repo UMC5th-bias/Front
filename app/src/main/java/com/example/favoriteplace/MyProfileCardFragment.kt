@@ -131,9 +131,9 @@ class MyProfileCardFragment : Fragment() {
             add(UnlimitedFame(R.drawable.unlimited_fame_2, "10000P"))
             add(UnlimitedFame(R.drawable.unlimited_fame_3, "100000P"))
         }
-        val limitedFameRVAdapter=ShopBannerNewLimitedFameRVAdapter(limitedFameData)
-        binding.myProfileCardFameLimitedRv.adapter=limitedFameRVAdapter
-        binding.myProfileCardFameLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        val limitedFameRVAdapter=ShopBannerNewLimitedFameRVAdapter(limitedFameData)
+//        binding.myProfileCardFameLimitedRv.adapter=limitedFameRVAdapter
+//        binding.myProfileCardFameLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         val unlimitedFameRVAdapter=ShopBannerNewUnlimitedFameRVAdapter(unlimitedFameData)
         binding.myProfileCardFameUnlimitedRv.adapter=unlimitedFameRVAdapter

@@ -15,24 +15,34 @@
 
         <ImageView
             android:id="@+id/item_shop_banner_new_fame_iv"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/limited_fame_1"
+            android:src="@null"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:id="@+id/item_shop_banner_new_fame_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5000P"
+            android:text="5000"
             android:textStyle="bold"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/item_shop_banner_new_fame_iv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="P"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@id/item_shop_banner_new_fame_tv"
+            app:layout_constraintTop_toTopOf="@id/item_shop_banner_new_fame_tv"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
