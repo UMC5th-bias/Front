@@ -35,6 +35,15 @@ class SignUpEmailInputActivity: AppCompatActivity() {
         emailCodeService = retrofit.create(EmailCodeService::class.java)
 
 
+
+        // 뒤로가기
+        binding.backPageIv.setOnClickListener {
+            val intent = Intent(this@SignUpEmailInputActivity, SignUpConditionConfirmActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
         // 이메일 유효성 검사
         binding.emailCheckBtn.setOnClickListener {
             val email = binding.emailInputEt.text.toString()

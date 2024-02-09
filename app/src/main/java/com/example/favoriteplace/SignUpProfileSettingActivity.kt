@@ -56,6 +56,13 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
 
         }
 
+        // 뒤로가기
+        binding.backPageIv.setOnClickListener {
+            val intent = Intent(this@SignUpProfileSettingActivity, SignUpPwdInputActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         binding.nextBtn.setOnClickListener {
             val snsAllow = intent.getBooleanExtra("snsAllow", false)
             val email = intent.getStringExtra("email") ?:""

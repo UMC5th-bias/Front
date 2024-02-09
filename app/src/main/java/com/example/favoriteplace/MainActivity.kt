@@ -16,9 +16,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
         setContentView(binding.root)
 
-//        setContentView(R.layout.fragment_free_write_post)
         initBottomNavigation()
-    }
+}
 
 
     private fun initBottomNavigation(){

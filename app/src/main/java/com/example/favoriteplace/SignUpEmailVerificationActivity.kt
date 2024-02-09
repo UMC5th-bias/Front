@@ -37,6 +37,14 @@ class SignUpEmailVerificationActivity: AppCompatActivity() {
         binding.emailEt.setText(email)
 
 
+        // 뒤로가기
+        binding.backPageIv.setOnClickListener {
+            val intent = Intent(this@SignUpEmailVerificationActivity, SignUpEmailInputActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
         // Retrofit 객체 생성
         val retrofit = Retrofit.Builder()
             .baseUrl("http://favoriteplace.store:8080") // 서버의 base URL을 설정합니다.

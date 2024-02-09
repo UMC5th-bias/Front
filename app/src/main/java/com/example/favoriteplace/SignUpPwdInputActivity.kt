@@ -30,6 +30,13 @@ class SignUpPwdInputActivity: AppCompatActivity() {
             .build()
 
 
+        // 뒤로가기
+        binding.backPageIv.setOnClickListener {
+            val intent = Intent(this@SignUpPwdInputActivity, SignUpEmailVerificationActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
 
         binding.nextBtn.setOnClickListener {
             //비밀번호 포함 여부

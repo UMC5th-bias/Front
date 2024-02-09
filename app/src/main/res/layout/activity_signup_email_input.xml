@@ -11,7 +11,7 @@
         android:layout_marginStart="15dp"
         android:orientation="horizontal">
         <ImageView
-            android:id="@+id/signup_email_back_iv"
+            android:id="@+id/back_page_iv"
             android:layout_width="8.5dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_black_left_arrow"/>

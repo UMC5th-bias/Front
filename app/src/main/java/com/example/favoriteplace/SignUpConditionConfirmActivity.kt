@@ -18,6 +18,15 @@ class SignUpConditionConfirmActivity: AppCompatActivity() {
         binding = ActivitySignupConditionConfirmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        // 뒤로가기
+        binding.backPageIv.setOnClickListener {
+            val intent = Intent(this@SignUpConditionConfirmActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
         binding.checkbox1.setOnClickListener {
             val isChecked = binding.checkbox1.isChecked
             binding.checkbox2.isChecked = isChecked

@@ -74,6 +74,8 @@
                     android:layout_alignBottom="@id/profile_background"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/signup_default_profile_image"/>
+
+
             </RelativeLayout>
             <ImageView
                 android:layout_width="42.90dp"
@@ -101,11 +103,12 @@
                         android:layout_marginStart="100dp"
                         android:textStyle="bold"
                         android:textSize="13sp"
+                        android:gravity="end"
                         android:textColor="@color/black"
                         android:text="아이"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="20dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="78.21dp"
                         android:text="님"
