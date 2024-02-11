@@ -100,7 +100,7 @@
         <ImageView
             android:id="@+id/rallydetail_img_iv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="170dp"
             android:scaleType="fitXY"
             android:src="@drawable/rallydetail_img" />
     </androidx.cardview.widget.CardView>
