@@ -1,13 +1,13 @@
 package com.example.favoriteplace
 
 data class NewUnlimitedSalesResponse(
-    val titles: List<NewLimitedCategory>,
-    val icons: List<NewLimitedCategory>
+    val titles: List<NewUnlimitedCategory>,
+    val icons: List<NewUnlimitedCategory>
 )
 
 data class NewUnlimitedCategory(
     val status: String,
-    val itemList: List<NewLimitedItem>
+    val itemList: List<NewUnlimitedItem>
 )
 
 data class NewUnlimitedItem(
