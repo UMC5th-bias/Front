@@ -1,6 +1,7 @@
 package com.example.favoriteplace
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -33,8 +34,14 @@ class AnimationRVAdapter(private val animationList: MutableList<Animation>, val 
                 .into(binding.rallyCategoryAnimationIv)
             binding.rallyCategoryAnimationProgressTv.text=animation.progress
             binding.rallyCategoryAnimationIv.setOnClickListener {
+                //랠리 id전달
+                val rallyDetailFragment = RallyDetailFragment()
+                val bundle = Bundle().apply {
+                    putString("rallyId", animation.id)
+                }
+                rallyDetailFragment.arguments = bundle
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frameLayout, RallyDetailFragment())
+                    .replace(R.id.main_frameLayout, rallyDetailFragment)
                     .addToBackStack(null)
                     .commitAllowingStateLoss()
             }

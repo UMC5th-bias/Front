@@ -27,7 +27,7 @@ class RallyCategoryFragment : Fragment() {
         fun setCategory(rallyCategoryResponseList: List<RallyCategoryResponse>) {
             val animationDatas = mutableListOf<Animation>()
             rallyCategoryResponseList.forEach {
-                animationDatas.add(Animation(it.image, it.name, "${it.myPilgrimageNumber}/${it.pilgrimageNumber}"))
+                animationDatas.add(Animation(it.image, it.name, "${it.myPilgrimageNumber}/${it.pilgrimageNumber}", it.id))
             }
             val animationRVAdapter=AnimationRVAdapter(animationDatas, context as MainActivity)
             binding.rallyCategoryAnimationRv.adapter=animationRVAdapter
