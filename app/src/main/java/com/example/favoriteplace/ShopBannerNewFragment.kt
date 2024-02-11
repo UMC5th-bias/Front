@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteplace.databinding.FragmentShopBannerNewBinding
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -68,10 +69,12 @@ class ShopBannerNewFragment : Fragment() {
                                 when (status.status) {
                                     "LIMITED_SALE" -> {
                                         limitedFameData.addAll(status.itemList.map { item ->
-                                            LimitedFame(item.imageUrl, item.point.toString())
+                                            Log.d("Limited_fame",item.id.toString())
+                                            LimitedFame(item.imageUrl, item.point.toString(), item.id)
                                         })
                                     }
                                 }
+                                Log.d("LimitedFame_check",LimitedFame().toString())
                             }
 
                             //아이콘의 status가 LIMITED_SALE일 때 LimitedIcon에 imageUrl, point, name을 저장함
@@ -82,7 +85,8 @@ class ShopBannerNewFragment : Fragment() {
                                             LimitedIcon(
                                                 item.imageUrl,
                                                 item.point.toString(),
-                                                item.name
+                                                item.name,
+                                                item.id
                                             )
                                         })
                                     }
@@ -114,12 +118,12 @@ class ShopBannerNewFragment : Fragment() {
                             unlimitedFameData.clear()
                             unlimitedIconData.clear()
 
-                            //칭호의 status가 LIMITED_SALE일 때 LimitedFame에 imageUrl, point를 저장함
+                            //칭호의 status가 LIMITED_SALE일 때 UnlimitedFame에 imageUrl, point를 저장함
                             it.titles.forEach { status ->
                                 when (status.status) {
                                     "ALWAYS_ON_SALE" -> {
                                         unlimitedFameData.addAll(status.itemList.map { item ->
-                                            UnlimitedFame(item.imageUrl, item.point.toString())
+                                            UnlimitedFame(item.imageUrl, item.point.toString(), item.id)
                                         })
                                     }
                                 }
@@ -133,7 +137,8 @@ class ShopBannerNewFragment : Fragment() {
                                             UnlimitedIcon(
                                                 item.imageUrl,
                                                 item.point.toString(),
-                                                item.name
+                                                item.name,
+                                                item.id
                                             )
                                         })
                                     }
@@ -161,9 +166,15 @@ class ShopBannerNewFragment : Fragment() {
 
             //한정 판매 칭호 아이템을 눌렀을 때 상세페이지로 넘어감
             limitedNewFameRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedFameRVAdapter.MyItemClickListener{
-                override fun onItemClick() {
+                override fun onItemLimitedFameClick(limitedFame: LimitedFame) {
                     (context as MainActivity).supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, ShopBannerLimitedFameFragment())
+                        .replace(R.id.main_frameLayout, ShopBannerLimitedFameFragment().apply {
+                            arguments=Bundle().apply {
+                                val gson=Gson()
+                                val limitedFameJson=gson.toJson(limitedFame.id)
+                                putString("limitedFame",limitedFameJson)
+                            }
+                        })
                         .commitAllowingStateLoss()
                 }
             })
@@ -176,7 +187,7 @@ class ShopBannerNewFragment : Fragment() {
 
             //한정 판매 아이콘 아이템을 눌렀을 때 상세페이지로 넘어감
             limitedIconRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedIconRVAdapter.MyItemClickListener{
-                override fun onItemClick() {
+                override fun onItemLimitedIconClick() {
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, ShopBannerLimitedIconFragment())
                         .commitAllowingStateLoss()
@@ -198,10 +209,11 @@ class ShopBannerNewFragment : Fragment() {
 
             //상시 판매 칭호 아이템을 눌렀을 때 상세페이지로 넘어감
             unlimitedFameRVAdapter.setMyItemClickListener(object :ShopBannerNewUnlimitedFameRVAdapter.MyItemClickListener{
-                override fun onItemClick() {
-                    (context as MainActivity).supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, ShopBannerUnlimitedFameFragment())
-                        .commitAllowingStateLoss()
+                override fun onItemUnlimitedFameClick() {
+//                    changeLimitedFameFragment(LimitedFame())
+//                    (context as MainActivity).supportFragmentManager.beginTransaction()
+//                        .replace(R.id.main_frameLayout, ShopBannerUnlimitedFameFragment())
+//                        .commitAllowingStateLoss()
                 }
             })
 
@@ -211,8 +223,8 @@ class ShopBannerNewFragment : Fragment() {
             binding.shopBannerNewIconUnlimitedRv.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
             //상시 판매 아이콘 아이템을 눌렀을 때 상세페이지로 넘어감
-            unlimitedIconRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedIconRVAdapter.MyItemClickListener{
-                override fun onItemClick() {
+            unlimitedIconRVAdapter.setMyItemClickListener(object :ShopBannerNewUnlimitedIconRVAdapter.MyItemClickListener{
+                override fun onItemUnlimitedIconClick() {
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, ShopBannerUnlimitedIconFragment())
                         .commitAllowingStateLoss()
@@ -222,5 +234,18 @@ class ShopBannerNewFragment : Fragment() {
         } catch (e: Exception){
             Log.d("ShopBannerNewUpdate","Error in update(): ${e.message}")
         }
+    }
+
+    private fun changeLimitedFameFragment(limitedFame:LimitedFame){
+        (context as MainActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frameLayout, ShopBannerLimitedFameFragment().apply {
+                arguments=Bundle().apply {
+                    val gson=Gson()
+                    val limitedFameJson=gson.toJson(limitedFame)
+                    putString("limitedFame",limitedFameJson)
+                    Log.d("PutString",limitedFameJson)
+                }
+            })
+            .commitAllowingStateLoss()
     }
 }

@@ -3,6 +3,7 @@ package com.example.favoriteplace
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,12 +14,13 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemShopBannerNewFameBinding
+import com.google.gson.Gson
 
 class ShopBannerNewLimitedFameRVAdapter(private val limitedFameList: ArrayList<LimitedFame>):RecyclerView.Adapter<ShopBannerNewLimitedFameRVAdapter.ViewHolder>(){
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
     interface MyItemClickListener{
-        fun onItemClick()
+        fun onItemLimitedFameClick(limitedFame: LimitedFame)
     }
 
     //전달받은 리스너 객체를 저장하는 변수
@@ -43,7 +45,7 @@ class ShopBannerNewLimitedFameRVAdapter(private val limitedFameList: ArrayList<L
         if (position >= 0 && position < limitedFameList.size){
             holder.bind(limitedFameList[position])
             holder.itemView.setOnClickListener{
-                mItemClickListener.onItemClick()
+                mItemClickListener.onItemLimitedFameClick(limitedFameList[position])
             }
         }
 
@@ -67,6 +69,11 @@ class ShopBannerNewLimitedFameRVAdapter(private val limitedFameList: ArrayList<L
                 imageLoader.enqueue(imageRequest)
 
                 binding.itemShopBannerNewFameTv.text = limitedFame.cost
+                Bundle().apply {
+                    val gson= Gson()
+                    val limitedFameJson=gson.toJson(limitedFame.id)
+                    Log.d("PutString",limitedFameJson)
+                }
             } catch (e: Exception) {
                 Log.e("ViewHolder", "Error loading image: ${e.message}")
                 e.printStackTrace()
