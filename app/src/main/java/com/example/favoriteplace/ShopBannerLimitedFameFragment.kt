@@ -28,6 +28,7 @@ class ShopBannerLimitedFameFragment: Fragment() {
     ): View? {
         binding = FragmentShopDetailLimitedFameBinding.inflate(inflater, container, false)
 
+        //api를 호출하는 코드
         callApi()
 
         //돌아가기 버튼을 클릭했을 때
@@ -50,6 +51,7 @@ class ShopBannerLimitedFameFragment: Fragment() {
         FamePurchaseDialog().show(parentFragmentManager, "")
     }
 
+    //api를 호출하는 코드
     private fun callApi() {
 
         //신상품 페이지 한정 칭호 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
@@ -57,13 +59,14 @@ class ShopBannerLimitedFameFragment: Fragment() {
         val itemId: Int = gson.fromJson(itemIdJson, Int::class.java)
         Log.d("itemId", itemId.toString())
 
-        //
+        //서버에서 해당 아이템의 데이터를 가져오는 코드
         RetrofitClient.shopService.getDetailItem("", itemId)
             .enqueue(object : Callback<ShopDetailsResponse> {
                 override fun onResponse(
                     call: Call<ShopDetailsResponse>,
                     response: Response<ShopDetailsResponse>
                 ) {
+                    //서버에서 데이터를 가져오는 걸 성공할 경우
                     if (response.isSuccessful) {
                         val detailsResponse = response.body()
 
@@ -71,19 +74,20 @@ class ShopBannerLimitedFameFragment: Fragment() {
                             limitedFameData.clear()
                             limitedFameData.add(it)
 
-                            setView()
+                            setView()   //데이터를 반영하여 화면에 보여주는 함수
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<ShopDetailsResponse>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    Log.d("ShopBannerLimitedFameFragment","Network Error: ${t.message}")
                 }
             })
     }
 
+    //데이터를 반영하여 화면에 보여주는 함수
     private fun setView() {
-        bind()
+        bind()  //svg 이미지를 가져오기 위한 함수
         binding.shopBannerDetailFameCostTv.text = limitedFameData[0].point.toString()
         binding.shopBannerDetailFameBodyTv.text = limitedFameData[0].description
         binding.shopBannerDetailFameTitleTv.text = limitedFameData[0].name
@@ -92,6 +96,7 @@ class ShopBannerLimitedFameFragment: Fragment() {
         binding.shopBannerDetailFameTimeTv.text=limitedFameData[0].salesDeadline
     }
 
+    //svg 이미지를 가져오기 위한 함수
     private fun bind() {
         try {
             val imageLoader = ImageLoader.Builder(binding.root.context)

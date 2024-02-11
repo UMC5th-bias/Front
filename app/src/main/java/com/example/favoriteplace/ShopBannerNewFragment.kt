@@ -169,6 +169,8 @@ class ShopBannerNewFragment : Fragment() {
                 override fun onItemLimitedFameClick(limitedFame: LimitedFame) {
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, ShopBannerLimitedFameFragment().apply {
+
+                            //아이템 아이디를 신상품 페이지 한정 칭호에게 gson으로 보내주는 코드
                             arguments=Bundle().apply {
                                 val gson=Gson()
                                 val limitedFameJson=gson.toJson(limitedFame.id)
@@ -234,18 +236,5 @@ class ShopBannerNewFragment : Fragment() {
         } catch (e: Exception){
             Log.d("ShopBannerNewUpdate","Error in update(): ${e.message}")
         }
-    }
-
-    private fun changeLimitedFameFragment(limitedFame:LimitedFame){
-        (context as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frameLayout, ShopBannerLimitedFameFragment().apply {
-                arguments=Bundle().apply {
-                    val gson=Gson()
-                    val limitedFameJson=gson.toJson(limitedFame)
-                    putString("limitedFame",limitedFameJson)
-                    Log.d("PutString",limitedFameJson)
-                }
-            })
-            .commitAllowingStateLoss()
     }
 }
