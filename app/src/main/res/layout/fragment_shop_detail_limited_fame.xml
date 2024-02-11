@@ -80,17 +80,17 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"/>
 
-                    <ImageView
-                        android:layout_width="300dp"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="15dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/limited_fame_1" />
+            <ImageView
+                android:id="@+id/shop_banner_detail_fame_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:src="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/shop_banner_detail_fame_apply_cl"
