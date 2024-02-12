@@ -41,6 +41,8 @@
         <activity android:name=".FreeWritePostActivity">
         </activity>
 
+        <activity android:name=".LoginActivity" />
+
     </application>
 
 </manifest>

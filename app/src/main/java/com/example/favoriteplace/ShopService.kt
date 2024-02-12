@@ -7,11 +7,11 @@ import retrofit2.http.Header
 interface ShopService {
     @GET("/shop/limited")
     fun getLimitedSales(
-        @Header("Authorization") authorization: String? = null
+        @Header("Authorization") authorization: String?
     ): Call<LimitedSalesResponse>
 
     @GET("/shop/always")
     fun getUnlimitedSales(
-        @Header("Authorization") authorization: String? = null
+        @Header("Authorization") authorization: String?
     ): Call<UnlimitedSalesResponse>
 }
