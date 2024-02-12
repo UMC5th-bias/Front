@@ -69,11 +69,7 @@ class ShopBannerNewLimitedFameRVAdapter(private val limitedFameList: ArrayList<L
                 imageLoader.enqueue(imageRequest)
 
                 binding.itemShopBannerNewFameTv.text = limitedFame.cost
-                Bundle().apply {
-                    val gson= Gson()
-                    val limitedFameJson=gson.toJson(limitedFame.id)
-                    Log.d("PutString",limitedFameJson)
-                }
+
             } catch (e: Exception) {
                 Log.e("ViewHolder", "Error loading image: ${e.message}")
                 e.printStackTrace()
