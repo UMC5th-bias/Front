@@ -219,11 +219,18 @@ class ShopBannerNewFragment : Fragment() {
 
             //상시 판매 칭호 아이템을 눌렀을 때 상세페이지로 넘어감
             unlimitedFameRVAdapter.setMyItemClickListener(object :ShopBannerNewUnlimitedFameRVAdapter.MyItemClickListener{
-                override fun onItemUnlimitedFameClick() {
-//                    changeLimitedFameFragment(LimitedFame())
-//                    (context as MainActivity).supportFragmentManager.beginTransaction()
-//                        .replace(R.id.main_frameLayout, ShopBannerUnlimitedFameFragment())
-//                        .commitAllowingStateLoss()
+                override fun onItemUnlimitedFameClick(unlimitedFame: UnlimitedFame) {
+                    (context as MainActivity).supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, ShopBannerUnlimitedFameFragment().apply {
+
+                            //아이템 아이디를 신상품 페이지 상시 칭호에게 gson으로 보내주는 코드
+                            arguments=Bundle().apply {
+                                val gson=Gson()
+                                val unlimitedFameJson=gson.toJson(unlimitedFame.id)
+                                putString("unlimitedFame",unlimitedFameJson)
+                            }
+                        })
+                        .commitAllowingStateLoss()
                 }
             })
 

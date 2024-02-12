@@ -13,7 +13,7 @@ class ShopBannerNewUnlimitedFameRVAdapter (private val unlimitedFameList: ArrayL
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
     interface MyItemClickListener {
-        fun onItemUnlimitedFameClick()
+        fun onItemUnlimitedFameClick(unlimitedFame: UnlimitedFame)
     }
 
     //전달받은 리스너 객체를 저장하는 변수
@@ -37,7 +37,7 @@ class ShopBannerNewUnlimitedFameRVAdapter (private val unlimitedFameList: ArrayL
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(unlimitedFameList[position])
         holder.itemView.setOnClickListener{
-            mItemClickListener.onItemUnlimitedFameClick()
+            mItemClickListener.onItemUnlimitedFameClick(unlimitedFameList[position])
         }
     }
 
