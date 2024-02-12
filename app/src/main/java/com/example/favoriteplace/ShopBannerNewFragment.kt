@@ -241,9 +241,17 @@ class ShopBannerNewFragment : Fragment() {
 
             //상시 판매 아이콘 아이템을 눌렀을 때 상세페이지로 넘어감
             unlimitedIconRVAdapter.setMyItemClickListener(object :ShopBannerNewUnlimitedIconRVAdapter.MyItemClickListener{
-                override fun onItemUnlimitedIconClick() {
+                override fun onItemUnlimitedIconClick(unlimitedIcon: UnlimitedIcon) {
                     (context as MainActivity).supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, ShopBannerUnlimitedIconFragment())
+                        .replace(R.id.main_frameLayout, ShopBannerUnlimitedIconFragment().apply {
+
+                            //아이템 아이디를 신상품 페이지 상시 아이콘에게 gson으로 보내주는 코드
+                            arguments=Bundle().apply {
+                                val gson=Gson()
+                                val unlimitedIconJson=gson.toJson(unlimitedIcon.id)
+                                putString("unlimitedIcon",unlimitedIconJson)
+                            }
+                        })
                         .commitAllowingStateLoss()
                 }
             })

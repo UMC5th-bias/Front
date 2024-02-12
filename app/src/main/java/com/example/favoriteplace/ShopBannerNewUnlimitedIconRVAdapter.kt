@@ -14,7 +14,7 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
     interface MyItemClickListener {
-        fun onItemUnlimitedIconClick()
+        fun onItemUnlimitedIconClick(unlimitedIcon: UnlimitedIcon)
     }
 
     //전달받은 리스너 객체를 저장하는 변수
@@ -41,7 +41,7 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
     ) {
         holder.bind(unlimitedIconList[position])
         holder.itemView.setOnClickListener{
-            mItemClickListener.onItemUnlimitedIconClick()
+            mItemClickListener.onItemUnlimitedIconClick(unlimitedIconList[position])
         }
     }
 
