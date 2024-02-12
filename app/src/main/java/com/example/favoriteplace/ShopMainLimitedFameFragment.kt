@@ -99,7 +99,7 @@ class ShopMainLimitedFameFragment: Fragment() {
                 .crossfade(true)
                 .crossfade(300)
                 .data(it.imageUrl)
-                .target(binding.shopBannerDetailFameImgIv)
+                .target(binding.shopBannerDetailFameIv)
                 .build()
             imageLoader.enqueue(imageRequest)
 

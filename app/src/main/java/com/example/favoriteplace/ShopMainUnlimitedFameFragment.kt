@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ShopMainUnlimitedFameFragment: Fragment() {
+class ShopMainUnlimitedFameFragment : Fragment() {
     lateinit var binding: FragmentShopDetailUnlimitedFameBinding
 
     override fun onCreateView(
@@ -22,19 +22,19 @@ class ShopMainUnlimitedFameFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentShopDetailUnlimitedFameBinding.inflate(inflater,container,false)
+        binding = FragmentShopDetailUnlimitedFameBinding.inflate(inflater, container, false)
 
         val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
 
         fetchItemDetails(itemId)
 
-        binding.shopBannerDetailFameIb.setOnClickListener{
+        binding.shopBannerDetailFameIb.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frameLayout, ShopMainFragment())
                 .commitAllowingStateLoss()
         }
 
-        binding.shopBannerDetailFamePurchaseBn.setOnClickListener{
+        binding.shopBannerDetailFamePurchaseBn.setOnClickListener {
             popupFamePurchaseClick()
         }
 
@@ -43,15 +43,13 @@ class ShopMainUnlimitedFameFragment: Fragment() {
 
     //칭호 구매 팝업창 띄우기
     private fun popupFamePurchaseClick() {
-        FamePurchaseDialog().show(parentFragmentManager,"")
+        FamePurchaseDialog().show(parentFragmentManager, "")
     }
 
     private fun fetchItemDetails(itemId: Int) {
         // 아이템 ID 로그 출력
         Log.d("ShopMainLimitedFameFragment", "Fetching details for item ID: $itemId")
 
-        // 네트워크 라이브러리를 사용하여 /shop/detail/{item_id} 엔드포인트 호출
-        // 예: Retrofit 사용 예시
         val itemDetail = RetrofitClient.shopService.getItemDetails(itemId)
         itemDetail.enqueue(object : Callback<ItemDetails> {
             override fun onResponse(
@@ -59,8 +57,6 @@ class ShopMainUnlimitedFameFragment: Fragment() {
                 response: Response<ItemDetails>
             ) {
                 if (response.isSuccessful) {
-                    // 성공적으로 데이터를 받아온 경우, UI 업데이트
-
                     val itemDetails = response.body()
 
                     Log.d("ShopMainFragment", "detail item data received: $itemDetails")
@@ -96,14 +92,10 @@ class ShopMainUnlimitedFameFragment: Fragment() {
                 .crossfade(true)
                 .crossfade(300)
                 .data(it.imageUrl)
-                .target(binding.shopBannerDetailFameImgIv)
+                .target(binding.shopBannerDetailFameIv)
                 .build()
             imageLoader.enqueue(imageRequest)
 
-//
-//            binding.textViewDescription.text = it.description ?: "Description not available"
-//            binding.imageView.load(it.imageUrl) // 이는 이미지 로딩 라이브러리를 사용한다고 가정한 예시입니다. 예: Glide or Picasso
-            // 기타 필요한 UI 업데이트 로직 추가
         }
     }
 
