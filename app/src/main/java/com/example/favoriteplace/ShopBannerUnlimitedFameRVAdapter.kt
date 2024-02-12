@@ -12,12 +12,12 @@ import com.example.favoriteplace.databinding.ItemShopBannerNewFameBinding
 class ShopBannerUnlimitedFameRVAdapter(private val unlimitedFameList: ArrayList<ShopMainUnlimitedFame>):RecyclerView.Adapter<ShopBannerUnlimitedFameRVAdapter.ViewHolder>() {
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
-    interface MyItemClickListener : ShopBannerNewLimitedFameRVAdapter.MyItemClickListener {
+    interface MyItemClickListener : ShopBannerLimitedIconRVAdapter.MyItemClickListener {
         override fun onItemClick()
     }
 
     //전달받은 리스너 객체를 저장하는 변수
-    private lateinit var mItemClickListener: ShopBannerNewLimitedFameRVAdapter.MyItemClickListener
+    private lateinit var mItemClickListener: ShopBannerLimitedIconRVAdapter.MyItemClickListener
     fun setMyItemClickListener(itemClickListener: MyItemClickListener){
         mItemClickListener=itemClickListener
     }

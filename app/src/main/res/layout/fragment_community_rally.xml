@@ -119,7 +119,7 @@
                         app:tabMode="scrollable"
                         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
                         app:layout_constraintTop_toBottomOf="@id/community_rally_tv"
-                        app:layout_constraintStart_toStartOf="@id/community_rally_tv"/>
+                        app:layout_constraintStart_toStartOf="parent"/>
 
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/community_rally_vp"

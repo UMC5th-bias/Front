@@ -13,7 +13,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.example.favoriteplace.databinding.ItemShopBannerNewFameBinding
-import com.squareup.picasso.Picasso
 import java.net.URI
 import javax.sql.DataSource
 

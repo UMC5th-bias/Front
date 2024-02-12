@@ -1,21 +1,25 @@
 package com.example.favoriteplace
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import com.example.favoriteplace.databinding.ItemShopBannerNewIconBinding
 
 class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayList<UnlimitedIcon>):
     RecyclerView.Adapter<ShopBannerNewUnlimitedIconRVAdapter.ViewHolder>(){
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
-    interface MyItemClickListener : ShopBannerNewLimitedFameRVAdapter.MyItemClickListener {
-        override fun onItemClick()
+    interface MyItemClickListener {
+        fun onItemUnlimitedIconClick(unlimitedIcon: UnlimitedIcon)
     }
 
     //전달받은 리스너 객체를 저장하는 변수
-    private lateinit var mItemClickListener: ShopBannerNewLimitedFameRVAdapter.MyItemClickListener
-    fun setMyItemClickListener(itemClickListener: ShopBannerNewLimitedIconRVAdapter.MyItemClickListener){
+    private lateinit var mItemClickListener: MyItemClickListener
+    fun setMyItemClickListener(itemClickListener: MyItemClickListener){
         mItemClickListener=itemClickListener
     }
 
@@ -37,15 +41,34 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
     ) {
         holder.bind(unlimitedIconList[position])
         holder.itemView.setOnClickListener{
-            mItemClickListener.onItemClick()
+            mItemClickListener.onItemUnlimitedIconClick(unlimitedIconList[position])
         }
     }
 
     inner class ViewHolder(val binding: ItemShopBannerNewIconBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(unlimitedIcon: UnlimitedIcon){
-            binding.itemShopBannerNewIconIv.setImageResource(unlimitedIcon.iconImg!!)
-            binding.itemShopBannerNewIconTitleTv.text=unlimitedIcon.title
-            binding.itemShopBannerNewIconCostTv.text=unlimitedIcon.cost
+            try {
+                val imageLoader = ImageLoader.Builder(binding.root.context)
+                    .componentRegistry {
+                        add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                    }
+                    .build()
+
+                val imageRequest = ImageRequest.Builder(binding.root.context)
+                    .crossfade(true)
+                    .crossfade(300)  //애니메이션 처리
+                    .data(unlimitedIcon.iconImg)
+                    .target(binding.itemShopBannerNewIconIv) //해당 이미지뷰를 타겟으로 svg 삽입
+                    .build()
+                imageLoader.enqueue(imageRequest)
+
+                binding.itemShopBannerNewIconCostTv.text=unlimitedIcon.cost
+                binding.itemShopBannerNewIconTitleTv.text=unlimitedIcon.title
+
+            } catch (e: Exception) {
+                Log.e("ViewHolder", "Error loading image: ${e.message}")
+                e.printStackTrace()
+            }
         }
     }
 }

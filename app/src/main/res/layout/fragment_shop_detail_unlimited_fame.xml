@@ -56,14 +56,14 @@
             android:background="@drawable/shop_banner_new_icon_border">
 
             <ImageView
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="15dp"
+                android:id="@+id/shop_banner_detail_fame_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:src="@null"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/limited_fame_1" />
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,26 +118,13 @@
                 android:id="@+id/shop_banner_detail_fame_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2024.02.00"
+                android:text="상시 판매함"
                 android:textStyle="normal"
                 android:textColor="@color/dark_gray"
                 android:textSize="10sp"
                 app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_fame_cost_tv"
                 app:layout_constraintStart_toStartOf="@id/shop_banner_detail_fame_cost_tv"
                 android:layout_marginTop="5dp"/>
-
-            <TextView
-                android:id="@+id/shop_banner_detail_fame_time_notice_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="까지 판매"
-                android:textStyle="normal"
-                android:textColor="@color/dark_gray"
-                android:textSize="10sp"
-                app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_fame_cost_tv"
-                app:layout_constraintStart_toEndOf="@id/shop_banner_detail_fame_time_tv"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="1dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

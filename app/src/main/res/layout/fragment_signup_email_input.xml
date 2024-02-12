@@ -11,6 +11,7 @@
         android:layout_marginStart="15dp"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/signup_email_back_iv"
             android:layout_width="8.5dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_black_left_arrow"/>
@@ -116,41 +117,201 @@
             android:textColor="@color/black"
             android:text="이메일을 입력해주세요."/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="이메일 주소를 입력해주세요."
-            android:background="@drawable/signup_edittext_background"
-            android:layout_marginTop="62.66dp"
-            android:paddingVertical="15dp"
-            android:paddingHorizontal="15dp"
-            android:drawableEnd="@drawable/signup_error_icon"
-            android:textColor="@color/black"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="62.66dp">
+
+            <EditText
+                android:id="@+id/email_input_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="이메일 주소를 입력해주세요."
+                android:background="@drawable/edge"
+                android:paddingVertical="15dp"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:id="@+id/email_error_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/email_input_et"
+                android:layout_alignEnd="@id/email_input_et"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"
+                android:src="@drawable/ic_error" />
+
+            <ImageView
+                android:id="@+id/email_checked_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/ic_check" />
+
+        </RelativeLayout>
+
+        <!--이메일 형식 오류 메시지-->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/email_error_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16.19dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/main"
                 android:textSize="11sp"
+                android:visibility="gone"
                 android:text="올바른 이메일 형식이 아닙니다."/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:layout_marginTop="78.14dp"
-                android:background="@drawable/signup_confirmbutton_background_darkgray"
-                android:text="인증코드 받기"
-                android:textSize="20sp"
-                android:textColor="@color/white"
-                android:textStyle="bold"/>
         </FrameLayout>
 
 
+        <!--인증코드 입력-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <EditText
+                android:id="@+id/code_input_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="인증 코드를 입력해주세요."
+                android:background="@drawable/signup_edittext_background"
+                android:paddingVertical="15dp"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/black"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/code_error_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/code_input_et"
+                android:layout_alignEnd="@id/code_input_et"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"
+                android:src="@drawable/ic_error" />
+
+            <ImageView
+                android:id="@+id/code_checked_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/ic_check" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/signup_dot_icon"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="9sp"
+                    android:layout_marginStart="7.25dp"
+                    android:text="입력하신 이메일 주소로 메일을 전송하였습니다."/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/signup_dot_icon"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="9sp"
+                    android:layout_marginStart="7.25dp"
+                    android:text="시간이 지나도 메일이 도착하지 않는다면 재전송 버튼을 눌러주세요."/>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/code_ok_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16.19dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/main"
+            android:textSize="11sp"
+            android:text="인증 코드가 올바르지 않습니다."
+            android:visibility="gone"/>
+
+
+
+
+        <Button
+            android:id="@+id/email_check_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_marginTop="78.14dp"
+            android:backgroundTint="@color/gray"
+            android:text="이메일 확인"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/code_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_marginTop="78.14dp"
+            android:backgroundTint="@color/gray"
+            android:text="인증번호 받기"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/next_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_marginTop="78.14dp"
+            android:backgroundTint="@color/gray"
+            android:text="다음단계"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textStyle="bold"/>
     </LinearLayout>
 
 </LinearLayout>

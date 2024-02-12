@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.favoriteplace.databinding.ItemShopBannerNewIconBinding
-import com.squareup.picasso.Picasso
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.load
@@ -18,12 +17,12 @@ import coil.request.ImageRequest
 class ShopBannerLimitedIconRVAdapter(private val limitedIconList: ArrayList<ShopMainLimitedIcon>):RecyclerView.Adapter<ShopBannerLimitedIconRVAdapter.ViewHolder>() {
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
-    interface MyItemClickListener : ShopBannerNewLimitedFameRVAdapter.MyItemClickListener {
-        override fun onItemClick()
+    interface MyItemClickListener {
+        fun onItemClick()
     }
 
     //전달받은 리스너 객체를 저장하는 변수
-    private lateinit var mItemClickListener: ShopBannerNewLimitedFameRVAdapter.MyItemClickListener
+    private lateinit var mItemClickListener: MyItemClickListener
     fun setMyItemClickListener(itemClickListener: MyItemClickListener){
         mItemClickListener=itemClickListener
     }
