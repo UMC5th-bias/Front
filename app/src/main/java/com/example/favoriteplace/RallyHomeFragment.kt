@@ -58,7 +58,7 @@ class RallyHomeFragment : Fragment() {
                 putString("rallyId", rallyHomeTrending.id.toString())
             }
             rallyDetailFragment.arguments = bundle
-
+            //렐리 상세페이지로 이동
             binding.recommendRallyCv.setOnClickListener {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frameLayout, rallyDetailFragment)
