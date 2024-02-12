@@ -73,6 +73,10 @@ class RallyHomeFragment : Fragment() {
             rallyHomeResponseMyRally.likedRally.forEach {
                 interestedRallyItems.add(InterestedRallyItem(it.name, it.image))
             }
+            //데이터 없을 때 에러메세지
+            if(interestedRallyItems.isEmpty()) binding.interestedRallyNotLoginCl.visibility = View.VISIBLE
+            else binding.interestedRallyNotLoginCl.visibility = View.GONE
+
             val interestedAdapter = RallyHomeInterestedRVAdapter(interestedRallyItems, context as MainActivity)
             binding.rallyHomeInterestedRallyRv.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -93,6 +97,9 @@ class RallyHomeFragment : Fragment() {
                     )
                 )
             }
+            //데이터 없을 때 에러메세지
+            if(certificationRallyItems.isEmpty()) binding.certificatedRallyNotLoginCl.visibility = View.VISIBLE
+            else binding.certificatedRallyNotLoginCl.visibility = View.GONE
 
             // 어댑터 생성 및 설정
             val certifiedAdapter = RallyHomeCertificationRVAdapter(certificationRallyItems, context as MainActivity)
