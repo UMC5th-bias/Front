@@ -98,6 +98,7 @@ class ShopBannerLimitedIconFragment : Fragment() {
         binding.shopBannerDetailIconUmcTv.text=limitedIconData[0].category
         binding.shopBannerDetailIconLimitedTimeTv.text=limitedIconData[0].saleDeadline
         binding.shopBannerDetailIconTimeTv.text=limitedIconData[0].saleDeadline
+        binding.shopBannerDetailIconUmcTv.text=limitedIconData[0].category
     }
 
     private fun bind(imageUrl: String, imageView: ImageView) {
