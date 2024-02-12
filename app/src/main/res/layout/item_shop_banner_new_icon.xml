@@ -20,7 +20,6 @@
                 android:layout_height="130dp"
                 android:src="@drawable/shop_banner_new_icon_profile"
                 android:layout_marginTop="25dp"
-                android:layout_marginStart="7dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -46,6 +45,7 @@
                 android:textSize="13sp"
                 app:layout_constraintTop_toBottomOf="@id/item_shop_banner_new_icon_iv"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="15dp"/>
 
         <TextView

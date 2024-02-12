@@ -19,7 +19,6 @@ class ShopBannerUnlimitedFameRVAdapter(private val unlimitedFameList: ArrayList<
     //전달받은 리스너 객체를 저장하는 변수
     private lateinit var mItemClickListener: MyItemClickListener
 
-
     fun setMyItemClickListener(itemClickListener: MyItemClickListener){
         mItemClickListener=itemClickListener
     }

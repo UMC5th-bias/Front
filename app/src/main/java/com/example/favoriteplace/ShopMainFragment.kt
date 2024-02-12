@@ -68,10 +68,10 @@ class ShopMainFragment : Fragment() {
             add(ShopMainLimitedFame(R.drawable.limited_frame_3.toString(), "300000P",2))
         }
 
-        val limitedFrameAdapter = ShopBannerLimitedFameRVAdapter(limitedNewFrameData)
-        binding.shopMainLimitedFrameRv.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.shopMainLimitedFrameRv.adapter = limitedFrameAdapter
+//        val limitedFrameAdapter = ShopBannerLimitedFameRVAdapter(limitedNewFrameData)
+//        binding.shopMainLimitedFrameRv.layoutManager =
+//            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        binding.shopMainLimitedFrameRv.adapter = limitedFrameAdapter
 
 //         한정판매 칭호 - UMC
 
@@ -80,7 +80,6 @@ class ShopMainFragment : Fragment() {
             add(ShopMainLimitedFame(R.drawable.limited_frame_umc_2.toString(), "5000P",4))
             add(ShopMainLimitedFame(R.drawable.limited_frame_umc_3.toString(), "5000P",5))
         }
-
         val limitedUMCFrameAdapter = ShopBannerLimitedFameRVAdapter(limitedUMCFrameData)
         binding.shopMainLimitedFrameUMCRv.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -346,6 +345,9 @@ class ShopMainFragment : Fragment() {
                         // 한정판매 칭호 리스트 업데이트
                         limitedNewFrameData.clear()
                         limitedUMCFrameData.clear()
+
+                        Log.d("LimitedFameBeforeMain",limitedUMCFrameData.toString())
+
                         var newLimitedCategoryFound = false // "NEW!" 카테고리를 찾았는지 여부를 추적하는 변수
                         var umcLimitedCategoryFound = false // "NEW!" 카테고리를 찾았는지 여부를 추적하는 변수
 
@@ -363,6 +365,7 @@ class ShopMainFragment : Fragment() {
                                     limitedUMCFrameData.addAll(category.itemList.map { item ->
                                         ShopMainLimitedFame(item.imageUrl, item.point.toString(), item.id)
                                     })
+                                    Log.d("LimitedFameAfterMain",limitedUMCFrameData.toString())
                                 }
                             }
                         }
@@ -578,6 +581,7 @@ class ShopMainFragment : Fragment() {
 
             val limitedUMCFrameDataAdapter = ShopBannerLimitedFameRVAdapter(limitedUMCFrameData)
             binding.shopMainLimitedFrameUMCRv.adapter = limitedUMCFrameDataAdapter
+            Log.d("ShopMainUPDATE",limitedUMCFrameData.toString())
 
             limitedUMCFrameDataAdapter.setMyItemClickListener(object :
                 ShopBannerLimitedFameRVAdapter.MyItemClickListener {

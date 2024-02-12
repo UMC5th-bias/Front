@@ -13,7 +13,7 @@ class ShopBannerUnlimitedIconRVAdapter(private val unlimitedIconList: ArrayList<
     RecyclerView.Adapter<ShopBannerUnlimitedIconRVAdapter.ViewHolder>(){
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
-    interface MyItemClickListener : ShopBannerNewLimitedFameRVAdapter.MyItemClickListener {
+    interface MyItemClickListener : ShopBannerLimitedIconRVAdapter.MyItemClickListener {
         override fun onItemClick()
     }
 

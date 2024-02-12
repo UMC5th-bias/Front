@@ -1,19 +1,23 @@
 package com.example.favoriteplace
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import com.example.favoriteplace.databinding.ItemShopBannerNewFameBinding
 
 class ShopBannerNewUnlimitedFameRVAdapter (private val unlimitedFameList: ArrayList<UnlimitedFame>):RecyclerView.Adapter<ShopBannerNewUnlimitedFameRVAdapter.ViewHolder>() {
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
-    interface MyItemClickListener : ShopBannerNewLimitedFameRVAdapter.MyItemClickListener {
-        override fun onItemClick()
+    interface MyItemClickListener {
+        fun onItemUnlimitedFameClick(unlimitedFame: UnlimitedFame)
     }
 
     //전달받은 리스너 객체를 저장하는 변수
-    private lateinit var mItemClickListener: ShopBannerNewLimitedFameRVAdapter.MyItemClickListener
+    private lateinit var mItemClickListener: MyItemClickListener
     fun setMyItemClickListener(itemClickListener: MyItemClickListener){
         mItemClickListener=itemClickListener
     }
@@ -33,14 +37,33 @@ class ShopBannerNewUnlimitedFameRVAdapter (private val unlimitedFameList: ArrayL
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(unlimitedFameList[position])
         holder.itemView.setOnClickListener{
-            mItemClickListener.onItemClick()
+            mItemClickListener.onItemUnlimitedFameClick(unlimitedFameList[position])
         }
     }
 
     inner class ViewHolder(val binding: ItemShopBannerNewFameBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(unlimitedFame: UnlimitedFame){
-            binding.itemShopBannerNewFameIv.setImageResource(unlimitedFame.fameImg!!)
-            binding.itemShopBannerNewFameTv.text=unlimitedFame.cost
+            try {
+                val imageLoader = ImageLoader.Builder(binding.root.context)
+                    .componentRegistry {
+                        add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                    }
+                    .build()
+
+                val imageRequest = ImageRequest.Builder(binding.root.context)
+                    .crossfade(true)
+                    .crossfade(300)  //애니메이션 처리
+                    .data(unlimitedFame.fameImg)
+                    .target(binding.itemShopBannerNewFameIv)  //해당 이미지뷰를 타겟으로 svg 삽입
+                    .build()
+                imageLoader.enqueue(imageRequest)
+
+                binding.itemShopBannerNewFameTv.text = unlimitedFame.cost
+
+            } catch (e: Exception) {
+                Log.e("ViewHolder", "Error loading image: ${e.message}")
+                e.printStackTrace()
+            }
         }
 
     }

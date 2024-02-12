@@ -2,6 +2,7 @@ package com.example.favoriteplace
 
 import android.app.Activity
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -27,6 +28,7 @@ class FreeWritePostActivity : AppCompatActivity() {
     private val selectedImages = mutableListOf<Uri>()
     private val selectedBitmaps = mutableListOf<Bitmap>()
 
+    @SuppressLint("CommitTransaction")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFreeWritePostBinding.inflate(layoutInflater)
@@ -52,6 +54,11 @@ class FreeWritePostActivity : AppCompatActivity() {
 
         binding.writePostArrowIv.setOnClickListener {
             finish()
+        }
+
+        binding.writePostRegisterBtn.setOnClickListener {
+            val intent = Intent(this, PostDetailActivity::class.java)
+            startActivity(intent)
         }
     }
 
