@@ -39,7 +39,6 @@ class ShopMainFragment : Fragment() {
     private var selectedLimitedFame: ShopMainLimitedFame? = null
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,9 +63,9 @@ class ShopMainFragment : Fragment() {
 
         // 한정판매 칭호 - NEW
         limitedNewFrameData.apply {
-            add(ShopMainLimitedFame(R.drawable.limited_frame_1.toString(), "10000P"))
-            add(ShopMainLimitedFame(R.drawable.limited_frame_2.toString(), "30000P"))
-            add(ShopMainLimitedFame(R.drawable.limited_frame_3.toString(), "300000P"))
+            add(ShopMainLimitedFame(R.drawable.limited_frame_1.toString(), "10000P",0))
+            add(ShopMainLimitedFame(R.drawable.limited_frame_2.toString(), "30000P",1))
+            add(ShopMainLimitedFame(R.drawable.limited_frame_3.toString(), "300000P",2))
         }
 
         val limitedFrameAdapter = ShopBannerLimitedFameRVAdapter(limitedNewFrameData)
@@ -74,20 +73,12 @@ class ShopMainFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.shopMainLimitedFrameRv.adapter = limitedFrameAdapter
 
-//        limitedFrameAdapter.setMyItemClickListener(object :ShopBannerLimitedFameRVAdapter.MyItemClickListener{
-//            override fun onItemClick() {
-//                (context as MainActivity).supportFragmentManager.beginTransaction()
-//                    .replace(R.id.main_frameLayout, ShopBannerLimitedFameFragment())
-//                    .commitAllowingStateLoss()
-//            }
-//        })
-
-        // 한정판매 칭호 - UMC
+//         한정판매 칭호 - UMC
 
         limitedUMCFrameData.apply {
-            add(ShopMainLimitedFame(R.drawable.limited_frame_umc_1.toString(), "5000P"))
-            add(ShopMainLimitedFame(R.drawable.limited_frame_umc_2.toString(), "5000P"))
-            add(ShopMainLimitedFame(R.drawable.limited_frame_umc_3.toString(), "5000P"))
+            add(ShopMainLimitedFame(R.drawable.limited_frame_umc_1.toString(), "5000P",3))
+            add(ShopMainLimitedFame(R.drawable.limited_frame_umc_2.toString(), "5000P",4))
+            add(ShopMainLimitedFame(R.drawable.limited_frame_umc_3.toString(), "5000P",5))
         }
 
         val limitedUMCFrameAdapter = ShopBannerLimitedFameRVAdapter(limitedUMCFrameData)
@@ -328,7 +319,7 @@ class ShopMainFragment : Fragment() {
         // 예시를 위한 가상 코드입니다. 실제로는 YOUR_AUTH_TOKEN을 적절한 토큰으로 대체해야 합니다.
 
         val accessToken =
-            "yJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanVAbmF2ZXIuY29tIiwiYXV0aCI6IiIsImV4cCI6MTcwNjcwMTI2NH0.2PxFwZIDCCsERyb4a31d_TbbIydJzAGj1PfCRDDV7bw"
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIzNDUiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzAwNTc4MTYyLCJleHAiOjE3MDA1ODE3NjJ9.7JQjAnetwRF3OjSvFiiqyUm2cNinNWnyx9ueacduQvQ"
 
         val callLimitedSales = if (isLoggedIn()) {
             RetrofitClient.shopService.getLimitedSales(authorization = accessToken)
@@ -363,14 +354,14 @@ class ShopMainFragment : Fragment() {
                                 "NEW!" -> {
                                     newLimitedCategoryFound = true // "NEW!" 카테고리를 찾았음을 표시
                                     limitedNewFrameData.addAll(category.itemList.map { item ->
-                                        ShopMainLimitedFame(item.imageUrl, item.point.toString())
+                                        ShopMainLimitedFame(item.imageUrl, item.point.toString(), item.id)
                                     })
                                 }
 
                                 "UMC" -> {
                                     umcLimitedCategoryFound = true
                                     limitedUMCFrameData.addAll(category.itemList.map { item ->
-                                        ShopMainLimitedFame(item.imageUrl, item.point.toString())
+                                        ShopMainLimitedFame(item.imageUrl, item.point.toString(), item.id)
                                     })
                                 }
                             }
@@ -565,9 +556,19 @@ class ShopMainFragment : Fragment() {
 
             limitedNewFrameDataAdapter.setMyItemClickListener(object :
                 ShopBannerLimitedFameRVAdapter.MyItemClickListener {
-                override fun onItemClick() {
+                //                override fun onItemClick() {
+//                    (context as MainActivity).supportFragmentManager.beginTransaction()
+//                        .replace(R.id.main_frameLayout, ShopMainLimitedFameFragment())
+//                        .commitAllowingStateLoss()
+//                }
+                override fun onItemClick(itemId: Int) { // onItemClick의 파라미터를 Int로 변경
+                    val fragment = ShopMainLimitedFameFragment().apply {
+                        arguments = Bundle().apply {
+                            putInt("ITEM_ID", itemId) // ITEM_ID 키로 아이템 ID 저장
+                        }
+                    }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, ShopMainLimitedFameFragment())
+                        .replace(R.id.main_frameLayout, fragment)
                         .commitAllowingStateLoss()
                 }
             })
@@ -578,11 +579,17 @@ class ShopMainFragment : Fragment() {
 
             limitedUMCFrameDataAdapter.setMyItemClickListener(object :
                 ShopBannerLimitedFameRVAdapter.MyItemClickListener {
-                override fun onItemClick() {
+                override fun onItemClick(itemId: Int) { // onItemClick의 파라미터를 Int로 변경
+                    val fragment = ShopMainLimitedFameFragment().apply {
+                        arguments = Bundle().apply {
+                            putInt("ITEM_ID", itemId) // ITEM_ID 키로 아이템 ID 저장
+                        }
+                    }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, ShopMainLimitedFameFragment())
+                        .replace(R.id.main_frameLayout, fragment)
                         .commitAllowingStateLoss()
                 }
+
             })
 
             // 한정판매 아이콘 어댑터 업데이트
