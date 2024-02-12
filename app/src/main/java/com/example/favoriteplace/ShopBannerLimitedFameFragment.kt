@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import coil.ImageLoader
 import coil.decode.SvgDecoder
@@ -70,6 +71,8 @@ class ShopBannerLimitedFameFragment: Fragment() {
                     if (response.isSuccessful) {
                         val detailsResponse = response.body()
 
+                        Log.d("detailsID",itemId.toString())
+                        Log.d("detailsResponse",detailsResponse.toString())
                         detailsResponse?.let {
                             limitedFameData.clear()
                             limitedFameData.add(it)
@@ -87,17 +90,17 @@ class ShopBannerLimitedFameFragment: Fragment() {
 
     //데이터를 반영하여 화면에 보여주는 함수
     private fun setView() {
-        bind()  //svg 이미지를 가져오기 위한 함수
+        bind(limitedFameData[0].imageUrl, binding.shopBannerDetailFameIv)  //svg 이미지를 가져오기 위한 함수
         binding.shopBannerDetailFameCostTv.text = limitedFameData[0].point.toString()
         binding.shopBannerDetailFameBodyTv.text = limitedFameData[0].description
         binding.shopBannerDetailFameTitleTv.text = limitedFameData[0].name
         binding.shopBannerDetailFameUmcTv.text=limitedFameData[0].category
-        binding.shopBannerDetailFameLimitedTimeTv.text=limitedFameData[0].salesDeadline
-        binding.shopBannerDetailFameTimeTv.text=limitedFameData[0].salesDeadline
+        binding.shopBannerDetailFameLimitedTimeTv.text=limitedFameData[0].saleDeadline
+        binding.shopBannerDetailFameTimeTv.text=limitedFameData[0].saleDeadline
     }
 
     //svg 이미지를 가져오기 위한 함수
-    private fun bind() {
+    fun bind(imageUrl: String, imageView: ImageView) {
         try {
             val imageLoader = ImageLoader.Builder(binding.root.context)
                 .componentRegistry {
@@ -108,13 +111,13 @@ class ShopBannerLimitedFameFragment: Fragment() {
             val imageRequest = ImageRequest.Builder(binding.root.context)
                 .crossfade(true)
                 .crossfade(300)  //애니메이션 처리
-                .data(limitedFameData[0].imageUrl)
-                .target(binding.shopBannerDetailFameIv)  //해당 이미지뷰를 타겟으로 svg 삽입
+                .data(imageUrl)
+                .target(imageView)  //해당 이미지뷰를 타겟으로 svg 삽입
                 .build()
             imageLoader.enqueue(imageRequest)
 
         } catch (e: Exception) {
-            Log.e("ViewHolder", "Error loading image: ${e.message}")
+            Log.e("ShopBannerLimitedFameFragment", "Error loading image: ${e.message}")
             e.printStackTrace()
         }
     }
