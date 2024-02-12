@@ -1,7 +1,7 @@
 package com.example.favoriteplace
 
 data class ShopDetailsResponse(
-    val salesDeadline: String,
+    val saleDeadline: String,
     val category: String,
     val imageUrl: String,
     val userPoint: Int,
