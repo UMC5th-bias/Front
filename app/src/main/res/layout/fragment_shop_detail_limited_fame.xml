@@ -55,21 +55,40 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/shop_banner_new_icon_border">
 
-                <TextView
-                    android:id="@+id/shop_banner_detail_fame_limited_time_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:background="@drawable/shop_banner_detail_limited_time"
-                    android:text="~2024.02.00"
-                    android:textStyle="normal"
-                    android:textSize="15dp"
-                    android:textColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="10dp"
-                    android:paddingHorizontal="5dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:background="@drawable/shop_banner_detail_limited_time"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp">
+
+            <TextView
+                android:id="@+id/shop_banner_detail_fame_limited_text_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="~"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:id="@+id/shop_banner_detail_fame_limited_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="2024.02.00"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/shop_banner_detail_fame_limited_text_tv"
+                android:paddingRight="10dp"/>
+
+            </LinearLayout>
+
 
                     <ImageView
                         android:layout_width="40dp"
