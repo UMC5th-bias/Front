@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -89,7 +90,7 @@ class ShopBannerLimitedFameFragment: Fragment() {
 
     //데이터를 반영하여 화면에 보여주는 함수
     private fun setView() {
-        bind(limitedFameData[0].imageUrl, binding.shopBannerDetailFameIv)  //svg 이미지를 가져오기 위한 함수
+        bind(binding.root.context,limitedFameData[0].imageUrl, binding.shopBannerDetailFameIv)  //svg 이미지를 가져오기 위한 함수
         binding.shopBannerDetailFameCostTv.text = limitedFameData[0].point.toString()
         binding.shopBannerDetailFameBodyTv.text = limitedFameData[0].description
         binding.shopBannerDetailFameTitleTv.text = limitedFameData[0].name
@@ -99,15 +100,15 @@ class ShopBannerLimitedFameFragment: Fragment() {
     }
 
     //svg 이미지를 가져오기 위한 함수
-    private fun bind(imageUrl: String, imageView: ImageView) {
+    fun bind(context: Context,imageUrl: String, imageView: ImageView) {
         try {
-            val imageLoader = ImageLoader.Builder(binding.root.context)
+            val imageLoader = ImageLoader.Builder(context)
                 .componentRegistry {
-                    add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                    add(SvgDecoder(context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
                 }
                 .build()
 
-            val imageRequest = ImageRequest.Builder(binding.root.context)
+            val imageRequest = ImageRequest.Builder(context)
                 .crossfade(true)
                 .crossfade(300)  //애니메이션 처리
                 .data(imageUrl)

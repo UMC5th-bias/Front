@@ -89,9 +89,8 @@ class ShopBannerLimitedIconFragment : Fragment() {
     //데이터를 반영하여 화면에 보여주는 함수
     private fun setView() {
 
-        Log.d("ShopBannerLimitedIconBind",limitedIconData[0].imageUrl)
-        bind(limitedIconData[0].imageUrl, binding.shopBannerDetailIconIv)  //svg 이미지를 가져오기 위한 함수
-        bind(limitedIconData[0].imageUrl, binding.shopBannerDetailIconApplyIconIv)
+        ShopBannerLimitedFameFragment().bind(binding.root.context,limitedIconData[0].imageUrl, binding.shopBannerDetailIconIv )
+        ShopBannerLimitedFameFragment().bind(binding.root.context,limitedIconData[0].imageUrl, binding.shopBannerDetailIconApplyIconIv)
         binding.shopBannerDetailIconCostTv.text = limitedIconData[0].point.toString()
         binding.shopBannerDetailIconBodyTv.text = limitedIconData[0].description
         binding.shopBannerDetailIconTitleTv.text = limitedIconData[0].name
@@ -99,27 +98,5 @@ class ShopBannerLimitedIconFragment : Fragment() {
         binding.shopBannerDetailIconLimitedTimeTv.text=limitedIconData[0].saleDeadline
         binding.shopBannerDetailIconTimeTv.text=limitedIconData[0].saleDeadline
         binding.shopBannerDetailIconUmcTv.text=limitedIconData[0].category
-    }
-
-    private fun bind(imageUrl: String, imageView: ImageView) {
-        try {
-            val imageLoader = ImageLoader.Builder(binding.root.context)
-                .componentRegistry {
-                    add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
-                }
-                .build()
-
-            val imageRequest = ImageRequest.Builder(binding.root.context)
-                .crossfade(true)
-                .crossfade(300)  //애니메이션 처리
-                .data(imageUrl)
-                .target(imageView)  //해당 이미지뷰를 타겟으로 svg 삽입
-                .build()
-            imageLoader.enqueue(imageRequest)
-
-        } catch (e: Exception) {
-            Log.e("ShopBannerDetailFragment", "Error loading image: ${e.message}")
-            e.printStackTrace()
-        }
     }
 }
