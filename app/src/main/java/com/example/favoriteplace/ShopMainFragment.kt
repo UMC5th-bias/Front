@@ -121,9 +121,9 @@ class ShopMainFragment : Fragment() {
         // 상시판매 칭호 - NEW
 
         regularFrameData.apply {
-            add(ShopMainUnlimitedFame(R.drawable.regular_frame_new_1.toString(), "5000P"))
-            add(ShopMainUnlimitedFame(R.drawable.regular_frame_new_2.toString(), "10000P"))
-            add(ShopMainUnlimitedFame(R.drawable.regular_frame_new_3.toString(), "100000P"))
+            add(ShopMainUnlimitedFame(R.drawable.regular_frame_new_1.toString(), "5000P", 0))
+            add(ShopMainUnlimitedFame(R.drawable.regular_frame_new_2.toString(), "10000P",1))
+            add(ShopMainUnlimitedFame(R.drawable.regular_frame_new_3.toString(), "100000P",2))
         }
 
         val regularFrameAdapter = ShopBannerUnlimitedFameRVAdapter(regularFrameData)
@@ -134,9 +134,9 @@ class ShopMainFragment : Fragment() {
         // 상시판매 칭호 - Normal
 
         regularFrameNormalData.apply {
-            add(ShopMainUnlimitedFame(R.drawable.regular_frame_normal_1.toString(), "50P"))
-            add(ShopMainUnlimitedFame(R.drawable.regular_frame_normal_2.toString(), "10000P"))
-            add(ShopMainUnlimitedFame(R.drawable.regular_frame_normal_3.toString(), "500000P"))
+            add(ShopMainUnlimitedFame(R.drawable.regular_frame_normal_1.toString(), "50P",3))
+            add(ShopMainUnlimitedFame(R.drawable.regular_frame_normal_2.toString(), "10000P",4))
+            add(ShopMainUnlimitedFame(R.drawable.regular_frame_normal_3.toString(), "500000P",5))
         }
 
         val regularFrameNormalAdapter = ShopBannerUnlimitedFameRVAdapter(regularFrameNormalData)
@@ -467,7 +467,8 @@ class ShopMainFragment : Fragment() {
                                     regularFrameData.addAll(category.itemList.map { item ->
                                         ShopMainUnlimitedFame(
                                             item.imageUrl,
-                                            item.point.toString()
+                                            item.point.toString(),
+                                            item.id
                                         )
                                     })
                                 }
@@ -477,7 +478,8 @@ class ShopMainFragment : Fragment() {
                                     regularFrameNormalData.addAll(category.itemList.map { item ->
                                         ShopMainUnlimitedFame(
                                             item.imageUrl,
-                                            item.point.toString()
+                                            item.point.toString(),
+                                            item.id
                                         )
                                     })
                                 }
@@ -631,9 +633,14 @@ class ShopMainFragment : Fragment() {
 
             regularNewFrameDataAdapter.setMyItemClickListener(object :
                 ShopBannerUnlimitedFameRVAdapter.MyItemClickListener {
-                override fun onItemClick() {
+                override fun onItemClick(itemId: Int) { // onItemClick의 파라미터를 Int로 변경
+                    val fragment = ShopMainUnlimitedFameFragment().apply {
+                        arguments = Bundle().apply {
+                            putInt("ITEM_ID", itemId) // ITEM_ID 키로 아이템 ID 저장
+                        }
+                    }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, ShopMainUnlimitedFameFragment())
+                        .replace(R.id.main_frameLayout, fragment)
                         .commitAllowingStateLoss()
                 }
             })
@@ -643,9 +650,14 @@ class ShopMainFragment : Fragment() {
             binding.shopMainRegularFrameNormalRv.adapter = regularNormalFrameDataAdapter
             regularNormalFrameDataAdapter.setMyItemClickListener(object :
                 ShopBannerUnlimitedFameRVAdapter.MyItemClickListener {
-                override fun onItemClick() {
+                override fun onItemClick(itemId: Int) { // onItemClick의 파라미터를 Int로 변경
+                    val fragment = ShopMainUnlimitedFameFragment().apply {
+                        arguments = Bundle().apply {
+                            putInt("ITEM_ID", itemId) // ITEM_ID 키로 아이템 ID 저장
+                        }
+                    }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, ShopMainUnlimitedFameFragment())
+                        .replace(R.id.main_frameLayout, fragment)
                         .commitAllowingStateLoss()
                 }
             })
