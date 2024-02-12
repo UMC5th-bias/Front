@@ -14,7 +14,7 @@ interface HomeService {
         @SerializedName("isLoggedIn") val isLoggedIn: Boolean,
         @SerializedName("userInfo") val userInfo: UserInfo,
         @SerializedName("rally") val rally: Rally,
-        @SerializedName("trendingPosts") val trendingPosts: List<Post>?
+        @SerializedName("trendingPosts") val trendingPosts: List<TrendingPosts>
     )
 
 
@@ -34,13 +34,13 @@ interface HomeService {
         val completeNumber: Int
     )
 
-    data class Post(
+    data class TrendingPosts(
         val id: Int,
         val rank: Int,
         val title: String,
         val profileImageUrl: URL?,
         val profileIconUrl: URL?,
-        val hashtags: List<String>,
+        val hashtags:  List<String>?,
         val passedTime: String,
         val board: String
     )

@@ -62,10 +62,12 @@ class SignUpFinishActivity: AppCompatActivity() {
 
         signUpService = retrofit.create(SignUpService::class.java)
 
-        // 저장소 권한 확인
-//        checkStoragePermission()
-
-
+        // 뒤로가기
+        binding.backIv.setOnClickListener {
+            val intent = Intent(this@SignUpFinishActivity, SignUpProfileSettingActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 
         // 이전 화면에서 전달받은 데이터 가져오기
@@ -74,13 +76,43 @@ class SignUpFinishActivity: AppCompatActivity() {
         val password = intent.getStringExtra("password") ?: ""
         val nickname = intent.getStringExtra("nickname") ?: ""
         val introduction = intent?.getStringExtra("introduction") ?: ""
-        val imageUri: Uri? = intent.getParcelableExtra("imageUri")
+        // 이미지 파일의 경로를 받아옴
+        val imageFilePath: String? = intent.getStringExtra("imageFilePath")
+
+
+        intent.putExtra("nickname", nickname)
+        intent.putExtra("introduction", introduction)
+        intent.putExtra("imageUri",imageUri)
+
 
         Log.d("SignUp", ">> finish >> { $snsAllow, $email, $password, $nickname, $introduction, $imageUri }")
 
 
         binding.nicknameTv.text = nickname
         binding.introductionTv.text = introduction
+
+
+        Glide.with(this)
+            .load(imageUri)
+            .placeholder(null)
+            .into(binding.finishProfileIv)
+
+        if (!imageFilePath.isNullOrEmpty()) {
+            // 이미지 파일 경로가 있는 경우, 해당 경로를 사용하여 이미지를 로드 또는 표시
+            // 예를 들어, Glide를 사용하여 이미지를 로드
+            Glide.with(this)
+                .load(imageFilePath)
+                .into(binding.finishProfileIv)
+        } else {
+            // 이미지 파일 경로가 없는 경우, 기본 이미지를 로드하거나 표시
+            // 예를 들어, 기본 이미지를 설정
+            binding.finishProfileIv.setImageResource(R.drawable.memberimg)
+        }
+
+
+        Log.d("SignUp", ">> Glide Image success")
+
+
 
         // 이미지 URI가 null이 아닌 경우에만 Glide를 사용하여 이미지 표시
 //        if (imageUri != null) {
@@ -117,20 +149,6 @@ class SignUpFinishActivity: AppCompatActivity() {
         }
     }
 
-    private fun checkStoragePermission() {
-        // 외부 저장소 읽기 권한 확인
-        if(ContextCompat.checkSelfPermission(
-            this,
-            android.Manifest.permission.READ_MEDIA_IMAGES
-        ) != PackageManager.PERMISSION_GRANTED){
-
-            // 권한이 없는 경우 권한 요청
-            requestPermissions(
-                arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES),
-                READ_EXTERNAL_STORAGE_REQUEST_CODE
-            )
-        }
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

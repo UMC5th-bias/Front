@@ -1,6 +1,7 @@
 package com.example.favoriteplace
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,8 +21,8 @@ class LoginActivity :AppCompatActivity() {
 
 
     companion object {
-        const val LOGIN_REQUEST_CODE = 101
         const val ACCESS_TOKEN_KEY = "accessToken"
+        const val LOGGED_OUT = "loggedOut"
     }
 
 
@@ -30,8 +31,6 @@ class LoginActivity :AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
 
 
         // Retrofit 객체 생성
@@ -62,6 +61,11 @@ class LoginActivity :AppCompatActivity() {
                             Log.d("Login", "AccessToken: $accessToken, RefreshToken: $refreshToken")
 
 
+                            // SharedPreferences 객체 가져오기
+                            val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                            // SharedPreferences에 액세스 토큰 저장
+                            sharedPreferences.edit().putString(ACCESS_TOKEN_KEY, accessToken).apply()
+
                             val resultIntent = Intent().apply {
                                 putExtra(ACCESS_TOKEN_KEY, accessToken)
                             }
@@ -89,7 +93,12 @@ class LoginActivity :AppCompatActivity() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
 
-
+        // 앱이 종료될 때 로그아웃 상태를 SharedPreferences에 저장
+        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean(LOGGED_OUT, true).apply()
+    }
 
 }

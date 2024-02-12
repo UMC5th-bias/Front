@@ -23,13 +23,6 @@ class SignUpPwdInputActivity: AppCompatActivity() {
         Log.d("SignUp", ">> Starting SignUpPwdInputActivity")
 
 
-        // Retrofit 객체 생성
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://favoriteplace.store:8080")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-
         // 뒤로가기
         binding.backPageIv.setOnClickListener {
             val intent = Intent(this@SignUpPwdInputActivity, SignUpEmailVerificationActivity::class.java)

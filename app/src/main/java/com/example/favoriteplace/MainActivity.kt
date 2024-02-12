@@ -1,10 +1,14 @@
 package com.example.favoriteplace
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.collection.arraySetOf
+import com.example.favoriteplace.HomeFragment.Companion.LOGIN_REQUEST_CODE
 import com.example.favoriteplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -16,8 +20,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
         setContentView(binding.root)
 
+
         initBottomNavigation()
 }
+
 
 
     private fun initBottomNavigation(){
@@ -63,5 +69,4 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
-
 }

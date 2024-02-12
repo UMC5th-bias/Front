@@ -32,10 +32,11 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
     private val PICK_IMAGE_REQUEST = 1
     private var imageUri: Uri? = null
 
+    // 이미지 파일 리스트
+    private val imageFiles = mutableListOf<File>()
 
     // 권한 요청에 사용될 코드 상수
     private val STORAGE_PERMISSION_REQUEST_CODE = 100
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,9 +73,9 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
 
 
             val imageUri = imageUri  // 이미지 URI 가져오기
+            val profileImageUri = imageUri
 
 
-            Log.d("SignUp", ">> { $snsAllow, $email, $password, $nickname, $introduction, $imageUri }")
             val intent = Intent(this@SignUpProfileSettingActivity, SignUpFinishActivity::class.java)
             intent.putExtra("snsAllow", snsAllow)
             intent.putExtra("email", email)
@@ -82,7 +83,10 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
             intent.putExtra("nickname", nickname)
             intent.putExtra("introduction", introduction)
             intent.putExtra("imageUri", imageUri)
-            startActivity(intent)
+
+            intent.putExtra("profileImageUri",profileImageUri.toString())
+
+            goToSignUpFinishActivity(imageUri?.toString())
 
         }
 
@@ -91,17 +95,17 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
     private fun checkStoragePermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
-                    android.Manifest.permission.READ_MEDIA_IMAGES
-                ) != PackageManager.PERMISSION_GRANTED
-            ){
-                // 이미 권한이 부여되지 않은 경우 권한 요청
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES),
-                    STORAGE_PERMISSION_REQUEST_CODE)
-            }else{
-                openGallery()
-            }
+                android.Manifest.permission.READ_MEDIA_IMAGES
+            ) != PackageManager.PERMISSION_GRANTED
+        ){
+            // 이미 권한이 부여되지 않은 경우 권한 요청
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES),
+                STORAGE_PERMISSION_REQUEST_CODE)
+        }else{
+            openGallery()
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -123,6 +127,20 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
                 ).show()
             }
         }
+    }
+    // 이미지 파일을 MultipartBody.Part로 변환하는 함수
+    private fun prepareImageParts(): List<MultipartBody.Part> {
+        val imageParts = mutableListOf<MultipartBody.Part>()
+        for (imageFile in imageFiles) {
+            val requestBody = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
+            val imagePart = MultipartBody.Part.createFormData("images", imageFile.name, requestBody)
+            imageParts.add(imagePart)
+        }
+        return imageParts
+    }
+    // 이미지 파일을 추가하는 함수
+    private fun addImageFile(file: File) {
+        imageFiles.add(file)
     }
 
     private fun openGallery() {
@@ -155,10 +173,13 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
 
             selectedImage?.let {
                 // 이미지 선택 후 처리
-                val imageUri = Uri.parse(getRealPathFromURI(selectedImage)) // Get the absolute path of the image
-                Log.d("SignUp", ">> imageUri: $imageUri") // Check the absolute path
-                goToSignUpFinishActivity(imageUri)
+                val imageUri = Uri.parse(getRealPathFromURI(selectedImage))
+                Log.d("SignUp", ">> imageUri: $imageUri")
+                // 이미지 파일을 생성하고 리스트에 추가
+                val imageFile = File(getRealPathFromURI(selectedImage))
+                addImageFile(imageFile)
 
+                intent.putExtra("imageFiles",imageFiles.toTypedArray())
 
                 val inputStream = contentResolver.openInputStream(it)
                 inputStream?.let { stream ->
@@ -166,21 +187,22 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
                     binding.profileIv.setImageBitmap(bitmap)
+
+                }
+
+
+                Log.d("SignUp", ">> 사진 선택 완료")
             }
-
-
-            Log.d("SignUp", ">> 사진 선택 완료")
         }
     }
-    }
 
-    private fun goToSignUpFinishActivity(imageUri: Uri?) {
-
+    private fun goToSignUpFinishActivity(imageFilePath: String?) {
         val snsAllow = intent.getBooleanExtra("snsAllow", false)
         val email = intent.getStringExtra("email") ?: ""
         val password = intent.getStringExtra("password") ?: ""
         val nickname = binding.nameTet.text.toString()
         val introduction = binding.introductionTet.text.toString()
+        val imageParts = prepareImageParts()
 
         val intent = Intent(this@SignUpProfileSettingActivity, SignUpFinishActivity::class.java)
         intent.putExtra("snsAllow", snsAllow)
@@ -189,8 +211,9 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
         intent.putExtra("nickname", nickname)
         intent.putExtra("introduction", introduction)
         intent.putExtra("imageUri", imageUri)  // 이미지 URI를 SignUpFinishActivity로 전달
+        intent.putExtra("imageFilePath", imageFilePath)
 
-        Log.d("SignUp", ">> { $snsAllow, $email, $password, $nickname, $introduction, $imageUri }")
+        Log.d("SignUp", ">> { $snsAllow, $email, $password, $nickname, $introduction,$imageFilePath }")
         startActivity(intent)
     }
 
