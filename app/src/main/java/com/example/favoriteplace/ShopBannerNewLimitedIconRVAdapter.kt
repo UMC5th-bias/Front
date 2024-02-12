@@ -13,7 +13,7 @@ class ShopBannerNewLimitedIconRVAdapter (private val limitedIconList: ArrayList<
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
     interface MyItemClickListener {
-        fun onItemLimitedIconClick()
+        fun onItemLimitedIconClick(limitedIcon: LimitedIcon)
     }
 
     //전달받은 리스너 객체를 저장하는 변수
@@ -33,7 +33,7 @@ class ShopBannerNewLimitedIconRVAdapter (private val limitedIconList: ArrayList<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(limitedIconList[position])
         holder.itemView.setOnClickListener{
-            mItemClickListener.onItemLimitedIconClick()
+            mItemClickListener.onItemLimitedIconClick(limitedIconList[position])
         }
     }
     inner class ViewHolder(val binding: ItemShopBannerNewIconBinding): RecyclerView.ViewHolder(binding.root){

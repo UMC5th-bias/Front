@@ -189,9 +189,17 @@ class ShopBannerNewFragment : Fragment() {
 
             //한정 판매 아이콘 아이템을 눌렀을 때 상세페이지로 넘어감
             limitedIconRVAdapter.setMyItemClickListener(object :ShopBannerNewLimitedIconRVAdapter.MyItemClickListener{
-                override fun onItemLimitedIconClick() {
+                override fun onItemLimitedIconClick(limitedIcon: LimitedIcon) {
                     (context as MainActivity).supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, ShopBannerLimitedIconFragment())
+                        .replace(R.id.main_frameLayout, ShopBannerLimitedIconFragment().apply {
+
+                            //아이템 아이디를 신상품 페이지 한정 아이콘에게 gson으로 보내주는 코드
+                            arguments=Bundle().apply {
+                                val gson=Gson()
+                                val limitedIconJson=gson.toJson(limitedIcon.id)
+                                putString("limitedIcon",limitedIconJson)
+                            }
+                        })
                         .commitAllowingStateLoss()
                 }
             })

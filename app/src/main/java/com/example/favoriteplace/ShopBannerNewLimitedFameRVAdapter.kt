@@ -36,6 +36,8 @@ class ShopBannerNewLimitedFameRVAdapter(private val limitedFameList: ArrayList<L
         val binding: ItemShopBannerNewFameBinding=ItemShopBannerNewFameBinding.inflate(
             LayoutInflater.from(viewGroup.context),viewGroup,false)
 
+        Log.d("확인","success")
+
         return ViewHolder(binding)
     }
 

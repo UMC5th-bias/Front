@@ -20,7 +20,6 @@ class ShopBannerLimitedFameFragment: Fragment() {
     lateinit var binding: FragmentShopDetailLimitedFameBinding
     private var gson: Gson = Gson()
     private var limitedFameData = ArrayList<ShopDetailsResponse>()
-    private var detailsResponse: ShopDetailsResponse? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,7 +99,7 @@ class ShopBannerLimitedFameFragment: Fragment() {
     }
 
     //svg 이미지를 가져오기 위한 함수
-    fun bind(imageUrl: String, imageView: ImageView) {
+    private fun bind(imageUrl: String, imageView: ImageView) {
         try {
             val imageLoader = ImageLoader.Builder(binding.root.context)
                 .componentRegistry {
@@ -117,7 +116,7 @@ class ShopBannerLimitedFameFragment: Fragment() {
             imageLoader.enqueue(imageRequest)
 
         } catch (e: Exception) {
-            Log.e("ShopBannerLimitedFameFragment", "Error loading image: ${e.message}")
+            Log.e("ShopBannerDetailFragment", "Error loading image: ${e.message}")
             e.printStackTrace()
         }
     }
