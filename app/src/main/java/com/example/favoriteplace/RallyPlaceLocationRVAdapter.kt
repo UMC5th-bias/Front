@@ -1,11 +1,16 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemRallyplaceLocationlistBinding
 
-class RallyPlaceLocationRVAdapter(private val locationInfoList: List<RallyPlaceLocationItem>) : RecyclerView.Adapter<RallyPlaceLocationRVAdapter.viewHolder>() {
+class RallyPlaceLocationRVAdapter(
+    private val context: Context,
+    private val locationInfoList:  List<RallyPlaceAnimation>
+) : RecyclerView.Adapter<RallyPlaceLocationRVAdapter.viewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -23,10 +28,12 @@ class RallyPlaceLocationRVAdapter(private val locationInfoList: List<RallyPlaceL
     }
 
     inner class viewHolder(val binding: ItemRallyplaceLocationlistBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(info: RallyPlaceLocationItem){
-            binding.rallyplaceLocationAni.text = info.name
-            binding.rallyplaceLocationLoc.text = info.location
-            binding.rallyplaceLocationImg.setImageResource(info.src)
+        fun bind(info: RallyPlaceAnimation){
+            binding.rallyplaceLocationAni.text = info.title
+            binding.rallyplaceLocationLoc.text = info.detailAddress
+            Glide.with(context)
+                .load(info.image)
+                .into(binding.rallyplaceLocationImg)
             binding.rallyplaceLocationImg.clipToOutline = true
         }
     }

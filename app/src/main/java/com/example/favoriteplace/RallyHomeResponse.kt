@@ -18,13 +18,13 @@ data class RallyHomeResponseMyRally(
 )
 
 data class RallyHomeLikedRally(
-    val id: Int,
+    val id: Long,
     val name: String,
     val image: URL
 )
 
 data class RallyHomeGuestBook(
-    val id: Int,
+    val id: Long,
     val title: String,
     val createdAt: String,
     val image: URL,
