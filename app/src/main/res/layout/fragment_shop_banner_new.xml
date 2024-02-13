@@ -217,7 +217,7 @@
                         android:layout_height="match_parent"
                         android:text="상시판매"
                         android:textStyle="bold"
-                        android:textSize="15dp"
+                        android:textSize="15sp"
                         android:textColor="@color/black"
                         android:background="@drawable/shop_banner_new_unlimited"
                         app:layout_constraintStart_toStartOf="parent"
