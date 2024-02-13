@@ -49,6 +49,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         // Retrofit 객체 생성
         retrofit = Retrofit.Builder()
             .baseUrl("http://favoriteplace.store:8080")
@@ -57,18 +59,11 @@ class HomeFragment : Fragment() {
 
         homeService = retrofit.create(HomeService::class.java)
 
-
-        if (!isLoggedIn) {
-            initializeUI()
-        }
-
-        //setupTrendingPostsRecyclerView()
-
-
-        // LoginActivity로부터 accessToken 받기
-//        if (!accessToken.isNullOrEmpty()) {
-//            getUserInfo(accessToken)
+        setupTrendingPostsRecyclerView()
+//        if (!isLoggedIn) {
+//            initializeUI()
 //        }
+
     }
 
     override fun onStart() {
@@ -120,12 +115,12 @@ class HomeFragment : Fragment() {
 
 
     private fun setupTrendingPostsRecyclerView() {
-        Log.d("HomeFragment", ">> trendingPostsAdapter()")
 
-        val trendingPostsAdapter = TrendingPostsAdapter(trendingPostsData)
+        // TrendingPostsAdapter 초기화
+        trendingPostsAdapter = TrendingPostsAdapter(trendingPostsData)
         binding.trendingPostsRecyclerView.adapter = trendingPostsAdapter
         binding.trendingPostsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        Log.d("HomeFragment", ">> RecyclerView success ")
+
     }
 
 
@@ -205,21 +200,14 @@ class HomeFragment : Fragment() {
 
         }
 
-//        homeData.trendingPosts?.let { trendingPosts ->
-//            trendingPostsAdapter.submitList(trendingPosts)
-//            trendingPostsAdapter.notifyDataSetChanged()
-//            Log.d("HomeFragment", ">> Update trending posts()")
-//        }
-//        homeData.trendingPosts?.let { trendingPosts ->
-//            val trendingPostsAdapter = TrendingPostsAdapter(trendingPostsData)
-//            // RecyclerView에 Adapter 설정
-//            binding.trendingPostsRecyclerView.adapter = trendingPostsAdapter
-//            // RecyclerView의 LayoutManager 설정
-//            binding.trendingPostsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//            Log.d("HomeFragment", ">> RecyclerView success ")
-//        }
-
         setupTrendingPostsRecyclerView()
+        Log.d("HomeFragment", ">>trendingPosts")
+        homeData.trendingPosts?.let { trendingPosts ->
+            trendingPostsAdapter.submitList(trendingPosts)
+        }
+
+
+
 
 
 

@@ -21,15 +21,15 @@ interface HomeService {
     data class UserInfo(
         val id: Int,
         val nickname: String,
-        val profileImageUrl: URL?,
-        val profileTitleUrl: URL?,
-        val profileIconUrl: URL?
+        val profileImageUrl: String?,
+        val profileTitleUrl: String?,
+        val profileIconUrl: String?
     )
 
     data class Rally(
         val id: Int,
         val name: String,
-        val backgroundImageUrl: URL?,
+        val backgroundImageUrl: String?,
         val pilgrimageNumber: Int,
         val completeNumber: Int
     )
@@ -38,8 +38,8 @@ interface HomeService {
         val id: Int,
         val rank: Int,
         val title: String,
-        val profileImageUrl: URL?,
-        val profileIconUrl: URL?,
+        val profileImageUrl: String?,
+        val profileIconUrl: String?,
         val hashtags:  List<String>?,
         val passedTime: String,
         val board: String
