@@ -68,11 +68,6 @@ class ShopMainFragment : Fragment() {
             add(ShopMainLimitedFame(R.drawable.limited_frame_3.toString(), "300000P", 2))
         }
 
-//        val limitedFrameAdapter = ShopBannerLimitedFameRVAdapter(limitedNewFrameData)
-//        binding.shopMainLimitedFrameRv.layoutManager =
-//            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//        binding.shopMainLimitedFrameRv.adapter = limitedFrameAdapter
-
 //         한정판매 칭호 - UMC
 
         limitedUMCFrameData.apply {
@@ -204,9 +199,9 @@ class ShopMainFragment : Fragment() {
 
     // 사용자의 로그인 상태를 확인하는 메소드
     private fun isLoggedIn(): Boolean {
-        // 로그인 상태 확인 로직 구현
+        // TODO : 로그인 상태 확인 로직 구현
         // 예를 들어, SharedPreferences, 데이터베이스 조회 등
-        return true // 임시로 false 반환
+        return false // 임시로 false 반환
     }
 
     private fun setupBannerViewPager() {
@@ -321,10 +316,10 @@ class ShopMainFragment : Fragment() {
         // 예시를 위한 가상 코드입니다. 실제로는 YOUR_AUTH_TOKEN을 적절한 토큰으로 대체해야 합니다.
 
         val accessToken =
-            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIzNDUiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzAwNTc4MTYyLCJleHAiOjE3MDA1ODE3NjJ9.7JQjAnetwRF3OjSvFiiqyUm2cNinNWnyx9ueacduQvQ"
-
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyNzRAbmF2ZXIuY29tIiwiaWF0IjoxNzA3Mzk5NDkzLCJleHAiOjE3MDk5OTE0OTN9.Ba1QtT8O4RJoC70_R3MlfmAc8Fnp_MB2SKAPle3aXHk"
+        val authorizationHeader = "Bearer $accessToken"
         val callLimitedSales = if (isLoggedIn()) {
-            RetrofitClient.shopService.getLimitedSales(authorization = accessToken)
+            RetrofitClient.shopService.getLimitedSales(authorizationHeader)
         } else {
             RetrofitClient.shopService.getLimitedSales(null)
         }
@@ -437,7 +432,7 @@ class ShopMainFragment : Fragment() {
         })
 
         val callUnlimitedSales = if (isLoggedIn()) {
-            RetrofitClient.shopService.getUnlimitedSales(authorization = accessToken)
+            RetrofitClient.shopService.getUnlimitedSales(authorizationHeader)
         } else {
             RetrofitClient.shopService.getUnlimitedSales(null)
         }
