@@ -12,6 +12,7 @@
         android:layout_marginStart="15dp"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/back_page_iv"
             android:layout_width="8.5dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_black_left_arrow"/>
@@ -119,11 +120,12 @@
             android:text="프로필을 설정해주세요."/>
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:paddingBottom="10dp"
             android:layout_marginTop="30dp"
             android:layout_gravity="center">
+
             <ImageView
                 android:id="@+id/profile_background"
                 android:layout_width="120dp"
@@ -132,6 +134,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/signup_profile_background"/>
             <ImageView
+                android:id="@+id/profile_iv"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
@@ -147,6 +150,7 @@
                 app:cardCornerRadius="100dp"
                 android:layout_marginBottom="2dp">
                 <ImageView
+                    android:id="@+id/profile_edit_iv"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:src="@drawable/signup_profile_edit_btn"/>

@@ -153,7 +153,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/home_member_name_iv"
+                                android:id="@+id/home_member_name_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
@@ -205,6 +205,7 @@
                         android:id="@+id/home_recommend_iv"
                         android:layout_width="170dp"
                         android:layout_height="170dp"
+                        android:scaleType="fitXY"
                         android:background="@drawable/round"
                         android:src="@drawable/img1" />
 
@@ -257,6 +258,7 @@
                             android:layout_width="170dp"
                             android:layout_height="170dp"
                             android:background="@drawable/round"
+                            android:scaleType="fitXY"
                             android:src="@drawable/img3"/>
 
 
@@ -367,425 +369,45 @@
                 </RelativeLayout>
             </LinearLayout>
 
-
-            <TextView
-                android:id="@+id/home_real_time_post_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="실시간 인기글"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/home_real_time_post2_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="소식을 알려드려요.🔥"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
-
-
-            <!-- 실시간 인기글 3개 -->
             <LinearLayout
-                android:id="@+id/realtime_post_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/home_real_time_post_tv">
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edge">
+
+                <TextView
+                    android:id="@+id/home_real_time_post_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:text="실시간 인기글"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/home_real_time_post2_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:text="소식을 알려드려요.🔥"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
 
-                <!-- 실시간 1위 -->
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_rank_1" />
-
-                    <!-- 회원 프로필 -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center|left"
-                        android:layout_marginStart="15dp">
-
-                        <FrameLayout
-                            android:layout_width="75dp"
-                            android:layout_height="75dp">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/home_item_civ1"
-                                android:layout_width="75dp"
-                                android:layout_height="75dp"
-                                app:civ_border_width="1dp"
-                                app:civ_border_overlay="true"
-                                android:src="@drawable/memberimg"
-                                app:civ_border_color="@color/gray"/>
-
-
-                            <LinearLayout
-                                android:layout_width="75dp"
-                                android:layout_height="75dp"
-                                android:orientation="horizontal"
-                                android:layout_gravity="bottom|right">
-                                <ImageView
-                                    android:id="@+id/home_member_icon_iv1"
-                                    android:layout_width="75dp"
-                                    android:layout_height="75dp"
-                                    android:scaleType="fitXY"
-                                    app:srcCompat="@drawable/ic_shop1" />
-                            </LinearLayout>
-
-                        </FrameLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="110dp"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/home_item_title_tv1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="제목"
-                            android:textColor="@color/black"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/home_item_tag1_tv1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="15dp"
-                                android:text="#해시태그"
-                                android:textColor="@color/main"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/home_item_tag2_tv1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="#해시태그"
-                                android:textColor="@color/main"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="179dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="top"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/home_item_time_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="시간"
-                                android:textColor="@color/gray"
-                                android:textSize="12sp" />
-
-
-                            <TextView
-                                android:id="@+id/home_item_category_tv1"
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="50dp"
-                                android:background="@drawable/round"
-                                android:backgroundTint="@color/gray"
-                                android:gravity="center"
-                                android:text="자유게시판"
-                                android:textColor="@color/white"
-                                android:textSize="10sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </FrameLayout>
-                <!-- 실시간 2위 -->
-                <FrameLayout
+                <!-- 실시간 인기글 3개 -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/trendingPostsRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_margin="10dp"
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_rank_2" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center|left"
-                        android:layout_marginStart="15dp">
-
-                        <FrameLayout
-                            android:layout_width="75dp"
-                            android:layout_height="75dp">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/home_item_civ2"
-                                android:layout_width="75dp"
-                                android:layout_height="75dp"
-                                app:civ_border_width="1dp"
-                                app:civ_border_overlay="true"
-                                android:src="@drawable/memberimg"
-                                app:civ_border_color="@color/gray"/>
-
-
-
-                            <LinearLayout
-                                android:layout_width="75dp"
-                                android:layout_height="75dp"
-                                android:orientation="horizontal"
-                                android:layout_gravity="bottom|right">
-                                <ImageView
-                                    android:id="@+id/home_item_profile_iv2"
-                                    android:layout_width="75dp"
-                                    android:layout_height="75dp"
-                                    android:scaleType="fitXY"
-                                    app:srcCompat="@drawable/ic_shop2" />
-                            </LinearLayout>
-
-                        </FrameLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="110dp"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/home_item_title_tv2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="제목"
-                            android:textColor="@color/black"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/home_item_tag1_tv2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="15dp"
-                                android:text="#해시태그"
-                                android:textColor="@color/main"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/home_item_tag2_tv2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="#해시태그"
-                                android:textColor="@color/main"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="179dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="top"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/home_item_time_tv2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="시간"
-                                android:textColor="@color/gray"
-                                android:textSize="12sp" />
-
-
-                            <TextView
-                                android:id="@+id/home_item_category_tv2"
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="50dp"
-                                android:background="@drawable/round"
-                                android:backgroundTint="@color/gray"
-                                android:gravity="center"
-                                android:text="자유게시판"
-                                android:textColor="@color/white"
-                                android:textSize="10sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </FrameLayout>
-                <!-- 실시간 3위 -->
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_rank_3" />
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center|left"
-                        android:layout_marginStart="15dp">
-
-                        <FrameLayout
-                            android:layout_width="75dp"
-                            android:layout_height="75dp">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/home_item_civ3"
-                                android:layout_width="75dp"
-                                android:layout_height="75dp"
-                                app:civ_border_width="1dp"
-                                app:civ_border_overlay="true"
-                                android:src="@drawable/memberimg"
-                                app:civ_border_color="@color/gray"/>
-
-
-
-                            <LinearLayout
-                                android:layout_width="75dp"
-                                android:layout_height="75dp"
-                                android:orientation="horizontal"
-                                android:layout_gravity="bottom|right">
-                                <ImageView
-                                    android:id="@+id/home_item_profile_iv3"
-                                    android:layout_width="75dp"
-                                    android:layout_height="75dp"
-                                    android:scaleType="fitXY"
-                                    app:srcCompat="@drawable/ic_shop3" />
-                            </LinearLayout>
-
-                        </FrameLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="110dp"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/home_item_title_tv3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="제목"
-                            android:textColor="@color/black"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/home_item_tag1_tv3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="15dp"
-                                android:text="#해시태그"
-                                android:textColor="@color/main"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/home_item_tag2_tv3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="#해시태그"
-                                android:textColor="@color/main"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="179dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="top"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/home_item_time_tv3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="시간"
-                                android:textColor="@color/gray"
-                                android:textSize="12sp" />
-
-
-                            <TextView
-                                android:id="@+id/home_item_category_tv3"
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="50dp"
-                                android:background="@drawable/round"
-                                android:backgroundTint="@color/gray"
-                                android:gravity="center"
-                                android:text="자유게시판"
-                                android:textColor="@color/white"
-                                android:textSize="10sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </FrameLayout>
-
+                    tools:listitem="@layout/item_trending_post"
+                    app:layout_constraintTop_toBottomOf="@+id/home_real_time_post_tv">
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
 
             <!-- 배너 -->
@@ -794,11 +416,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp">
 
+
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/home_banner_vp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
                     android:background="@drawable/round" />
 
             </LinearLayout>
