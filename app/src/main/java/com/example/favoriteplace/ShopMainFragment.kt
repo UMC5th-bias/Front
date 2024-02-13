@@ -201,7 +201,7 @@ class ShopMainFragment : Fragment() {
     private fun isLoggedIn(): Boolean {
         // TODO : 로그인 상태 확인 로직 구현
         // 예를 들어, SharedPreferences, 데이터베이스 조회 등
-        return false // 임시로 false 반환
+        return true // 임시로 false 반환
     }
 
     private fun setupBannerViewPager() {
@@ -315,8 +315,7 @@ class ShopMainFragment : Fragment() {
         // RetrofitClient.shopService.getLimitedSales("Bearer YOUR_AUTH_TOKEN") 호출 구현 필요
         // 예시를 위한 가상 코드입니다. 실제로는 YOUR_AUTH_TOKEN을 적절한 토큰으로 대체해야 합니다.
 
-        val accessToken =
-            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyNzRAbmF2ZXIuY29tIiwiaWF0IjoxNzA3Mzk5NDkzLCJleHAiOjE3MDk5OTE0OTN9.Ba1QtT8O4RJoC70_R3MlfmAc8Fnp_MB2SKAPle3aXHk"
+        val accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0MzI5MjlAbmF2ZXIuY29tIiwiaWF0IjoxNzA3NzU3NzE5LCJleHAiOjE3MTAzNDk3MTl9.CHnXELf6b-vPC--rmZAnwRY6aAvUKt0iPy9Wq_1QYLo"
         val authorizationHeader = "Bearer $accessToken"
         val callLimitedSales = if (isLoggedIn()) {
             RetrofitClient.shopService.getLimitedSales(authorizationHeader)
