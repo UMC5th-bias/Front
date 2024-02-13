@@ -18,7 +18,7 @@ class ShopBannerLimitedIconRVAdapter(private val limitedIconList: ArrayList<Shop
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
     interface MyItemClickListener {
-        fun onItemClick()
+        fun onItemClick(itemId: Int)
     }
 
     //전달받은 리스너 객체를 저장하는 변수
@@ -34,18 +34,13 @@ class ShopBannerLimitedIconRVAdapter(private val limitedIconList: ArrayList<Shop
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int=3
+    override fun getItemCount(): Int=limitedIconList.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (position >= 0 && position < limitedIconList.size) {
-            holder.bind(limitedIconList[position])
-            holder.itemView.setOnClickListener {
-                mItemClickListener.onItemClick()
-            }
-        } else {
-            // 리스트가 비어있거나 유효한 위치가 아닌 경우에 대한 처리
-            // 여기에서 에러 메시지 출력 또는 다른 대체 동작을 수행할 수 있습니다.
-            Log.e("ShopBannerLimitedIconRVAdapter", "Invalid position: $position")
+    override fun onBindViewHolder(holder: ShopBannerLimitedIconRVAdapter.ViewHolder, position: Int) {
+        val limitedIcon = limitedIconList[position]
+        holder.bind(limitedIcon)
+        holder.itemView.setOnClickListener {
+            mItemClickListener.onItemClick(limitedIcon.id)
         }
     }
 
