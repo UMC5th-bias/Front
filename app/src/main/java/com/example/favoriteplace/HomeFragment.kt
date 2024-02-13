@@ -59,40 +59,7 @@ class HomeFragment : Fragment() {
 
         homeService = retrofit.create(HomeService::class.java)
 
-        setupTrendingPostsRecyclerView()
-//        if (!isLoggedIn) {
-//            initializeUI()
-//        }
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-        checkLoginStatus()
-    }
-
-    private fun checkLoginStatus() {
-        // SharedPreferences에서 액세스 토큰 가져오기
-        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
-        if (!isLoggedIn) {
-            initializeUI()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        // 앱이 종료될 때 로그아웃 상태를 SharedPreferences에 저장
-        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        with(sharedPreferences.edit()) {
-            putBoolean("isLoggedIn", isLoggedIn)
-            apply()
-        }
-
-    }
-    private fun initializeUI() {
-        // 로그인 상태가 아니면 UI 초기화
-        //광고 배너
         val bannerAdapter = BannerVPAdapter(this)
         binding.homeBannerVp.adapter=bannerAdapter
         binding.homeBannerVp.orientation=ViewPager2.ORIENTATION_HORIZONTAL
@@ -112,10 +79,64 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // 트렌딩 포스트 리사이클러뷰 설정
-        setupTrendingPostsRecyclerView()
+        // 앱이 처음 시작될 때 로그인 상태를 확인하고, 로그인 정보가 없으면 서버에 요청을 보냄
+        checkLoginStatus()
+
     }
 
+    override fun onStart() {
+        super.onStart()
+        //checkLoginStatus()
+    }
+
+    private fun checkLoginStatus() {
+        // SharedPreferences에서 액세스 토큰 가져오기
+        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+
+        if (isLoggedIn) {
+            // 로그인 상태인 경우 사용자 정보를 가져옴
+            val userToken = sharedPreferences.getString("accessToken", "")
+            if (!userToken.isNullOrEmpty()) {
+                getUserInfo(userToken)
+                Log.d("HomeFragment", ">> 로그인 상태인 경우 사용자 정보를 가져옴, $userToken")
+            }
+        }else{
+            // 비회원 상태인 경우
+            Log.d("HomeFragment", ">> 비회원 상태입니다., $isLoggedIn")
+
+        }
+    }
+
+
+    private fun sendLoginStatusToServer(isLoggedIn: String?) {
+
+        lifecycleScope.launch {
+            try {
+                // 로그인 상태를 서버에 전달
+                val response: Response<HomeService.LoginResponse> = homeService.getUserInfo(isLoggedIn)
+                if (response.isSuccessful) {
+                    Log.d("HomeFragment", ">> Login status sent to server: $isLoggedIn")
+                } else {
+                    Log.e("HomeFragment", "Failed to send login status to server: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("HomeFragment", "Error sending login status to server: ${e.message}", e)
+            }
+        }
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        // 앱이 종료될 때 로그아웃 상태를 SharedPreferences에 저장
+        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putBoolean("isLoggedIn", isLoggedIn)
+            apply()
+        }
+
+    }
 
     private fun setupTrendingPostsRecyclerView() {
 
@@ -147,12 +168,15 @@ class HomeFragment : Fragment() {
                     // 로그인 상태인 경우
                     // 서버로부터 사용자 정보를 성공적으로 받아왔을 때 UI 업데이트
                     val loginResponse: HomeService.LoginResponse? = response.body()
-                    if(loginResponse != null && loginResponse.isLoggedIn){
+                    if(loginResponse != null){
                         updateUI(loginResponse)
 
                         Log.d("HomeFragment", ">> Home Login Success")
                         Log.d("HomeFragment", ">> $loginResponse")
 
+                    }else{
+                        updateUI(null)
+                        Log.d("HomeFragment", ">> 비회원 $loginResponse")
                     }
 
                 }else{
@@ -168,66 +192,74 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun updateUI(homeData: HomeService.LoginResponse) {
-        binding.userLayout.visibility=View.VISIBLE
-        binding.unUserLayout.visibility=View.GONE
+    private fun updateUI(homeData: HomeService.LoginResponse?) {
 
-        binding.nonMembersLayout.visibility=View.GONE
-        binding.membersRallyLayout.visibility=View.VISIBLE
-
-
-        // 사용자 정보가 제대로 반환되었을 때만 UI 업데이트
-        homeData.userInfo?.let { userInfo ->
-            // 사용자 이미지
-            Glide.with(this)
-                .load(userInfo.profileImageUrl.toString()) // 서버에 저장된 이미지 URI
-                .placeholder(R.drawable.signup_default_profile_image) // 이미지를 불러오는 동안 보여줄 임시 이미지
-                .error(R.drawable.signup_default_profile_image) // 이미지 로드 실패 시 보여줄 이미지
-                .into(binding.homeMemberProfileCiv) // 이미지를 설정할 ImageView
-
-            // 사용자 아이콘
-            Glide.with(this)
-                .load(userInfo.profileIconUrl.toString())
-                .placeholder(null)
-                .into(binding.homeMemberIconIv)
-
-            // 사용자 뱃지
-            Glide.with(this)
-                .load(userInfo.profileTitleUrl.toString())
-                .placeholder(null)
-                .into(binding.homeMemberIconIv)
-
-            // 사용자 닉네임
-            binding.homeMemberNameTv.text = userInfo.nickname
-
-
-        }
-
+        Log.d("HomeFragment", ">> $homeData")
         setupTrendingPostsRecyclerView()
-        Log.d("HomeFragment", ">>trendingPosts")
-        homeData.trendingPosts?.let { trendingPosts ->
+        Log.d("HomeFragment", ">> trendingPosts")
+        homeData?.trendingPosts?.let { trendingPosts ->
             trendingPostsAdapter.submitList(trendingPosts)
         }
 
 
 
 
+        if (homeData != null ) {
+            binding.userLayout.visibility=View.VISIBLE
+            binding.unUserLayout.visibility=View.GONE
+
+            binding.nonMembersLayout.visibility=View.GONE
+            binding.membersRallyLayout.visibility=View.VISIBLE
 
 
-        homeData.rally?.let { rally ->
-            binding.homeRallyingTv.text=rally.name
-            binding.rallyLocationdetailTotalTv.text=rally.pilgrimageNumber.toString()
-            binding.rallyLocationdetailCheckTv.text=rally.completeNumber.toString()
+            // 사용자 정보가 제대로 반환되었을 때만 UI 업데이트
+            homeData.userInfo?.let { userInfo ->
+                // 사용자 이미지
+                Glide.with(this)
+                    .load(userInfo.profileImageUrl.toString()) // 서버에 저장된 이미지 URI
+                    .placeholder(R.drawable.signup_default_profile_image) // 이미지를 불러오는 동안 보여줄 임시 이미지
+                    .error(R.drawable.signup_default_profile_image) // 이미지 로드 실패 시 보여줄 이미지
+                    .into(binding.homeMemberProfileCiv) // 이미지를 설정할 ImageView
 
-            // 회원랠리화면
-            Glide.with(this)
-                .load(rally.backgroundImageUrl.toString())
-                .placeholder(null)
-                .into(binding.homeRallyIv)
+                // 사용자 아이콘
+                Glide.with(this)
+                    .load(userInfo.profileIconUrl.toString())
+                    .placeholder(null)
+                    .into(binding.homeMemberIconIv)
+
+                // 사용자 뱃지
+                Glide.with(this)
+                    .load(userInfo.profileTitleUrl.toString())
+                    .placeholder(null)
+                    .into(binding.homeMemberIconIv)
+
+                // 사용자 닉네임
+                binding.homeMemberNameTv.text = userInfo.nickname
+
+
+            }
+
+            homeData.rally?.let { rally ->
+                binding.homeRallyingTv.text=rally.name
+                binding.rallyLocationdetailTotalTv.text=rally.pilgrimageNumber.toString()
+                binding.rallyLocationdetailCheckTv.text=rally.completeNumber.toString()
+
+                // 회원랠리화면
+                Glide.with(this)
+                    .load(rally.backgroundImageUrl.toString())
+                    .placeholder(null)
+                    .into(binding.homeRallyIv)
+            }
         }
-
+        else{
+            // 비회원
+            binding.userLayout.visibility = View.GONE
+            binding.unUserLayout.visibility = View.VISIBLE
+        }
     }
+
 }
+
 
 
 
