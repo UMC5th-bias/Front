@@ -55,21 +55,39 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/shop_banner_new_icon_border">
 
-                <TextView
-                    android:id="@+id/shop_banner_detail_icon_limited_time_tv"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="20dp"
                     android:background="@drawable/shop_banner_detail_limited_time"
-                    android:text="~2024.02.00"
-                    android:textStyle="normal"
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
-                    android:paddingHorizontal="5dp" />
+                    android:layout_marginStart="10dp">
+
+                    <TextView
+                        android:id="@+id/shop_banner_detail_icon_limited_text_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="~"
+                        android:textStyle="normal"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="10dp"/>
+
+                    <TextView
+                        android:id="@+id/shop_banner_detail_icon_limited_time_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="2024.02.00"
+                        android:textStyle="normal"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/shop_banner_detail_fame_limited_text_tv"
+                        android:paddingRight="10dp"/>
+
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="60dp"
@@ -81,10 +99,10 @@
                     android:layout_marginEnd="5dp"/>
 
                 <ImageView
-                    android:id="@+id/shop_banner_detail_icon_icon_iv"
+                    android:id="@+id/shop_banner_detail_icon_iv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/limited_icon_detail_1"
+                    android:src="@null"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -110,13 +128,13 @@
 
                     <ImageView
                         android:id="@+id/shop_banner_detail_icon_apply_icon_iv"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:src="@drawable/limited_icon_1"
-                        app:layout_constraintBottom_toBottomOf="@id/shop_banner_detail_icon_profile_iv"
-                        android:layout_marginTop="-40dp"
-                        app:layout_constraintEnd_toEndOf="@id/shop_banner_detail_icon_profile_iv"
-                        android:layout_marginEnd="-10dp"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="20dp"/>
                     <TextView
                         android:id="@+id/shop_banner_detail_icon_title_tv"
                         android:layout_width="wrap_content"
@@ -219,6 +237,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/shop_banner_detail_icon_body_cl"
-                android:layout_marginTop="50dp"/>
+                android:layout_marginTop="30dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
