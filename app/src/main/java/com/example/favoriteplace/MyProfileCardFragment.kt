@@ -97,17 +97,18 @@ class MyProfileCardFragment : Fragment() {
 
 
     private fun icon() {
-        limitedIconData.apply {
-            add(LimitedIcon(R.drawable.limited_icon_1,"유닝이","20000P"))
-            add(LimitedIcon(R.drawable.limited_icon_1,"Developer","10000P"))
-            add(LimitedIcon(R.drawable.limited_icon_1,"유닝이","20000P"))
-        }
+        //LimitedIcon, UnLimitedIcon 데이터 클래스의 자료형을 수정함에 따라 에러가 발생
+//        limitedIconData.apply {
+//            add(LimitedIcon(R.drawable.limited_icon_1,"유닝이","20000P"))
+//            add(LimitedIcon(R.drawable.limited_icon_1,"Developer","10000P"))
+//            add(LimitedIcon(R.drawable.limited_icon_1,"유닝이","20000P"))
+//        }
 
-        unlimitedIconData.apply {
-            add(UnlimitedIcon(R.drawable.unlimited_icon_1,"별행성","10000P"))
-            add(UnlimitedIcon(R.drawable.unlimited_icon_2,"새턴","10000P"))
-            add(UnlimitedIcon(R.drawable.unlimited_icon_3,"초승달","10000P"))
-        }
+//        unlimitedIconData.apply {
+//            add(UnlimitedIcon(R.drawable.unlimited_icon_1,"별행성","10000P"))
+//            add(UnlimitedIcon(R.drawable.unlimited_icon_2,"새턴","10000P"))
+//            add(UnlimitedIcon(R.drawable.unlimited_icon_3,"초승달","10000P"))
+//        }
 
         val limitedIconRVAdapter=ShopBannerNewLimitedIconRVAdapter(limitedIconData)
         binding.myProfileCardIconLimitedRv.adapter=limitedIconRVAdapter
@@ -120,24 +121,25 @@ class MyProfileCardFragment : Fragment() {
 
 
     private fun badge() {
-        limitedFameData.apply{
-            add(LimitedFame(R.drawable.limited_fame_1,"5000P"))
-            add(LimitedFame(R.drawable.limited_fame_2,"30000P"))
-            add(LimitedFame(R.drawable.limited_fame_3,"300000P"))
-        }
+        //LimitedFame, UnLimitedFame 데이터 클래스의 자료형을 수정함에 따라 에러가 발생
+//        limitedFameData.apply{
+//            add(LimitedFame(R.drawable.limited_fame_1,"5000P"))
+//            add(LimitedFame(R.drawable.limited_fame_2,"30000P"))
+//            add(LimitedFame(R.drawable.limited_fame_3,"300000P"))
+//        }
 
-        unlimitedFameData.apply {
-            add(UnlimitedFame(R.drawable.unlimited_fame_1, "5000P"))
-            add(UnlimitedFame(R.drawable.unlimited_fame_2, "10000P"))
-            add(UnlimitedFame(R.drawable.unlimited_fame_3, "100000P"))
-        }
-        val limitedFameRVAdapter=ShopBannerNewLimitedFameRVAdapter(limitedFameData)
-        binding.myProfileCardFameLimitedRv.adapter=limitedFameRVAdapter
-        binding.myProfileCardFameLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-        val unlimitedFameRVAdapter=ShopBannerNewUnlimitedFameRVAdapter(unlimitedFameData)
-        binding.myProfileCardFameUnlimitedRv.adapter=unlimitedFameRVAdapter
-        binding.myProfileCardFameUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        unlimitedFameData.apply {
+//            add(UnlimitedFame(R.drawable.unlimited_fame_1, "5000P"))
+//            add(UnlimitedFame(R.drawable.unlimited_fame_2, "10000P"))
+//            add(UnlimitedFame(R.drawable.unlimited_fame_3, "100000P"))
+//        }
+//        val limitedFameRVAdapter=ShopBannerNewLimitedFameRVAdapter(limitedFameData)
+//        binding.myProfileCardFameLimitedRv.adapter=limitedFameRVAdapter
+//        binding.myProfileCardFameLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//
+//        val unlimitedFameRVAdapter=ShopBannerNewUnlimitedFameRVAdapter(unlimitedFameData)
+//        binding.myProfileCardFameUnlimitedRv.adapter=unlimitedFameRVAdapter
+//        binding.myProfileCardFameUnlimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
 

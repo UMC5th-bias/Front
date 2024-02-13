@@ -1,15 +1,26 @@
 package com.example.favoriteplace
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.drawable.BitmapDrawable
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
+import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemShopBannerNewFameBinding
+import com.google.gson.Gson
 
-class ShopBannerNewLimitedFameRVAdapter (private val limitedFameList: ArrayList<LimitedFame>):RecyclerView.Adapter<ShopBannerNewLimitedFameRVAdapter.ViewHolder>(){
+class ShopBannerNewLimitedFameRVAdapter(private val limitedFameList: ArrayList<LimitedFame>):RecyclerView.Adapter<ShopBannerNewLimitedFameRVAdapter.ViewHolder>(){
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
     interface MyItemClickListener{
-        fun onItemClick()
+        fun onItemLimitedFameClick(limitedFame: LimitedFame)
     }
 
     //전달받은 리스너 객체를 저장하는 변수
@@ -31,17 +42,38 @@ class ShopBannerNewLimitedFameRVAdapter (private val limitedFameList: ArrayList<
     override fun getItemCount(): Int=limitedFameList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(limitedFameList[position])
-        holder.itemView.setOnClickListener{
-            mItemClickListener.onItemClick()
+        if (position >= 0 && position < limitedFameList.size){
+            holder.bind(limitedFameList[position])
+            holder.itemView.setOnClickListener{
+                mItemClickListener.onItemLimitedFameClick(limitedFameList[position])
+            }
         }
+
     }
 
     inner class ViewHolder(val binding: ItemShopBannerNewFameBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(limitedFame: LimitedFame){
-            binding.itemShopBannerNewFameIv.setImageResource(limitedFame.fameImg!!)
-            binding.itemShopBannerNewFameTv.text=limitedFame.cost
-        }
+            try {
+                val imageLoader = ImageLoader.Builder(binding.root.context)
+                    .componentRegistry {
+                        add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                    }
+                    .build()
 
+                val imageRequest = ImageRequest.Builder(binding.root.context)
+                    .crossfade(true)
+                    .crossfade(300)  //애니메이션 처리
+                    .data(limitedFame.fameImg)
+                    .target(binding.itemShopBannerNewFameIv)  //해당 이미지뷰를 타겟으로 svg 삽입
+                    .build()
+                imageLoader.enqueue(imageRequest)
+
+                binding.itemShopBannerNewFameTv.text = limitedFame.cost
+
+            } catch (e: Exception) {
+                Log.e("ViewHolder", "Error loading image: ${e.message}")
+                e.printStackTrace()
+            }
+        }
     }
 }

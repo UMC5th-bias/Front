@@ -1,7 +1,8 @@
 package com.example.favoriteplace
 
 data class LimitedIcon(
-    var iconImg: Int?=null,
+    var iconImg: String ="",
+    var cost: String?="",
     var title: String?="",
-    var cost: String?=""
+    var id: Int=0
 )
