@@ -171,8 +171,10 @@ class FreeWritePostActivity : AppCompatActivity() {
         val title = "도쿄 성지순례 장소 추천해주세요 :)"
         val content = "이번 3월에 도쿄 여행을 계획 중인데, 도쿄 주변 가볼만한 혹은 꼭!! 가야만 하는 성지순례 장소있을까요? 애니메이션 장르 상관 없이 추천 부탁드려요😊"
         val postData = PostData(title, content)
+        val accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0MzI5MjlAbmF2ZXIuY29tIiwiaWF0IjoxNzA3NzU3NzE5LCJleHAiOjE3MTAzNDk3MTl9.CHnXELf6b-vPC--rmZAnwRY6aAvUKt0iPy9Wq_1QYLo"
+        val authorizationHeader = "Bearer $accessToken"
 
-        postService.uploadPost("null", postData, imageParts)
+        postService.uploadPost(authorizationHeader, postData, imageParts)
             .enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
