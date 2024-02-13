@@ -14,14 +14,14 @@ class ShopBannerUnlimitedIconRVAdapter(private val unlimitedIconList: ArrayList<
 
     //RVA에서 setOnClickListener을 쓸 수 있도록 하는 인터페이스
     interface MyItemClickListener {
-        fun onItemClick()
+        fun onItemClick(itemId: Int)
     }
 
     //전달받은 리스너 객체를 저장하는 변수
-    private lateinit var mItemClickListener: ShopBannerLimitedIconRVAdapter.MyItemClickListener
+    private lateinit var mItemClickListener: MyItemClickListener
 
     fun setMyItemClickListener(itemClickListener: MyItemClickListener){
-//        mItemClickListener=itemClickListener
+        mItemClickListener=itemClickListener
     }
 
     override fun onCreateViewHolder(
@@ -40,9 +40,10 @@ class ShopBannerUnlimitedIconRVAdapter(private val unlimitedIconList: ArrayList<
         holder: ShopBannerUnlimitedIconRVAdapter.ViewHolder,
         position: Int
     ) {
-        holder.bind(unlimitedIconList[position])
-        holder.itemView.setOnClickListener{
-            mItemClickListener.onItemClick()
+        val unlimitedIcon = unlimitedIconList[position]
+        holder.bind(unlimitedIcon)
+        holder.itemView.setOnClickListener {
+            mItemClickListener.onItemClick(unlimitedIcon.id)
         }
     }
 

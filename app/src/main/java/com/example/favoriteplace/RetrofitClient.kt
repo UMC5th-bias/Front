@@ -13,5 +13,9 @@ object RetrofitClient {
         .build()
 
     val shopService: ShopService = retrofit.create(ShopService::class.java)
+
+    val postService: PostService = retrofit.create(PostService::class.java)
+
     val communityService: CommunityAPIService= retrofit.create(CommunityAPIService::class.java)
+
 }

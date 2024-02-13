@@ -1,14 +1,15 @@
 package com.example.favoriteplace
 
-import android.app.Activity
 import android.Manifest
-import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -19,20 +20,28 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import com.example.favoriteplace.databinding.ActivityFreeWritePostBinding
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.ByteArrayOutputStream
 
 class FreeWritePostActivity : AppCompatActivity() {
-    lateinit var binding: ActivityFreeWritePostBinding
+    private lateinit var binding: ActivityFreeWritePostBinding
+    private lateinit var postService: PostService
 
     private val REQUEST_CODE_GALLERY = 100
     private val REQUEST_IMAGE_CAPTURE = 1
     private val selectedImages = mutableListOf<Uri>()
-    private val selectedBitmaps = mutableListOf<Bitmap>()
 
-    @SuppressLint("CommitTransaction")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFreeWritePostBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        postService = RetrofitClient.postService
 
         binding.writePostGalleryIv.setOnClickListener {
             openGallery()
@@ -57,14 +66,13 @@ class FreeWritePostActivity : AppCompatActivity() {
         }
 
         binding.writePostRegisterBtn.setOnClickListener {
-            val intent = Intent(this, PostDetailActivity::class.java)
-            startActivity(intent)
+            uploadPost()
         }
     }
 
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(this.packageManager)?.also {
+            takePictureIntent.resolveActivity(packageManager)?.also {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
         }
@@ -77,21 +85,18 @@ class FreeWritePostActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        when (requestCode) {
-            REQUEST_IMAGE_CAPTURE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 권한이 부여되었으면 카메라 앱 시작
-                    dispatchTakePictureIntent()
-                }
-            }
-            // 필요한 경우 다른 requestCode에 대한 처리 추가
+        if (requestCode == REQUEST_IMAGE_CAPTURE && grantResults.isNotEmpty()
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED
+        ) {
+            dispatchTakePictureIntent()
         }
     }
 
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            type = "image/*"
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        }
         startActivityForResult(intent, REQUEST_CODE_GALLERY)
     }
 
@@ -99,33 +104,26 @@ class FreeWritePostActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_CODE_GALLERY && resultCode == Activity.RESULT_OK) {
-            val clipData = data?.clipData
-            if (clipData != null) {
-                // 여러 이미지 처리
+            data?.clipData?.let { clipData ->
                 for (i in 0 until clipData.itemCount) {
                     val imageUri = clipData.getItemAt(i).uri
                     addImageToLayout(imageUri)
                     if (i == 4) break // 최대 5개의 이미지만 허용
                 }
-            } else {
-                // 단일 이미지 처리
-                data?.data?.let { uri ->
-                    addImageToLayout(uri)
-                }
+            } ?: data?.data?.let { uri ->
+                addImageToLayout(uri)
             }
-        }
-
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            // 결과 데이터에서 Bitmap 추출
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as? Bitmap
             imageBitmap?.let {
-                addImageToLayout(it)
+                val uri = getImageUri(this, it)
+                addImageToLayout(uri)
             }
         }
     }
 
     private fun addImageToLayout(uri: Uri) {
-        if (selectedImages.size >= 5) return // 이미 5개의 이미지가 선택된 경우 추가하지 않음
+        if (selectedImages.size >= 5) return // 최대 5개의 이미지만 허용
 
         val frameLayout = FrameLayout(this).apply {
             layoutParams = LinearLayout.LayoutParams(
@@ -163,44 +161,38 @@ class FreeWritePostActivity : AppCompatActivity() {
         selectedImages.add(uri)
     }
 
-    private fun addImageToLayout(bitmap: Bitmap) {
-        if (selectedBitmaps.size >= 5) return // 이미 5개의 이미지가 선택된 경우 추가하지 않음
-
-        val frameLayout = FrameLayout(this).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                marginEnd = 10
-            }
+    private fun uploadPost() {
+        val imageParts = selectedImages.map { uri ->
+            val inputStream = contentResolver.openInputStream(uri)
+            val requestBody = inputStream?.readBytes()?.toRequestBody("image/*".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData("images", "image.jpg", requestBody!!)
         }
 
-        val imageView = ImageView(this).apply {
-            layoutParams = FrameLayout.LayoutParams(100, 100)
-            scaleType = ImageView.ScaleType.CENTER_CROP
-            setImageBitmap(bitmap) // Bitmap 설정
-        }
+        val title = "도쿄 성지순례 장소 추천해주세요 :)"
+        val content = "이번 3월에 도쿄 여행을 계획 중인데, 도쿄 주변 가볼만한 혹은 꼭!! 가야만 하는 성지순례 장소있을까요? 애니메이션 장르 상관 없이 추천 부탁드려요😊"
+        val postData = PostData(title, content)
 
-        val deleteButton = ImageButton(this).apply {
-            layoutParams = FrameLayout.LayoutParams(
-                50, // 버튼 크기 조정
-                50
-            ).apply {
-                gravity = Gravity.TOP or Gravity.END
-                setMargins(10)
-            }
-            setImageResource(R.drawable.ic_delete_btn) // 커스텀 이미지 사용
-            background = null // 배경을 투명하게 설정
-            setOnClickListener {
-                // removeImage
-                removeImageFromLayout(frameLayout, bitmap)
-            }
-        }
+        postService.uploadPost("null", postData, imageParts)
+            .enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (response.isSuccessful) {
+                        // 업로드 성공
+                        Log.d("FreeWritePostActivity", "Post upload successful")
+                        // 업로드 성공 시에 수행할 작업을 여기에 추가합니다.
+                    } else {
+                        // 업로드 실패
+                        // 실패 시에 수행할 작업을 여기에 추가합니다.
+                        Log.d("FreeWritePostActivity", "API Error: ${response.errorBody()?.string()}")
+                    }
+                }
 
-        frameLayout.addView(imageView)
-        frameLayout.addView(deleteButton)
-        binding.imageContainer.addView(frameLayout)
-        selectedBitmaps.add(bitmap) // selectedBitmaps는 선택된 Bitmap 객체를 추적하는 리스트
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    // 네트워크 오류 등으로 실패
+                    // 실패 시에 수행할 작업을 여기에 추가합니다.
+                    Log.d("FreeWritePostActivity", "Network Error: ${t.message}")
+                }
+            })
+
     }
 
     private fun removeImageFromLayout(frameLayout: FrameLayout, uri: Uri) {
@@ -208,9 +200,10 @@ class FreeWritePostActivity : AppCompatActivity() {
         selectedImages.remove(uri)
     }
 
-    private fun removeImageFromLayout(frameLayout: FrameLayout, bitmap: Bitmap) {
-        binding.imageContainer.removeView(frameLayout) // FrameLayout을 메인 레이아웃에서 제거
-        selectedBitmaps.remove(bitmap) // 선택된 Bitmap 리스트에서 해당 Bitmap 제거
+    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
     }
-
 }
