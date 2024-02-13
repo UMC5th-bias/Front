@@ -10,4 +10,6 @@ interface CommunityHomeService {
     @GET("/posts/trending/today/guestbooks")
     fun getTrendingGuestbook(): Call<CommunityHomeTrendingGuestbook>
 
+    @GET("/posts/trending/month")
+    fun getTrendingMonth(): Call<List<CommunityHomeTrendingMonthUnit>>
 }

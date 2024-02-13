@@ -41,12 +41,7 @@ class CommunityMainFragment: Fragment() {
 
         var freeTopic: CommunityHomeTrendingFree
         var guestbookTopic: CommunityHomeTrendingGuestbook
-
-        val monthlyTopic: List<String> = listOf(
-            "나고야 주변 성지순례 리스트 모음집.zip",
-            "날씨의 아이 성지순례 언제 가는게 좋을지 추천 해주세요!",
-            "8월 말 도쿄타원 투어하고 주변 다니면서 성지순례 한 후기"
-        )
+        var monthlyTopic: List<CommunityHomeTrendingMonthUnit>
 
         // 오늘의 화제글 - 자유(홈) 불러오기
         fun setFreeBoard() {
@@ -112,7 +107,40 @@ class CommunityMainFragment: Fragment() {
             })
         }
 
-        setFreeBoard() // 커뮤니티 홈 들어왔을 때 화제글 보여주기
+        // 월간 화제글(홈) 불러오기
+        fun setMonthBoard() {
+            RetrofitAPI.communityHomeService.getTrendingMonth().enqueue(object: Callback<List<CommunityHomeTrendingMonthUnit>> {
+                override fun onResponse(call: Call<List<CommunityHomeTrendingMonthUnit>>, response: Response<List<CommunityHomeTrendingMonthUnit>>) {
+                    if(response.isSuccessful) {
+                        val responseData = response.body()
+                        if(responseData != null) {
+                            Log.d("Retrofit:getTrendingMonth()", "Response: ${responseData}")
+                            monthlyTopic = responseData
+                            for(i in 0..2) {
+                                if(monthlyTopic.size > i) {
+                                    topicBoard["month"]?.get(i)?.visibility = View.VISIBLE
+                                    topicBoard["month"]?.get(i)?.text = monthlyTopic[i].title
+                                }
+                                else {
+                                    topicBoard["month"]?.get(i)?.visibility = View.GONE
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        Log.e("Retrofit:getTrendingMonth()", "notSuccessful: ${response.code()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<List<CommunityHomeTrendingMonthUnit>>, t: Throwable) {
+                    Log.e("Retrofit:getTrendingMonth()", "onFailure: $t")
+                }
+
+            })
+        }
+
+        setFreeBoard() // 커뮤니티 홈 들어왔을 때 일간 화제글 불러오기
+        setMonthBoard() // 커뮤니티 홈 들어왔을 때 월간 화제글 불러오기
 
         binding.freeBoard.setOnClickListener {
             binding.freeBoard.setTextColor(Color.parseColor("#F73D93"))
@@ -128,15 +156,7 @@ class CommunityMainFragment: Fragment() {
             setGuestbookBoard()
         }
 
-        for(i in 0..2) {
-            if(monthlyTopic.size > i) {
-                topicBoard["month"]?.get(i)?.visibility = View.VISIBLE
-                topicBoard["month"]?.get(i)?.text = monthlyTopic[i]
-            }
-            else {
-                topicBoard["month"]?.get(i)?.visibility = View.GONE
-            }
-        }
+
 
         binding.communityFreeIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()

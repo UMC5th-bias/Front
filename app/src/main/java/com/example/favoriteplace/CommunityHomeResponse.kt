@@ -19,3 +19,9 @@ data class CommunityHomeTrendingGuestbookUnit (
     val id: Long,
     val title: String
 )
+
+data class CommunityHomeTrendingMonthUnit (
+    val id: Long,
+    val title: String,
+    val type: String
+)
