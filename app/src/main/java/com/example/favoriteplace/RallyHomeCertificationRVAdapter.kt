@@ -1,13 +1,15 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import com.example.favoriteplace.databinding.ItemRallyhomeCertificatedrallyBinding
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlin.math.min
 
-class RallyHomeCertificationRVAdapter(private val items: List<CertifiedRallyItem>) : RecyclerView.Adapter<RallyHomeCertificationRVAdapter.ViewHolder>() {
+class RallyHomeCertificationRVAdapter(private val items: List<CertifiedRallyItem>, private val context: Context) : RecyclerView.Adapter<RallyHomeCertificationRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemRallyhomeCertificatedrallyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,7 +30,9 @@ class RallyHomeCertificationRVAdapter(private val items: List<CertifiedRallyItem
             binding.certificatedRallyTitleTv.text = item.title
             binding.certificatedRallyTag1Tv.text = item.tag1
             binding.certificatedRallyTag2Tv.text = item.tag2
-            binding.certificatedAnimationIv.setImageResource(item.imageResId)
+            Glide.with(context as MainActivity)
+                .load(item.imageResId)
+                .into(binding.certificatedAnimationIv)
             binding.certificatedRallyTimeTv.text = item.time
             // 여기에 데이터 바인딩 로직 구현
             // 예: binding.textView.text = item.title

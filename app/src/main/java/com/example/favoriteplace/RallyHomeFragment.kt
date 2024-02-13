@@ -1,6 +1,7 @@
 package com.example.favoriteplace
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.FragmentRallydetailBinding
 import com.example.favoriteplace.databinding.FragmentRallyhomeBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RallyHomeFragment : Fragment() {
 
@@ -24,40 +29,7 @@ class RallyHomeFragment : Fragment() {
         binding = FragmentRallyhomeBinding.inflate(inflater, container, false)
 
 
-        val interestedRallyItems = listOf(
-            InterestedRallyItem("시간을 달리는 소녀", R.drawable.interested_rally_img),
-            InterestedRallyItem("센과 치히로의 행방불명", R.drawable.interested_rally_img2),
-            InterestedRallyItem("주술회전", R.drawable.interested_rally_img3)
-        )
 
-        // 데이터 리스트 생성
-        val certificationRallyItems = listOf(
-            CertifiedRallyItem(
-                "날씨의 아이 덕후 투어 다녀왔어요:)",
-                "#날씨의아이",
-                "#도쿄",
-                R.drawable.certificated_rally_img,
-                "1시간 전"
-            ),
-            CertifiedRallyItem(
-                "시타 가쿠슈인역에 다녀왔습니..",
-                "#시간을달리는소녀",
-                "#도쿄",
-                R.drawable.certificated_rally_img2,
-                "어제"
-            )
-            // 추가 데이터...
-        )
-
-        // 어댑터 생성 및 설정
-        val certifiedAdapter = RallyHomeCertificationRVAdapter(certificationRallyItems)
-        binding.rallyHomeCertificatedRallyRv.layoutManager = LinearLayoutManager(context)
-        binding.rallyHomeCertificatedRallyRv.adapter = certifiedAdapter
-
-        val interestedAdapter = RallyHomeInterestedRVAdapter(interestedRallyItems)
-        binding.rallyHomeInterestedRallyRv.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.rallyHomeInterestedRallyRv.adapter = interestedAdapter
 
         binding.rallyPlaceBlackBoxCl.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -73,12 +45,109 @@ class RallyHomeFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
-        binding.recommendRallyCv.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frameLayout, RallyDetailFragment())
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+        fun setTrendingRally(rallyHomeTrending: RallyHomeTrending) {
+            binding.recommendRallyTitleTv.text = rallyHomeTrending.name
+            binding.recommendRallyProgressTv.text = "${rallyHomeTrending.myPilgrimageNumber}/${rallyHomeTrending.pilgrimageNumber}"
+            Glide.with(this)
+                .load(rallyHomeTrending.image)
+                .into(binding.recommendRallyIv)
+
+            //랠리 id전달
+            val rallyDetailFragment = RallyDetailFragment()
+            val bundle = Bundle().apply {
+                putString("rallyId", rallyHomeTrending.id.toString())
+            }
+            rallyDetailFragment.arguments = bundle
+            //렐리 상세페이지로 이동
+            binding.recommendRallyCv.setOnClickListener {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, rallyDetailFragment)
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+            }
         }
+
+        fun setMyRally(rallyHomeResponseMyRally: RallyHomeResponseMyRally) {
+            // 관심있는 렐리 모아보기 데이터 연동
+            val interestedRallyItems = mutableListOf<InterestedRallyItem>()
+            rallyHomeResponseMyRally.likedRally.forEach {
+                interestedRallyItems.add(InterestedRallyItem(it.name, it.image))
+            }
+            //데이터 없을 때 에러메세지
+            if(interestedRallyItems.isEmpty()) binding.interestedRallyNotLoginCl.visibility = View.VISIBLE
+            else binding.interestedRallyNotLoginCl.visibility = View.GONE
+
+            val interestedAdapter = RallyHomeInterestedRVAdapter(interestedRallyItems, context as MainActivity)
+            binding.rallyHomeInterestedRallyRv.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.rallyHomeInterestedRallyRv.adapter = interestedAdapter
+
+            // 내 성지순례 인증글 모아보기 데이터 연동
+            // 데이터 리스트 생성
+            val certificationRallyItems = mutableListOf<CertifiedRallyItem>()
+            rallyHomeResponseMyRally.guestBook.forEach {
+                certificationRallyItems.add(
+                    CertifiedRallyItem(
+                        title = it.title,
+                        tag1 = it.hashTag.first(),
+                        tag2 = it.hashTag.first(),
+                        imageResId = it.image,
+                        time = it.createdAt
+
+                    )
+                )
+            }
+            //데이터 없을 때 에러메세지
+            if(certificationRallyItems.isEmpty()) binding.certificatedRallyNotLoginCl.visibility = View.VISIBLE
+            else binding.certificatedRallyNotLoginCl.visibility = View.GONE
+
+            // 어댑터 생성 및 설정
+            val certifiedAdapter = RallyHomeCertificationRVAdapter(certificationRallyItems, context as MainActivity)
+            binding.rallyHomeCertificatedRallyRv.layoutManager = LinearLayoutManager(context)
+            binding.rallyHomeCertificatedRallyRv.adapter = certifiedAdapter
+        }
+
+        //이달의 추천 랠리 불러오기
+        RetrofitAPI.rallyHomeService.getTrending().enqueue(object: Callback<RallyHomeTrending> {
+            override fun onResponse(call: Call<RallyHomeTrending>, response: Response<RallyHomeTrending>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.d("Retrofit:getTrending()", "Response: ${responseData}")
+                        setTrendingRally(responseData)
+                    }
+                }
+                else {
+                    Log.e("Retrofit:getTrending()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<RallyHomeTrending>, t: Throwable) {
+                Log.e("Retrofit:getTrending()", "onFailure: $t")
+            }
+
+        })
+
+        //관심있는 랠리, 성지순레 인증글 모아보기 불러오기
+        RetrofitAPI.rallyHomeService.getMyRally().enqueue(object: Callback<RallyHomeResponseMyRally> {
+            override fun onResponse(call: Call<RallyHomeResponseMyRally>, response: Response<RallyHomeResponseMyRally>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.d("Retrofit:getMyRally()", "Response: ${responseData}")
+                        setMyRally(responseData)
+                    }
+                }
+                else {
+                    Log.e("Retrofit:getMyRally()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<RallyHomeResponseMyRally>, t: Throwable) {
+                Log.e("Retrofit:getMyRally()", "onFailure: $t")
+            }
+
+        })
 
         return binding.root
     }
