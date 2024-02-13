@@ -369,36 +369,46 @@
                 </RelativeLayout>
             </LinearLayout>
 
-
-            <TextView
-                android:id="@+id/home_real_time_post_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="실시간 인기글"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/home_real_time_post2_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="소식을 알려드려요.🔥"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
-
-
-            <!-- 실시간 인기글 3개 -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/trendingPostsRecyclerView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                tools:listitem="@layout/item_trending_post"
-                app:layout_constraintTop_toBottomOf="@+id/home_real_time_post_tv">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edge">
+
+                <TextView
+                    android:id="@+id/home_real_time_post_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:text="실시간 인기글"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/home_real_time_post2_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:text="소식을 알려드려요.🔥"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+
+                <!-- 실시간 인기글 3개 -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/trendingPostsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+
+                    tools:listitem="@layout/item_trending_post"
+                    app:layout_constraintTop_toBottomOf="@+id/home_real_time_post_tv">
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
 
             <!-- 배너 -->
             <LinearLayout
@@ -406,11 +416,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp">
 
+
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/home_banner_vp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
                     android:background="@drawable/round" />
 
             </LinearLayout>

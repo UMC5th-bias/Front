@@ -54,12 +54,8 @@ class TrendingPostsAdapter(private val trendingPost : List<HomeService.TrendingP
                 board1.text = post.board
                 rank.text=post.rank.toString()
 
-                post.hashtags?.let { hashtags ->
-                    if (hashtags.size >= 2) {
-                        tag1.text = hashtags[0]
-                        tag2.text = hashtags[1]
-                    }
-                }
+                tag1.text = post.hashtags?.getOrNull(0)
+                tag2.text =  post.hashtags?.getOrNull(1)
 
                 // Glide 또는 다른 라이브러리를 사용하여 이미지 로드
                 Glide.with(itemView)

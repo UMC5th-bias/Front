@@ -111,6 +111,9 @@ class HomeFragment : Fragment() {
                 e.printStackTrace()
             }
         }
+
+        // 트렌딩 포스트 리사이클러뷰 설정
+        setupTrendingPostsRecyclerView()
     }
 
 
@@ -118,8 +121,8 @@ class HomeFragment : Fragment() {
 
         // TrendingPostsAdapter 초기화
         trendingPostsAdapter = TrendingPostsAdapter(trendingPostsData)
+        binding.trendingPostsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.trendingPostsRecyclerView.adapter = trendingPostsAdapter
-        binding.trendingPostsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
     }
 
