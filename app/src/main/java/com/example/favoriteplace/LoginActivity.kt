@@ -51,7 +51,7 @@ class LoginActivity :AppCompatActivity() {
 
 
         binding.loginSignupTv.setOnClickListener {
-            startActivity(Intent(this, SignUpConditionConfirmFragment::class.java))
+            startActivity(Intent(this, SignUpConditionConfirmActivity::class.java))
 
         }
     }
