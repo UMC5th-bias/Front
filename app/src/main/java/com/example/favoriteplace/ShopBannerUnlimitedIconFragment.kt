@@ -61,7 +61,7 @@ class ShopBannerUnlimitedIconFragment : Fragment() {
         }
 
         //서버에서 해당 아이템의 데이터를 가져오는 코드
-        RetrofitClient.shopService.getDetailItem("{$accessToken}", itemId)
+        RetrofitClient.shopService.getDetailItem("Bearer $accessToken", itemId)
             .enqueue(object : Callback<ShopDetailsResponse> {
                 override fun onResponse(
                     call: Call<ShopDetailsResponse>,

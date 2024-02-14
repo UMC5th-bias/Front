@@ -63,11 +63,11 @@ class ShopBannerLimitedFameFragment: Fragment() {
 
         //로그인 중이라면 토큰을 서버에 전달
         if (isLogIn){
-            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0MzI5MjlAbmF2ZXIuY29tIiwiaWF0IjoxNzA3NzU3NzE5LCJleHAiOjE3MTAzNDk3MTl9.CHnXELf6b-vPC--rmZAnwRY6aAvUKt0iPy9Wq_1QYLo"
+            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmNkQG5hdmVyLmNvbSIsImlhdCI6MTcwNzc1ODA2NywiZXhwIjoxNzEwMzUwMDY3fQ.H0P-lbuFXzkK24j5f2KCjRwi0DYY_Y5wd63vybffl60"
         }
 
         //서버에서 해당 아이템의 데이터를 가져오는 코드
-        RetrofitClient.shopService.getDetailItem("{$accessToken}", itemId)
+        RetrofitClient.shopService.getDetailItem("Bearer $accessToken", itemId)
             .enqueue(object : Callback<ShopDetailsResponse> {
                 override fun onResponse(
                     call: Call<ShopDetailsResponse>,
