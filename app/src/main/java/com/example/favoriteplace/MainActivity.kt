@@ -62,6 +62,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.myFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, MyFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
 
                 }
 
