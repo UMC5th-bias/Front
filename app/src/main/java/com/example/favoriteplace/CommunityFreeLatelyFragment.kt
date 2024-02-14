@@ -17,24 +17,21 @@ class CommunityFreeLatelyFragment : Fragment() {
     lateinit var binding: FragmentCommunityFreeLatelyBinding
     private var freeLatelyWriteData = ArrayList<Posts>()
     private var currentPage=1
-    private var isLastPage=false
-    private lateinit var adapter: CommunityFreeLatelyRVAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("실행이 되는가1","success")
         binding= FragmentCommunityFreeLatelyBinding.inflate(inflater,container,false)
 
-        fetchPosts()
+        fetchPosts()    //서버에서 최신글을 가져오는 코드
 
         return binding.root
     }
 
+    //서버에서 최신글을 가져오는 코드
     private fun fetchPosts() {
-        Log.d("실행이 되는가3","success")
         RetrofitClient.communityService.getPosts(currentPage,10,"latest")
             .enqueue(object : Callback<CommunityPost> {
 
@@ -42,13 +39,10 @@ class CommunityFreeLatelyFragment : Fragment() {
                     call: Call<CommunityPost>,
                     response: Response<CommunityPost>
                 ) {
-                    Log.d("실행이 되는가4",currentPage.toString())
                     if (response.isSuccessful) {
-
-                        Log.d("실행이 되는가5",response.body().toString())
-                        if(response.body()?.post?.isNotEmpty() == true&&!isLastPage){
+                        if(response.body()?.post?.isNotEmpty() == true){   //post의 값이 있을 경우,
                             response.body()?.let { post ->
-
+                                    //freeLatelyWriteData에 데이터를 받아옴
                                     freeLatelyWriteData.addAll(post.post.map { item ->
                                         Posts(
                                             item.id,
@@ -60,19 +54,17 @@ class CommunityFreeLatelyFragment : Fragment() {
                                             item.passedTime
                                         )
                                     })
-                                    Log.d("실행이 되는가7",freeLatelyWriteData.toString())
-                                    currentPage++
-                                    fetchPosts()
+
+                                    currentPage++   //다음 페이지를 받아오기 위해 현재 페이지를 1 증가 시킴
+                                    fetchPosts()    //재귀함수
+
+                                //RVA실행
                                     val latelywriteRVAdapter =
                                         CommunityFreeLatelyRVAdapter(freeLatelyWriteData)
                                     binding.communityFreeLatelyRv.adapter = latelywriteRVAdapter
                                     binding.communityFreeLatelyRv.layoutManager =
                                         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-                                Log.d("실행이 되는가8",freeLatelyWriteData.toString())
                             }
-                        } else {
-                            isLastPage=true
                         }
                     }
                 }
