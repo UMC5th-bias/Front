@@ -25,7 +25,6 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
     ): View? {
         binding= FragmentShopDetailUnlimitedFameBinding.inflate(inflater,container,false)
 
-
         //api를 호출하는 코드
         callApi()
 
@@ -62,7 +61,7 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
         }
 
         //서버에서 해당 아이템의 데이터를 가져오는 코드
-        RetrofitClient.shopService.getDetailItem(accessToken, itemId)
+        RetrofitClient.shopService.getDetailItem("{$accessToken}", itemId)
             .enqueue(object : Callback<ShopDetailsResponse> {
                 override fun onResponse(
                     call: Call<ShopDetailsResponse>,
@@ -72,8 +71,6 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
                     if (response.isSuccessful) {
                         val detailsResponse = response.body()
 
-                        Log.d("detailsID",itemId.toString())
-                        Log.d("detailsResponse",detailsResponse.toString())
                         detailsResponse?.let {
                             unlimitedFameData.clear()
                             unlimitedFameData.add(it)
