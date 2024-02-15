@@ -17,7 +17,10 @@ interface ShopService {
     ): Call<SalesResponse>
 
     @GET("/shop/detail/{item_id}")
-    fun getItemDetails(@Path("item_id") itemId: Int): Call<ItemDetails>
+    fun getItemDetails(
+        @Header("Authorization") authorization: String?,
+        @Path("item_id") itemId: Int
+    ): Call<ItemDetails>
 
     @GET("/shop/new")
     fun getNewLimitedSales():Call<NewLimitedSalesResponse>

@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -46,11 +47,19 @@ class ShopMainUnlimitedIconFragment : Fragment() {
         IconPurchaseDialog().show(parentFragmentManager, "")
     }
 
+
+    private fun getAccessToken(): String? {
+        val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
+    }
+
     private fun fetchItemDetails(itemId: Int) {
         // 아이템 ID 로그 출력
         Log.d("ShopMainLimitedFameFragment", "Fetching details for item ID: $itemId")
+        val accessToken = getAccessToken() // 액세스 토큰 가져오기
+        val authorizationHeader = "Bearer $accessToken"
 
-        val itemDetail = RetrofitClient.shopService.getItemDetails(itemId)
+        val itemDetail = RetrofitClient.shopService.getItemDetails(authorizationHeader, itemId)
         itemDetail.enqueue(object : Callback<ItemDetails> {
             override fun onResponse(
                 call: Call<ItemDetails>,

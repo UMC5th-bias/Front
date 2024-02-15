@@ -2,6 +2,7 @@ package com.example.favoriteplace
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,22 +12,26 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import com.example.favoriteplace.databinding.ActivityFreeWritePostBinding
+import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.InputStream
 
 class FreeWritePostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFreeWritePostBinding
@@ -89,6 +94,19 @@ class FreeWritePostActivity : AppCompatActivity() {
             && grantResults[0] == PackageManager.PERMISSION_GRANTED
         ) {
             dispatchTakePictureIntent()
+        }
+    }
+
+    private fun logSelectedImages() {
+        selectedImages?.let { images ->
+            for ((index, uri) in images.withIndex()) {
+                Log.d("FreeWritePostActivity", "Selected image $index: $uri")
+            }
+            if (images.isEmpty()) {
+                Log.d("FreeWritePostActivity", "No images selected")
+            }
+        } ?: run {
+            Log.d("FreeWritePostActivity", "selectedImages is null")
         }
     }
 
@@ -161,41 +179,118 @@ class FreeWritePostActivity : AppCompatActivity() {
         selectedImages.add(uri)
     }
 
+    // 이미지 Uri와 Context를 받아 해당 이미지의 크기를 확인하는 함수
+    fun checkImageSize(context: Context, imageUri: Uri): Boolean {
+        val inputStream: InputStream? = context.contentResolver.openInputStream(imageUri)
+        val imageSize = inputStream?.available() ?: 0
+
+        // 4MB 미만인지 확인
+        if (imageSize > 4 * 1024 * 1024) {
+            // 이미지 크기가 4MB를 초과하는 경우
+            return false
+        }
+        return true
+    }
+
+
+    private fun getAccessToken(): String? {
+        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
+    }
+
+    private fun urisToMultipartBodyParts(uris: List<Uri>, contentResolver: ContentResolver): List<MultipartBody.Part> {
+        return uris.mapNotNull { uri ->
+            // ContentResolver를 사용하여 Uri에서 InputStream을 얻음
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                // InputStream에서 바이트 배열을 읽음
+                val byteArray = inputStream.readBytes()
+                // 바이트 배열을 사용하여 RequestBody 생성
+                val requestBody = byteArray.toRequestBody("image/*".toMediaTypeOrNull())
+                // 파일 이름을 생성. 실제 앱에서는 더 의미 있는 이름을 생성할 필요가 있을 수 있음
+                val filename = "file_${System.currentTimeMillis()}.jpg"
+
+                // MultipartBody.Part 생성 및 반환
+                MultipartBody.Part.createFormData("images", filename, requestBody)
+            }
+        }
+    }
+
+    // Retrofit 호출에 사용할 이미지 파트 리스트 생성
+    private fun createImageParts(): List<MultipartBody.Part> {
+        return urisToMultipartBodyParts(selectedImages, contentResolver)
+    }
+
     private fun uploadPost() {
-        val imageParts = selectedImages.map { uri ->
-            val inputStream = contentResolver.openInputStream(uri)
-            val requestBody = inputStream?.readBytes()?.toRequestBody("image/*".toMediaTypeOrNull())
-            MultipartBody.Part.createFormData("images", "image.jpg", requestBody!!)
+
+        val title = binding.writePostTitleEdt.text.toString().trim()
+        val content = binding.writePostContentEdt.text.toString().trim()
+
+        // 제목, 내용 비워져 있으면-> toast 메세지
+        if (title.isEmpty() || content.isEmpty()) {
+            val inflater = LayoutInflater.from(this)
+            val customToastView = inflater.inflate(R.layout.custom_toast, null)
+            val textViewMessage: TextView = customToastView.findViewById(R.id.custom_toast_message)
+            textViewMessage.text = "제목과 내용을 입력해주세요."
+
+            val toast = Toast(applicationContext)
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = customToastView
+            toast.show()
+
+            return
         }
 
-        val title = "도쿄 성지순례 장소 추천해주세요 :)"
-        val content = "이번 3월에 도쿄 여행을 계획 중인데, 도쿄 주변 가볼만한 혹은 꼭!! 가야만 하는 성지순례 장소있을까요? 애니메이션 장르 상관 없이 추천 부탁드려요😊"
+
+        logSelectedImages()
+
+        // 이미지 크기 검사
+        for (uri in selectedImages) {
+            if (!checkImageSize(this, uri)) {
+                // 이미지 크기가 4MB를 초과하는 경우, 사용자에게 알림
+                Toast.makeText(this, "모든 이미지는 4MB 미만이어야 합니다.", Toast.LENGTH_SHORT).show()
+                return // 업로드 중단
+            }
+        }
+
+        // 게시글 데이터를 JSON으로 변환
         val postData = PostData(title, content)
-        val accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
-        
+        // 게시글 데이터를 JSON 문자열로 변환
+        val postJson = Gson().toJson(postData)
+        // JSON 문자열을 RequestBody로 변환
+        val postRequestBody = postJson.toRequestBody("application/json".toMediaTypeOrNull())
+        Log.d("FreeWritePostActivity", "postJson : $postJson")
+
+        // 이미지 파트 생성
+        val imageParts = createImageParts()
+        Log.d("FreeWritePostActivity", "ImageParts : $imageParts")
+
+        // AccessToken 가져오기
+        val accessToken = getAccessToken()
+        // 헤더에 AccessToken 추가
         val authorizationHeader = "Bearer $accessToken"
 
-        postService.uploadPost(authorizationHeader, postData, imageParts)
-            .enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+        postService.uploadPost(authorizationHeader, postRequestBody, imageParts)
+            .enqueue(object : Callback<PostResponse> {
+                override fun onResponse(
+                    call: Call<PostResponse>,
+                    response: Response<PostResponse>
+                ) {
                     if (response.isSuccessful) {
-                        // 업로드 성공
-                        Log.d("FreeWritePostActivity", "Post upload successful")
-                        // 업로드 성공 시에 수행할 작업을 여기에 추가합니다.
+                        val responseData = response.body()
+                        if (responseData != null) {
+                            Log.d("FreeWritePostActivity", "게시글을 성공적으로 등록했습니다. 메시지: ${response.body()?.message}")
+
+                        }
                     } else {
-                        // 업로드 실패
-                        // 실패 시에 수행할 작업을 여기에 추가합니다.
+                        Log.e("FreeWritePostActivity", "실패: ${response.body()?.message}")
                         Log.d("FreeWritePostActivity", "API Error: ${response.errorBody()?.string()}")
                     }
                 }
 
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    // 네트워크 오류 등으로 실패
-                    // 실패 시에 수행할 작업을 여기에 추가합니다.
+                override fun onFailure(call: Call<PostResponse>, t: Throwable) {
                     Log.d("FreeWritePostActivity", "Network Error: ${t.message}")
                 }
             })
-
     }
 
     private fun removeImageFromLayout(frameLayout: FrameLayout, uri: Uri) {
