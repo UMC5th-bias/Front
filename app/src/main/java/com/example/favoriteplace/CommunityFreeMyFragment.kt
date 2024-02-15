@@ -50,7 +50,7 @@ class CommunityFreeMyFragment : Fragment() {
                     response: Response<CommunityPost>
                 ) {
                     if (response.isSuccessful) {
-                        if(response.body()?.post?.isNotEmpty() == true){   //post의 값이 있을 경우,
+                        if (response.body()?.post?.isNotEmpty() == true) {   //post의 값이 있을 경우,
                             response.body()?.let { post ->
                                 //freeMyWriteData에 데이터를 받아옴
                                 freeMyWriteData.addAll(post.post.map { item ->
@@ -69,11 +69,15 @@ class CommunityFreeMyFragment : Fragment() {
                                 fetchPosts()    //재귀함수
 
                                 //RVA실행
-                                val communityFreeMyRVAdapter=
+                                val communityFreeMyRVAdapter =
                                     CommunityFreeMyRVAdapter(freeMyWriteData)
                                 binding.communityFreeMyRv.adapter = communityFreeMyRVAdapter
                                 binding.communityFreeMyRv.layoutManager =
-                                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                                    LinearLayoutManager(
+                                        context,
+                                        LinearLayoutManager.VERTICAL,
+                                        false
+                                    )
                             }
                         }
                     }
