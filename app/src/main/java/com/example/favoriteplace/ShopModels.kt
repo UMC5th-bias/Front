@@ -1,10 +1,18 @@
 package com.example.favoriteplace
 
-data class LimitedSalesResponse(
+data class SalesResponse(
     val isLoggedIn: Boolean,
-    val userInfo: Any?, // 사용자 정보에 대한 더 구체적인 모델이 필요할 수 있음
+    val userInfo: UserInfo?, // 사용자 정보에 대한 더 구체적인 모델이 필요할 수 있음
     val titles: List<LimitedCategory>,
     val icons: List<LimitedCategory>
+)
+data class UserInfo(
+    val id: Int,
+    val nickname: String,
+    val point: Int,
+    val profileImageUrl: String?,
+    val profileTitleUrl: String,
+    val profileIconUrl: String?
 )
 
 data class LimitedCategory(

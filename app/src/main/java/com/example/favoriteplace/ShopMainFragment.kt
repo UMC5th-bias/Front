@@ -201,7 +201,7 @@ class ShopMainFragment : Fragment() {
     private fun isLoggedIn(): Boolean {
         // TODO : 로그인 상태 확인 로직 구현
         // 예를 들어, SharedPreferences, 데이터베이스 조회 등
-        return true // 임시로 false 반환
+        return false // 임시로 false 반환
     }
 
     private fun setupBannerViewPager() {
@@ -245,7 +245,6 @@ class ShopMainFragment : Fragment() {
 
         // 한정 판매 목록 로드
         fetchLimitedSales()
-
 
         // 초기 상태 설정
         binding.shopMainSwitchOnOffSc.isChecked = false
@@ -317,22 +316,34 @@ class ShopMainFragment : Fragment() {
 
         val accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0MzI5MjlAbmF2ZXIuY29tIiwiaWF0IjoxNzA3NzU3NzE5LCJleHAiOjE3MTAzNDk3MTl9.CHnXELf6b-vPC--rmZAnwRY6aAvUKt0iPy9Wq_1QYLo"
         val authorizationHeader = "Bearer $accessToken"
+
+
+
         val callLimitedSales = if (isLoggedIn()) {
             RetrofitClient.shopService.getLimitedSales(authorizationHeader)
+
         } else {
             RetrofitClient.shopService.getLimitedSales(null)
         }
 
         Log.d("ShopMainFragment", " use token : ${accessToken}")
 
-        callLimitedSales.enqueue(object : Callback<LimitedSalesResponse> {
+        callLimitedSales.enqueue(object : Callback<SalesResponse> {
             override fun onResponse(
-                call: Call<LimitedSalesResponse>,
-                response: Response<LimitedSalesResponse>
+                call: Call<SalesResponse>,
+                response: Response<SalesResponse>
             ) {
                 if (response.isSuccessful) {
                     // 성공적으로 데이터를 받음. 여기서 UI 업데이트 로직을 구현합니다.
                     val limitedSalesResponse = response.body()
+
+                    if (isLoggedIn()) {
+                        if (limitedSalesResponse != null) {
+                            limitedSalesResponse.userInfo?.let { userInfo ->
+                                updateUserInfo(userInfo)
+                            }
+                        }
+                    }
 
                     // 받아온 데이터를 로그로 출력
                     Log.d("ShopMainFragment", "Limited sales data received: $limitedSalesResponse")
@@ -424,7 +435,7 @@ class ShopMainFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<LimitedSalesResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SalesResponse>, t: Throwable) {
                 // 네트워크 오류 등의 실패 처리
                 Log.d("ShopMainFragment", "Network Error: ${t.message}")
             }
@@ -436,10 +447,10 @@ class ShopMainFragment : Fragment() {
             RetrofitClient.shopService.getUnlimitedSales(null)
         }
 
-        callUnlimitedSales.enqueue(object : Callback<UnlimitedSalesResponse> {
+        callUnlimitedSales.enqueue(object : Callback<SalesResponse> {
             override fun onResponse(
-                call: Call<UnlimitedSalesResponse>,
-                response: Response<UnlimitedSalesResponse>
+                call: Call<SalesResponse>,
+                response: Response<SalesResponse>
             ) {
                 if (response.isSuccessful) {
                     // 성공적으로 데이터를 받음. 여기서 UI 업데이트 로직을 구현합니다.
@@ -450,6 +461,15 @@ class ShopMainFragment : Fragment() {
                         "ShopMainFragment",
                         "Unlimited sales data received: $unlimitedSalesResponse"
                     )
+
+                    if (isLoggedIn()) {
+                        if (unlimitedSalesResponse != null) {
+                            unlimitedSalesResponse.userInfo?.let { userInfo ->
+                                updateUserInfo(userInfo)
+                            }
+                        }
+                    }
+
 
                     // 받아온 데이터로 상시판매 칭호와 아이콘 리스트 업데이트
                     unlimitedSalesResponse?.let {
@@ -547,7 +567,7 @@ class ShopMainFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<UnlimitedSalesResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SalesResponse>, t: Throwable) {
                 // 네트워크 오류 등의 실패 처리
                 Log.d("ShopMainFragment", "Network Error: ${t.message}")
             }
@@ -714,5 +734,20 @@ class ShopMainFragment : Fragment() {
             Log.e("ShopMainUpdateUI", "Error in update(): ${e.message}")
         }
 
+    }
+
+    private fun updateUserInfo(userInfo: UserInfo?) {
+        if (userInfo != null) {
+            // 사용자 정보 업데이트 로직
+            // 예: 닉네임 표시
+            Log.d("ShopMainFragment", "Updating user info: $userInfo")
+
+            // ...
+        } else {
+            // 로그인 정보 없음 처리
+            Log.d("ShopMainFragment", "로그인 정보가 없습니다.")
+        }
+        // 사용자 프로필 UI 업데이트
+        // 예를 들어, 사용자 닉네임, 포인트 등을 UI에 반영하는 로직을 여기에 구현합니다.
     }
 }

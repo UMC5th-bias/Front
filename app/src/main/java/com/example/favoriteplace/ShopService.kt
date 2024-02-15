@@ -9,12 +9,12 @@ interface ShopService {
     @GET("/shop/limited")
     fun getLimitedSales(
         @Header("Authorization") authorization: String?
-    ): Call<LimitedSalesResponse>
+    ): Call<SalesResponse>
 
     @GET("/shop/always")
     fun getUnlimitedSales(
         @Header("Authorization") authorization: String?
-    ): Call<UnlimitedSalesResponse>
+    ): Call<SalesResponse>
 
     @GET("/shop/detail/{item_id}")
     fun getItemDetails(@Path("item_id") itemId: Int): Call<ItemDetails>
