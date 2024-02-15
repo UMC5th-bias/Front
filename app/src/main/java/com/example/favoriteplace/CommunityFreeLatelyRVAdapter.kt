@@ -36,9 +36,4 @@ class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<Posts>): R
         }
 
     }
-
-//    fun addPosts(newPosts: List<CommunityPost>){
-//        posts.addAll(newPosts)
-//        notifyDataSetChanged()
-//    }
 }
