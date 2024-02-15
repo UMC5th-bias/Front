@@ -51,7 +51,7 @@ class CommunityFreeRecommendFragment : Fragment() {
                     if (response.isSuccessful) {
                         if(response.body()?.post?.isNotEmpty() == true){   //post의 값이 있을 경우,
                             response.body()?.let { post ->
-                                //freeLatelyWriteData에 데이터를 받아옴
+                                //freeRecommendData에 데이터를 받아옴
                                 freeRecommendWriteData.addAll(post.post.map { item ->
                                     Posts(
                                         item.id,
@@ -68,9 +68,9 @@ class CommunityFreeRecommendFragment : Fragment() {
                                 fetchPosts()    //재귀함수
 
                                 //RVA실행
-                                val latelywriteRVAdapter =
-                                    CommunityFreeLatelyRVAdapter(freeRecommendWriteData)
-                                binding.communityFreeRecommendRv.adapter = latelywriteRVAdapter
+                                val freeRecommendRVAdapter =
+                                    CommunityFreeRecommendRVAdapter(freeRecommendWriteData)
+                                binding.communityFreeRecommendRv.adapter = freeRecommendRVAdapter
                                 binding.communityFreeRecommendRv.layoutManager =
                                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                             }
