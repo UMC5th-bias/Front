@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteplace.databinding.FragmentRallyplaceBinding
 import com.google.firebase.annotations.concurrent.UiThread
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -139,6 +140,7 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
         naverMap.locationTrackingMode = LocationTrackingMode.Face // 위치 추적 활성화
         val uiSettings = naverMap.uiSettings
         uiSettings.isLocationButtonEnabled = true // 현위치 버튼 활성화
+        naverMap.moveCamera(CameraUpdate.zoomTo(12.0)) // 줌 레벨을 12으로 설정
 
     }
 
