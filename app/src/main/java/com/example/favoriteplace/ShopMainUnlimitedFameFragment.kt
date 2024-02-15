@@ -62,6 +62,8 @@ class ShopMainUnlimitedFameFragment : Fragment() {
 
     //칭호 구매 팝업창 띄우기
     private fun popupFamePurchaseClick() {
+        val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0  // 이 줄은 예시일 뿐, 실제로는 클래스 변수를 사용할 것입니다.
+
         if (getAccessToken() == null) {
             showToast(requireContext(), "로그인이 필요한 기능입니다. 로그인을 해주세요.")
         } else if (alreadyBought) {
@@ -74,6 +76,7 @@ class ShopMainUnlimitedFameFragment : Fragment() {
             val args = Bundle().apply {
                 putInt("userPoint", userPoint)
                 putInt("itemPoint", itemPoint)
+                putInt("itemID", itemId)
             }
             famePurchaseDialog.arguments = args // Bundle을 Dialog에 설정
 

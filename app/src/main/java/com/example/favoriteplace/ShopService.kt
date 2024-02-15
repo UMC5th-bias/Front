@@ -3,6 +3,7 @@ package com.example.favoriteplace
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ShopService {
@@ -33,5 +34,10 @@ interface ShopService {
         @Header("Authorization") authorization: String?=null,
         @Path("item_id") itemId: Int
     ): Call<ShopDetailsResponse>
-  
+
+    @POST("/shop/purchase/{item_id}")
+    fun purchaseItem(
+        @Header("Authorization") token: String,
+        @Path("item_id") itemId: Int
+    ): Call<PurchaseResponse>
 }
