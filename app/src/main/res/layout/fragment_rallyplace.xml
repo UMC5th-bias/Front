@@ -51,6 +51,7 @@
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/rally_place_mv_container"
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:layout_marginStart="15dp"
