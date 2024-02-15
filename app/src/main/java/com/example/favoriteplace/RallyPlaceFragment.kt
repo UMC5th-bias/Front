@@ -1,6 +1,5 @@
 package com.example.favoriteplace
 
-import android.health.connect.datatypes.ExerciseRoute
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteplace.databinding.FragmentRallyplaceBinding
 import com.google.firebase.annotations.concurrent.UiThread
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
@@ -46,9 +44,9 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
 
         //지도 fragment
         val fm = childFragmentManager
-        val mapFragment = fm.findFragmentById(R.id.rally_place_mv_container) as MapFragment?
+        val mapFragment = fm.findFragmentById(R.id.rally_place_mv) as MapFragment?
             ?: MapFragment.newInstance().also {
-                fm.beginTransaction().add(R.id.rally_place_mv_container, it).commit()
+                fm.beginTransaction().add(R.id.rally_place_mv, it).commit()
             }
         mapFragment.getMapAsync(this)
 
@@ -175,8 +173,10 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
 
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Face // 위치 추적 활성화
+
         val uiSettings = naverMap.uiSettings
         uiSettings.isLocationButtonEnabled = true // 현위치 버튼 활성화
+
         naverMap.moveCamera(CameraUpdate.zoomTo(12.0)) // 줌 레벨을 12으로 설정
 
         naverMap.addOnLocationChangeListener { location -> //현재 위치 실시간 저장
@@ -199,4 +199,5 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
+
 }
