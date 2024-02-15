@@ -20,7 +20,7 @@ class RallyPlaceCityRVAdapter(
     private val context: Context,
     private val districtDetailList: List<DistrictDetail>,
     private val naverMap: NaverMap,
-    private val markerAdd: (Marker) -> Unit,
+    private val markerAdd: (LatLng) -> Unit,
     private val markerCLear: () -> Unit
 ) : RecyclerView.Adapter<RallyPlaceCityRVAdapter.viewHolder>() {
 
@@ -72,10 +72,7 @@ class RallyPlaceCityRVAdapter(
                                         animationList?.sortedBy { it.id } //정렬
 
                                         animationList?.forEach {
-                                            val marker = Marker()
-                                            marker.position = LatLng(it.latitude, it.longitude)
-                                            marker.map = naverMap
-                                            markerAdd(marker)
+                                            markerAdd(LatLng(it.latitude, it.longitude))
                                         }
 
                                         //애니메이션 rv 설정

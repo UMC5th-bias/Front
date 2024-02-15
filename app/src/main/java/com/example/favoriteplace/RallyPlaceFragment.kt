@@ -1,5 +1,7 @@
 package com.example.favoriteplace
 
+import android.health.connect.datatypes.ExerciseRoute
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteplace.databinding.FragmentRallyplaceBinding
 import com.google.firebase.annotations.concurrent.UiThread
+import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
@@ -28,8 +31,10 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
     lateinit var binding: FragmentRallyplaceBinding
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
-    var regionList: List<Region> = emptyList()
-    val markersList = mutableListOf<Marker>()
+    var regionList = emptyList<Region>()
+    private val markersList = mutableListOf<Marker>()
+    private var myLatLng: LatLng = LatLng(0.0, 0.0)
+    //latitude=35.69297366487135, longitude=139.69942224122263 - 테스트용
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,8 +63,22 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
+    // 두 위치 사이의 거리가 1km 이내인지 확인하는 함수
+    private fun isWithin1Km(targetLocation: LatLng): Boolean {
+        val results = FloatArray(1)
+        Location.distanceBetween(myLatLng.latitude, myLatLng.longitude, targetLocation.latitude, targetLocation.longitude, results)
+        return results[0] <= 1000 // 거리가 1000m(1km) 이내인지 확인
+    }
+
     // 마커 기록
-    fun markerAdd(marker: Marker) { markersList.add(marker); }
+    private fun markerAdd(latLng: LatLng) {
+        if(isWithin1Km(latLng)) {
+            val marker = Marker()
+            marker.position = latLng
+            marker.map = naverMap
+            markersList.add(marker)
+        }
+    }
 
     // 기록된 마커 전부 제거
     fun markerClear() {
@@ -159,6 +178,10 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
         val uiSettings = naverMap.uiSettings
         uiSettings.isLocationButtonEnabled = true // 현위치 버튼 활성화
         naverMap.moveCamera(CameraUpdate.zoomTo(12.0)) // 줌 레벨을 12으로 설정
+
+        naverMap.addOnLocationChangeListener { location -> //현재 위치 실시간 저장
+            myLatLng = LatLng(location.latitude, location.longitude)
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
