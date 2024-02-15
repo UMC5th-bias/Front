@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -17,6 +18,7 @@ import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.example.favoriteplace.LoginActivity.Companion.ACCESS_TOKEN_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,10 +42,6 @@ class ShopMainFragment : Fragment() {
     private var regularFrameNormalData = ArrayList<ShopMainUnlimitedFame>()
     private var regularNewIconData = ArrayList<ShopMainUnlimitedIcon>()
     private var regularNormalIconData = ArrayList<ShopMainUnlimitedIcon>()
-
-    // ShopMainLimitedFame 객체를 저장할 변수
-    private var selectedLimitedFame: ShopMainLimitedFame? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -202,12 +200,15 @@ class ShopMainFragment : Fragment() {
             notLoginView.visibility = View.VISIBLE
         }
     }
+    // sharePreferences에 저장된 액세스 토큰 반환하는 메소드
+    private fun getAccessToken(): String? {
+        val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences?.getString(ACCESS_TOKEN_KEY, null)
+    }
 
     // 사용자의 로그인 상태를 확인하는 메소드
     private fun isLoggedIn(): Boolean {
-        // TODO : 로그인 상태 확인 로직 구현
-        // 예를 들어, SharedPreferences, 데이터베이스 조회 등
-        return true // 임시로 false 반환
+        return getAccessToken() != null
     }
 
     private fun setupBannerViewPager() {
@@ -315,12 +316,22 @@ class ShopMainFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        // 앱이 종료될 때 로그아웃 상태를 SharedPreferences에 저장
+        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putBoolean("isLoggedIn", false)
+            apply()
+        }
+    }
+
     // 한정 판매 목록 로드 메서드
     private fun fetchLimitedSales() {
         // RetrofitClient.shopService.getLimitedSales("Bearer YOUR_AUTH_TOKEN") 호출 구현 필요
         // 예시를 위한 가상 코드입니다. 실제로는 YOUR_AUTH_TOKEN을 적절한 토큰으로 대체해야 합니다.
 
-        val accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
+        val accessToken = getAccessToken() // 액세스 토큰 가져오기
         val authorizationHeader = "Bearer $accessToken"
 
 
