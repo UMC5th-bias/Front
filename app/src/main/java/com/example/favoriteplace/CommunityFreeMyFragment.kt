@@ -28,9 +28,6 @@ class CommunityFreeMyFragment : Fragment() {
 
         fetchPosts()    //서버에서 내 글을 가져오는 코드
 
-        val mywriteRVAdapter=CommunityFreeMyRVAdapter(freeMyWriteData)
-        binding.communityFreeMyRv.adapter=mywriteRVAdapter
-        binding.communityFreeMyRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         return binding.root
     }
     private fun fetchPosts() {

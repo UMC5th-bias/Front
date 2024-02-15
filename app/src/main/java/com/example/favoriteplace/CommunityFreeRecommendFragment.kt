@@ -28,9 +28,6 @@ class CommunityFreeRecommendFragment : Fragment() {
 
         fetchPosts()    //서버에서 최신글을 가져오는 코드
 
-        val recommendwriteRVAdapter=CommunityFreeRecommendRVAdapter(freeRecommendWriteData)
-        binding.communityFreeRecommendRv.adapter=recommendwriteRVAdapter
-        binding.communityFreeRecommendRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         return binding.root
     }
 
