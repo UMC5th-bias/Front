@@ -1,31 +1,21 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.FragmentRallydetailBinding
-import com.example.favoriteplace.databinding.FragmentRallyhomeBinding
-import com.google.android.gms.common.api.Api
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-//import kotlinx.serialization.decodeFromString
-//import kotlinx.serialization.json.Json
-import org.json.JSONObject
-import org.json.JSONTokener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
-import java.lang.Exception
 
 
 class RallyDetailFragment : Fragment() {
@@ -55,15 +45,16 @@ class RallyDetailFragment : Fragment() {
             Glide.with(this)
                 .load(rallyDetailData.image)
                 .into(binding.rallydetailImgIv)
-            Glide.with(this)
-                .load(rallyDetailData.itemImage)
-                .into(binding.rallydetailGetbadgeIv)
+
+
+
+            bind(binding.root.context,rallyDetailData.itemImage, binding.rallydetailGetbadgeIv)
             binding.rallydetailTitleTv.text = rallyDetailData.name
             binding.rallydetailCheckTv.text = rallyDetailData.myPilgrimageNumber.toString()
             binding.rallydetailTotalTv.text = rallyDetailData.pilgrimageNumber.toString()
             binding.rallydetailTextTv.text = rallyDetailData.description
             binding.rallydetailPlaceCountTv.text = rallyDetailData.pilgrimageNumber.toString()
-            binding.rallydetailCountTv.text = rallyDetailData.achieveNumber.toString()
+            binding.countTv.text = rallyDetailData.achieveNumber.toString()
             if(rallyDetailData.isLike) {
                 binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_on)
             }
@@ -72,6 +63,7 @@ class RallyDetailFragment : Fragment() {
             }
 
         }
+
 
         RetrofitAPI.rallyDetailService.getRallyDetail(rallyId?.toLong() ?: 1).enqueue(object:
             Callback<RallyDetailData> {
@@ -94,6 +86,27 @@ class RallyDetailFragment : Fragment() {
 
         })
 
+    }
+
+    fun bind(context: Context, imageUrl: String, imageView: ImageView) {
+        try {
+            val imageLoader = ImageLoader.Builder(context)
+                .componentRegistry {
+                    add(SvgDecoder(context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                }
+                .build()
+
+            val imageRequest = ImageRequest.Builder(context)
+                .crossfade(true)
+                .data(imageUrl)
+                .target(imageView)  //해당 이미지뷰를 타겟으로 svg 삽입
+                .build()
+            imageLoader.enqueue(imageRequest)
+
+        } catch (e: Exception) {
+            Log.e("RallyDetail", "Error loading image: ${e.message}")
+            e.printStackTrace()
+        }
     }
 
 

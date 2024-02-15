@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example.favoriteplace.LoginActivity.Companion.ACCESS_TOKEN_KEY
 import com.example.favoriteplace.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -79,7 +80,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // 앱이 처음 시작될 때 로그인 상태를 확인하고, 로그인 정보가 없으면 서버에 요청을 보냄
+        // 앱이 처음 시작될 때 로그인 상태를 확인 후, 로그인 정보가 없으면 서버에 요청을 보냄
         checkLoginStatus()
 
     }
@@ -92,11 +93,11 @@ class HomeFragment : Fragment() {
     private fun checkLoginStatus() {
         // SharedPreferences에서 액세스 토큰 가져오기
         val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", true)
 
         if (isLoggedIn) {
             // 로그인 상태인 경우 사용자 정보를 가져옴
-            val userToken = sharedPreferences.getString("accessToken", "")
+            val userToken = sharedPreferences.getString(ACCESS_TOKEN_KEY, "")
             if (!userToken.isNullOrEmpty()) {
                 getUserInfo(userToken)
                 Log.d("HomeFragment", ">> 로그인 상태인 경우 사용자 정보를 가져옴, $userToken")
@@ -151,9 +152,12 @@ class HomeFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
+            val isLoggedIn = data?.getBooleanExtra("isLoggedIn", false) ?: false
             val userToken = data?.getStringExtra("accessToken")
-            if (!userToken.isNullOrEmpty()) {
+            if (!userToken.isNullOrEmpty() && isLoggedIn) {
+                this.isLoggedIn = true
                 Log.d("HomeFragment", ">> Home Login userToken : $userToken")
+                Log.d("HomeFragment", ">> Home Login isLoggedIn : $isLoggedIn")
                 // Retrofit 요청 -> 사용자 정보 가져옴
                 getUserInfo(userToken)
             }
@@ -174,11 +178,7 @@ class HomeFragment : Fragment() {
                         Log.d("HomeFragment", ">> Home Login Success")
                         Log.d("HomeFragment", ">> $loginResponse")
 
-                    }else{
-                        updateUI(null)
-                        Log.d("HomeFragment", ">> 비회원 $loginResponse")
                     }
-
                 }else{
                     // 로그인 상태가 아닌 경우
                     Log.e("HomeFragment", "Failed to get home data: ${response.code()}")
@@ -195,12 +195,6 @@ class HomeFragment : Fragment() {
     private fun updateUI(homeData: HomeService.LoginResponse?) {
 
         Log.d("HomeFragment", ">> $homeData")
-        setupTrendingPostsRecyclerView()
-        Log.d("HomeFragment", ">> trendingPosts")
-        homeData?.trendingPosts?.let { trendingPosts ->
-            trendingPostsAdapter.submitList(trendingPosts)
-        }
-
 
 
 
@@ -250,6 +244,13 @@ class HomeFragment : Fragment() {
                     .placeholder(null)
                     .into(binding.homeRallyIv)
             }
+
+
+            setupTrendingPostsRecyclerView()
+            homeData?.trendingPosts?.let { trendingPosts ->
+                trendingPostsAdapter.submitList(trendingPosts)
+            }
+
         }
         else{
             // 비회원

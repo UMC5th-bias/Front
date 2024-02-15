@@ -68,6 +68,7 @@ class LoginActivity :AppCompatActivity() {
 
                             val resultIntent = Intent().apply {
                                 putExtra(ACCESS_TOKEN_KEY, accessToken)
+                                putExtra("isLoggedIn", true)
                             }
                             setResult(Activity.RESULT_OK, resultIntent)
                             finish()
@@ -98,7 +99,7 @@ class LoginActivity :AppCompatActivity() {
 
         // 앱이 종료될 때 로그아웃 상태를 SharedPreferences에 저장
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        sharedPreferences.edit().putBoolean(LOGGED_OUT, true).apply()
+        sharedPreferences.edit().putBoolean(LOGGED_OUT, false).apply()
     }
 
 }

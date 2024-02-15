@@ -20,7 +20,7 @@ class MySettingFragment : Fragment() {
 
 
 
-
+        // 뒤로가기
         binding.mySettingBackIb.setOnClickListener{
             parentFragmentManager.commit {
                 replace(R.id.main_frameLayout, MyFragment())

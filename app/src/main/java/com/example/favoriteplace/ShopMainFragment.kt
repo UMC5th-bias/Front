@@ -201,7 +201,7 @@ class ShopMainFragment : Fragment() {
     private fun isLoggedIn(): Boolean {
         // TODO : 로그인 상태 확인 로직 구현
         // 예를 들어, SharedPreferences, 데이터베이스 조회 등
-        return true // 임시로 false 반환
+        return false // 임시로 false 반환
     }
 
     private fun setupBannerViewPager() {
