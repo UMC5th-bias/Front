@@ -10,7 +10,8 @@ interface PostService {
     @POST("/posts/free")
     fun uploadPost(
         @Header("Authorization") authorization: String,
-        @Part("data") data: RequestBody,
-        @Part images: List<MultipartBody.Part>?
+        @Part ("data") data: RequestBody, // JSON 형식의 데이터를 담은 RequestBody
+        @Part files: List<MultipartBody.Part> // 파일 데이터
     ): Call<PostResponse>
+
 }
