@@ -26,12 +26,12 @@ class CommunityFreeRecommendFragment : Fragment() {
     ): View? {
         binding= FragmentCommunityFreeRecommendBinding.inflate(inflater,container,false)
 
-        fetchPosts()    //서버에서 최신글을 가져오는 코드
+        fetchPosts()    //서버에서 추천글을 가져오는 코드
 
         return binding.root
     }
 
-    //서버에서 최신글을 가져오는 코드
+    //서버에서 추천글을 가져오는 코드
     private fun fetchPosts() {
 
         var accessToken: String? =null

@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemCommunityFreeRecommendBinding
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
-class CommunityFreeRecommendRVAdapter (private val freeRecommendList: ArrayList<Posts>): RecyclerView.Adapter<CommunityFreeRecommendRVAdapter.ViewHolder>(){
+class CommunityFreeRecommendRVAdapter(private val freeRecommendList: ArrayList<Posts>): RecyclerView.Adapter<CommunityFreeRecommendRVAdapter.ViewHolder>(){
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
