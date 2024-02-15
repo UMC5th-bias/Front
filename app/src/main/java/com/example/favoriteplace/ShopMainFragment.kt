@@ -11,6 +11,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -201,7 +207,7 @@ class ShopMainFragment : Fragment() {
     private fun isLoggedIn(): Boolean {
         // TODO : 로그인 상태 확인 로직 구현
         // 예를 들어, SharedPreferences, 데이터베이스 조회 등
-        return false // 임시로 false 반환
+        return true // 임시로 false 반환
     }
 
     private fun setupBannerViewPager() {
@@ -314,9 +320,8 @@ class ShopMainFragment : Fragment() {
         // RetrofitClient.shopService.getLimitedSales("Bearer YOUR_AUTH_TOKEN") 호출 구현 필요
         // 예시를 위한 가상 코드입니다. 실제로는 YOUR_AUTH_TOKEN을 적절한 토큰으로 대체해야 합니다.
 
-        val accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0MzI5MjlAbmF2ZXIuY29tIiwiaWF0IjoxNzA3NzU3NzE5LCJleHAiOjE3MTAzNDk3MTl9.CHnXELf6b-vPC--rmZAnwRY6aAvUKt0iPy9Wq_1QYLo"
+        val accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
         val authorizationHeader = "Bearer $accessToken"
-
 
 
         val callLimitedSales = if (isLoggedIn()) {
@@ -741,6 +746,43 @@ class ShopMainFragment : Fragment() {
             // 사용자 정보 업데이트 로직
             // 예: 닉네임 표시
             Log.d("ShopMainFragment", "Updating user info: $userInfo")
+            // 닉네임 업데이트
+            binding.profileNicknameTv.text = userInfo.nickname
+            binding.profileUserPointTv.text = userInfo.point.toString()
+
+            Glide.with(binding.root.context)
+                .load(userInfo.profileImageUrl)
+                .apply(RequestOptions().circleCrop()) // RequestOptions를 사용하여 circleCrop 적용
+                .placeholder(R.drawable.memberimg) // 로딩 중에 표시할 플레이스홀더 이미지
+                .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
+                .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적용
+                .into(binding.shopMainMyProfileCiv) // 이미지를 표시할 ImageView
+// Glide CircleCrop으로 표시
+
+            val imageLoader = ImageLoader.Builder(binding.root.context)
+                .componentRegistry {
+                    add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                }
+                .build()
+
+            val titleImageRequest = ImageRequest.Builder(binding.root.context)
+                .crossfade(true)
+                .crossfade(300)
+                .data(userInfo.profileTitleUrl)
+                .target (binding.shopMainProfileTagIv)
+                .build()
+
+            imageLoader.enqueue(titleImageRequest)
+
+            val iconImageRequest = ImageRequest.Builder(binding.root.context)
+                .crossfade(true)
+                .crossfade(300)
+                .data(userInfo.profileIconUrl)
+                .target (binding.myIconIv)
+                .build()
+
+            imageLoader.enqueue(iconImageRequest)
+
 
             // ...
         } else {
