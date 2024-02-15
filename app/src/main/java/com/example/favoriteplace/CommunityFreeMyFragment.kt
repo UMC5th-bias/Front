@@ -36,7 +36,7 @@ class CommunityFreeMyFragment : Fragment() {
 
         //로그인 중이라면 토큰을 서버에 전달
         if (isLogIn){
-            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
+            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlejcwM0BuYXZlci5jb20iLCJpYXQiOjE3MDc5ODUzNDUsImV4cCI6MTcxMDU3NzM0NX0.xFCNj09c3M0CkiCV_Luqq2w6gjhW2Z6-kJM82NF0MtU"
         }
 
         RetrofitClient.communityService.getMyPosts("Bearer $accessToken",currentPage,10)

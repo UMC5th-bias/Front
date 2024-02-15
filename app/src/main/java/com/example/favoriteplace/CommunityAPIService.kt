@@ -21,4 +21,11 @@ interface CommunityAPIService {
         @Query("size") size: Int
     ): Call<CommunityPost>
 
+    @GET("posts/free/my-comments")
+    fun getMyComments(
+        @Header("Authorization") authorization:String?,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Call<Comments>
+
 }
