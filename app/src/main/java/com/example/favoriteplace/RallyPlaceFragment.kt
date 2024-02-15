@@ -53,11 +53,6 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
         // 위치 구하는 모듈
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
-
-
-
-
-
         return binding.root
     }
 
@@ -69,10 +64,11 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
     }
 
     // 마커 기록
-    private fun markerAdd(latLng: LatLng) {
+    private fun markerAdd(latLng: LatLng, title: String) {
         if(isWithin1Km(latLng)) {
             val marker = Marker()
             marker.position = latLng
+            marker.captionText = title
             marker.map = naverMap
             markersList.add(marker)
         }
@@ -96,7 +92,7 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
                 if(binding.tokyoRV.isVisible) binding.tokyoRV.visibility = View.GONE
                 else binding.tokyoRV.visibility = View.VISIBLE
             }
-            binding.tokyoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempTyoko.first().detail, naverMap, { markerAdd(it) }, { markerClear() })
+            binding.tokyoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempTyoko.first().detail, naverMap, ::markerAdd, ::markerClear)
             binding.tokyoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
         }
 
@@ -109,7 +105,7 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
                 if(binding.osakaRV.isVisible) binding.osakaRV.visibility = View.GONE
                 else binding.osakaRV.visibility = View.VISIBLE
             }
-            binding.osakaRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempOsaka.first().detail, naverMap, { markerAdd(it) }, { markerClear() })
+            binding.osakaRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempOsaka.first().detail, naverMap, ::markerAdd, ::markerClear)
             binding.osakaRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
         }
 
@@ -122,7 +118,7 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
                 if(binding.kyotoRV.isVisible) binding.kyotoRV.visibility = View.GONE
                 else binding.kyotoRV.visibility = View.VISIBLE
             }
-            binding.kyotoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempKyoto.first().detail, naverMap, { markerAdd(it) }, { markerClear() })
+            binding.kyotoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempKyoto.first().detail, naverMap, ::markerAdd, ::markerClear)
             binding.kyotoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
 
         }
@@ -136,7 +132,7 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
                 if(binding.hokkaidoRV.isVisible) binding.hokkaidoRV.visibility = View.GONE
                 else binding.hokkaidoRV.visibility = View.VISIBLE
             }
-            binding.hokkaidoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempHokkaido.first().detail, naverMap, { markerAdd(it) }, { markerClear() })
+            binding.hokkaidoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempHokkaido.first().detail, naverMap, ::markerAdd, ::markerClear)
             binding.hokkaidoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
         }
     }
