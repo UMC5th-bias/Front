@@ -22,12 +22,12 @@ class CommunityFreeCommendRVAdapter (private val commendList: ArrayList<Comments
         fun bind(commend: Comments){
             binding.itemCommunityFreeCommendDayTv.text=commend.passedTime
             binding.itemCommunityFreeCommendTv.text=commend.content
-            binding.itemCommunityFreeCommendTitleTv.text=commend.post[0].title
-            binding.itemCommunityFreeCommendWriterTv.text=commend.post[0].nickname
-            binding.itemCommunityFreeCommendEyeTv.text= commend.post[0].views.toString()
-            binding.itemCommunityFreeCommendLikeTv.text= commend.post[0].likes.toString()
-            binding.itemCommunityFreeCommendClockTv.text= commend.post[0].passedTime
-            binding.itemCommunityFreeCommendCommentNumTv.text= commend.post[0].comments.toString()
+            binding.itemCommunityFreeCommendTitleTv.text=commend.post.title
+            binding.itemCommunityFreeCommendWriterTv.text=commend.post.nickname
+            binding.itemCommunityFreeCommendEyeTv.text= commend.post.views.toString()
+            binding.itemCommunityFreeCommendLikeTv.text= commend.post.likes.toString()
+            binding.itemCommunityFreeCommendClockTv.text= commend.post.passedTime
+            binding.itemCommunityFreeCommendCommentNumTv.text= commend.post.comments.toString()
         }
 
     }

@@ -42,18 +42,19 @@ class CommunityFreeCommendFragment : Fragment() {
         }
 
         RetrofitClient.communityService.getMyComments("Bearer $accessToken",currentPage,10)
-            .enqueue(object : Callback<Comments> {
+            .enqueue(object : Callback<CommunityComment> {
                 override fun onResponse(
-                    call: Call<Comments>,
-                    response: Response<Comments>
+                    call: Call<CommunityComment>,
+                    response: Response<CommunityComment>
                 ) {
                     if (response.isSuccessful){
-                        if(response.body()?.post?.isNotEmpty()==true){  //post의 값이 있을 경우
+                        if(response.body()?.comment?.isNotEmpty()==true){  //post의 값이 있을 경우
                             //freeCommendData에 데이터를 받아옴
                             response.body()?.let { post ->
-                                freeCommendData.add(post)
+                                freeCommendData.addAll(post.comment)
                             }
 
+                            Log.d("CommunityFreeCommendFragment1",response.body().toString())
                             currentPage++   //다음 페이지를 받아오기 위해 현재 페이지를 1 증가 시킴
                             fetchPosts()    //재귀함수
 
@@ -61,11 +62,13 @@ class CommunityFreeCommendFragment : Fragment() {
                             val commendRVAdapter=CommunityFreeCommendRVAdapter(freeCommendData)
                             binding.communityFreeCommendRv.adapter=commendRVAdapter
                             binding.communityFreeCommendRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+                        } else {
+                            Log.d("CommunityFreeCommendFragment2",response.body().toString())
                         }
                     }
                 }
 
-                override fun onFailure(call: Call<Comments>, t: Throwable) {
+                override fun onFailure(call: Call<CommunityComment>, t: Throwable) {
                     Log.d("CommunityFreeCommendFragment7","Network Error: ${t.message}")
                 }
             })

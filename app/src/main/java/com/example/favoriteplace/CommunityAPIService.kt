@@ -26,6 +26,6 @@ interface CommunityAPIService {
         @Header("Authorization") authorization:String?,
         @Query("page") page: Int,
         @Query("size") size: Int
-    ): Call<Comments>
+    ): Call<CommunityComment>
 
 }
