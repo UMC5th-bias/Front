@@ -1,12 +1,14 @@
 package com.example.favoriteplace
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import coil.ImageLoader
 import coil.decode.SvgDecoder
@@ -21,7 +23,7 @@ import retrofit2.Response
 class RallyDetailFragment : Fragment() {
 
     lateinit var binding:FragmentRallydetailBinding
-
+    private lateinit var sharedPreferences: SharedPreferences
 
 
     override fun onCreateView(
@@ -30,7 +32,7 @@ class RallyDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding= FragmentRallydetailBinding.inflate(inflater,container,false)
-
+        sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
         return binding.root
     }
@@ -41,11 +43,12 @@ class RallyDetailFragment : Fragment() {
 
         val rallyId = arguments?.getString("rallyId")
 
+
+
         fun setRallyDetail(rallyDetailData: RallyDetailData) {
             Glide.with(this)
                 .load(rallyDetailData.image)
                 .into(binding.rallydetailImgIv)
-
 
 
             bind(binding.root.context,rallyDetailData.itemImage, binding.rallydetailGetbadgeIv)
@@ -55,12 +58,53 @@ class RallyDetailFragment : Fragment() {
             binding.rallydetailTextTv.text = rallyDetailData.description
             binding.rallydetailPlaceCountTv.text = rallyDetailData.pilgrimageNumber.toString()
             binding.countTv.text = rallyDetailData.achieveNumber.toString()
-            if(rallyDetailData.isLike) {
-                binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_on)
+
+
+
+            binding.rallydetailLikeBtn.setOnClickListener {
+                if(isLoggedIn()){
+
+                    Log.d("RallyDetailFragment", "User is logged in")
+
+                    rallyId?.let { id ->
+                        RetrofitAPI.rallyDetailService.updateLikeStatus(id.toLong())
+                            .enqueue(object : Callback<UpdateResponse> {
+
+                                override fun onResponse(
+                                    call: Call<UpdateResponse>,
+                                    response: Response<UpdateResponse>
+                                ) {
+                                    if(response.isSuccessful){
+                                        val responseData = response.body()
+                                        if(responseData?.success ==true){
+                                            binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_on)
+                                            rallyDetailData.isLike=true
+                                            Log.d("RallyDetailFragment", "isLike: $responseData")
+
+                                        }else{
+                                            binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_off)
+                                            rallyDetailData.isLike=false
+                                            Log.e("RallyDetailFragment", "Failed to update like status ${response.code()}, ${responseData?.success}, ${responseData?.message}")
+                                        }
+                                    }else{
+                                        // 서버 응답이 실패한 경우
+                                        Log.e("RallyDetailFragment", "Server error: ${response.code()}")
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<UpdateResponse>, t: Throwable) {
+                                    // 네트워크 오류 발생 시
+                                    Log.e("RallyDetailFragment", "Network error: ${t.message}")
+                                }
+                            })
+                    }
+                }else{
+                    Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
+                    Log.d("rallyDetailData", "isLike: : false ")
+                }
+
             }
-            else {
-                binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_off)
-            }
+
 
         }
 
@@ -109,5 +153,8 @@ class RallyDetailFragment : Fragment() {
         }
     }
 
+    private fun isLoggedIn(): Boolean {
+        return sharedPreferences.getBoolean("isLoggedIn", false)
+    }
 
 }
