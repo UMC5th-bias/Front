@@ -17,6 +17,6 @@ data class  RallyPlaceAnimation(
     val title: String,
     val detailAddress: String,
     val image: URL,
-    val latitude: String,
-    val longitude: String
+    val latitude: Double,
+    val longitude: Double
 )

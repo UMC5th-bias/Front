@@ -10,11 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteplace.databinding.FragmentRallyplaceBinding
 import com.google.firebase.annotations.concurrent.UiThread
+import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,6 +28,8 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
     lateinit var binding: FragmentRallyplaceBinding
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
+    var regionList: List<Region> = emptyList()
+    val markersList = mutableListOf<Marker>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,8 +38,6 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
     ): View {
 
         binding = FragmentRallyplaceBinding.inflate(inflater,container,false)
-
-        var regionList: List<Region> = emptyList()
 
         //지도 fragment
         val fm = childFragmentManager
@@ -50,60 +52,84 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
 
 
 
-        // 불러온 지역에 해당하는 버튼 활성화 및 RecyclerView 설정
-        fun setRegionRV() {
-            //도쿄
-            val tempTyoko = regionList.filter {it.state == "도쿄도" }
-            if(tempTyoko.isNotEmpty()) {
-                binding.tyokoBT.visibility = View.VISIBLE
-                binding.tyokoBT.setOnClickListener {
-                    if(binding.tokyoRV.isVisible) binding.tokyoRV.visibility = View.GONE
-                    else binding.tokyoRV.visibility = View.VISIBLE
-                }
-                binding.tokyoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempTyoko.first().detail)
-                binding.tokyoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
-            }
 
-            //오사카
-            val tempOsaka = regionList.filter {it.state == "오사카" }
-            if(tempOsaka.isNotEmpty()) {
-                binding.osakaBT.visibility = View.VISIBLE
-                binding.osakaBT.setOnClickListener {
-                    if(binding.osakaRV.isVisible) binding.osakaRV.visibility = View.GONE
-                    else binding.osakaRV.visibility = View.VISIBLE
-                }
-                binding.osakaRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempOsaka.first().detail)
-                binding.osakaRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
-            }
 
-            //쿄토
-            val tempKyoto = regionList.filter {it.state == "쿄토" }
-            if(tempKyoto.isNotEmpty()) {
-                binding.kyotoBT.visibility = View.VISIBLE
-                binding.kyotoBT.setOnClickListener {
-                    if(binding.kyotoRV.isVisible) binding.kyotoRV.visibility = View.GONE
-                    else binding.kyotoRV.visibility = View.VISIBLE
-                }
-                binding.kyotoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempKyoto.first().detail)
-                binding.kyotoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
 
-            }
+        return binding.root
+    }
 
-            //훗카이도
-            val tempHokkaido = regionList.filter {it.state == "훗카이도" }
-            if(tempHokkaido.isNotEmpty()) {
-                binding.hokkaidoBT.visibility = View.VISIBLE
-                binding.hokkaidoBT.setOnClickListener {
-                    if(binding.hokkaidoRV.isVisible) binding.hokkaidoRV.visibility = View.GONE
-                    else binding.hokkaidoRV.visibility = View.VISIBLE
-                }
-                binding.hokkaidoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempHokkaido.first().detail)
-                binding.hokkaidoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
+    // 마커 기록
+    fun markerAdd(marker: Marker) { markersList.add(marker); }
+
+    // 기록된 마커 전부 제거
+    fun markerClear() {
+        markersList.forEach {
+            it.map = null
+        }
+    }
+
+    // 불러온 지역에 해당하는 버튼 활성화 및 RecyclerView 설정
+    fun setRegionRV() {
+        //도쿄
+        val tempTyoko = regionList.filter {it.state == "도쿄도" }
+        if(tempTyoko.isNotEmpty()) {
+            binding.tyokoBT.visibility = View.VISIBLE
+            binding.tyokoBT.setOnClickListener {
+                markerClear() // 모든 마커 지우기
+                if(binding.tokyoRV.isVisible) binding.tokyoRV.visibility = View.GONE
+                else binding.tokyoRV.visibility = View.VISIBLE
             }
+            binding.tokyoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempTyoko.first().detail, naverMap, { markerAdd(it) }, { markerClear() })
+            binding.tokyoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
         }
 
+        //오사카
+        val tempOsaka = regionList.filter {it.state == "오사카" }
+        if(tempOsaka.isNotEmpty()) {
+            binding.osakaBT.visibility = View.VISIBLE
+            binding.osakaBT.setOnClickListener {
+                markerClear() // 모든 마커 지우기
+                if(binding.osakaRV.isVisible) binding.osakaRV.visibility = View.GONE
+                else binding.osakaRV.visibility = View.VISIBLE
+            }
+            binding.osakaRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempOsaka.first().detail, naverMap, { markerAdd(it) }, { markerClear() })
+            binding.osakaRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
+        }
 
+        //쿄토
+        val tempKyoto = regionList.filter {it.state == "쿄토" }
+        if(tempKyoto.isNotEmpty()) {
+            binding.kyotoBT.visibility = View.VISIBLE
+            binding.kyotoBT.setOnClickListener {
+                markerClear() // 모든 마커 지우기
+                if(binding.kyotoRV.isVisible) binding.kyotoRV.visibility = View.GONE
+                else binding.kyotoRV.visibility = View.VISIBLE
+            }
+            binding.kyotoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempKyoto.first().detail, naverMap, { markerAdd(it) }, { markerClear() })
+            binding.kyotoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
 
+        }
+
+        //훗카이도
+        val tempHokkaido = regionList.filter {it.state == "훗카이도" }
+        if(tempHokkaido.isNotEmpty()) {
+            binding.hokkaidoBT.visibility = View.VISIBLE
+            binding.hokkaidoBT.setOnClickListener {
+                markerClear() // 모든 마커 지우기
+                if(binding.hokkaidoRV.isVisible) binding.hokkaidoRV.visibility = View.GONE
+                else binding.hokkaidoRV.visibility = View.VISIBLE
+            }
+            binding.hokkaidoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempHokkaido.first().detail, naverMap, { markerAdd(it) }, { markerClear() })
+            binding.hokkaidoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
+        }
+    }
+
+    //지도 준비됐을때 호출
+    @UiThread
+    override fun onMapReady(naverMap: NaverMap) {
+        this.naverMap = naverMap
+
+        //지역 목록 불러오기
         RetrofitAPI.rallyPlaceService.getRegion().enqueue(object: Callback<List<Region>> {
             override fun onResponse(call: Call<List<Region>>, response: Response<List<Region>>) {
                 if(response.isSuccessful) {
@@ -128,20 +154,11 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
 
         })
 
-        return binding.root
-    }
-
-
-    //지도 준비됐을때 호출
-    @UiThread
-    override fun onMapReady(naverMap: NaverMap) {
-        this.naverMap = naverMap
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Face // 위치 추적 활성화
         val uiSettings = naverMap.uiSettings
         uiSettings.isLocationButtonEnabled = true // 현위치 버튼 활성화
         naverMap.moveCamera(CameraUpdate.zoomTo(12.0)) // 줌 레벨을 12으로 설정
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
