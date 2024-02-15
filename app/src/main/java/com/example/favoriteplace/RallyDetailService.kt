@@ -2,6 +2,7 @@ package com.example.favoriteplace
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface RallyDetailService {
@@ -9,4 +10,10 @@ interface RallyDetailService {
     fun getRallyDetail(
         @Path("rally_id") rallyId: Long
     ): Call<RallyDetailData>
+
+
+    @POST("/pilgrimage/{rally_id}")
+    fun updateLikeStatus(
+        @Path("rally_id") rallyId: Long
+    ): Call<UpdateResponse>
 }

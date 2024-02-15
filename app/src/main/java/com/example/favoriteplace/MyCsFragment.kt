@@ -6,28 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.example.favoriteplace.databinding.FragmentMySettingBinding
+import com.example.favoriteplace.databinding.FragmentCscBinding
 
-class MySettingFragment : Fragment() {
-    lateinit var binding: FragmentMySettingBinding
+class MyCsFragment : Fragment() {
+    lateinit var binding: FragmentCscBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMySettingBinding.inflate(inflater, container, false)
-
+        binding = FragmentCscBinding.inflate(inflater, container, false)
 
 
         // 뒤로가기
-        binding.mySettingBackIb.setOnClickListener{
+        binding.placeInquiryBackIb.setOnClickListener{
             parentFragmentManager.commit {
                 replace(R.id.main_frameLayout, MyFragment())
                 addToBackStack(null)
             }
         }
 
-        return binding.root
+
+        return  binding.root
     }
 }

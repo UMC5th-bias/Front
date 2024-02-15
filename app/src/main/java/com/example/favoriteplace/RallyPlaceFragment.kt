@@ -1,14 +1,25 @@
 package com.example.favoriteplace
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteplace.databinding.FragmentRallyplaceBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.geometry.LatLngBounds
+import com.naver.maps.map.MapFragment
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,6 +28,7 @@ import retrofit2.Response
 class RallyPlaceFragment: Fragment(){
 
     lateinit var binding: FragmentRallyplaceBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +39,6 @@ class RallyPlaceFragment: Fragment(){
         binding = FragmentRallyplaceBinding.inflate(inflater,container,false)
 
         var regionList: List<Region> = emptyList()
-
 
         fun setRegionRV() {
             //도쿄
@@ -108,4 +119,5 @@ class RallyPlaceFragment: Fragment(){
 
         return binding.root
     }
+
 }
