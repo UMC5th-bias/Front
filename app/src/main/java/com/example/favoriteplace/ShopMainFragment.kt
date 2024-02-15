@@ -211,6 +211,7 @@ class ShopMainFragment : Fragment() {
         return getAccessToken() != null
     }
 
+
     private fun setupBannerViewPager() {
         // BannerItem 리스트 생성
         val items = listOf(
@@ -238,6 +239,8 @@ class ShopMainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         startAutoSlide()
+        updateLoginStatusView() // 로그인 상태에 따라 뷰 업데이트
+
     }
 
     override fun onPause() {

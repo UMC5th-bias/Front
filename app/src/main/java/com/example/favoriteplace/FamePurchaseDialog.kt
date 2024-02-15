@@ -34,6 +34,7 @@ class FamePurchaseDialog : DialogFragment(){
 
         val remainingPoint = userPoint?.minus(itemPoint!!)
         binding.dialogShopDetailPurchaseFameAfterTv.text =remainingPoint.toString()
+
         //팝업창 모서리 둥글게 만들기
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 

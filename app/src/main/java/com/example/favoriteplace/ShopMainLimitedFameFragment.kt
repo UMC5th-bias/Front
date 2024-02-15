@@ -65,7 +65,9 @@ class ShopMainLimitedFameFragment: Fragment() {
     //칭호 구매 팝업창 띄우기
     private fun popupFamePurchaseClick() {
         // 이미 구매한 경우 토스트 메시지 표시
-        if (alreadyBought) {
+        if (getAccessToken() == null) {
+            showToast(requireContext(), "로그인이 필요한 기능입니다. 로그인을 해주세요.")
+        } else if (alreadyBought) {
             showToast(requireContext(), "이미 구매한 아이템입니다.")
         } else {
             // 구매 팝업창 띄우기
@@ -80,7 +82,6 @@ class ShopMainLimitedFameFragment: Fragment() {
 
             // Dialog를 표시
             famePurchaseDialog.show(parentFragmentManager, "FamePurchaseDialog")
-//            FamePurchaseDialog().show(parentFragmentManager,"")
         }
     }
 

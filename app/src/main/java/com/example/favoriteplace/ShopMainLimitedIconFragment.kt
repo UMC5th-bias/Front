@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import coil.ImageLoader
 import coil.decode.SvgDecoder
@@ -17,6 +19,9 @@ import retrofit2.Response
 
 class ShopMainLimitedIconFragment : Fragment() {
     lateinit var binding: FragmentShopDetailLimitedIconBinding
+    private var alreadyBought: Boolean = false
+    private var userPoint: Int = 0 // 사용자 포인트를 저장할 변수
+    private var itemPoint: Int = 0 // 아이템 가격을 저장할 변수
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +34,7 @@ class ShopMainLimitedIconFragment : Fragment() {
 
         // 아이템 ID를 사용하여 API 호출
         fetchItemDetails(itemId)
+
         binding.shopBannerDetailIconIb.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frameLayout, ShopMainFragment())
@@ -42,9 +48,40 @@ class ShopMainLimitedIconFragment : Fragment() {
         return binding.root
     }
 
+    fun showToast(context: Context, message: String) {
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+
+        val textView = layout.findViewById<TextView>(R.id.custom_toast_message)
+        textView.text = message
+
+        val toast = Toast(context)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
+    }
+
     //아이콘 구매 팝업창 띄우기
     private fun popupIconPurchaseClick() {
-        IconPurchaseDialog().show(parentFragmentManager, "")
+        // 이미 구매한 경우 토스트 메시지 표시
+        if (getAccessToken() == null) {
+            showToast(requireContext(), "로그인이 필요한 기능입니다. 로그인을 해주세요.")
+        } else if(alreadyBought) {
+            showToast(requireContext(), "이미 구매한 아이템입니다.")
+        } else {
+            // 구매 팝업창 띄우기
+            val iconPurchaseDialog =  IconPurchaseDialog()
+
+            // Bundle 객체 생성 및 userPoint와 itemPoint 값 추가
+            val args = Bundle().apply {
+                putInt("userPoint", userPoint)
+                putInt("itemPoint", itemPoint)
+            }
+            iconPurchaseDialog.arguments = args // Bundle을 Dialog에 설정
+
+            // Dialog를 표시
+            iconPurchaseDialog.show(parentFragmentManager, "FamePurchaseDialog")
+        }
     }
 
     private fun getAccessToken(): String? {
@@ -69,11 +106,15 @@ class ShopMainLimitedIconFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     // 성공적으로 데이터를 받아온 경우, UI 업데이트
-
                     val itemDetails = response.body()
-
                     Log.d("ShopMainFragment", "detail icon data received: $itemDetails")
 
+                    alreadyBought = itemDetails?.alreadyBought ?: false
+                    Log.d("ShopMainFragment", "alreadyBought: $alreadyBought")
+
+                    // 여기서 userPoint와 itemPoint 값을 업데이트
+                    userPoint = itemDetails?.userPoint ?: 0
+                    itemPoint = itemDetails?.point ?: 0
                     updateUI(itemDetails)
                 }
             }
@@ -107,8 +148,6 @@ class ShopMainLimitedIconFragment : Fragment() {
                 .crossfade(true)
                 .crossfade(300)
                 .data(it.imageUrl)
-//                .target(binding.shopBannerDetailIconIv)
-//                .target(binding.shopBannerDetailIconApplyIconIv)
                 .target { drawable ->
                     // 첫 번째 ImageView에 이미지 적용
                     binding.shopBannerDetailIconIv.setImageDrawable(drawable)
@@ -117,11 +156,6 @@ class ShopMainLimitedIconFragment : Fragment() {
                 }
                 .build()
             imageLoader.enqueue(imageRequest)
-
-//
-//            binding.textViewDescription.text = it.description ?: "Description not available"
-//            binding.imageView.load(it.imageUrl) // 이는 이미지 로딩 라이브러리를 사용한다고 가정한 예시입니다. 예: Glide or Picasso
-            // 기타 필요한 UI 업데이트 로직 추가
         }
     }
 

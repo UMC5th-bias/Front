@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import coil.ImageLoader
 import coil.decode.SvgDecoder
@@ -17,6 +19,9 @@ import retrofit2.Response
 
 class ShopMainUnlimitedFameFragment : Fragment() {
     lateinit var binding: FragmentShopDetailUnlimitedFameBinding
+    private var alreadyBought: Boolean = false
+    private var userPoint: Int = 0 // 사용자 포인트를 저장할 변수
+    private var itemPoint: Int = 0 // 아이템 가격을 저장할 변수
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,9 +47,39 @@ class ShopMainUnlimitedFameFragment : Fragment() {
         return binding.root
     }
 
+    fun showToast(context: Context, message: String) {
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+
+        val textView = layout.findViewById<TextView>(R.id.custom_toast_message)
+        textView.text = message
+
+        val toast = Toast(context)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
+    }
+
     //칭호 구매 팝업창 띄우기
     private fun popupFamePurchaseClick() {
-        FamePurchaseDialog().show(parentFragmentManager, "")
+        if (getAccessToken() == null) {
+            showToast(requireContext(), "로그인이 필요한 기능입니다. 로그인을 해주세요.")
+        } else if (alreadyBought) {
+            showToast(requireContext(), "이미 구매한 아이템입니다.")
+        } else {
+            // 구매 팝업창 띄우기
+            val famePurchaseDialog = FamePurchaseDialog()
+
+            // Bundle 객체 생성 및 userPoint와 itemPoint 값 추가
+            val args = Bundle().apply {
+                putInt("userPoint", userPoint)
+                putInt("itemPoint", itemPoint)
+            }
+            famePurchaseDialog.arguments = args // Bundle을 Dialog에 설정
+
+            // Dialog를 표시
+            famePurchaseDialog.show(parentFragmentManager, "FamePurchaseDialog")
+        }
     }
 
     private fun getAccessToken(): String? {
@@ -68,8 +103,15 @@ class ShopMainUnlimitedFameFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     val itemDetails = response.body()
-
                     Log.d("ShopMainFragment", "detail item data received: $itemDetails")
+
+                    // 여기서 itemDetails를 기반으로 alreadyBought 값을 업데이트
+                    alreadyBought = itemDetails?.alreadyBought ?: false
+                    Log.d("ShopMainFragment", "alreadyBought: $alreadyBought")
+
+                    // 여기서 userPoint와 itemPoint 값을 업데이트
+                    userPoint = itemDetails?.userPoint ?: 0
+                    itemPoint = itemDetails?.point ?: 0
 
                     updateUI(itemDetails)
                 }
