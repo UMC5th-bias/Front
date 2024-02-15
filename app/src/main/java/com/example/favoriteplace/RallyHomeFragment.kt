@@ -29,6 +29,16 @@ class RallyHomeFragment : Fragment() {
         binding = FragmentRallyhomeBinding.inflate(inflater, container, false)
 
 
+        // searchEditText에 검색어 입력 후 drawableEnd로 설정되있는 이미지 버튼을 누르면 서버에서 정보를 가져와 해당 검색 결과를 반환
+        binding.searchIv.setOnClickListener {
+            
+            val keyword = binding.searchEt.text.toString()
+            if(keyword.isNotEmpty()){
+                searchRally(keyword)
+            }else{
+                showToast("검색어를 입력하세요.")
+            }
+        }
 
 
         binding.rallyPlaceBlackBoxCl.setOnClickListener {
@@ -150,6 +160,10 @@ class RallyHomeFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun searchRally(keyword: String) {
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
