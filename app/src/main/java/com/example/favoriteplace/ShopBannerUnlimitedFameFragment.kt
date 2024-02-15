@@ -57,7 +57,7 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
 
         //로그인 중이라면 토큰을 서버에 전달
         if (isLogIn){
-            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0MzI5MjlAbmF2ZXIuY29tIiwiaWF0IjoxNzA3NzU3NzE5LCJleHAiOjE3MTAzNDk3MTl9.CHnXELf6b-vPC--rmZAnwRY6aAvUKt0iPy9Wq_1QYLo"
+            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
         }
 
         //서버에서 해당 아이템의 데이터를 가져오는 코드
@@ -67,16 +67,19 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
                     call: Call<ShopDetailsResponse>,
                     response: Response<ShopDetailsResponse>
                 ) {
+                    Log.d("Response_test",response.toString())
                     //서버에서 데이터를 가져오는 걸 성공할 경우
                     if (response.isSuccessful) {
                         val detailsResponse = response.body()
-
+                        Log.d("Response_test",detailsResponse.toString())
                         detailsResponse?.let {
                             unlimitedFameData.clear()
                             unlimitedFameData.add(it)
 
                             setView()   //데이터를 반영하여 화면에 보여주는 함수
                         }
+                    } else {
+                        Log.d("Response_test","Fail")
                     }
                 }
 

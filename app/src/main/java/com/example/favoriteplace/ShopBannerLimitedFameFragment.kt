@@ -63,7 +63,7 @@ class ShopBannerLimitedFameFragment: Fragment() {
 
         //로그인 중이라면 토큰을 서버에 전달
         if (isLogIn){
-            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmNkQG5hdmVyLmNvbSIsImlhdCI6MTcwNzc1ODA2NywiZXhwIjoxNzEwMzUwMDY3fQ.H0P-lbuFXzkK24j5f2KCjRwi0DYY_Y5wd63vybffl60"
+            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
         }
 
         //서버에서 해당 아이템의 데이터를 가져오는 코드
