@@ -79,7 +79,7 @@ class CommunityFreeMyFragment : Fragment() {
                     }
                 }
                 override fun onFailure(call: Call<CommunityPost>, t: Throwable) {
-                    Log.d("CommunityFreeLatelyFragment","Network Error: ${t.message}")
+                    Log.d("CommunityFreeMyFragment","Network Error: ${t.message}")
                 }
             })
     }
