@@ -217,21 +217,23 @@
 
             <!-- 지도 첨부 (내위치)  -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/map_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="180dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="0dp"
+                android:background="@drawable/edge"
                 app:layout_constraintTop_toBottomOf="@+id/rally_locationdetail_place_tv">
 
-                <ImageView
+
+                <com.naver.maps.map.MapView
+                    android:id="@+id/rally_map_mv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_mylocation" />
+                    android:layout_height="match_parent"/>
             </androidx.cardview.widget.CardView>
 
 

@@ -35,6 +35,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="9mabgun9em" />
+
+
         <activity android:name=".SignUpConditionConfirmActivity"/>
         <activity android:name=".SignUpEmailInputActivity"/>
         <activity android:name=".SignUpEmailVerificationActivity"/>
