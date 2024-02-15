@@ -17,6 +17,7 @@ class CommunityFreeLatelyFragment : Fragment() {
     lateinit var binding: FragmentCommunityFreeLatelyBinding
     private var freeLatelyWriteData = ArrayList<Posts>()
     private var currentPage=1
+    private var isLogIn=true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +33,15 @@ class CommunityFreeLatelyFragment : Fragment() {
 
     //서버에서 최신글을 가져오는 코드
     private fun fetchPosts() {
-        RetrofitClient.communityService.getPosts(currentPage,10,"latest")
+
+        var accessToken: String? =null
+
+        //로그인 중이라면 토큰을 서버에 전달
+        if (isLogIn){
+            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
+        }
+
+        RetrofitClient.communityService.getPosts("Bearer $accessToken",currentPage,10,"latest")
             .enqueue(object : Callback<CommunityPost> {
 
                 override fun onResponse(
