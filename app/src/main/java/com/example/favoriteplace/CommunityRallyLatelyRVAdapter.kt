@@ -54,19 +54,22 @@ class CommunityRallyLatelyRVAdapter(private val rallyLatelyList: ArrayList<Guest
             binding.itemCommunityRallyLikeTv.text=rallyLately.likes.toString()
             binding.itemCommunityRallyClockTv.text= rallyLately.passedTime
             binding.itemCommunityRallyCommentTv.text= rallyLately.comments.toString()
+
+            //만일 해시태그가 있다면
             if(rallyLately.hashTags.isNotEmpty()){
-                binding.itemCommunityRallyTag1Tv.text= rallyLately.hashTags[0].toString()
-                if(rallyLately.hashTags.size>=2){
-                    binding.itemCommunityRallyTag2Tv.text=rallyLately.hashTags[1].toString()
-                } else {
+                binding.itemCommunityRallyTag1Tv.text= rallyLately.hashTags[0]
+                if(rallyLately.hashTags.size>=2){   //만일 해시태그가 두 개라면
+                    binding.itemCommunityRallyTag2Tv.text=rallyLately.hashTags[1]
+                } else {    //만일 해시태그가 하나라면
                     binding.itemCommunityRallyTag2TextTv.visibility=View.INVISIBLE
                 }
-            } else {
+            } else {    //만일 해시태그가 없다면
                 binding.itemCommunityRallyTag1TextTv.visibility=View.INVISIBLE
                 binding.itemCommunityRallyTag2TextTv.visibility=View.INVISIBLE
             }
         }
 
+        //이미지를 로드하는 함수
         private fun loadImage() {
             val rallyLately = rallyLatelyList[adapterPosition]
             val imageView = binding.itemCommunityRallyIv
