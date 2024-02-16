@@ -28,4 +28,12 @@ interface CommunityAPIService {
         @Query("size") size: Int
     ): Call<CommunityComment>
 
+    @GET("posts/guestbooks?")
+    fun getRallyPost(
+        @Header("Authorization") authorization:String?,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("sort") sort: String
+    ): Call<RallyPost>
+
 }

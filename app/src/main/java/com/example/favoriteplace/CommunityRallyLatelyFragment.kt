@@ -1,17 +1,23 @@
 package com.example.favoriteplace
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteplace.databinding.FragmentCommunityRallyLatelyBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CommunityRallyLatelyFragment : Fragment() {
 
     lateinit var binding: FragmentCommunityRallyLatelyBinding
-    private var rallyLatelyWriteData=ArrayList<RallyLatelyWrite>()
+    private var rallyLatelyWriteData=ArrayList<GuestBook>()
+    private var currentPage=1
+    private var isLogIn=true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,18 +26,63 @@ class CommunityRallyLatelyFragment : Fragment() {
     ): View? {
         binding=FragmentCommunityRallyLatelyBinding.inflate(inflater,container,false)
 
-        rallyLatelyWriteData.apply {
-            add(RallyLatelyWrite(R.drawable.community_rally_place_1,5,"도쿄타워 #러브라이브 성지순례!","zi존이다","#러브라이브","#도쿄",3,0,"5분전",0))
-            add(RallyLatelyWrite(R.drawable.community_rally_place_2,5,"시부야 스크램블 교차로 사람 정말 ..","키라키라","#최애의아이","#도쿄",3,0,"20분전",8))
-            add(RallyLatelyWrite(R.drawable.community_rally_place_3,5,"오다이바 해변공원 날씨가 좋지는 않","키미노 나마에와","#날씨의아이","#도쿄",3,0,"30분전",0))
-            add(RallyLatelyWrite(R.drawable.community_rally_place_4,5,"주술회전 하라주쿠역 영접하고 왔습..","고죠사마","#주술회전","#도쿄",3,0,"1시간전",0))
+        fetchPosts()
 
-        }
-
-        val rallyLatelyRVAdapter=CommunityRallyLatelyRVAdapter(rallyLatelyWriteData)
-        binding.communityRallyLatelyRv.adapter=rallyLatelyRVAdapter
-        binding.communityRallyLatelyRv.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         return binding.root
 
+    }
+
+    //서버에서 최신글을 가져오는 코드
+    private fun fetchPosts() {
+
+        var accessToken: String? =null
+
+        //로그인 중이라면 토큰을 서버에 전달
+        if (isLogIn){
+            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
+        }
+
+        RetrofitClient.communityService.getRallyPost("Bearer $accessToken",currentPage,10,"latest")
+            .enqueue(object : Callback<RallyPost> {
+
+                override fun onResponse(
+                    call: Call<RallyPost>,
+                    response: Response<RallyPost>
+                ) {
+                    if (response.isSuccessful) {
+                        if(response.body()?.guestBook?.isNotEmpty() == true){ //post의 값이 있을 경우,
+                            response.body()?.let { guestbook ->
+                                //rallyLatelyWriteData에 데이터를 받아옴
+                                rallyLatelyWriteData.addAll(guestbook.guestBook.map { item ->
+                                    GuestBook(
+                                        item.id,
+                                        item.title,
+                                        item.nickname,
+                                        item.thumbnail,
+                                        item.views,
+                                        item.likes,
+                                        item.comments,
+                                        item.passedTime,
+                                        item.hashTags
+                                    )
+                                })
+
+                                currentPage++   //다음 페이지를 받아오기 위해 현재 페이지를 1 증가 시킴
+                                fetchPosts()    //재귀함수
+
+                                //RVA실행
+                                val latelywriteRVAdapter =
+                                    CommunityRallyLatelyRVAdapter(rallyLatelyWriteData)
+                                binding.communityRallyLatelyRv.adapter = latelywriteRVAdapter
+                                binding.communityRallyLatelyRv.layoutManager =
+                                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<RallyPost>, t: Throwable) {
+                    Log.d("CommunityRallyLatelyFragment","Network Error: ${t.message}")
+                }
+            })
     }
 }
