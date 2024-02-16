@@ -54,7 +54,6 @@ class CommunityFreeCommendFragment : Fragment() {
                                 freeCommendData.addAll(post.comment)
                             }
 
-                            Log.d("CommunityFreeCommendFragment1",response.body().toString())
                             currentPage++   //다음 페이지를 받아오기 위해 현재 페이지를 1 증가 시킴
                             fetchPosts()    //재귀함수
 
@@ -62,8 +61,6 @@ class CommunityFreeCommendFragment : Fragment() {
                             val commendRVAdapter=CommunityFreeCommendRVAdapter(freeCommendData)
                             binding.communityFreeCommendRv.adapter=commendRVAdapter
                             binding.communityFreeCommendRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
-                        } else {
-                            Log.d("CommunityFreeCommendFragment2",response.body().toString())
                         }
                     }
                 }
