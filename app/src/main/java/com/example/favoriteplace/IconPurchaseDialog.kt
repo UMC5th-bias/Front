@@ -58,6 +58,8 @@ class IconPurchaseDialog : DialogFragment(){
                 ) {
                     if (response.isSuccessful) {
                         val purchaseResponse = response.body()
+                        Log.d("ShopMainFragment", "canBuy : ${response.body()}")
+
                         if (purchaseResponse?.canBuy == true) {
                             // 구매 가능한 경우, 아이템 적용 팝업창 표시
                             popupIconApplyClick()
