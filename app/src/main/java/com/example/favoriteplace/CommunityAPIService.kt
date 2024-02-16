@@ -35,4 +35,11 @@ interface CommunityAPIService {
         @Query("sort") sort: String
     ): Call<RallyPost>
 
+    @GET("posts/guestbooks/my-posts")
+    fun getMyRally(
+        @Header("Authorization") authorization:String?,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Call<RallyMy>
+
 }

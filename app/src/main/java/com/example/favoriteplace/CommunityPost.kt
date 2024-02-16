@@ -47,6 +47,18 @@ data class GuestBook(
     val hashTags: List<String>
 )
 
-data class HashTag(
-    val hashTag: String
+data class RallyMy(
+    val page: Int,
+    val size: Int,
+    val myGuestBookInfo: List<GuestMy>
+)
+
+data class GuestMy(
+    val id: Int,
+    val title: String,
+    val nickname: String,
+    val views: Int,
+    val likes: Int,
+    val comments: Int,
+    val passedTime: String,
 )
