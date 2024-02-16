@@ -30,7 +30,6 @@ interface CommunityAPIService {
 
     @GET("posts/guestbooks?")
     fun getRallyPost(
-        @Header("Authorization") authorization:String?,
         @Query("page") page: Int,
         @Query("size") size: Int,
         @Query("sort") sort: String

@@ -42,7 +42,7 @@ class CommunityRallyLatelyFragment : Fragment() {
             accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
         }
 
-        RetrofitClient.communityService.getRallyPost("Bearer $accessToken",currentPage,10,"latest")
+        RetrofitClient.communityService.getRallyPost(currentPage,10,"latest")
             .enqueue(object : Callback<RallyPost> {
 
                 override fun onResponse(
