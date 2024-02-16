@@ -104,7 +104,7 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
             }
 
         mapFragment.getMapAsync(this)
-
+        requestLocationPermission()
 
 
         return binding.root

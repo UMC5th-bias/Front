@@ -53,9 +53,16 @@ class LoginActivity :AppCompatActivity() {
 
        loginService = retrofit.create(LoginService::class.java)
 
-// SharedPreferences 초기화
+        // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
+
+        // 이전에 로그인된 상태인지 확인
+        if(isLoggedIn()){
+            // 로그인된 상태인 경우 -> HomeFragment 이동
+            startActivity(Intent(this,  HomeFragment::class.java))
+            finish()
+        }
 
         // 로그인 버튼 틀릭 시
         binding.logoinBtn.setOnClickListener {
@@ -71,6 +78,20 @@ class LoginActivity :AppCompatActivity() {
         // 주기적으로 토큰 확인
         scheduleTokenCheck()
 
+    }
+
+    // SharedPreferences에 저장된 로그인 상태를 반환
+    private fun isLoggedIn(): Boolean {
+
+        return  sharedPreferences.getBoolean("isLoggedIn", false)
+    }
+
+
+    // 로그인 상태 sharedPreferences저장
+    private fun setLoggedIn(isLoggedIn: Boolean) {
+        sharedPreferences.edit {
+            putBoolean("isLoggedIn", isLoggedIn)
+        }
     }
 
     private fun scheduleTokenCheck() {
@@ -153,8 +174,9 @@ class LoginActivity :AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
-        // 앱이 종료될 때 로그아웃 상태를 SharedPreferences에 저장
-        sharedPreferences.edit().putBoolean(LOGGED_OUT, false).apply()
+        setLoggedIn(true)
+        Log.d("Login", ">> 로그아웃 상태 저장 : $sharedPreferences" )
+
     }
 
 }
