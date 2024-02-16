@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +12,13 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.example.favoriteplace.LoginActivity.Companion.ACCESS_TOKEN_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,10 +42,6 @@ class ShopMainFragment : Fragment() {
     private var regularFrameNormalData = ArrayList<ShopMainUnlimitedFame>()
     private var regularNewIconData = ArrayList<ShopMainUnlimitedIcon>()
     private var regularNormalIconData = ArrayList<ShopMainUnlimitedIcon>()
-
-    // ShopMainLimitedFame 객체를 저장할 변수
-    private var selectedLimitedFame: ShopMainLimitedFame? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -196,13 +200,17 @@ class ShopMainFragment : Fragment() {
             notLoginView.visibility = View.VISIBLE
         }
     }
+    // sharePreferences에 저장된 액세스 토큰 반환하는 메소드
+    private fun getAccessToken(): String? {
+        val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences?.getString(ACCESS_TOKEN_KEY, null)
+    }
 
     // 사용자의 로그인 상태를 확인하는 메소드
     private fun isLoggedIn(): Boolean {
-        // TODO : 로그인 상태 확인 로직 구현
-        // 예를 들어, SharedPreferences, 데이터베이스 조회 등
-        return false // 임시로 false 반환
+        return getAccessToken() != null
     }
+
 
     private fun setupBannerViewPager() {
         // BannerItem 리스트 생성
@@ -231,6 +239,8 @@ class ShopMainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         startAutoSlide()
+        updateLoginStatusView() // 로그인 상태에 따라 뷰 업데이트
+
     }
 
     override fun onPause() {
@@ -245,7 +255,6 @@ class ShopMainFragment : Fragment() {
 
         // 한정 판매 목록 로드
         fetchLimitedSales()
-
 
         // 초기 상태 설정
         binding.shopMainSwitchOnOffSc.isChecked = false
@@ -310,29 +319,50 @@ class ShopMainFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        // 앱이 종료될 때 로그아웃 상태를 SharedPreferences에 저장
+        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putBoolean("isLoggedIn", false)
+            apply()
+        }
+    }
+
     // 한정 판매 목록 로드 메서드
     private fun fetchLimitedSales() {
         // RetrofitClient.shopService.getLimitedSales("Bearer YOUR_AUTH_TOKEN") 호출 구현 필요
         // 예시를 위한 가상 코드입니다. 실제로는 YOUR_AUTH_TOKEN을 적절한 토큰으로 대체해야 합니다.
 
-        val accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0MzI5MjlAbmF2ZXIuY29tIiwiaWF0IjoxNzA3NzU3NzE5LCJleHAiOjE3MTAzNDk3MTl9.CHnXELf6b-vPC--rmZAnwRY6aAvUKt0iPy9Wq_1QYLo"
+        val accessToken = getAccessToken() // 액세스 토큰 가져오기
         val authorizationHeader = "Bearer $accessToken"
+
+
         val callLimitedSales = if (isLoggedIn()) {
             RetrofitClient.shopService.getLimitedSales(authorizationHeader)
+
         } else {
             RetrofitClient.shopService.getLimitedSales(null)
         }
 
         Log.d("ShopMainFragment", " use token : ${accessToken}")
 
-        callLimitedSales.enqueue(object : Callback<LimitedSalesResponse> {
+        callLimitedSales.enqueue(object : Callback<SalesResponse> {
             override fun onResponse(
-                call: Call<LimitedSalesResponse>,
-                response: Response<LimitedSalesResponse>
+                call: Call<SalesResponse>,
+                response: Response<SalesResponse>
             ) {
                 if (response.isSuccessful) {
                     // 성공적으로 데이터를 받음. 여기서 UI 업데이트 로직을 구현합니다.
                     val limitedSalesResponse = response.body()
+
+                    if (isLoggedIn()) {
+                        if (limitedSalesResponse != null) {
+                            limitedSalesResponse.userInfo?.let { userInfo ->
+                                updateUserInfo(userInfo)
+                            }
+                        }
+                    }
 
                     // 받아온 데이터를 로그로 출력
                     Log.d("ShopMainFragment", "Limited sales data received: $limitedSalesResponse")
@@ -424,7 +454,7 @@ class ShopMainFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<LimitedSalesResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SalesResponse>, t: Throwable) {
                 // 네트워크 오류 등의 실패 처리
                 Log.d("ShopMainFragment", "Network Error: ${t.message}")
             }
@@ -436,10 +466,10 @@ class ShopMainFragment : Fragment() {
             RetrofitClient.shopService.getUnlimitedSales(null)
         }
 
-        callUnlimitedSales.enqueue(object : Callback<UnlimitedSalesResponse> {
+        callUnlimitedSales.enqueue(object : Callback<SalesResponse> {
             override fun onResponse(
-                call: Call<UnlimitedSalesResponse>,
-                response: Response<UnlimitedSalesResponse>
+                call: Call<SalesResponse>,
+                response: Response<SalesResponse>
             ) {
                 if (response.isSuccessful) {
                     // 성공적으로 데이터를 받음. 여기서 UI 업데이트 로직을 구현합니다.
@@ -450,6 +480,15 @@ class ShopMainFragment : Fragment() {
                         "ShopMainFragment",
                         "Unlimited sales data received: $unlimitedSalesResponse"
                     )
+
+                    if (isLoggedIn()) {
+                        if (unlimitedSalesResponse != null) {
+                            unlimitedSalesResponse.userInfo?.let { userInfo ->
+                                updateUserInfo(userInfo)
+                            }
+                        }
+                    }
+
 
                     // 받아온 데이터로 상시판매 칭호와 아이콘 리스트 업데이트
                     unlimitedSalesResponse?.let {
@@ -547,7 +586,7 @@ class ShopMainFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<UnlimitedSalesResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SalesResponse>, t: Throwable) {
                 // 네트워크 오류 등의 실패 처리
                 Log.d("ShopMainFragment", "Network Error: ${t.message}")
             }
@@ -714,5 +753,57 @@ class ShopMainFragment : Fragment() {
             Log.e("ShopMainUpdateUI", "Error in update(): ${e.message}")
         }
 
+    }
+
+    private fun updateUserInfo(userInfo: UserInfo?) {
+        if (userInfo != null) {
+            // 사용자 정보 업데이트 로직
+            // 예: 닉네임 표시
+            Log.d("ShopMainFragment", "Updating user info: $userInfo")
+            // 닉네임 업데이트
+            binding.profileNicknameTv.text = userInfo.nickname
+            binding.profileUserPointTv.text = userInfo.point.toString()
+
+            Glide.with(binding.root.context)
+                .load(userInfo.profileImageUrl)
+                .apply(RequestOptions().circleCrop()) // RequestOptions를 사용하여 circleCrop 적용
+                .placeholder(R.drawable.memberimg) // 로딩 중에 표시할 플레이스홀더 이미지
+                .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
+                .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적용
+                .into(binding.shopMainMyProfileCiv) // 이미지를 표시할 ImageView
+// Glide CircleCrop으로 표시
+
+            val imageLoader = ImageLoader.Builder(binding.root.context)
+                .componentRegistry {
+                    add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                }
+                .build()
+
+            val titleImageRequest = ImageRequest.Builder(binding.root.context)
+                .crossfade(true)
+                .crossfade(300)
+                .data(userInfo.profileTitleUrl)
+                .target (binding.shopMainProfileTagIv)
+                .build()
+
+            imageLoader.enqueue(titleImageRequest)
+
+            val iconImageRequest = ImageRequest.Builder(binding.root.context)
+                .crossfade(true)
+                .crossfade(300)
+                .data(userInfo.profileIconUrl)
+                .target (binding.myIconIv)
+                .build()
+
+            imageLoader.enqueue(iconImageRequest)
+
+
+            // ...
+        } else {
+            // 로그인 정보 없음 처리
+            Log.d("ShopMainFragment", "로그인 정보가 없습니다.")
+        }
+        // 사용자 프로필 UI 업데이트
+        // 예를 들어, 사용자 닉네임, 포인트 등을 UI에 반영하는 로직을 여기에 구현합니다.
     }
 }

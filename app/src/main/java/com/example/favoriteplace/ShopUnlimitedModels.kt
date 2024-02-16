@@ -7,6 +7,7 @@ data class UnlimitedSalesResponse(
     val icons: List<UnlimitedCategory>
 )
 
+
 data class UnlimitedCategory(
     val category: String,
     val itemList: List<UnlimitedItem>

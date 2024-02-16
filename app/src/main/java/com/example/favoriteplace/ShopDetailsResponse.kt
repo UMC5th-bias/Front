@@ -12,3 +12,7 @@ data class ShopDetailsResponse(
     val description: String,
     val alreadyBought: Boolean
 )
+
+data class PurchaseResponse(
+    val canBuy: Boolean
+)
