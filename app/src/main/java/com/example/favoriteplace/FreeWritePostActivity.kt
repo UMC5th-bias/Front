@@ -264,6 +264,15 @@ class FreeWritePostActivity : AppCompatActivity() {
         // 헤더에 AccessToken 추가
         val authorizationHeader = "Bearer ${getAccessToken()}"
 
+        if (selectedImages.isNotEmpty()) {
+            uploadPostRequest(authorizationHeader, jsonRequestBody, imageParts)
+        } else {
+            uploadPostRequest(authorizationHeader,jsonRequestBody, emptyList() )
+        }
+
+    }
+
+    private fun uploadPostRequest (authorizationHeader: String, jsonRequestBody: RequestBody, imageParts: List<MultipartBody.Part> ){
         postService.uploadPost(authorizationHeader, jsonRequestBody, imageParts )
             .enqueue(object : Callback<PostResponse> {
                 override fun onResponse(
@@ -276,7 +285,7 @@ class FreeWritePostActivity : AppCompatActivity() {
                             Log.d("FreeWritePostActivity", "게시글을 성공적으로 등록했습니다. 메시지: ${response.body()?.message}")
 
                             // 서버로부터 받은 메시지를 Toast로 표시
-                            showToast(this@FreeWritePostActivity, responseData.message)ㅁㄴㅇ
+                            showToast(this@FreeWritePostActivity, responseData.message)
 
                             // PostDetailActivity를 시작
                             val intent = Intent(this@FreeWritePostActivity, PostDetailActivity::class.java)
