@@ -20,8 +20,7 @@ import retrofit2.Response
 class RallyHomeFragment : Fragment() {
 
     lateinit var binding: FragmentRallyhomeBinding
-    lateinit var rallybinding : FragmentRallydetailBinding
-    var userToken: String = ""
+    private var userToken: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +50,7 @@ class RallyHomeFragment : Fragment() {
             }
         }
 
+        //유저 인증상태 가져오기
         checkLoginStatus()
 
         binding.rallyPlaceBlackBoxCl.setOnClickListener {
@@ -61,10 +61,15 @@ class RallyHomeFragment : Fragment() {
         }
 
         binding.animationRallyBlackBoxCl.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frameLayout, RallyCategoryFragment())
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+            if(userToken == "") {
+                Toast.makeText(context, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, RallyCategoryFragment())
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+            }
         }
 
         fun setTrendingRally(rallyHomeTrending: RallyHomeTrending) {
@@ -111,8 +116,8 @@ class RallyHomeFragment : Fragment() {
                 certificationRallyItems.add(
                     CertifiedRallyItem(
                         title = it.title,
-                        tag1 = it.hashTag.first(),
-                        tag2 = it.hashTag.first(),
+                        tag1 = if(it.hashTag.size >= 1) it.hashTag[0] else "",
+                        tag2 = if(it.hashTag.size >= 2) it.hashTag[1] else "",
                         imageResId = it.image,
                         time = it.createdAt
 
