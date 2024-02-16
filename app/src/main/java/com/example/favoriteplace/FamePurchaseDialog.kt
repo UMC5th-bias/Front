@@ -16,7 +16,17 @@ import retrofit2.Response
 
 class FamePurchaseDialog : DialogFragment() {
     private lateinit var binding: DialogShopDetailPurchaseFameBinding
+    private var fragmentAttached = false
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        fragmentAttached = true
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        fragmentAttached = false
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,66 +35,71 @@ class FamePurchaseDialog : DialogFragment() {
         binding = DialogShopDetailPurchaseFameBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        super.onViewCreated(view, savedInstanceState)
+        // 프래그먼트가 활성화되어 있는 경우에만 코드 실행
+        if (fragmentAttached) {
+            // 이하 코드 생략
+            super.onViewCreated(view, savedInstanceState)
 
-        // 사용자의 보유 포인트 정보를 저장할 변수
-        val userPoint = arguments?.getInt("userPoint", 0) // 기본값 0
-        val itemPoint = arguments?.getInt("itemPoint", 0) // 기본값 0
-        val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
+            // 사용자의 보유 포인트 정보를 저장할 변수
+            val userPoint = arguments?.getInt("userPoint", 0) // 기본값 0
+            val itemPoint = arguments?.getInt("itemPoint", 0) // 기본값 0
+            val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
 
-        // 로그 출력
-        Log.d(
-            "ShopMainFragment",
-            "User Point: $userPoint, Item Point: $itemPoint, Item ID : $itemId"
-        )
+            // 로그 출력
+            Log.d(
+                "ShopMainFragment",
+                "User Point: $userPoint, Item Point: $itemPoint, Item ID : $itemId"
+            )
 
-        binding.dialogShopDetailPurchaseFameCurrentTv.text = userPoint.toString()
+            binding.dialogShopDetailPurchaseFameCurrentTv.text = userPoint.toString()
 
-        val remainingPoint = userPoint?.minus(itemPoint!!)
-        binding.dialogShopDetailPurchaseFameAfterTv.text = remainingPoint.toString()
+            val remainingPoint = userPoint?.minus(itemPoint!!)
+            binding.dialogShopDetailPurchaseFameAfterTv.text = remainingPoint.toString()
 
-        //팝업창 모서리 둥글게 만들기
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            //팝업창 모서리 둥글게 만들기
+            dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        //구매하지 않기 버튼을 클릭했을 때 팝업창 삭제
-        binding.dialogShopDetailPurchaseNoBtn.setOnClickListener {
-            dismiss()
-        }
+            //구매하지 않기 버튼을 클릭했을 때 팝업창 삭제
+            binding.dialogShopDetailPurchaseNoBtn.setOnClickListener {
+                dismiss()
+            }
 
-        //구매하기 버튼을 클릭했을 때 아이템 적용 팝업창 띄우기, 이 팝업창은 삭제
-        binding.dialogShopDetailPurchaseYesBtn.setOnClickListener {
-            val token = "Bearer ${getAccessToken()}"
+            //구매하기 버튼을 클릭했을 때 아이템 적용 팝업창 띄우기, 이 팝업창은 삭제
+            binding.dialogShopDetailPurchaseYesBtn.setOnClickListener {
+                val token = "Bearer ${getAccessToken()}"
 
-            Log.d("ShopMainFragment", "Item ID : $itemId")
+                Log.d("ShopMainFragment", "Item ID : $itemId")
 
-            val call = RetrofitClient.shopService.purchaseItem(token, itemId)
-            call.enqueue(object : Callback<PurchaseResponse> {
-                override fun onResponse(
-                    call: Call<PurchaseResponse>,
-                    response: Response<PurchaseResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val purchaseResponse = response.body()
-                        if (purchaseResponse?.canBuy == true) {
-                            // 구매 가능한 경우, 아이템 적용 팝업창 표시
+                val call = RetrofitClient.shopService.purchaseItem(token, itemId)
+                call.enqueue(object : Callback<PurchaseResponse> {
+                    override fun onResponse(
+                        call: Call<PurchaseResponse>,
+                        response: Response<PurchaseResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val purchaseResponse = response.body()
+                            Log.d("ShopMainFragment", "canBuy : $purchaseResponse")
+
                             popupFameApplyClick()
+                            dismiss()
                         } else {
-                            // 구매 불가능한 경우, 로그 출력
-                            Log.d("ShopMainFragment", "아이템 구매가 불가능합니다.")
+                            // 요청 실패 처리, 로그 출력
+                            Log.d("ShopMainFragment", "요청 실패: ${response.errorBody()?.string()}")
+                            dismiss()
                         }
-                    } else {
-                        // 요청 실패 처리, 로그 출력
-                        Log.d("ShopMainFragment", "요청 실패: ${response.errorBody()?.string()}")
                     }
-                }
 
-                override fun onFailure(call: Call<PurchaseResponse>, t: Throwable) {
-                    // 네트워크 오류 등의 실패 처리, 로그 출력
-                    Log.d("ShopMainFragment", "네트워크 오류: ${t.message}")
-                }
-            })
-            dismiss()
+                    override fun onFailure(call: Call<PurchaseResponse>, t: Throwable) {
+                        // 네트워크 오류 등의 실패 처리, 로그 출력
+                        Log.d("ShopMainFragment", "네트워크 오류: ${t.message}")
+                        dismiss()
+                    }
+                })
+            }
+        } else {
+            Log.d("DEBUG", "Fragment not attached to a context.")
         }
+
 
         return view
     }
