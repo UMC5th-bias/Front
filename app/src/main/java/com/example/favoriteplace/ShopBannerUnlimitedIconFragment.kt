@@ -16,6 +16,7 @@ class ShopBannerUnlimitedIconFragment : Fragment() {
     lateinit var binding: FragmentShopDetailUnlimitedIconBinding
     private var gson: Gson = Gson()
     private var unlimitedIconData=ArrayList<ShopDetailsResponse>()
+    private var isLogIn=true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,21 +53,25 @@ class ShopBannerUnlimitedIconFragment : Fragment() {
         //신상품 페이지 한정 칭호 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
         val itemIdJson = arguments?.getString("unlimitedIcon")
         val itemId: Int = gson.fromJson(itemIdJson, Int::class.java)
-        Log.d("itemId", itemId.toString())
+        var accessToken: String? =null
+
+        //로그인 중이라면 토큰을 서버에 전달
+        if (isLogIn){
+            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
+        }
 
         //서버에서 해당 아이템의 데이터를 가져오는 코드
-        RetrofitClient.shopService.getDetailItem("", itemId)
+        RetrofitClient.shopService.getDetailItem("Bearer $accessToken", itemId)
             .enqueue(object : Callback<ShopDetailsResponse> {
                 override fun onResponse(
                     call: Call<ShopDetailsResponse>,
                     response: Response<ShopDetailsResponse>
                 ) {
+
                     //서버에서 데이터를 가져오는 걸 성공할 경우
                     if (response.isSuccessful) {
                         val detailsResponse = response.body()
 
-                        Log.d("detailsID",itemId.toString())
-                        Log.d("detailsResponse",detailsResponse.toString())
                         detailsResponse?.let {
                             unlimitedIconData.clear()
                             unlimitedIconData.add(it)
@@ -85,7 +90,7 @@ class ShopBannerUnlimitedIconFragment : Fragment() {
     //데이터를 반영하여 화면에 보여주는 함수
     private fun setView() {
 
-        ShopBannerLimitedFameFragment().bind(binding.root.context,unlimitedIconData[0].imageUrl, binding.shopBannerDetailIconIconIv)
+        ShopBannerLimitedFameFragment().bind(binding.root.context,unlimitedIconData[0].imageCenterUrl, binding.shopBannerDetailIconIconIv)
         ShopBannerLimitedFameFragment().bind(binding.root.context,unlimitedIconData[0].imageUrl, binding.shopBannerDetailIconApplyIconIv)
         binding.shopBannerDetailIconCostTv.text = unlimitedIconData[0].point.toString()
         binding.shopBannerDetailIconBodyTv.text = unlimitedIconData[0].description

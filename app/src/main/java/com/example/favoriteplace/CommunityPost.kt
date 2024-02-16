@@ -15,3 +15,16 @@ data class Posts(
     val comments: Int,
     val passedTime: String
 )
+
+data class CommunityComment(
+    val page: Int,
+    val size: Int,
+    val comment: List<Comments>
+)
+
+data class Comments(
+    val id: Int,
+    val content: String,
+    val passedTime: String,
+    val post: Posts
+)

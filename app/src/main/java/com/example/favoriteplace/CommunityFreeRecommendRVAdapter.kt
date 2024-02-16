@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemCommunityFreeRecommendBinding
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
-class CommunityFreeRecommendRVAdapter (private val freeRecommendList: ArrayList<FreeRecommend>): RecyclerView.Adapter<CommunityFreeRecommendRVAdapter.ViewHolder>(){
+class CommunityFreeRecommendRVAdapter(private val freeRecommendList: ArrayList<Posts>): RecyclerView.Adapter<CommunityFreeRecommendRVAdapter.ViewHolder>(){
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -23,13 +23,13 @@ class CommunityFreeRecommendRVAdapter (private val freeRecommendList: ArrayList<
     }
 
     inner class ViewHolder(val binding: ItemCommunityFreeRecommendBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(freeRecommend: FreeRecommend){
+        fun bind(freeRecommend: Posts){
             binding.itemCommunityFreeRecommendTitleTv.text=freeRecommend.title
-            binding.itemCommunityFreeRecommendWriterTv.text=freeRecommend.writer
-            binding.itemCommunityFreeRecommendEyeTv.text= freeRecommend.eye.toString()
-            binding.itemCommunityFreeRecommendLikeTv.text=freeRecommend.like.toString()
-            binding.itemCommunityFreeRecommendClockTv.text= freeRecommend.time
-            binding.itemCommunityFreeRecommendCommentNumTv.text= freeRecommend.commentNum.toString()
+            binding.itemCommunityFreeRecommendWriterTv.text=freeRecommend.nickname
+            binding.itemCommunityFreeRecommendEyeTv.text= freeRecommend.views.toString()
+            binding.itemCommunityFreeRecommendLikeTv.text=freeRecommend.likes.toString()
+            binding.itemCommunityFreeRecommendClockTv.text= freeRecommend.passedTime
+            binding.itemCommunityFreeRecommendCommentNumTv.text= freeRecommend.comments.toString()
         }
 
     }

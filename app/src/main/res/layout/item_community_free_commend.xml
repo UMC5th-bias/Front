@@ -10,23 +10,12 @@
         android:id="@+id/item_community_free_commend_day_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2024.01.07"
+        android:text="2024.01.07 13:20"
         android:textSize="13sp"
         android:textColor="@color/dark_gray"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"/>
-
-    <TextView
-        android:id="@+id/item_community_free_commend_time_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="13:20"
-        android:textSize="13sp"
-        android:textColor="@color/dark_gray"
-        app:layout_constraintTop_toTopOf="@id/item_community_free_commend_day_tv"
-        app:layout_constraintStart_toEndOf="@id/item_community_free_commend_day_tv"
         android:layout_marginStart="10dp"/>
 
     <TextView
@@ -37,7 +26,7 @@
         android:textSize="15sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/item_community_free_commend_time_tv"
+        app:layout_constraintTop_toBottomOf="@id/item_community_free_commend_day_tv"
         app:layout_constraintStart_toStartOf="@id/item_community_free_commend_day_tv"
         android:layout_marginTop="5dp"/>
 
