@@ -62,3 +62,16 @@ data class GuestMy(
     val comments: Int,
     val passedTime: String,
 )
+
+data class RallyMyComment(
+    val page: Int,
+    val size: Int,
+    val comment: List<MyComments>
+)
+
+data class MyComments(
+    val id: Int,
+    val content: String,
+    val passedTime: String,
+    val myGuestBookInfo: GuestMy
+)

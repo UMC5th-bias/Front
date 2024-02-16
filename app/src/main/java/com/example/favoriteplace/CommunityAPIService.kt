@@ -42,4 +42,11 @@ interface CommunityAPIService {
         @Query("size") size: Int
     ): Call<RallyMy>
 
+    @GET("posts/guestbooks/my-comments")
+    fun getMyRallyComment(
+        @Header("Authorization") authorization:String?,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Call<RallyMyComment>
+
 }
