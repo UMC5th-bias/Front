@@ -3,13 +3,11 @@ package com.example.favoriteplace
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.FragmentRallylocationdetailBinding
@@ -29,16 +27,27 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.Manifest
 import android.app.AlertDialog
+import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.app.ActivityCompat
+import com.example.favoriteplace.databinding.DialogRallylocationDetailBinding
 import com.google.firebase.annotations.concurrent.UiThread
 import com.naver.maps.map.util.FusedLocationSource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
     lateinit var binding: FragmentRallylocationdetailBinding
     lateinit var retrofit: Retrofit
     lateinit var rallyLocationDetailService: RallyLocationDetailService
+    lateinit var homeService : HomeService
     lateinit var naverMap: NaverMap // NaverMap 변수 선언
-    private lateinit var locationSource: FusedLocationSource
 
     //권한 요청 코드
     companion object {
@@ -46,11 +55,19 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
     }
 
     private var rallyAnimationId: Long = -1 // rallyAnimationId 인스턴스 변수 추가
+    private lateinit var targetLocation: LatLng
 
 
     // 내위치
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var currentUserLocation: LatLng
+
+
+    // test
+//    private val testLatitude: Double = 35.69297366487135
+//    private val testLongitude: Double = 139.69942224122263
+
+
 
     // SharedPreferences
     private lateinit var sharedPreferences: SharedPreferences
@@ -63,6 +80,7 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
         binding = FragmentRallylocationdetailBinding.inflate(inflater, container, false)
 
+
         // Retrofit 객체 생성
         retrofit = Retrofit.Builder()
             .baseUrl("http://favoriteplace.store:8080")
@@ -71,6 +89,9 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
             .build()
 
         rallyLocationDetailService = retrofit.create(RallyLocationDetailService::class.java)
+        homeService = retrofit.create(HomeService::class.java)
+
+
         // SharedPreferences 초기화
         sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
@@ -84,7 +105,6 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
 
-        //locationSource = FusedLocationSource(this, RallyPlaceFragment.LOCATION_PERMISSION_REQUEST_CODE)
 
 
         return binding.root
@@ -118,12 +138,7 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-
-
     }
-
 
 
     private fun fetchRallyInfo(rallyAnimationId: Long) {
@@ -146,8 +161,11 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                         val rallyInfo=response.body()
                         if (rallyInfo != null) {
                             Log.d("rallyLocationDetail", ">> rallyInfo: $rallyInfo")
+                            // 서버에서 받아온 목표 위치의 위도와 경도로 targetLocation 설정
+                            targetLocation = LatLng(rallyInfo.latitude ?: 0.0, rallyInfo.longitude ?: 0.0)
                             rallyInfo.let {
                                 displayRallyInfo(rallyInfo)
+                                getCurrentLocation()
 
                             }
                         }else{
@@ -168,6 +186,78 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
 
     }
+
+    // 사용자 현재 위치
+    private fun getCurrentLocation(){
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                location?.let {
+                    currentUserLocation=LatLng(location.latitude, location.longitude)
+                    //currentUserLocation = LatLng(testLatitude, testLongitude) // test
+                    val distance = currentUserLocation.distanceTo(targetLocation)
+
+                    if(distance <=150){
+                        // 거리가 150m 이내인 경우 다이얼로그 보여주기
+                        Toast.makeText(context,"성지순례 인증하기 20P를 얻으셨습니다!",Toast.LENGTH_SHORT).show()
+
+                        binding.rallyLocationdetailCv.visibility = View.GONE
+                        binding.rallyLocationdetailGuestbookCv.visibility = View.VISIBLE
+                        binding.rallyLocationdetailNcountCv.visibility = View.VISIBLE
+
+                        showDistanceAlertDialog()
+                    }else{
+
+                        Toast.makeText(context,"150m 반경에 있지 않습니다.",Toast.LENGTH_SHORT).show()
+                        binding.rallyLocationdetailCv.visibility = View.VISIBLE
+                        binding.rallyLocationdetailGuestbookCv.visibility = View.GONE
+                        binding.rallyLocationdetailNcountCv.visibility = View.GONE
+
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showDistanceAlertDialog() {
+        // SharedPreferences에서 토큰 가져오기
+        val token = sharedPreferences.getString("token", null)
+        Log.d("RallyLocationDetail", ">> user token : $token")
+
+
+        fetchUserNickname(token!!) { nickname ->
+            // 닉네임을 가져온 후에 다이얼로그 생성
+            val dialog = RallyLocationDialog(nickname)
+            dialog.show(childFragmentManager, "RallyLocationDialog")
+            Log.d("RallyLocationDetail", ">> userNickname : $nickname")
+        }
+
+    }
+
+
+    // user token을 사용하여 사용자 nickname 가져오기
+    private fun fetchUserNickname(token: String, callback: (String) -> Unit) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val response   = homeService.getUserInfo("Bearer $token")
+                if(response.isSuccessful){
+                    val loginResponse  = response.body()
+                    val userInfo = loginResponse?.userInfo
+                    val nickname = userInfo?.nickname ?: ""
+                    callback(nickname)
+
+                }else{
+                    Log.e("RallyLocationDetail", "Failed to fetch user info: ${response.code()}")
+                }
+
+
+            }catch (e:Exception){
+                Log.e("RallyLocationDetail", "Error fetching user nickname: ${e.message}")
+            }
+        }
+    }
+
+
     private fun displayRallyInfo(rallyInfo: RallyLocationDetailService.RallyInfo) {
 
 

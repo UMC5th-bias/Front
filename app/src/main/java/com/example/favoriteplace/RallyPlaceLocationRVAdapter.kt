@@ -42,6 +42,8 @@ class RallyPlaceLocationRVAdapter(
             if(!isLoggedIn()){
                 // 비회원인 경우
                 Toast.makeText(context, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
+
+            }else{
                 val fragment = RallyLocationDetailFragment()
                 val bundle = Bundle().apply {
                     putLong("rallyAnimationId", itemId) // 아이템의 ID를 번들에 추가
@@ -54,9 +56,6 @@ class RallyPlaceLocationRVAdapter(
                     .replace(R.id.main_frameLayout, fragment)
                     .addToBackStack(null)  // 뒤로 가기 스택에 추가
                     .commit()
-
-            }else{
-
             }
         }
     }
