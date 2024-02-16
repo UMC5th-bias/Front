@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ class RallyHomeFragment : Fragment() {
 
     lateinit var binding: FragmentRallyhomeBinding
     lateinit var rallybinding : FragmentRallydetailBinding
+    var userToken: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +32,26 @@ class RallyHomeFragment : Fragment() {
 
 
 
+        fun checkLoginStatus() {
+            // SharedPreferences에서 액세스 토큰 가져오기
+            val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+            var isLoggedIn = false
+            isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", true)
+
+            if (isLoggedIn) {
+                // 로그인 상태인 경우 사용자 정보를 가져옴
+                userToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, "")
+                if (!userToken.isNullOrEmpty()) {
+                    Log.d("HomeFragment", ">> 로그인 상태인 경우 사용자 정보를 가져옴, $userToken")
+                }
+            }else{
+                // 비회원 상태인 경우
+                Log.d("HomeFragment", ">> 비회원 상태입니다., $isLoggedIn")
+
+            }
+        }
+
+        checkLoginStatus()
 
         binding.rallyPlaceBlackBoxCl.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -108,7 +130,10 @@ class RallyHomeFragment : Fragment() {
         }
 
         //이달의 추천 랠리 불러오기
-        RetrofitAPI.rallyHomeService.getTrending().enqueue(object: Callback<RallyHomeTrending> {
+        RetrofitAPI.rallyHomeService.getTrending(
+            if(userToken == null) ""
+            else "Bearer $userToken"
+        ).enqueue(object: Callback<RallyHomeTrending> {
             override fun onResponse(call: Call<RallyHomeTrending>, response: Response<RallyHomeTrending>) {
                 if(response.isSuccessful) {
                     val responseData = response.body()
