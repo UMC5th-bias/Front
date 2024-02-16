@@ -38,13 +38,6 @@ class CommunityRallyRecommendFragment: Fragment() {
     //서버에서 추천글을 가져오는 코드
     private fun fetchPosts() {
 
-        var accessToken: String? =null
-
-        //로그인 중이라면 토큰을 서버에 전달
-        if (isLogIn){
-            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
-        }
-
         RetrofitClient.communityService.getRallyPost(currentPage,10,"liked")
             .enqueue(object : Callback<RallyPost> {
 
