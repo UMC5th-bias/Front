@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
         setContentView(binding.root)
 
+        // LoginActivity에서 전달된 데이터 받기
+        val isLoggedIn = intent.getBooleanExtra("isLoggedIn", false)
+
 
         initBottomNavigation()
 }

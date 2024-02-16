@@ -32,7 +32,6 @@ class LoginActivity :AppCompatActivity() {
     companion object {
         const val ACCESS_TOKEN_KEY = "accessToken"
         const val REFRESH_TOKEN_KEY = "refreshToken"
-        const val LOGGED_OUT = "loggedOut"
         const val CHECK_TOKEN_INTERVAL = 1000 * 60 * 60 // 1 hour in milliseconds
     }
 
@@ -58,11 +57,11 @@ class LoginActivity :AppCompatActivity() {
 
 
         // 이전에 로그인된 상태인지 확인
-        if(isLoggedIn()){
-            // 로그인된 상태인 경우 -> HomeFragment 이동
-            startActivity(Intent(this,  HomeFragment::class.java))
-            finish()
-        }
+//        if(isLoggedIn()){
+//            // 로그인된 상태인 경우 -> HomeFragment 이동
+//            startActivity(Intent(this,  MainActivity::class.java))
+//            finish()
+//        }
 
         // 로그인 버튼 틀릭 시
         binding.logoinBtn.setOnClickListener {
@@ -124,8 +123,7 @@ class LoginActivity :AppCompatActivity() {
                         val accessToken = loginResponse.accessToken
                         val refreshToken = loginResponse.refreshToken
 
-                        Log.d("Login", "AccessToken: $accessToken, RefreshToken: $refreshToken")
-
+                        Log.d("Login", "AccessToken: $accessToken, \n RefreshToken: $refreshToken")
 
                         saveToken(accessToken)
 
@@ -138,7 +136,7 @@ class LoginActivity :AppCompatActivity() {
                             putString(REFRESH_TOKEN_KEY, accessToken)
                         }
 
-                        val resultIntent = Intent().apply {
+                        val resultIntent = Intent(this@LoginActivity, MainActivity::class.java).apply {
                             putExtra(ACCESS_TOKEN_KEY, accessToken)
                             putExtra("isLoggedIn", true)
                         }

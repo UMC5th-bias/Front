@@ -108,9 +108,11 @@ class HomeFragment : Fragment() {
         }else{
             // 비회원 상태인 경우
             Log.d("HomeFragment", ">> 비회원 상태입니다., $isLoggedIn")
+            fetchNonMember()
 
         }
     }
+
 
 
     private fun sendLoginStatusToServer(isLoggedIn: String?) {
@@ -180,7 +182,6 @@ class HomeFragment : Fragment() {
                         updateUI(loginResponse)
 
                         Log.d("HomeFragment", ">> Home Login Success")
-                        Log.d("HomeFragment", ">> $loginResponse")
 
                     }
                 }else{
@@ -259,6 +260,32 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun fetchNonMember() {
+        // 비회원
+        lifecycleScope.launch {
+            try {
+
+                val response : Response<HomeService.NonMemberData> = homeService.getNonMemberInfo()
+                if(response.isSuccessful){
+                    val nonMemberData = response.body()
+
+                    nonMemberData?.let { data ->
+                        setupTrendingPostsRecyclerView()
+                        data.trendingPosts?.let { trendingPosts ->
+                            trendingPostsAdapter.submitList(trendingPosts)
+                        }
+                    }
+                }else{
+                    // 비회원 게시물 요청이 실패
+                    Log.e("HomeFragment", "Failed to retrieve non-member posts: ${response.code()}")
+                }
+
+            }catch (e:Exception){
+                // 오류 발생 시 처리
+                Log.e("HomeFragment", "Error fetching non-member posts: ${e.message}", e)
+            }
+        }
+    }
 
     //svg 이미지를 가져오기 위한 함수
     fun bind(context: Context,iconImageUrl: String?, imageView: ImageView) {
