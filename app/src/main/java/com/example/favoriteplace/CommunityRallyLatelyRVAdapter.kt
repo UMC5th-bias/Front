@@ -58,7 +58,12 @@ class CommunityRallyLatelyRVAdapter(private val rallyLatelyList: ArrayList<Guest
                 binding.itemCommunityRallyTag1Tv.text= rallyLately.hashTags[0].toString()
                 if(rallyLately.hashTags.size>=2){
                     binding.itemCommunityRallyTag2Tv.text=rallyLately.hashTags[1].toString()
+                } else {
+                    binding.itemCommunityRallyTag2TextTv.visibility=View.INVISIBLE
                 }
+            } else {
+                binding.itemCommunityRallyTag1TextTv.visibility=View.INVISIBLE
+                binding.itemCommunityRallyTag2TextTv.visibility=View.INVISIBLE
             }
         }
 
