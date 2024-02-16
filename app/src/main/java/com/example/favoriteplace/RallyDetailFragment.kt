@@ -24,6 +24,7 @@ class RallyDetailFragment : Fragment() {
 
     lateinit var binding:FragmentRallydetailBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private var userToken: String = ""
 
 
     override fun onCreateView(
@@ -43,7 +44,27 @@ class RallyDetailFragment : Fragment() {
 
         val rallyId = arguments?.getString("rallyId")
 
+        fun checkLoginStatus() {
+            // SharedPreferences에서 액세스 토큰 가져오기
+            val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+            var isLoggedIn = false
+            isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", true)
 
+            if (isLoggedIn) {
+                // 로그인 상태인 경우 사용자 정보를 가져옴
+                userToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, "") ?: ""
+                if (userToken.isNotEmpty()) {
+                    Log.d("HomeFragment", ">> 로그인 상태인 경우 사용자 정보를 가져옴, $userToken")
+                }
+            }else{
+                // 비회원 상태인 경우
+                Log.d("HomeFragment", ">> 비회원 상태입니다., $isLoggedIn")
+
+            }
+        }
+
+        //유저 인증상태 가져오기
+        checkLoginStatus()
 
         fun setRallyDetail(rallyDetailData: RallyDetailData) {
             Glide.with(this)
@@ -109,7 +130,7 @@ class RallyDetailFragment : Fragment() {
         }
 
 
-        RetrofitAPI.rallyDetailService.getRallyDetail(rallyId?.toLong() ?: 1).enqueue(object:
+        RetrofitAPI.rallyDetailService.getRallyDetail(rallyId?.toLong() ?: 1, "Bearer $userToken").enqueue(object:
             Callback<RallyDetailData> {
             override fun onResponse(call: Call<RallyDetailData>, response: Response<RallyDetailData>) {
                 if(response.isSuccessful) {

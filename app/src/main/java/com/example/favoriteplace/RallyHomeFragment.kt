@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,7 +20,7 @@ import retrofit2.Response
 class RallyHomeFragment : Fragment() {
 
     lateinit var binding: FragmentRallyhomeBinding
-    lateinit var rallybinding : FragmentRallydetailBinding
+    private var userToken: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +31,27 @@ class RallyHomeFragment : Fragment() {
 
 
 
+        fun checkLoginStatus() {
+            // SharedPreferences에서 액세스 토큰 가져오기
+            val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+            var isLoggedIn = false
+            isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", true)
+
+            if (isLoggedIn) {
+                // 로그인 상태인 경우 사용자 정보를 가져옴
+                userToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, "") ?: ""
+                if (userToken.isNotEmpty()) {
+                    Log.d("HomeFragment", ">> 로그인 상태인 경우 사용자 정보를 가져옴, $userToken")
+                }
+            }else{
+                // 비회원 상태인 경우
+                Log.d("HomeFragment", ">> 비회원 상태입니다., $isLoggedIn")
+
+            }
+        }
+
+        //유저 인증상태 가져오기
+        checkLoginStatus()
 
         binding.rallyPlaceBlackBoxCl.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -39,10 +61,15 @@ class RallyHomeFragment : Fragment() {
         }
 
         binding.animationRallyBlackBoxCl.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frameLayout, RallyCategoryFragment())
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+            if(userToken == "") {
+                Toast.makeText(context, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frameLayout, RallyCategoryFragment())
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+            }
         }
 
         fun setTrendingRally(rallyHomeTrending: RallyHomeTrending) {
@@ -89,8 +116,8 @@ class RallyHomeFragment : Fragment() {
                 certificationRallyItems.add(
                     CertifiedRallyItem(
                         title = it.title,
-                        tag1 = it.hashTag.first(),
-                        tag2 = it.hashTag.first(),
+                        tag1 = if(it.hashTag.size >= 1) it.hashTag[0] else "",
+                        tag2 = if(it.hashTag.size >= 2) it.hashTag[1] else "",
                         imageResId = it.image,
                         time = it.createdAt
 
@@ -108,7 +135,7 @@ class RallyHomeFragment : Fragment() {
         }
 
         //이달의 추천 랠리 불러오기
-        RetrofitAPI.rallyHomeService.getTrending().enqueue(object: Callback<RallyHomeTrending> {
+        RetrofitAPI.rallyHomeService.getTrending("Bearer $userToken").enqueue(object: Callback<RallyHomeTrending> {
             override fun onResponse(call: Call<RallyHomeTrending>, response: Response<RallyHomeTrending>) {
                 if(response.isSuccessful) {
                     val responseData = response.body()
@@ -129,7 +156,7 @@ class RallyHomeFragment : Fragment() {
         })
 
         //관심있는 랠리, 성지순레 인증글 모아보기 불러오기
-        RetrofitAPI.rallyHomeService.getMyRally().enqueue(object: Callback<RallyHomeResponseMyRally> {
+        RetrofitAPI.rallyHomeService.getMyRally("Bearer $userToken").enqueue(object: Callback<RallyHomeResponseMyRally> {
             override fun onResponse(call: Call<RallyHomeResponseMyRally>, response: Response<RallyHomeResponseMyRally>) {
                 if(response.isSuccessful) {
                     val responseData = response.body()
