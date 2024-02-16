@@ -16,6 +16,7 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
     lateinit var binding: FragmentShopDetailUnlimitedFameBinding
     private var gson: Gson = Gson()
     private var unlimitedFameData = ArrayList<ShopDetailsResponse>()
+    private var isLogIn=true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,7 +24,6 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding= FragmentShopDetailUnlimitedFameBinding.inflate(inflater,container,false)
-
 
         //api를 호출하는 코드
         callApi()
@@ -53,27 +53,33 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
         //신상품 페이지 상시 칭호 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
         val itemIdJson = arguments?.getString("unlimitedFame")
         val itemId: Int = gson.fromJson(itemIdJson, Int::class.java)
-        Log.d("itemId", itemId.toString())
+        var accessToken: String? =null
+
+        //로그인 중이라면 토큰을 서버에 전달
+        if (isLogIn){
+            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
+        }
 
         //서버에서 해당 아이템의 데이터를 가져오는 코드
-        RetrofitClient.shopService.getDetailItem("", itemId)
+        RetrofitClient.shopService.getDetailItem("Bearer $accessToken", itemId)
             .enqueue(object : Callback<ShopDetailsResponse> {
                 override fun onResponse(
                     call: Call<ShopDetailsResponse>,
                     response: Response<ShopDetailsResponse>
                 ) {
+                    Log.d("Response_test",response.toString())
                     //서버에서 데이터를 가져오는 걸 성공할 경우
                     if (response.isSuccessful) {
                         val detailsResponse = response.body()
-
-                        Log.d("detailsID",itemId.toString())
-                        Log.d("detailsResponse",detailsResponse.toString())
+                        Log.d("Response_test",detailsResponse.toString())
                         detailsResponse?.let {
                             unlimitedFameData.clear()
                             unlimitedFameData.add(it)
 
                             setView()   //데이터를 반영하여 화면에 보여주는 함수
                         }
+                    } else {
+                        Log.d("Response_test","Fail")
                     }
                 }
 

@@ -20,6 +20,7 @@ class ShopBannerLimitedIconFragment : Fragment() {
     lateinit var binding: FragmentShopDetailLimitedIconBinding
     private var gson: Gson=Gson()
     private var limitedIconData=ArrayList<ShopDetailsResponse>()
+    private var isLogIn=true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,10 +57,16 @@ class ShopBannerLimitedIconFragment : Fragment() {
         //신상품 페이지 한정 칭호 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
         val itemIdJson = arguments?.getString("limitedIcon")
         val itemId: Int = gson.fromJson(itemIdJson, Int::class.java)
-        Log.d("itemId", itemId.toString())
+
+        var accessToken: String? =null
+
+        //로그인 중이라면 토큰을 서버에 전달
+        if (isLogIn){
+            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
+        }
 
         //서버에서 해당 아이템의 데이터를 가져오는 코드
-        RetrofitClient.shopService.getDetailItem("", itemId)
+        RetrofitClient.shopService.getDetailItem("Bearer $accessToken", itemId)
             .enqueue(object : Callback<ShopDetailsResponse> {
                 override fun onResponse(
                     call: Call<ShopDetailsResponse>,
@@ -89,7 +96,7 @@ class ShopBannerLimitedIconFragment : Fragment() {
     //데이터를 반영하여 화면에 보여주는 함수
     private fun setView() {
 
-        ShopBannerLimitedFameFragment().bind(binding.root.context,limitedIconData[0].imageUrl, binding.shopBannerDetailIconIv )
+        ShopBannerLimitedFameFragment().bind(binding.root.context,limitedIconData[0].imageCenterUrl, binding.shopBannerDetailIconIv )
         ShopBannerLimitedFameFragment().bind(binding.root.context,limitedIconData[0].imageUrl, binding.shopBannerDetailIconApplyIconIv)
         binding.shopBannerDetailIconCostTv.text = limitedIconData[0].point.toString()
         binding.shopBannerDetailIconBodyTv.text = limitedIconData[0].description

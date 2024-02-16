@@ -15,7 +15,6 @@ class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<Posts>): R
     ): CommunityFreeLatelyRVAdapter.ViewHolder {
         val binding: ItemCommunityFreeLatelyBinding = ItemCommunityFreeLatelyBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup, false)
 
-        Log.d("CommunityFreeRVA","SUCCESS")
         return ViewHolder(binding)
     }
 
@@ -37,9 +36,4 @@ class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<Posts>): R
         }
 
     }
-
-//    fun addPosts(newPosts: List<CommunityPost>){
-//        posts.addAll(newPosts)
-//        notifyDataSetChanged()
-//    }
 }

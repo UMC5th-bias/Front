@@ -22,15 +22,22 @@ class MyFragment : Fragment(){
 
 
 
+        // 프로필 카드 환경설정
         binding.mySettingIv.setOnClickListener {
-            // MySettingFragment 이동
-
             parentFragmentManager.commit {
                 replace(R.id.main_frameLayout, MySettingFragment())
-                addToBackStack(null) // 백 스택에 추가하여 이전 Fragment로 돌아갈 수 있도록 함
+                addToBackStack(null)
             }
         }
 
+
+        // 고객센터
+        binding.myCsTv.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.main_frameLayout, MyCsFragment())
+                addToBackStack(null)
+            }
+        }
 
         return binding.root
     }

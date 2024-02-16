@@ -217,21 +217,48 @@
 
             <!-- 지도 첨부 (내위치)  -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/map_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="180dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="0dp"
+                android:background="@drawable/edge"
                 app:layout_constraintTop_toBottomOf="@+id/rally_locationdetail_place_tv">
 
-                <ImageView
+
+                <com.naver.maps.map.MapView
+                    android:id="@+id/rally_map_mv"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </androidx.cardview.widget.CardView>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/rally_locationdetail_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:padding="20dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginBottom="30dp"
+                android:background="@color/gray">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_mylocation" />
+                    android:gravity="left|center"
+                    android:padding="10dp"
+                    android:paddingStart="10dp"
+                    android:text="🚩 성지순례 인증하기"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
             </androidx.cardview.widget.CardView>
 
 
@@ -244,6 +271,7 @@
                 android:layout_marginEnd="15dp"
                 android:padding="20dp"
                 app:cardCornerRadius="8dp"
+                android:visibility="gone"
                 android:background="@color/gray">
 
                 <TextView
@@ -269,6 +297,7 @@
                 android:layout_marginBottom="30dp"
                 android:background="@color/gray"
                 android:padding="20dp"
+                android:visibility="gone"
                 app:cardCornerRadius="10dp">
 
 

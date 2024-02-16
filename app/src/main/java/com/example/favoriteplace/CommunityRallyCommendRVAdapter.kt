@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemCommunityRallyCommendBinding
 
-class CommunityRallyCommendRVAdapter (private val commendList: ArrayList<RallyCommend>):
+class CommunityRallyCommendRVAdapter (private val commendList: ArrayList<MyComments>):
     RecyclerView.Adapter<CommunityRallyCommendRVAdapter.ViewHolder>() {
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemCommunityRallyCommendBinding = ItemCommunityRallyCommendBinding.inflate(
@@ -21,16 +21,15 @@ class CommunityRallyCommendRVAdapter (private val commendList: ArrayList<RallyCo
     }
 
     inner class ViewHolder(val binding: ItemCommunityRallyCommendBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(commend: RallyCommend){
-            binding.itemCommunityRallyCommendDayTv.text=commend.day
-            binding.itemCommunityRallyCommendTimeTv.text=commend.commendTime
-            binding.itemCommunityRallyCommendTv.text=commend.commend
-            binding.itemCommunityRallyCommendTitleTv.text=commend.title
-            binding.itemCommunityRallyCommendWriterTv.text=commend.writer
-            binding.itemCommunityRallyCommendEyeTv.text= commend.eye.toString()
-            binding.itemCommunityRallyCommendLikeTv.text= commend.like.toString()
-            binding.itemCommunityRallyCommendClockTv.text= commend.time
-            binding.itemCommunityRallyCommendCommentNumTv.text= commend.commentNum.toString()
+        fun bind(commend: MyComments){
+            binding.itemCommunityRallyCommendDayTv.text=commend.passedTime
+            binding.itemCommunityRallyCommendTv.text=commend.content
+            binding.itemCommunityRallyCommendTitleTv.text=commend.myGuestBookInfo.title
+            binding.itemCommunityRallyCommendWriterTv.text=commend.myGuestBookInfo.nickname
+            binding.itemCommunityRallyCommendEyeTv.text= commend.myGuestBookInfo.views.toString()
+            binding.itemCommunityRallyCommendLikeTv.text= commend.myGuestBookInfo.likes.toString()
+            binding.itemCommunityRallyCommendClockTv.text= commend.myGuestBookInfo.passedTime
+            binding.itemCommunityRallyCommendCommentNumTv.text= commend.myGuestBookInfo.comments.toString()
         }
 
     }
