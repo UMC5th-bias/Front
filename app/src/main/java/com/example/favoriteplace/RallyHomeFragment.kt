@@ -21,7 +21,7 @@ class RallyHomeFragment : Fragment() {
 
     lateinit var binding: FragmentRallyhomeBinding
     lateinit var rallybinding : FragmentRallydetailBinding
-    var userToken: String? = null
+    var userToken: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,8 +40,8 @@ class RallyHomeFragment : Fragment() {
 
             if (isLoggedIn) {
                 // 로그인 상태인 경우 사용자 정보를 가져옴
-                userToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, "")
-                if (!userToken.isNullOrEmpty()) {
+                userToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, "") ?: ""
+                if (userToken.isNotEmpty()) {
                     Log.d("HomeFragment", ">> 로그인 상태인 경우 사용자 정보를 가져옴, $userToken")
                 }
             }else{
@@ -130,10 +130,7 @@ class RallyHomeFragment : Fragment() {
         }
 
         //이달의 추천 랠리 불러오기
-        RetrofitAPI.rallyHomeService.getTrending(
-            if(userToken == null) ""
-            else "Bearer $userToken"
-        ).enqueue(object: Callback<RallyHomeTrending> {
+        RetrofitAPI.rallyHomeService.getTrending("Bearer $userToken").enqueue(object: Callback<RallyHomeTrending> {
             override fun onResponse(call: Call<RallyHomeTrending>, response: Response<RallyHomeTrending>) {
                 if(response.isSuccessful) {
                     val responseData = response.body()
@@ -154,7 +151,7 @@ class RallyHomeFragment : Fragment() {
         })
 
         //관심있는 랠리, 성지순레 인증글 모아보기 불러오기
-        RetrofitAPI.rallyHomeService.getMyRally().enqueue(object: Callback<RallyHomeResponseMyRally> {
+        RetrofitAPI.rallyHomeService.getMyRally("Bearer $userToken").enqueue(object: Callback<RallyHomeResponseMyRally> {
             override fun onResponse(call: Call<RallyHomeResponseMyRally>, response: Response<RallyHomeResponseMyRally>) {
                 if(response.isSuccessful) {
                     val responseData = response.body()

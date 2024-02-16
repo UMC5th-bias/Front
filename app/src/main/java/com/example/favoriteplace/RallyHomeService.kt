@@ -11,5 +11,7 @@ interface RallyHomeService {
     ): Call<RallyHomeTrending>
 
     @GET("/pilgrimage")
-    fun getMyRally(): Call<RallyHomeResponseMyRally>
+    fun getMyRally(
+        @Header("Authorization") authorization: String?
+    ): Call<RallyHomeResponseMyRally>
 }
