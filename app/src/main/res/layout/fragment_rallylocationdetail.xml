@@ -197,22 +197,40 @@
             </FrameLayout>
 
 
-            <!-- 장소 이름  -->
-            <TextView
-                android:id="@+id/rally_locationdetail_map_place_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/edge"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edge"
-                android:padding="15dp"
-                android:paddingStart="15dp"
-                android:text="Shibuya Scramble Crossing \n渋谷スクランブル交差点"
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                app:layout_constraintTop_toBottomOf="@+id/cardview2" />
+                app:layout_constraintTop_toBottomOf="@+id/cardview2">
+
+                <!-- 장소 이름  -->
+                <TextView
+                    android:id="@+id/rally_map_place_en_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:paddingStart="15dp"
+                    android:text="Shibuya Scramble Crossing"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/rally_map_place_jp_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:text="渋谷スクランブル交差点"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+
 
 
             <!-- 지도 첨부 (내위치)  -->

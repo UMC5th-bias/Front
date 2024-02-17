@@ -102,6 +102,25 @@
 
 
         <!-- 애니메이션 사진/ 제목/ 위치 정보-->
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                android:background="@drawable/edge"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp"
+                app:cardElevation = "0dp">
+
+                <ImageView
+                    android:id="@+id/rally_locationdetail_place_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/rally_location_place_img"/>
+
+            </androidx.cardview.widget.CardView>
         <RelativeLayout
             android:id="@+id/relativelayout"
             android:layout_width="match_parent"
@@ -142,6 +161,8 @@
 
                 <!-- 사용자 사진 추가  -->
                 <FrameLayout
+                    android:id="@+id/framelayout"
+                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -160,6 +181,7 @@
                             android:background="@drawable/edge_fill_gray"/>
 
                         <ImageView
+                            android:id="@+id/add_image_iv"
                             android:layout_width="match_parent"
                             android:layout_height="200dp" />
 
@@ -177,6 +199,7 @@
                                 android:text  ="장소의 사진을 추가해주세요."/>
 
                             <ImageButton
+                                android:id="@+id/openGallery_ib"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/ic_plus_btn"
@@ -190,6 +213,7 @@
 
 
                 <EditText
+                    android:id="@+id/guestbook_title_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
@@ -199,6 +223,7 @@
                     android:textSize="15dp"/>
 
                 <EditText
+                    android:id="@+id/guestbook_content_et"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginTop="15dp"
@@ -267,6 +292,7 @@
 
 
             <Button
+                android:id="@+id/guestbook_upload_btn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginStart="15dp"

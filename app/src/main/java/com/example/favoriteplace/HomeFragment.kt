@@ -9,10 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.example.favoriteplace.LoginActivity.Companion.ACCESS_TOKEN_KEY
 import com.example.favoriteplace.databinding.FragmentHomeBinding
@@ -31,10 +35,12 @@ class HomeFragment : Fragment() {
 
     private var trendingPostsData: MutableList<HomeService.TrendingPosts> = mutableListOf()
     private var isLoggedIn = false // 로그인 상태를 나타내는 변수
+    private var accessToken: String? = null // 액세스 토큰을 저장할 변수
+
 
     companion object{
         const val LOGIN_REQUEST_CODE=101
-
+        const val ACCESS_TOKEN_KEY = "token" // SharedPreferences 키 상수
     }
 
     override fun onCreateView(
@@ -65,7 +71,7 @@ class HomeFragment : Fragment() {
         binding.homeBannerVp.adapter=bannerAdapter
         binding.homeBannerVp.orientation=ViewPager2.ORIENTATION_HORIZONTAL
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_banner1))
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_banner1))
+        bannerAdapter.addFragment(BannerFragment(R.drawable.demo))
 
 
 
@@ -85,29 +91,29 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        //checkLoginStatus()
-    }
 
     private fun checkLoginStatus() {
         // SharedPreferences에서 액세스 토큰 가져오기
         val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", true)
+
+        accessToken = sharedPreferences.getString(ACCESS_TOKEN_KEY, null)
+        isLoggedIn = !accessToken.isNullOrEmpty()
+
+
 
         if (isLoggedIn) {
             // 로그인 상태인 경우 사용자 정보를 가져옴
-            val userToken = sharedPreferences.getString(ACCESS_TOKEN_KEY, "")
-            if (!userToken.isNullOrEmpty()) {
-                getUserInfo(userToken)
-                Log.d("HomeFragment", ">> 로그인 상태인 경우 사용자 정보를 가져옴, $userToken")
-            }
+            getUserInfo(accessToken!!)
+            Log.d("HomeFragment", ">> 로그인 상태 : $isLoggedIn, \n $accessToken")
+
         }else{
             // 비회원 상태인 경우
             Log.d("HomeFragment", ">> 비회원 상태입니다., $isLoggedIn")
+            fetchNonMember()
 
         }
     }
+
 
 
     private fun sendLoginStatusToServer(isLoggedIn: String?) {
@@ -128,16 +134,6 @@ class HomeFragment : Fragment() {
     }
 
 
-    override fun onStop() {
-        super.onStop()
-        // 앱이 종료될 때 로그아웃 상태를 SharedPreferences에 저장
-        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        with(sharedPreferences.edit()) {
-            putBoolean("isLoggedIn", isLoggedIn)
-            apply()
-        }
-
-    }
 
     private fun setupTrendingPostsRecyclerView() {
 
@@ -153,7 +149,7 @@ class HomeFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
             val isLoggedIn = data?.getBooleanExtra("isLoggedIn", false) ?: false
-            val userToken = data?.getStringExtra("accessToken")
+            val userToken = data?.getStringExtra("token")
             if (!userToken.isNullOrEmpty() && isLoggedIn) {
                 this.isLoggedIn = true
                 Log.d("HomeFragment", ">> Home Login userToken : $userToken")
@@ -174,9 +170,8 @@ class HomeFragment : Fragment() {
                     val loginResponse: HomeService.LoginResponse? = response.body()
                     if(loginResponse != null){
                         updateUI(loginResponse)
-
+                        Log.d("HomeFragment", "$loginResponse")
                         Log.d("HomeFragment", ">> Home Login Success")
-                        Log.d("HomeFragment", ">> $loginResponse")
 
                     }
                 }else{
@@ -215,11 +210,6 @@ class HomeFragment : Fragment() {
                     .error(R.drawable.signup_default_profile_image) // 이미지 로드 실패 시 보여줄 이미지
                     .into(binding.homeMemberProfileCiv) // 이미지를 설정할 ImageView
 
-                // 사용자 아이콘
-                Glide.with(this)
-                    .load(userInfo.profileIconUrl.toString())
-                    .placeholder(null)
-                    .into(binding.homeMemberIconIv)
 
                 // 사용자 뱃지
                 Glide.with(this)
@@ -230,7 +220,8 @@ class HomeFragment : Fragment() {
                 // 사용자 닉네임
                 binding.homeMemberNameTv.text = userInfo.nickname
 
-
+                // 사용자 아이콘
+                bind(binding.root.context, userInfo.profileIconUrl, binding.homeMemberIconIv)
             }
 
             homeData.rally?.let { rally ->
@@ -259,8 +250,59 @@ class HomeFragment : Fragment() {
         }
     }
 
-}
+    private fun fetchNonMember() {
+        // 비회원
+        lifecycleScope.launch {
+            try {
 
+                val response : Response<HomeService.NonMemberData> = homeService.getNonMemberInfo()
+                if(response.isSuccessful){
+                    val nonMemberData = response.body()
+
+                    nonMemberData?.let { data ->
+                        setupTrendingPostsRecyclerView()
+                        data.trendingPosts?.let { trendingPosts ->
+                            trendingPostsAdapter.submitList(trendingPosts)
+                        }
+                    }
+                }else{
+                    // 비회원 게시물 요청이 실패
+                    Log.e("HomeFragment", "Failed to retrieve non-member posts: ${response.code()}")
+                }
+
+            }catch (e:Exception){
+                // 오류 발생 시 처리
+                Log.e("HomeFragment", "Error fetching non-member posts: ${e.message}", e)
+            }
+        }
+    }
+
+    //svg 이미지를 가져오기 위한 함수
+    fun bind(context: Context,iconImageUrl: String?, imageView: ImageView) {
+        try {
+            // iconImageUrl이 null이 아닌 경우에는 해당 이미지를 로드하여 설정
+            iconImageUrl?.let {
+                val imageLoader = ImageLoader.Builder(context)
+                    .componentRegistry {
+                        add(SvgDecoder(context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                    }
+                    .build()
+
+                val imageRequest = ImageRequest.Builder(context)
+                    .data(it)
+                    .target(imageView)  // 해당 이미지뷰를 타겟으로 svg 삽입
+                    .build()
+                imageLoader.enqueue(imageRequest)
+            } ?: run {
+                // iconImageUrl이 null인 경우에는 기본 이미지를 설정
+            }
+
+        } catch (e: Exception) {
+            Log.e("ShopBannerDetailFragment", "Error loading image: ${e.message}")
+            e.printStackTrace()
+        }
+    }
+}
 
 
 
