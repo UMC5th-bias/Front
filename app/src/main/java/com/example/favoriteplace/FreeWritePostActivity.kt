@@ -104,8 +104,6 @@ class FreeWritePostActivity : AppCompatActivity() {
             if (images.isEmpty()) {
                 Log.d("FreeWritePostActivity", "No images selected")
             }
-        } ?: run {
-            Log.d("FreeWritePostActivity", "selectedImages is null")
         }
     }
 
@@ -137,25 +135,6 @@ class FreeWritePostActivity : AppCompatActivity() {
                 addImageToLayout(uri)
             }
         }
-    }
-
-    fun getPathFromUri(context: Context, uri: Uri): String? {
-        var cursor: Cursor? = null
-        try {
-            val proj = arrayOf(MediaStore.Images.Media.DATA)
-            cursor = context.contentResolver.query(uri, proj, null, null, null)
-            val columnIndex = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            cursor?.moveToFirst()
-            if (cursor != null) {
-                return columnIndex?.let { cursor.getString(it) }
-            }
-        } catch (e: Exception) {
-            // 오류 처리 (예: 로깅)
-            e.printStackTrace()
-        } finally {
-            cursor?.close()
-        }
-        return null // 커서가 null이거나, 첫 번째 row로 이동할 수 없거나, columnIndex가 유효하지 않은 경우 null 반환
     }
 
 
@@ -324,15 +303,6 @@ class FreeWritePostActivity : AppCompatActivity() {
         return null
     }
 
-    fun getMimeType(file: File): String {
-        val extension = file.extension.toLowerCase(Locale.ROOT)
-        return when (extension) {
-            "jpg", "jpeg" -> "image/jpeg"
-            "png" -> "image/png"
-            // 추가적인 이미지 형식을 여기에 명시할 수 있습니다.
-            else -> "application/octet-stream" // 일치하는 형식이 없을 경우의 기본값
-        }
-    }
     private fun removeImageFromLayout(frameLayout: FrameLayout, uri: Uri) {
         binding.imageContainer.removeView(frameLayout)
         selectedImages.remove(uri)
