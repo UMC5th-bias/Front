@@ -28,11 +28,11 @@ interface RallyGuestBookService {
 
     @Multipart
     @POST("/posts/guestbooks/{pilgrimage_id}")
-    fun guestBookUploadPost(
+    fun uploadPost(
+        @Path("pilgrimage_id") pilgrimageId: Long,
         @Header("Authorization") authorization: String,
         @Part ("data") data: RequestBody,
-        @Part files: List<MultipartBody.Part>,
-        @Path("pilgrimageId") pilgrimageId: Long
+        @Part files: List<MultipartBody.Part>
     ): Call<GuestbookResponse>
 
 

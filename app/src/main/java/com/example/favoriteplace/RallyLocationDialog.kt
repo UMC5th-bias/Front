@@ -38,6 +38,7 @@ class RallyLocationDialog(private val nickname: String, private val rallyAnimati
 
         // "바로 쓰러가기" 버튼 클릭 시 이동
         binding.dialogNowBtn.setOnClickListener {
+            Log.d("rallyAnimationId", ">> $rallyAnimationId")
             Toast.makeText(context,"바로 쓰러가기 클릭 ",Toast.LENGTH_SHORT).show()
             dismiss()
 

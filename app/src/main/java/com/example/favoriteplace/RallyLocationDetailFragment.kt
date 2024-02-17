@@ -145,7 +145,7 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 //        if(token!=null){
         val call = rallyLocationDetailService.getRallyInfo("Bearer $token",rallyAnimationId)
         Log.d("RallyLocationDetail", ">> Bearer : $token ")
-
+        Log.d("rallyAnimationId", ">> fetchRallyInfo: $rallyAnimationId")
 
         call.enqueue(object : Callback<RallyLocationDetailService.RallyInfo> {
             override fun onResponse(
@@ -159,7 +159,10 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                         // 서버에서 받아온 목표 위치의 위도와 경도로 targetLocation 설정
                         targetLocation = LatLng(rallyInfo.latitude ?: 0.0, rallyInfo.longitude ?: 0.0)
                         rallyInfo.let {
-                            displayRallyInfo(rallyInfo)
+                            // 수정된 부분: isCertified 값을 true로 설정
+                            val modifiedRallyInfo = rallyInfo.copy(isWritable = true)
+                            displayRallyInfo(modifiedRallyInfo)
+                            Log.d("rallyLocationDetail", ">> modifiedRallyInfo: $modifiedRallyInfo")
                             getCurrentLocation()
 
                         }
@@ -217,12 +220,19 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
     private fun showDistanceAlertDialog() {
         // SharedPreferences에서 토큰 가져오기
         val token = sharedPreferences.getString("token", null)
+        val rallyAnimationId = arguments?.getLong("rallyAnimationId") ?: -1
+
+
         Log.d("RallyLocationDetail", ">> user token : $token")
+        Log.d("rallyAnimationId", ">> showDistanceAlertDialog: $rallyAnimationId")
 
 
         fetchUserNickname(token!!) { nickname ->
             // 닉네임을 가져온 후에 다이얼로그 생성
             val dialog = RallyLocationDialog(nickname,rallyAnimationId)
+            dialog.arguments = Bundle().apply {
+                putLong("rallyAnimationId", rallyAnimationId)
+            }
             dialog.show(childFragmentManager, "RallyLocationDialog")
             Log.d("RallyLocationDetail", ">> userNickname : $nickname")
         }
@@ -253,8 +263,6 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
 
     private fun displayRallyInfo(rallyInfo: RallyLocationDetailService.RallyInfo) {
-
-
         binding.rallyLocationdetailTitleTv.text = rallyInfo.rallyName
         binding.rallyLocationdetailNameTv.text =rallyInfo.rallyName
         binding.rallyLocationdetailPlaceTv.text = rallyInfo.address

@@ -24,6 +24,7 @@ import com.example.favoriteplace.databinding.FragmentRallyGuestbookBinding
 import com.naver.maps.geometry.LatLng
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
@@ -42,14 +43,11 @@ class RallyGuestBookActivity : AppCompatActivity() {
     private lateinit var retrofit: Retrofit
     private lateinit var rallyGuestBookService: RallyGuestBookService
     lateinit var rallyLocationDetailService: RallyLocationDetailService
-
-    private var rallyAnimationId: Long = -1 // rallyAnimationId 인스턴스 변수 추가
     private lateinit var sharedPreferences: SharedPreferences
 
 
     private val REQUEST_CODE_GALLERY = 100
     private val REQUEST_IMAGE_CAPTURE = 1
-
     private val selectedImages = mutableListOf<Uri>()
 
 
@@ -60,17 +58,28 @@ class RallyGuestBookActivity : AppCompatActivity() {
 
         binding.cardview.visibility = View.VISIBLE
 
-        val rallyAnimationId = intent.getLongExtra("rallyAnimationId", -1)
 
         // Retrofit 객체 생성
         retrofit = Retrofit.Builder()
             .baseUrl("http://favoriteplace.store:8080")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(OkHttpClient.Builder().addInterceptor(RetrofitClient.logging).build()) // 로깅 인터셉터 추가
             .build()
 
         rallyGuestBookService = retrofit.create(RallyGuestBookService::class.java)
         rallyLocationDetailService = retrofit.create(RallyLocationDetailService::class.java)
 
+        // SharedPreferences 초기화
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+
+        // RallyAnimationId를 Intent에서 가져오기
+        val rallyAnimationId = intent.getLongExtra("rallyAnimationId", -1)
+        Log.d("RallyGuestBookActivity", "RallyAnimationId: $rallyAnimationId") // rallyAnimationId 값 확인
+        fetchRallyInfo(rallyAnimationId)
+
+
+        Log.d("RallyGuestBookActivity", ">> fetchRallyInfo 실행")
 
         binding.openGalleryIb.setOnClickListener {
             openGallery()
@@ -80,16 +89,20 @@ class RallyGuestBookActivity : AppCompatActivity() {
 
 
         binding.guestbookUploadBtn.setOnClickListener {
+            Log.d("RallyGuestBookActivity", ">> uploadPost() 요청")
             uploadPost()
+            Log.d("RallyGuestBookActivity", ">> uploadPost() 실행 끝")
         }
 
 
     }
 
     private fun uploadPost() {
+        val rallyAnimationId = intent.getLongExtra("rallyAnimationId", -1)
+
         val title = binding.guestbookTitleEt.text.toString().trim()
         val content = binding.guestbookContentEt.text.toString().trim()
-        val hashtags = binding.rallyGuestbookTag1Et.toString()
+        val hashtags = binding.rallyGuestbookTag1Et.text.toString().split(" ").filter { it.isNotBlank() }
 
 
         // 제목, 내용 비워져 있으면-> toast 메세지
@@ -97,9 +110,6 @@ class RallyGuestBookActivity : AppCompatActivity() {
             showToast(this, "제목과 내용을 입력해주세요.")
             return
         }
-
-        // pilgrimageId를 여기에서 설정
-        val pilgrimageId: Long = 1 // 예시로 설정
 
 
         val jsonObject = JSONObject().apply {
@@ -124,24 +134,27 @@ class RallyGuestBookActivity : AppCompatActivity() {
         val imageParts = selectedImages.mapNotNull { uri ->
             uriToMultipartBodyPart(uri, "images")
         }
+        Log.d("RallyGuestBookActivity", "imageParts : $imageParts")
 
 
         // 헤더에 AccessToken 추가
         val authorizationHeader = "Bearer ${getAccessToken()}"
-        Log.e("RallyGuestBookActivity", ">> $authorizationHeader")
 
 
         if (selectedImages.isNotEmpty()) {
-            uploadPostRequest(authorizationHeader, jsonRequestBody, imageParts, pilgrimageId)
+            Log.d("RallyGuestBookActivity", "1")
+            uploadPostRequest(rallyAnimationId,authorizationHeader, jsonRequestBody, imageParts)
+
         } else {
-            uploadPostRequest(authorizationHeader,jsonRequestBody, emptyList(), pilgrimageId)
+            Log.d("RallyGuestBookActivity", "2")
+            uploadPostRequest(rallyAnimationId, authorizationHeader,jsonRequestBody, emptyList())
         }
 
 
     }
 
     private fun getAccessToken(): String? {
-        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        //val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
     }
 
@@ -157,12 +170,15 @@ class RallyGuestBookActivity : AppCompatActivity() {
     }
 
     private fun uploadPostRequest(
+        rallyAnimationId:Long,
         authorizationHeader: String,
         jsonRequestBody: RequestBody,
         imageParts: List<MultipartBody.Part>,
-        pilgrimageId:Long) {
+        ) {
 
-        rallyGuestBookService.guestBookUploadPost(authorizationHeader,jsonRequestBody,imageParts,pilgrimageId)
+        Log.d("RallyGuestBookActivity", ">> pilgrimageId: $rallyAnimationId")
+
+        rallyGuestBookService.uploadPost(rallyAnimationId,authorizationHeader,jsonRequestBody,imageParts)
             .enqueue(object :Callback<RallyGuestBookService.GuestbookResponse>{
                 override fun onResponse(
                     call: Call<RallyGuestBookService.GuestbookResponse>,
@@ -176,13 +192,15 @@ class RallyGuestBookActivity : AppCompatActivity() {
 
                             val intent = Intent(this@RallyGuestBookActivity, MyGuestBookActivity::class.java)
                             // 여기에 게시글 ID 등의 데이터를 전달할 수 있음
-                            startActivity(intent)
+                            //startActivity(intent)
+
 
                             // 현재 액티비티를 종료
                             finish()
                         }
                         else{
                             Log.e("RallyGuestBookActivity", "API Error: 실패")
+                            Log.d("FreeWritePostActivity", "API Error: ${response.errorBody()?.string()}")
                         }
                     }
                 }
@@ -198,12 +216,11 @@ class RallyGuestBookActivity : AppCompatActivity() {
 
 
     private fun fetchRallyInfo(rallyAnimationId: Long){
-        //토큰 유효성
-        val token = sharedPreferences.getString("token", null)
-        val rallyAnimationId = intent.getLongExtra("rallyAnimationId", -1)
 
-        val call = rallyLocationDetailService.getRallyInfo("Bearer $token",rallyAnimationId.toLong())
+        val token = sharedPreferences.getString("token", null)
+        val call = rallyLocationDetailService.getRallyInfo("Bearer $token",rallyAnimationId)
         Log.d("RallyGuestBookActivity", ">> Bearer : $token ")
+
 
         call.enqueue(object : Callback<RallyLocationDetailService.RallyInfo> {
             override fun onResponse(
@@ -214,11 +231,8 @@ class RallyGuestBookActivity : AppCompatActivity() {
                     val rallyInfo=response.body()
                     if (rallyInfo != null) {
                         Log.d("RallyGuestBookActivity", ">> rallyInfo: $rallyInfo")
-                        rallyInfo.let {
-                            Log.e("RallyGuestBookActivity", ">> displayRallyInfo() 성공 ")
-                            displayRallyInfo(rallyInfo)
+                        displayRallyInfo(rallyInfo)
 
-                        }
                     }else{
                         // 응답 바디가 null인 경우
                         Log.e("RallyGuestBookActivity", "Response body is null")
@@ -237,6 +251,7 @@ class RallyGuestBookActivity : AppCompatActivity() {
     }
 
     private fun displayRallyInfo(rallyInfo: RallyLocationDetailService.RallyInfo) {
+
         binding.rallyGuestbookNameTv.text = rallyInfo.rallyName
         binding.rallyGuestbookCheckTv.text= rallyInfo.myPilgrimageNumber.toString()
         binding.rallyGuestbookTotalTv.text = rallyInfo.pilgrimageNumber.toString()
