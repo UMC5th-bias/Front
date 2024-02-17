@@ -134,17 +134,6 @@ class HomeFragment : Fragment() {
     }
 
 
-    override fun onStop() {
-        super.onStop()
-        // 앱이 종료될 때 로그아웃 상태를 SharedPreferences에 저장
-        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        with(sharedPreferences.edit()) {
-            putBoolean("isLoggedIn", isLoggedIn)
-            putString(ACCESS_TOKEN_KEY, accessToken)
-            apply()
-        }
-
-    }
 
     private fun setupTrendingPostsRecyclerView() {
 

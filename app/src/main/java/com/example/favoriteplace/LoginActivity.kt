@@ -49,7 +49,7 @@ class LoginActivity :AppCompatActivity() {
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
-       loginService = retrofit.create(LoginService::class.java)
+        loginService = retrofit.create(LoginService::class.java)
 
         // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
@@ -84,6 +84,7 @@ class LoginActivity :AppCompatActivity() {
         sharedPreferences.edit {
             putBoolean("isLoggedIn", isLoggedIn)
         }
+        Log.d("Login", " 로그인 상태 변경 : $isLoggedIn")
     }
 
     private fun scheduleTokenCheck() {
@@ -116,18 +117,19 @@ class LoginActivity :AppCompatActivity() {
                         val accessToken = loginResponse.accessToken
                         val refreshToken = loginResponse.refreshToken
 
-                        Log.d("Login", "AccessToken: $accessToken, \n RefreshToken: $refreshToken")
-                        Log.d("Login", "$loginResponse")
+                        Log.d("Login상태", "AccessToken: $accessToken, \n RefreshToken: $refreshToken")
+                        Log.d("Login상태", ">> lodgin body : $loginResponse")
                         saveToken(accessToken)
 
 
                         // SharedPreferences 객체 가져오기
-                        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
                         // SharedPreferences에 액세스 토큰 저장
                         sharedPreferences.edit {
                             putString(ACCESS_TOKEN_KEY, accessToken)
                             putString(REFRESH_TOKEN_KEY, refreshToken)
                         }
+                        // 로그인 상태 변경
+                        setLoggedIn(true)
 
                         val resultIntent = Intent(this@LoginActivity, MainActivity::class.java).apply {
                             putExtra(ACCESS_TOKEN_KEY, accessToken)
@@ -154,20 +156,12 @@ class LoginActivity :AppCompatActivity() {
     }
 
     private fun saveToken(token: String) {
-        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString(ACCESS_TOKEN_KEY, token).apply()
     }
 
     private fun isTokenExpired(token: String): Boolean {
         return false
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        setLoggedIn(false)
-        Log.d("Login", ">> 로그아웃" )
-
     }
 
 }

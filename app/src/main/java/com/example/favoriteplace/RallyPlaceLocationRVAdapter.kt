@@ -75,6 +75,7 @@ class RallyPlaceLocationRVAdapter(
     private fun isLoggedIn(): Boolean {
         // SharedPreferences에서 액세스 토큰 가져오기
         val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        Log.w("test", "${sharedPreferences.getBoolean("isLoggedIn", false)}")
         return sharedPreferences.getBoolean("isLoggedIn", false)
     }
 }
