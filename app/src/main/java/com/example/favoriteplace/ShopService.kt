@@ -4,6 +4,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ShopService {
@@ -40,4 +41,11 @@ interface ShopService {
         @Header("Authorization") token: String,
         @Path("item_id") itemId: Int
     ): Call<PurchaseResponse>
+
+    // 아이템을 적용하는 PUT 요청을 보내는 메소드
+    @PUT("/my/items/{item_id}")
+    fun applyItem(
+        @Header("Authorization") authorization: String,
+        @Path("item_id") itemId: Int
+    ): Call<ApplyResponse>
 }

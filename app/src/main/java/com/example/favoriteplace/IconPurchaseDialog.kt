@@ -59,26 +59,24 @@ class IconPurchaseDialog : DialogFragment(){
                     if (response.isSuccessful) {
                         val purchaseResponse = response.body()
                         Log.d("ShopMainFragment", "canBuy : ${response.body()}")
+                        popupIconApplyClick(itemId)
+                        dismiss()
 
-                        if (purchaseResponse?.canBuy == true) {
-                            // 구매 가능한 경우, 아이템 적용 팝업창 표시
-                            popupIconApplyClick()
-                        } else {
-                            // 구매 불가능한 경우, 로그 출력
-                            Log.d("ShopMainFragment", "아이템 구매가 불가능합니다.")
-                        }
                     } else {
                         // 요청 실패 처리, 로그 출력
                         Log.d("ShopMainFragment", "요청 실패: ${response.errorBody()?.string()}")
+                        dismiss()
+
                     }
                 }
 
                 override fun onFailure(call: Call<PurchaseResponse>, t: Throwable) {
                     // 네트워크 오류 등의 실패 처리, 로그 출력
                     Log.d("ShopMainFragment", "네트워크 오류: ${t.message}")
+                    dismiss()
+
                 }
             })
-            dismiss()
         }
 
         return view
@@ -89,9 +87,15 @@ class IconPurchaseDialog : DialogFragment(){
         val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
     }
-    private fun popupIconApplyClick() {
+
+    private fun popupIconApplyClick(itemId: Int) {
         if (isAdded && !isRemoving) {
-            FameApplyDialog().show(parentFragmentManager, "")
+            val dialog = IconApplyDialog()
+            val args = Bundle().apply {
+                putInt("ITEM_ID", itemId)
+            }
+            dialog.arguments = args
+            dialog.show(parentFragmentManager, "")
         } else {
             Log.d("DEBUG", "Fragment not attached to a context.")
         }

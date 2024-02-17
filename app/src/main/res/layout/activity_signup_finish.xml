@@ -61,19 +61,21 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="31.57dp"
                 android:layout_marginStart="30dp">
-                <ImageView
+
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/signup_profile_background"/>
-                <ImageView
+                    android:src="@drawable/signup_profile_background" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/finish_profile_iv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignBottom="@id/profile_background"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/signup_default_profile_image"/>
+                    android:src="@drawable/signup_default_profile_image" />
 
 
             </RelativeLayout>

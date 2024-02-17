@@ -76,7 +76,7 @@ class ShopMainUnlimitedFameFragment : Fragment() {
             val args = Bundle().apply {
                 putInt("userPoint", userPoint)
                 putInt("itemPoint", itemPoint)
-                putInt("itemID", itemId)
+                putInt("ITEM_ID", itemId)
             }
             famePurchaseDialog.arguments = args // Bundle을 Dialog에 설정
 

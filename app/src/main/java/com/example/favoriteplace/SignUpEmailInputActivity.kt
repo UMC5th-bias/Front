@@ -81,6 +81,7 @@ class SignUpEmailInputActivity: AppCompatActivity() {
                                 intent.putExtra("email", email)
 
                                 startActivity(intent)
+                                finish() // 현재 화면 종료
                             }
                         } else {
                             // 요청 실패시

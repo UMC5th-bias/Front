@@ -124,6 +124,7 @@ class SignUpEmailVerificationActivity: AppCompatActivity() {
                         intent.putExtra("email", email)
 
                         startActivity(intent)
+                        finish() // 현재 화면 종료
 
 
                     } else {
