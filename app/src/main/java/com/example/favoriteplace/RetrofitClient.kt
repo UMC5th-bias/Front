@@ -26,7 +26,6 @@ object RetrofitClient {
 
     val communityService: CommunityAPIService= retrofit.create(CommunityAPIService::class.java)
 
-    val rallyGuestBookService : RallyGuestBookService = retrofit.create(RallyGuestBookService::class.java)
 
 
 

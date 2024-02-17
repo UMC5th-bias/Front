@@ -40,12 +40,17 @@ import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import org.json.JSONObject
+import retrofit2.create
 
 
 class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
     lateinit var binding: FragmentRallylocationdetailBinding
     lateinit var retrofit: Retrofit
     lateinit var rallyLocationDetailService: RallyLocationDetailService
+    lateinit var rallyCertifyService: RallyCertifyService
     lateinit var homeService : HomeService
     lateinit var naverMap: NaverMap // NaverMap 변수 선언
 
@@ -85,10 +90,11 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
         retrofit = Retrofit.Builder()
             .baseUrl("http://favoriteplace.store:8080")
             .addConverterFactory(GsonConverterFactory.create())
-            .client(createOkHttpClient()) // OkHttpClient 추가
+            .client(OkHttpClient.Builder().addInterceptor(RetrofitClient.logging).build()) // 로깅 인터셉터 추가
             .build()
 
         rallyLocationDetailService = retrofit.create(RallyLocationDetailService::class.java)
+        rallyCertifyService=retrofit.create(RallyCertifyService::class.java)
         homeService = retrofit.create(HomeService::class.java)
 
 
@@ -160,10 +166,13 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                         targetLocation = LatLng(rallyInfo.latitude ?: 0.0, rallyInfo.longitude ?: 0.0)
                         rallyInfo.let {
                             // 수정된 부분: isCertified 값을 true로 설정
-                            val modifiedRallyInfo = rallyInfo.copy(isWritable = true)
-                            displayRallyInfo(modifiedRallyInfo)
-                            Log.d("rallyLocationDetail", ">> modifiedRallyInfo: $modifiedRallyInfo")
+                            val CertifiedRallyInfo = rallyInfo.copy(isWritable = true)
+
+
+                            displayRallyInfo(CertifiedRallyInfo)
+                            Log.d("rallyLocationDetail", ">> modifiedRallyInfo: $CertifiedRallyInfo")
                             getCurrentLocation()
+                            //etCertify()
 
                         }
                     }else{
@@ -185,8 +194,14 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
     }
 
+    private fun getCertify() {
+        //val
+    }
+
     // 사용자 현재 위치
     private fun getCurrentLocation(){
+        val token = sharedPreferences.getString("token", null)
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -203,7 +218,24 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                         binding.rallyLocationdetailGuestbookCv.visibility = View.VISIBLE
                         binding.rallyLocationdetailNcountCv.visibility = View.VISIBLE
 
-                        showDistanceAlertDialog()
+
+//                        val jsonObject = JSONObject().apply {
+//                            put("latitude", testLatitude)
+//                            put("longitude", testLongitude)
+//                        }
+                        //val jsonRequestBody = RequestBody.create("application/json".toMediaTypeOrNull(), jsonObject.toString())
+                        // 헤더에 AccessToken 추가
+                        val authorizationHeader = "Bearer $token"
+
+                        val rallyAnimationId = arguments?.getLong("rallyAnimationId") ?: -1
+
+                        Log.d("RallyLocationDetail", " Latitude: $testLatitude, Longitude: $testLongitude ")
+
+                        Log.d("RallyLocationDetail", " 1번")
+                        uploadPostRequest(rallyAnimationId, authorizationHeader,testLongitude,testLatitude )
+                        Log.d("RallyLocationDetail", " 2번")
+//                        showDistanceAlertDialog()
+//                        Log.d("RallyLocationDetail", " 3")
                     }else{
 
                         Toast.makeText(context,"150m 반경에 있지 않습니다.",Toast.LENGTH_SHORT).show()
@@ -216,6 +248,51 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
+
+    private fun uploadPostRequest(
+        pilgrimageId: Long,
+        authorizationHeader: String,
+        longitude: Double,
+        latitude: Double
+    ) {
+        val postData = RallyCertifyService.PostData(longitude, latitude)
+
+        val call = rallyCertifyService.RallyCertify(
+            pilgrimageId,
+            authorizationHeader,
+            postData
+        )
+        Log.d("RallyLocationDetail", " ４번")
+        Log.d("RallyLocationDetail", ">> pilgrimageId: $pilgrimageId")
+
+        call.enqueue(object : Callback<RallyCertifyService.RallyCertifyResponse>{
+            override fun onResponse(
+                call: Call<RallyCertifyService.RallyCertifyResponse>,
+                response: Response<RallyCertifyService.RallyCertifyResponse>
+            ) {
+                if(response.isSuccessful){
+                    val responseData = response.body()
+                    if(responseData!=null){
+                        Log.d("RallyLocationDetail", " 인증 성공! \n" +
+                                "메시지: ${response.body()?.message}")
+                    }else{
+                        Log.d("RallyLocationDetail", "API Error: ${response.errorBody()?.string()}")
+                    }
+                }else{
+                    val errorBody = response.errorBody()?.string()
+                    Log.d("RallyLocationDetail", "API Error: $errorBody")
+                }
+            }
+
+            override fun onFailure(
+                call: Call<RallyCertifyService.RallyCertifyResponse>,
+                t: Throwable
+            ) {
+                Log.e("RallyGuestBookActivity", "Network Error: ${t.message}")
+            }
+        })
+    }
+
 
     private fun showDistanceAlertDialog() {
         // SharedPreferences에서 토큰 가져오기
