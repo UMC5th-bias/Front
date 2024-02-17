@@ -59,7 +59,7 @@ class IconPurchaseDialog : DialogFragment(){
                     if (response.isSuccessful) {
                         val purchaseResponse = response.body()
                         Log.d("ShopMainFragment", "canBuy : ${response.body()}")
-                        popupIconApplyClick()
+                        popupIconApplyClick(itemId)
                         dismiss()
 
                     } else {
@@ -87,9 +87,15 @@ class IconPurchaseDialog : DialogFragment(){
         val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
     }
-    private fun popupIconApplyClick() {
+
+    private fun popupIconApplyClick(itemId: Int) {
         if (isAdded && !isRemoving) {
-            FameApplyDialog().show(parentFragmentManager, "")
+            val dialog = IconApplyDialog()
+            val args = Bundle().apply {
+                putInt("ITEM_ID", itemId)
+            }
+            dialog.arguments = args
+            dialog.show(parentFragmentManager, "")
         } else {
             Log.d("DEBUG", "Fragment not attached to a context.")
         }

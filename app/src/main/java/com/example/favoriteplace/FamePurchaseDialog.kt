@@ -80,7 +80,7 @@ class FamePurchaseDialog : DialogFragment() {
                             val purchaseResponse = response.body()
                             Log.d("ShopMainFragment", "canBuy : $purchaseResponse")
 
-                            popupFameApplyClick()
+                            popupFameApplyClick(itemId)
                             dismiss()
                         } else {
                             // 요청 실패 처리, 로그 출력
@@ -110,9 +110,14 @@ class FamePurchaseDialog : DialogFragment() {
         return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
     }
 
-    private fun popupFameApplyClick() {
+    private fun popupFameApplyClick(itemId: Int) {
         if (isAdded && !isRemoving) {
-            FameApplyDialog().show(parentFragmentManager, "")
+            val dialog = FameApplyDialog()
+            val args = Bundle().apply {
+                putInt("ITEM_ID", itemId)
+            }
+            dialog.arguments = args
+            dialog.show(parentFragmentManager, "")
         } else {
             Log.d("DEBUG", "Fragment not attached to a context.")
         }
