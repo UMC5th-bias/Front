@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -20,6 +21,7 @@ class CommunityFreeFragment : Fragment(), SortBottomSheetFragment.OnSortOptionSe
     lateinit var binding: FragmentCommunityFreeBinding
     private val information= arrayListOf("최신 글","추천 많은 글","내가 작성한 글","내 댓글")
     private var searchText: String=""
+    private var searchType: String=""
 
     @SuppressLint("ClickableViewAccessibility", "ServiceCast")
     override fun onCreateView(
@@ -99,13 +101,16 @@ class CommunityFreeFragment : Fragment(), SortBottomSheetFragment.OnSortOptionSe
 
         //사용자가 검색한 내용 저장
         searchText= binding.searchTextView.text.toString()
-        arguments = Bundle().apply {
-            putString("SEARCH_TEXT", searchText) // SEARCH_TEXT 키로 사용자가 검색한 내용 저장
-        }
+        searchType=binding.communityFreeSortTv.text.toString()
 
         //CommunityFreeSearchFragment()로 전환
         (context as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frameLayout, CommunityFreeSearchFragment())
+            .replace(R.id.main_frameLayout, CommunityFreeSearchFragment().apply {
+                arguments = Bundle().apply {
+                    putString("SEARCH_TEXT", searchText) // SEARCH_TEXT 키로 사용자가 검색한 내용 저장
+                    putString("SEARCH_TYPE", searchType)
+                }
+            })
             .commitAllowingStateLoss()
     }
 
@@ -119,10 +124,16 @@ class CommunityFreeFragment : Fragment(), SortBottomSheetFragment.OnSortOptionSe
             "내용" -> {
                 // 날짜로 정렬하는 작업 수행
                 binding.communityFreeSortTv.text="내용"
+                arguments = Bundle().apply {
+                    putString("SEARCH_TYPE", option) // SEARCH_TEXT 키로 사용자가 검색한 내용 저장
+                }
             }
             "닉네임" -> {
-                // 평점으로 정렬하는 작업 수행
+                // 닉네임으로 정렬하는 작업 수행
                 binding.communityFreeSortTv.text="닉네임"
+                arguments = Bundle().apply {
+                    putString("SEARCH_TYPE", option) // SEARCH_TEXT 키로 사용자가 검색한 내용 저장
+                }
             }
         }
     }

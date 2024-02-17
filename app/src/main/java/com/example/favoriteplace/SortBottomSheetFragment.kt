@@ -26,7 +26,7 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SortBottomSheetBinding.inflate(inflater, container, false)
 
         // 이전 선택 값이 있으면 UI에 설정
