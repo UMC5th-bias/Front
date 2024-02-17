@@ -1,8 +1,11 @@
 package com.example.favoriteplace
 
+import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -60,4 +63,10 @@ interface CommunityAPIService {
         @Path("post_id") postId: Long
     ): Call<FreeCommentDetailResponse>
 
+    @POST("/posts/free/{post_id}/comments")
+    fun postFreeComment(
+        @Header("Authorization") authorization:String?,
+        @Path("post_id") postId: Long,
+        @Body requestBody: RequestBody
+    ): Call<ApplyResponse>
 }

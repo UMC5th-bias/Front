@@ -1,14 +1,13 @@
 package com.example.favoriteplace
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.ImageLoader
@@ -19,12 +18,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.favoriteplace.databinding.ActivityPostDetailBinding
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class PostDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityPostDetailBinding
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +49,35 @@ class PostDetailActivity : AppCompatActivity() {
         } else {
             // 적절한 오류 처리 또는 사용자에게 피드백 제공
         }
+
+        binding.commentSubmitButton.setOnClickListener {
+            val comment = binding.commentRegisterEt.text.toString()
+            if (comment.isNotEmpty()) {
+                sendCommentToServer(postId, comment)
+            } else {
+                showToast(this,"댓글을 입력하세요.") // 댓글이 비어있을 경우 처리
+            }
+        }
     }
+
+    private fun getAccessToken(): String? {
+        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
+    }
+
+    fun showToast(context: Context, message: String) {
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+
+        val textView = layout.findViewById<TextView>(R.id.custom_toast_message)
+        textView.text = message
+
+        val toast = Toast(context)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
+    }
+
 
     private fun modalWithRoundCorner() {
         val modal = MyFilterBottomSheetFragment().apply {
@@ -171,5 +202,33 @@ class PostDetailActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun sendCommentToServer(postId: Int, commentContent: String) {
+        // 댓글 내용을 JSON 형식의 문자열로 변환합니다.
+        val jsonComment = "{\"content\": \"$commentContent\"}"
+
+        // RequestBody를 생성하여 JSON 형식의 문자열을 전달합니다.
+        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), jsonComment)
+
+        // 헤더에 AccessToken 추가
+        val authorizationHeader = "Bearer ${getAccessToken()}"
+
+        // Retrofit 클라이언트 인터페이스에서 정의한 API 메서드를 사용하여 댓글을 등록하는 요청을 만듭니다.
+        RetrofitClient.communityService.postFreeComment(authorizationHeader, postId.toLong(), requestBody).enqueue(object : Callback<ApplyResponse> {
+            override fun onResponse(call: Call<ApplyResponse>, response: Response<ApplyResponse>) {
+                if (response.isSuccessful) {
+                    Log.e("PostDetailActivity", "댓글이 등록되었습니다.")
+                    fetchPostDetail(postId)
+                } else {
+                    Log.e("PostDetailActivity", "댓글 등록에 실패했습니다.")
+                }
+            }
+
+            override fun onFailure(call: Call<ApplyResponse>, t: Throwable) {
+                Log.e("PostDetailActivity", "네트워크 오류: ${t.message}")
+            }
+        })
+    }
+
 
 }
