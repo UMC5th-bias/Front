@@ -3,6 +3,7 @@ package com.example.favoriteplace
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CommunityAPIService {
@@ -48,5 +49,10 @@ interface CommunityAPIService {
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Call<RallyMyComment>
+
+    @GET("/posts/free/{post_id}")
+    fun getPostDetail(
+        @Path("post_id") postId: Int
+    ): Call<PostDetailResponse>
 
 }

@@ -1,5 +1,7 @@
 package com.example.favoriteplace
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,7 +19,6 @@ class CommunityFreeRecommendFragment : Fragment() {
     lateinit var binding: FragmentCommunityFreeRecommendBinding
     private var freeRecommendWriteData = ArrayList<Posts>()
     private var currentPage=1
-    private var isLogIn=true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,14 +32,25 @@ class CommunityFreeRecommendFragment : Fragment() {
         return binding.root
     }
 
+    private fun getAccessToken(): String? {
+        val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
+    }
+
+    // 사용자의 로그인 상태를 확인하는 메소드
+    private fun isLoggedIn(): Boolean {
+        return getAccessToken() != null
+    }
+
+
     //서버에서 추천글을 가져오는 코드
     private fun fetchPosts() {
 
         var accessToken: String? =null
 
         //로그인 중이라면 토큰을 서버에 전달
-        if (isLogIn){
-            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
+        if (isLoggedIn()){
+            accessToken = getAccessToken()
         }
 
         RetrofitClient.communityService.getPosts("Bearer $accessToken",currentPage,10,"liked")
@@ -69,7 +81,14 @@ class CommunityFreeRecommendFragment : Fragment() {
 
                                 //RVA실행
                                 val freeRecommendRVAdapter =
-                                    CommunityFreeRecommendRVAdapter(freeRecommendWriteData)
+                                    CommunityFreeRecommendRVAdapter(freeRecommendWriteData, object : CommunityFreeLatelyRVAdapter.OnItemClickListener{
+                                        override fun onItemClick(postId: Int) {
+                                            val intent = Intent(context, PostDetailActivity::class.java).apply {
+                                                putExtra("POST_ID", postId)
+                                            }
+                                            startActivity(intent)
+                                        }
+                                    })
                                 binding.communityFreeRecommendRv.adapter = freeRecommendRVAdapter
                                 binding.communityFreeRecommendRv.layoutManager =
                                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

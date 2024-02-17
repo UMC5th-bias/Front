@@ -1,5 +1,7 @@
 package com.example.favoriteplace
 
+import com.google.gson.annotations.SerializedName
+
 data class CommunityPost(
     val page: Int,
     val size: Int,
@@ -74,4 +76,30 @@ data class MyComments(
     val content: String,
     val passedTime: String,
     val myGuestBookInfo: GuestMy
+)
+
+data class PostDetailResponse(
+    @SerializedName("userInfo") val userInfo: PostUserInfo,
+    @SerializedName("postInfo") val postInfo: PostInfo
+)
+
+data class PostUserInfo(
+    @SerializedName("id") val id: Int,
+    @SerializedName("nickname") val nickname: String,
+    @SerializedName("profileImageUrl") val profileImageUrl: String,
+    @SerializedName("profileTitleUrl") val profileTitleUrl: String,
+    @SerializedName("profileIconUrl") val profileIconUrl: String
+)
+
+data class PostInfo(
+    @SerializedName("id") val id: Int,
+    @SerializedName("title") val title: String,
+    @SerializedName("content") val content: String,
+    @SerializedName("views") val views: Int,
+    @SerializedName("likes") val likes: Int,
+    @SerializedName("comments") val comments: Int,
+    @SerializedName("isLike") val isLike: Boolean,
+    @SerializedName("isWrite") val isWrite: Boolean,
+    @SerializedName("passedTime") val passedTime: String,
+    @SerializedName("image") val image: List<String>
 )

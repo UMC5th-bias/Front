@@ -7,7 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemCommunityFreeLatelyBinding
 import java.util.ArrayList
 
-class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<Posts>): RecyclerView.Adapter<CommunityFreeLatelyRVAdapter.ViewHolder>() {
+class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<Posts>,
+                                    private val listener: OnItemClickListener
+): RecyclerView.Adapter<CommunityFreeLatelyRVAdapter.ViewHolder>() {
+
+    // 클릭 이벤트를 처리할 리스너 인터페이스 정의
+    interface OnItemClickListener {
+        fun onItemClick(postId: Int)
+    }
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -25,6 +32,14 @@ class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<Posts>): R
     override fun getItemCount(): Int=latelyList.size
 
     inner class ViewHolder(val binding: ItemCommunityFreeLatelyBinding): RecyclerView.ViewHolder(binding.root){
+        init {
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(latelyList[position].id)
+                }
+            }
+        }
 
         fun bind(latelywrite: Posts){
             binding.itemCommunityFreeLatelyTitleTv.text=latelywrite.title
