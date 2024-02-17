@@ -135,11 +135,6 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
 
     private fun fetchRallyInfo(rallyAnimationId: Long) {
 
@@ -227,13 +222,12 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
         fetchUserNickname(token!!) { nickname ->
             // 닉네임을 가져온 후에 다이얼로그 생성
-            val dialog = RallyLocationDialog(nickname)
+            val dialog = RallyLocationDialog(nickname,rallyAnimationId)
             dialog.show(childFragmentManager, "RallyLocationDialog")
             Log.d("RallyLocationDetail", ">> userNickname : $nickname")
         }
 
     }
-
 
     // user token을 사용하여 사용자 nickname 가져오기
     private fun fetchUserNickname(token: String, callback: (String) -> Unit) {

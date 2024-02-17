@@ -53,6 +53,8 @@
         <activity android:name=".SignUpPwdInputActivity"/>
         <activity android:name=".FreeWritePostActivity"/>
         <activity android:name=".PostDetailActivity"/>
+        <activity android:name=".RallyGuestBookActivity"/>
+        <activity android:name=".MyGuestBookActivity"/>
 
     </application>
 

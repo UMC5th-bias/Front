@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,9 +12,10 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.favoriteplace.databinding.DialogRallylocationDetailBinding
 
-class RallyLocationDialog(private val nickname: String) : DialogFragment(){
+class RallyLocationDialog(private val nickname: String, private val rallyAnimationId: Long) : DialogFragment() {
 
     private lateinit var binding : DialogRallylocationDetailBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +40,10 @@ class RallyLocationDialog(private val nickname: String) : DialogFragment(){
         binding.dialogNowBtn.setOnClickListener {
             Toast.makeText(context,"바로 쓰러가기 클릭 ",Toast.LENGTH_SHORT).show()
             dismiss()
+
+            val intent = Intent(requireContext(), RallyGuestBookActivity::class.java)
+            intent.putExtra("rallyAnimationId", rallyAnimationId)
+            startActivity(intent)
         }
 
         // 닉네임 설정
