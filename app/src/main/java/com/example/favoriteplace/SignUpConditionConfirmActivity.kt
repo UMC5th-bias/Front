@@ -49,7 +49,7 @@ class SignUpConditionConfirmActivity: AppCompatActivity() {
                     val intent = Intent(this@SignUpConditionConfirmActivity, SignUpEmailInputActivity::class.java)
                     intent.putExtra("snsAllow", snsAllow)
                     startActivity(intent)
-
+                    finish() // 현재 화면 종료
 
                 }
             } else {

@@ -173,7 +173,7 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
 
             selectedImage?.let {
                 // 이미지 선택 후 처리
-                val imageUri = Uri.parse(getRealPathFromURI(selectedImage))
+                imageUri = Uri.parse(getRealPathFromURI(selectedImage))
                 Log.d("SignUp", ">> imageUri: $imageUri")
                 // 이미지 파일을 생성하고 리스트에 추가
                 val imageFile = File(getRealPathFromURI(selectedImage))
@@ -181,15 +181,18 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
 
                 intent.putExtra("imageFiles",imageFiles.toTypedArray())
 
-                val inputStream = contentResolver.openInputStream(it)
-                inputStream?.let { stream ->
-                    val bitmap = BitmapFactory.decodeStream(stream)
-                    val byteArrayOutputStream = ByteArrayOutputStream()
-                    bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-                    binding.profileIv.setImageBitmap(bitmap)
+//                val inputStream = contentResolver.openInputStream(it)
+//                inputStream?.let { stream ->
+//                    val bitmap = BitmapFactory.decodeStream(stream)
+//                    val byteArrayOutputStream = ByteArrayOutputStream()
+//                    bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+//                    binding.profileIv.setImageBitmap(bitmap)
+//
+//                }
 
-                }
 
+                // CircleImageView에 이미지 설정
+                binding.profileIv.setImageURI(imageUri)
 
                 Log.d("SignUp", ">> 사진 선택 완료")
             }
@@ -215,6 +218,7 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
 
         Log.d("SignUp", ">> { $snsAllow, $email, $password, $nickname, $introduction,$imageFilePath }")
         startActivity(intent)
+        finish() // 현재 화면 종료
     }
 
     private fun getRealPathFromURI(uri: Uri): String ? {
