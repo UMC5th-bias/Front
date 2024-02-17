@@ -70,6 +70,7 @@ class LoginActivity :AppCompatActivity() {
 
         binding.loginSignupTv.setOnClickListener {
             startActivity(Intent(this, SignUpConditionConfirmActivity::class.java))
+            finish() // 현재 화면 종료
         }
 
 

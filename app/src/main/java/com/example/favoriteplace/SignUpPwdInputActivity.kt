@@ -73,6 +73,7 @@ class SignUpPwdInputActivity: AppCompatActivity() {
                             Log.d("SignUp", ">> $snsAllow, $email, $password")
 
                             startActivity(intent)
+                            finish() // 현재 화면 종료
                         }
                     }
 
