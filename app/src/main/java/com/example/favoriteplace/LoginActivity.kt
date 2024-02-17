@@ -49,7 +49,7 @@ class LoginActivity :AppCompatActivity() {
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
-       loginService = retrofit.create(LoginService::class.java)
+        loginService = retrofit.create(LoginService::class.java)
 
         // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)

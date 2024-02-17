@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.collection.arraySetOf
+import androidx.core.content.edit
+import com.example.favoriteplace.HomeFragment.Companion.ACCESS_TOKEN_KEY
 import com.example.favoriteplace.HomeFragment.Companion.LOGIN_REQUEST_CODE
 import com.example.favoriteplace.databinding.ActivityMainBinding
 
@@ -16,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
     private lateinit var sharedPreferences: SharedPreferences
+    internal var accessToken: String? = null // 액세스 토큰을 저장할 변수
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,13 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        // 앱이 종료될 때 토큰 값을 제거
-        removeToken()
         super.onDestroy()
-    }
-
-    private fun removeToken() {
-        sharedPreferences.edit().remove("token").apply()
     }
 
     private fun initBottomNavigation(){

@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
         binding.homeBannerVp.adapter=bannerAdapter
         binding.homeBannerVp.orientation=ViewPager2.ORIENTATION_HORIZONTAL
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_banner1))
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_banner1))
+        bannerAdapter.addFragment(BannerFragment(R.drawable.demo))
 
 
 
@@ -314,7 +314,6 @@ class HomeFragment : Fragment() {
         }
     }
 }
-
 
 
 
