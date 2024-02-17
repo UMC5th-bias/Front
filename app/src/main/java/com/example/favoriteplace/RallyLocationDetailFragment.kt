@@ -64,8 +64,8 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
 
     // test
-//    private val testLatitude: Double = 35.69297366487135
-//    private val testLongitude: Double = 139.69942224122263
+    private val testLatitude: Double = 35.69297366487135
+    private val testLongitude: Double = 139.69942224122263
 
 
 
@@ -193,8 +193,8 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 location?.let {
-                    currentUserLocation=LatLng(location.latitude, location.longitude)
-                    //currentUserLocation = LatLng(testLatitude, testLongitude) // test
+                    //currentUserLocation=LatLng(location.latitude, location.longitude)
+                    currentUserLocation = LatLng(testLatitude, testLongitude) // test
                     val distance = currentUserLocation.distanceTo(targetLocation)
 
                     if(distance <=150){
