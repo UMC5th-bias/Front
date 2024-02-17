@@ -78,6 +78,7 @@ class SignUpFinishActivity: AppCompatActivity() {
         val introduction = intent?.getStringExtra("introduction") ?: ""
         // 이미지 파일의 경로를 받아옴
         val imageFilePath: String? = intent.getStringExtra("imageFilePath")
+        Log.d("Sign up", ">> Image File Path : $imageFilePath")
 
 
         intent.putExtra("nickname", nickname)
@@ -137,7 +138,7 @@ class SignUpFinishActivity: AppCompatActivity() {
             // JSON 데이터를 RequestBody로 변환
             val jsonRequestBody = Gson().toJson(signUpRequest).toRequestBody("application/json".toMediaTypeOrNull())
             // 이미지 URI를 MultipartBody.Part로 변환
-            val imagePart = imageUri?.let { uriToMultipartBodyPart(it) }
+            val imagePart = uriToMultipartBodyPart(imageFilePath)
 
             // 이미지가 null이 아닌 경우에만 서버에 전송
             if (imagePart != null) {
@@ -183,6 +184,7 @@ class SignUpFinishActivity: AppCompatActivity() {
                             Log.d("SignUp", ">> 회원가입 성공!")
                             val intent = Intent(this@SignUpFinishActivity, LoginActivity::class.java)
                             startActivity(intent)
+                            finish() // 현재 화면 종료
                         }
                     } else {
                         val errorBody = response.errorBody()?.string()
@@ -196,13 +198,14 @@ class SignUpFinishActivity: AppCompatActivity() {
             })
     }
 
-    private fun uriToMultipartBodyPart(uri: Uri): MultipartBody.Part {
-        // URI를 파일 경로로 변환하여 RequestBody로 생성
-        val file = File(uri.path ?: "")
-        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-
-        // 이미지 파일의 이름을 파라미터로 지정하여 MultipartBody.Part 생성
-        return MultipartBody.Part.createFormData("images", file.name, requestFile)
+    private fun uriToMultipartBodyPart(imageFilePath: String?): MultipartBody.Part? {
+        // 이미지 파일 경로가 null이 아니고 빈 문자열이 아닌 경우에만 처리
+        if (!imageFilePath.isNullOrEmpty()) {
+            val file = File(imageFilePath)
+            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+            return MultipartBody.Part.createFormData("images", file.name, requestFile)
+        }
+        return null
     }
 
 }

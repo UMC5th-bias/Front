@@ -261,13 +261,18 @@ class FreeWritePostActivity : AppCompatActivity() {
             uriToMultipartBodyPart(uri, "images")
         }
 
+        Log.d("FreeWriteFragment", "imageParts : $imageParts")
+
         // 헤더에 AccessToken 추가
         val authorizationHeader = "Bearer ${getAccessToken()}"
 
         if (selectedImages.isNotEmpty()) {
+            Log.d("FreeWriteFragment", "1")
             uploadPostRequest(authorizationHeader, jsonRequestBody, imageParts)
         } else {
-            uploadPostRequest(authorizationHeader,jsonRequestBody, emptyList() )
+            Log.d("FreeWriteFragment", "2")
+            val emptyImageList = listOf<MultipartBody.Part>()
+            uploadPostRequest(authorizationHeader,jsonRequestBody, emptyImageList )
         }
 
     }
@@ -287,10 +292,10 @@ class FreeWritePostActivity : AppCompatActivity() {
                             // 서버로부터 받은 메시지를 Toast로 표시
                             showToast(this@FreeWritePostActivity, responseData.message)
 
-                            // PostDetailActivity를 시작
-                            val intent = Intent(this@FreeWritePostActivity, PostDetailActivity::class.java)
-                            // 여기에 게시글 ID 등의 데이터를 전달할 수 있음
-                            startActivity(intent)
+//                            // CommunityFreeFragment 시작
+//                            supportFragmentManager.beginTransaction()
+//                                .replace(R.id.main_frameLayout, CommunityFreeFragment())
+//                                .commitAllowingStateLoss()
 
                             // 현재 액티비티를 종료
                             finish()
