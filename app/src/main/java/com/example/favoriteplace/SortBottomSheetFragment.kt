@@ -9,11 +9,9 @@ import android.view.ViewGroup
 import com.example.favoriteplace.databinding.SortBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-
-// 이전에 선택한 값을 저장할 변수 (초기값: 제목)
-private var previousOption: Int=2131297427
-
 class SortBottomSheetFragment : BottomSheetDialogFragment() {
+    // 이전에 선택한 값을 저장할 변수(초기값: 제목)
+    private var previousOption: Int=2131297427
     lateinit var binding: SortBottomSheetBinding
 
     private var onDismissListener: SearchManager.OnDismissListener? = null
