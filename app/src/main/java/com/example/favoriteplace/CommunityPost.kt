@@ -103,3 +103,17 @@ data class PostInfo(
     @SerializedName("passedTime") val passedTime: String,
     @SerializedName("image") val image: List<String>
 )
+
+data class FreeCommentDetailResponse(
+    val page: Int,
+    val size: Int,
+    val comment: List<Comment>
+)
+
+data class Comment(
+    val userInfo: PostUserInfo,
+    val id: Int,
+    val content: String,
+    val passedTime: String,
+    val isWrite: Boolean
+)

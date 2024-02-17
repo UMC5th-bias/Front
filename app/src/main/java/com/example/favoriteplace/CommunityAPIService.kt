@@ -51,8 +51,13 @@ interface CommunityAPIService {
     ): Call<RallyMyComment>
 
     @GET("/posts/free/{post_id}")
-    fun getPostDetail(
+    fun getFreePostDetail(
         @Path("post_id") postId: Int
     ): Call<PostDetailResponse>
+
+    @GET("/posts/free/{post_id}/comments")
+    fun getFreeCommentDetail(
+        @Path("post_id") postId: Long
+    ): Call<FreeCommentDetailResponse>
 
 }

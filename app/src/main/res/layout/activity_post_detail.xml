@@ -223,12 +223,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
+            android:layout_marginTop="2dp"
             android:text="3"
             android:textColor="@color/main"
             android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="@id/status_bottomLine_vw"
+            app:layout_constraintBottom_toBottomOf="@id/commentNum_tv"
             app:layout_constraintStart_toEndOf="@id/good_iv"
-            app:layout_constraintTop_toTopOf="@id/status_topLine_vw" />
+            app:layout_constraintTop_toTopOf="@id/commentNum_tv" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/comment_iv"
@@ -272,9 +273,9 @@
             android:text="2"
             android:textColor="@color/gray"
             android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="@id/status_bottomLine_vw"
+            app:layout_constraintBottom_toBottomOf="@id/commentNum_tv"
             app:layout_constraintStart_toEndOf="@id/view_iv"
-            app:layout_constraintTop_toTopOf="@id/status_topLine_vw" />
+            app:layout_constraintTop_toTopOf="@id/commentNum_tv" />
 
         <View
             android:id="@+id/status_bottomLine_vw"

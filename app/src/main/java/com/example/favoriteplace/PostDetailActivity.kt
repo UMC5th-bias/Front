@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
@@ -55,7 +56,31 @@ class PostDetailActivity : AppCompatActivity() {
     }
 
     private fun fetchPostDetail(postId: Int) {
-        RetrofitClient.communityService.getPostDetail(postId).enqueue(object :
+        // 댓글 정보를 받아오는 Retrofit 요청
+        RetrofitClient.communityService.getFreeCommentDetail(postId.toLong()).enqueue(object :
+            Callback<FreeCommentDetailResponse> {
+            override fun onResponse(call: Call<FreeCommentDetailResponse>, response: Response<FreeCommentDetailResponse>) {
+                if (response.isSuccessful) {
+                    val postDetail = response.body()
+                    postDetail?.let {
+                        // 데이터를 가져왔으므로 어댑터에 설정
+                        val commentAdapter = CommentAdapter(postDetail.comment)
+                        binding.commentRv.adapter = commentAdapter
+                        binding.commentRv.layoutManager = LinearLayoutManager(this@PostDetailActivity)
+                    }
+                } else {
+                    // 댓글 정보를 받아오는 데 실패한 경우
+                    Log.e("PostDetailActivity", "Fetch comment detail failed: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<FreeCommentDetailResponse>, t: Throwable) {
+                // 네트워크 요청 자체가 실패한 경우
+                Log.e("PostDetailActivity", "Network request failed: ${t.message}")
+            }
+        })
+
+        RetrofitClient.communityService.getFreePostDetail(postId).enqueue(object :
             Callback<PostDetailResponse> {
             override fun onResponse(call: Call<PostDetailResponse>, response: Response<PostDetailResponse>) {
                 if (response.isSuccessful) {
