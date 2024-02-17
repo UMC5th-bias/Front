@@ -25,12 +25,11 @@ class LoginActivity :AppCompatActivity() {
     lateinit var retrofit: Retrofit
     lateinit var loginService: LoginService
     private lateinit var sharedPreferences: SharedPreferences
-
     private val handler = Handler()
 
 
     companion object {
-        const val ACCESS_TOKEN_KEY = "accessToken"
+        const val ACCESS_TOKEN_KEY = "token"
         const val REFRESH_TOKEN_KEY = "refreshToken"
         const val CHECK_TOKEN_INTERVAL = 1000 * 60 * 60 // 1 hour in milliseconds
     }
@@ -79,12 +78,6 @@ class LoginActivity :AppCompatActivity() {
 
     }
 
-    // SharedPreferences에 저장된 로그인 상태를 반환
-    private fun isLoggedIn(): Boolean {
-
-        return  sharedPreferences.getBoolean("isLoggedIn", false)
-    }
-
 
     // 로그인 상태 sharedPreferences저장
     private fun setLoggedIn(isLoggedIn: Boolean) {
@@ -124,7 +117,7 @@ class LoginActivity :AppCompatActivity() {
                         val refreshToken = loginResponse.refreshToken
 
                         Log.d("Login", "AccessToken: $accessToken, \n RefreshToken: $refreshToken")
-
+                        Log.d("Login", "$loginResponse")
                         saveToken(accessToken)
 
 
@@ -133,7 +126,7 @@ class LoginActivity :AppCompatActivity() {
                         // SharedPreferences에 액세스 토큰 저장
                         sharedPreferences.edit {
                             putString(ACCESS_TOKEN_KEY, accessToken)
-                            putString(REFRESH_TOKEN_KEY, accessToken)
+                            putString(REFRESH_TOKEN_KEY, refreshToken)
                         }
 
                         val resultIntent = Intent(this@LoginActivity, MainActivity::class.java).apply {
@@ -162,7 +155,7 @@ class LoginActivity :AppCompatActivity() {
 
     private fun saveToken(token: String) {
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString("token", token).apply()
+        sharedPreferences.edit().putString(ACCESS_TOKEN_KEY, token).apply()
     }
 
     private fun isTokenExpired(token: String): Boolean {
@@ -172,8 +165,8 @@ class LoginActivity :AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
-        setLoggedIn(true)
-        Log.d("Login", ">> 로그아웃 상태 저장 : $sharedPreferences" )
+        setLoggedIn(false)
+        Log.d("Login", ">> 로그아웃" )
 
     }
 

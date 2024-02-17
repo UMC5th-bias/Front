@@ -16,8 +16,7 @@ import retrofit2.Response
 
 class RallyPlaceLocationRVAdapter(
     private val context: Context,
-    private val locationInfoList:  List<RallyPlaceAnimation>
-
+    private val locationInfoList:  List<RallyPlaceAnimation>,
 
 ) : RecyclerView.Adapter<RallyPlaceLocationRVAdapter.viewHolder>() {
     override fun onCreateViewHolder(

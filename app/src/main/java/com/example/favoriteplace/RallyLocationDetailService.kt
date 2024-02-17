@@ -26,7 +26,7 @@ interface RallyLocationDetailService {
 
     @GET("/pilgrimage/detail/{pilgrimageId}")
     fun getRallyInfo(
-        @Header("Authorization") token: String,
+        @Header("Authorization") authorization: String,
         @Path("pilgrimageId") pilgrimageId: Long
     ): Call<RallyInfo>
 }

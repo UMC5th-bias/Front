@@ -15,7 +15,6 @@ interface LoginService {
         val grantType: String,
         val accessToken: String,
         val refreshToken: String,
-
         val errorMessage: String? // 실패 시
     )
 

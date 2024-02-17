@@ -2,6 +2,7 @@ package com.example.favoriteplace
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,20 +15,42 @@ import com.example.favoriteplace.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
+    private lateinit var sharedPreferences: SharedPreferences
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
         setContentView(binding.root)
 
-        // LoginActivity에서 전달된 데이터 받기
-        val isLoggedIn = intent.getBooleanExtra("isLoggedIn", false)
-
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        // 앱 실행 시 토큰 값 확인
+        checkToken()
 
         initBottomNavigation()
 }
 
+    private fun checkToken() {
+        val accessToken = sharedPreferences.getString("token", null)
+        if (accessToken != null) {
 
+            Log.d("MainActivity", ">> login 상태 ")
+
+        } else {
+            Log.d("MainActivity", ">> Token 없음 ")
+        }
+    }
+
+    override fun onDestroy() {
+        // 앱이 종료될 때 토큰 값을 제거
+        removeToken()
+        super.onDestroy()
+    }
+
+    private fun removeToken() {
+        sharedPreferences.edit().remove("token").apply()
+    }
 
     private fun initBottomNavigation(){
         supportFragmentManager.beginTransaction()

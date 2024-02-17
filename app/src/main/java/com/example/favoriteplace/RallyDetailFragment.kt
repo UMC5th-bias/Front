@@ -40,13 +40,13 @@ class RallyDetailFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val rallyId = arguments?.getString("rallyId")
+        val accessToken = sharedPreferences.getString("token", null)
 
-        RetrofitAPI.rallyDetailService.getRallyDetail(rallyId?.toLong() ?: 1).enqueue(object :
+        RetrofitAPI.rallyDetailService.getRallyDetail(rallyId?.toLong() ?: 1, accessToken).enqueue(object :
             Callback<RallyDetailData> {
             override fun onResponse(
                 call: Call<RallyDetailData>,
@@ -69,7 +69,8 @@ class RallyDetailFragment : Fragment() {
 
         })
 
-        }
+    }
+
 
     private fun setRallyDetail(rallyDetailData: RallyDetailData) {
             Glide.with(this)

@@ -96,8 +96,7 @@
                 android:id="@+id/recommend_rally_iv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/weathering_with_you" />
+                android:scaleType="centerCrop"/>
 
         </androidx.cardview.widget.CardView>
 

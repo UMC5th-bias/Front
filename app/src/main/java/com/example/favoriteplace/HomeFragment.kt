@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
 
     companion object{
         const val LOGIN_REQUEST_CODE=101
-        const val ACCESS_TOKEN_KEY = "accessToken" // SharedPreferences 키 상수
+        const val ACCESS_TOKEN_KEY = "token" // SharedPreferences 키 상수
     }
 
     override fun onCreateView(
@@ -98,6 +98,7 @@ class HomeFragment : Fragment() {
 
         accessToken = sharedPreferences.getString(ACCESS_TOKEN_KEY, null)
         isLoggedIn = !accessToken.isNullOrEmpty()
+
 
 
         if (isLoggedIn) {
@@ -159,7 +160,7 @@ class HomeFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
             val isLoggedIn = data?.getBooleanExtra("isLoggedIn", false) ?: false
-            val userToken = data?.getStringExtra("accessToken")
+            val userToken = data?.getStringExtra("token")
             if (!userToken.isNullOrEmpty() && isLoggedIn) {
                 this.isLoggedIn = true
                 Log.d("HomeFragment", ">> Home Login userToken : $userToken")
@@ -180,7 +181,7 @@ class HomeFragment : Fragment() {
                     val loginResponse: HomeService.LoginResponse? = response.body()
                     if(loginResponse != null){
                         updateUI(loginResponse)
-
+                        Log.d("HomeFragment", "$loginResponse")
                         Log.d("HomeFragment", ">> Home Login Success")
 
                     }

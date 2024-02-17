@@ -148,41 +148,41 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
         val rallyAnimationId = arguments?.getLong("rallyAnimationId") ?: -1
 
 //        if(token!=null){
-            val call = rallyLocationDetailService.getRallyInfo("Bearer $token",rallyAnimationId)
-            Log.d("RallyLocationDetail", ">> Bearer : $token ")
+        val call = rallyLocationDetailService.getRallyInfo("Bearer $token",rallyAnimationId)
+        Log.d("RallyLocationDetail", ">> Bearer : $token ")
 
 
-            call.enqueue(object : Callback<RallyLocationDetailService.RallyInfo> {
-                override fun onResponse(
-                    call: Call<RallyLocationDetailService.RallyInfo>,
-                    response: Response<RallyLocationDetailService.RallyInfo>
-                ) {
-                    if(response.isSuccessful){
-                        val rallyInfo=response.body()
-                        if (rallyInfo != null) {
-                            Log.d("rallyLocationDetail", ">> rallyInfo: $rallyInfo")
-                            // 서버에서 받아온 목표 위치의 위도와 경도로 targetLocation 설정
-                            targetLocation = LatLng(rallyInfo.latitude ?: 0.0, rallyInfo.longitude ?: 0.0)
-                            rallyInfo.let {
-                                displayRallyInfo(rallyInfo)
-                                getCurrentLocation()
+        call.enqueue(object : Callback<RallyLocationDetailService.RallyInfo> {
+            override fun onResponse(
+                call: Call<RallyLocationDetailService.RallyInfo>,
+                response: Response<RallyLocationDetailService.RallyInfo>
+            ) {
+                if(response.isSuccessful){
+                    val rallyInfo=response.body()
+                    if (rallyInfo != null) {
+                        Log.d("rallyLocationDetail", ">> rallyInfo: $rallyInfo")
+                        // 서버에서 받아온 목표 위치의 위도와 경도로 targetLocation 설정
+                        targetLocation = LatLng(rallyInfo.latitude ?: 0.0, rallyInfo.longitude ?: 0.0)
+                        rallyInfo.let {
+                            displayRallyInfo(rallyInfo)
+                            getCurrentLocation()
 
-                            }
-                        }else{
-                            // 응답 바디가 null인 경우
-                            Log.e("RallyLocationDetail", "Response body is null")
                         }
-
                     }else{
-                        // 응답 실패
-                        Log.e("RallyLocationDetail", "RallyLocationDetail failed with error code: ${response.code()}")
+                        // 응답 바디가 null인 경우
+                        Log.e("RallyLocationDetail", "Response body is null")
                     }
-                }
 
-                override fun onFailure(call: Call<RallyLocationDetailService.RallyInfo>, t: Throwable) {
-                    Log.d("RallyLocationDetail", ">> server error")
+                }else{
+                    // 응답 실패
+                    Log.e("RallyLocationDetail", "RallyLocationDetail failed with error code: ${response.code()}")
                 }
-            })
+            }
+
+            override fun onFailure(call: Call<RallyLocationDetailService.RallyInfo>, t: Throwable) {
+                Log.d("RallyLocationDetail", ">> server error")
+            }
+        })
 
 
     }

@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemCommunityFreeCommendBinding
-import com.example.favoriteplace.databinding.ItemCommunityFreeLatelyBinding
 
-class CommunityFreeCommendRVAdapter (private val commendList: ArrayList<FreeCommend>):RecyclerView.Adapter<CommunityFreeCommendRVAdapter.ViewHolder>() {
+
+class CommunityFreeCommendRVAdapter (private val commendList: ArrayList<Comments>):RecyclerView.Adapter<CommunityFreeCommendRVAdapter.ViewHolder>() {
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemCommunityFreeCommendBinding=ItemCommunityFreeCommendBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
+        val binding: ItemCommunityFreeCommendBinding =ItemCommunityFreeCommendBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
 
         return ViewHolder(binding)
     }
@@ -20,16 +20,15 @@ class CommunityFreeCommendRVAdapter (private val commendList: ArrayList<FreeComm
     }
 
     inner class ViewHolder(val binding: ItemCommunityFreeCommendBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(commend: FreeCommend){
-            binding.itemCommunityFreeCommendDayTv.text=commend.day
-            binding.itemCommunityFreeCommendTimeTv.text=commend.commendTime
-            binding.itemCommunityFreeCommendTv.text=commend.commend
-            binding.itemCommunityFreeCommendTitleTv.text=commend.title
-            binding.itemCommunityFreeCommendWriterTv.text=commend.writer
-            binding.itemCommunityFreeCommendEyeTv.text= commend.eye.toString()
-            binding.itemCommunityFreeCommendLikeTv.text= commend.like.toString()
-            binding.itemCommunityFreeCommendClockTv.text= commend.time
-            binding.itemCommunityFreeCommendCommentNumTv.text= commend.commentNum.toString()
+        fun bind(commend: Comments){
+            binding.itemCommunityFreeCommendDayTv.text=commend.passedTime
+            binding.itemCommunityFreeCommendTv.text=commend.content
+            binding.itemCommunityFreeCommendTitleTv.text=commend.post.title
+            binding.itemCommunityFreeCommendWriterTv.text=commend.post.nickname
+            binding.itemCommunityFreeCommendEyeTv.text= commend.post.views.toString()
+            binding.itemCommunityFreeCommendLikeTv.text= commend.post.likes.toString()
+            binding.itemCommunityFreeCommendClockTv.text= commend.post.passedTime
+            binding.itemCommunityFreeCommendCommentNumTv.text= commend.post.comments.toString()
         }
 
     }

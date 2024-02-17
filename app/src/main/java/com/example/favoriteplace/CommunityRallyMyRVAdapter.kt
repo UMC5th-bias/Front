@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemCommunityRallyMyBinding
 import java.util.ArrayList
 
-class CommunityRallyMyRVAdapter(private val rallyMyWriteList: ArrayList<RallyMyWrite>): RecyclerView.Adapter<CommunityRallyMyRVAdapter.ViewHolder>(){
+class CommunityRallyMyRVAdapter(private val rallyMyWriteList: ArrayList<GuestMy>): RecyclerView.Adapter<CommunityRallyMyRVAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemCommunityRallyMyBinding = ItemCommunityRallyMyBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup, false)
@@ -20,13 +20,13 @@ class CommunityRallyMyRVAdapter(private val rallyMyWriteList: ArrayList<RallyMyW
         holder.bind(rallyMyWriteList[position])
     }
     inner class ViewHolder(val binding: ItemCommunityRallyMyBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(freeRecommend: RallyMyWrite){
+        fun bind(freeRecommend: GuestMy){
             binding.itemCommunityRallyMyTitleTv.text=freeRecommend.title
-            binding.itemCommunityRallyMyWriterTv.text=freeRecommend.writer
-            binding.itemCommunityRallyMyEyeTv.text= freeRecommend.eye.toString()
-            binding.itemCommunityRallyMyLikeTv.text=freeRecommend.like.toString()
-            binding.itemCommunityRallyMyClockTv.text= freeRecommend.time
-            binding.itemCommunityRallyMyCommentNumTv.text= freeRecommend.commentNum.toString()
+            binding.itemCommunityRallyMyWriterTv.text=freeRecommend.nickname
+            binding.itemCommunityRallyMyEyeTv.text= freeRecommend.views.toString()
+            binding.itemCommunityRallyMyLikeTv.text=freeRecommend.likes.toString()
+            binding.itemCommunityRallyMyCommentNumTv.text= freeRecommend.comments.toString()
+            binding.itemCommunityRallyMyClockTv.text= freeRecommend.passedTime
         }
 
     }
