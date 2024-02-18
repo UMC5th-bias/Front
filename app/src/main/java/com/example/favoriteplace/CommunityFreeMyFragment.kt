@@ -79,7 +79,7 @@ class CommunityFreeMyFragment : Fragment() {
 
                                 //RVA실행
                                 val communityFreeMyRVAdapter =
-                                    CommunityFreeMyRVAdapter(freeMyWriteData, object : CommunityFreeLatelyRVAdapter.OnItemClickListener{
+                                    CommunityFreeMyRVAdapter(freeMyWriteData, object : CommunityFreeMyRVAdapter.OnItemClickListener{
                                         override fun onItemClick(postId: Int) {
                                             val intent = Intent(context, PostDetailActivity::class.java).apply {
                                                 putExtra("POST_ID", postId)

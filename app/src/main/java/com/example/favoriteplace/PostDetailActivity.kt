@@ -73,29 +73,6 @@ class PostDetailActivity : AppCompatActivity() {
     }
 
     private fun fetchPostDetail(postId: Int) {
-        // 댓글 정보를 받아오는 Retrofit 요청
-        RetrofitClient.communityService.getFreeCommentDetail(postId.toLong()).enqueue(object :
-            Callback<FreeCommentDetailResponse> {
-            override fun onResponse(call: Call<FreeCommentDetailResponse>, response: Response<FreeCommentDetailResponse>) {
-                if (response.isSuccessful) {
-                    val postDetail = response.body()
-                    postDetail?.let {
-                        // 데이터를 가져왔으므로 어댑터에 설정
-                        val commentAdapter = CommentAdapter(postDetail.comment)
-                        binding.commentRv.adapter = commentAdapter
-                        binding.commentRv.layoutManager = LinearLayoutManager(this@PostDetailActivity)
-                    }
-                } else {
-                    // 댓글 정보를 받아오는 데 실패한 경우
-                    Log.e("PostDetailActivity", "Fetch comment detail failed: ${response.errorBody()?.string()}")
-                }
-            }
-
-            override fun onFailure(call: Call<FreeCommentDetailResponse>, t: Throwable) {
-                // 네트워크 요청 자체가 실패한 경우
-                Log.e("PostDetailActivity", "Network request failed: ${t.message}")
-            }
-        })
 
         RetrofitClient.communityService.getFreePostDetail(postId).enqueue(object :
             Callback<PostDetailResponse> {
@@ -116,12 +93,6 @@ class PostDetailActivity : AppCompatActivity() {
                             .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
                             .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적
                             .into(binding.profileImgIv) // profileImageIv는 PNG 이미지를 로드할 ImageView의 ID입니다.
-
-//                        // Glide를 사용하여 PNG 이미지 로딩
-//                        Glide.with(this@PostDetailActivity)
-//                            .load(it.userInfo.profileImageUrl)
-//                            .circleCrop() // 이미지를 원형으로 크롭
-//                            .into(binding.profileImgIv) // profileImageIv는 PNG 이미지를 로드할 ImageView의 ID입니다.
 
                         // Coil을 사용하여 SVG 이미지 로딩 - 프로필 타이틀
                         val imageLoader = ImageLoader.Builder(this@PostDetailActivity)
@@ -185,6 +156,30 @@ class PostDetailActivity : AppCompatActivity() {
                 // 네트워크 요청 자체가 실패한 경우
                 Log.e("PostDetailActivity", "Network request failed: ${t.message}")
 
+            }
+        })
+
+        // 댓글 정보를 받아오는 Retrofit 요청
+        RetrofitClient.communityService.getFreeCommentDetail(postId.toLong()).enqueue(object :
+            Callback<FreeCommentDetailResponse> {
+            override fun onResponse(call: Call<FreeCommentDetailResponse>, response: Response<FreeCommentDetailResponse>) {
+                if (response.isSuccessful) {
+                    val postDetail = response.body()
+                    postDetail?.let {
+                        // 데이터를 가져왔으므로 어댑터에 설정
+                        val commentAdapter = CommentAdapter(postDetail.comment)
+                        binding.commentRv.adapter = commentAdapter
+                        binding.commentRv.layoutManager = LinearLayoutManager(this@PostDetailActivity)
+                    }
+                } else {
+                    // 댓글 정보를 받아오는 데 실패한 경우
+                    Log.e("PostDetailActivity", "Fetch comment detail failed: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<FreeCommentDetailResponse>, t: Throwable) {
+                // 네트워크 요청 자체가 실패한 경우
+                Log.e("PostDetailActivity", "Network request failed: ${t.message}")
             }
         })
     }

@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -32,14 +33,25 @@ class CommunityRallyLatelyFragment : Fragment() {
 
     }
 
+
+    private fun getAccessToken(): String? {
+        val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
+    }
+
+    // 사용자의 로그인 상태를 확인하는 메소드
+    private fun isLoggedIn(): Boolean {
+        return getAccessToken() != null
+    }
+
     //서버에서 최신글을 가져오는 코드
     private fun fetchPosts() {
 
         var accessToken: String? =null
 
         //로그인 중이라면 토큰을 서버에 전달
-        if (isLogIn){
-            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
+        if (isLoggedIn()){
+            accessToken = getAccessToken()
         }
 
         RetrofitClient.communityService.getRallyPost(currentPage,10,"latest")

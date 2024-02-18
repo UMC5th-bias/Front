@@ -81,7 +81,7 @@ class CommunityFreeRecommendFragment : Fragment() {
 
                                 //RVA실행
                                 val freeRecommendRVAdapter =
-                                    CommunityFreeRecommendRVAdapter(freeRecommendWriteData, object : CommunityFreeLatelyRVAdapter.OnItemClickListener{
+                                    CommunityFreeRecommendRVAdapter(freeRecommendWriteData, object : CommunityFreeRecommendRVAdapter.OnItemClickListener{
                                         override fun onItemClick(postId: Int) {
                                             val intent = Intent(context, PostDetailActivity::class.java).apply {
                                                 putExtra("POST_ID", postId)

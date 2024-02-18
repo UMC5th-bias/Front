@@ -9,7 +9,14 @@ import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemCommunityRallyLatelyRecommendBinding
 import kotlin.collections.ArrayList
 
-class CommunityRallyLatelyRVAdapter(private val rallyLatelyList: ArrayList<GuestBook>): RecyclerView.Adapter<CommunityRallyLatelyRVAdapter.ViewHolder>(){
+class CommunityRallyLatelyRVAdapter(private val rallyLatelyList: ArrayList<GuestBook>
+): RecyclerView.Adapter<CommunityRallyLatelyRVAdapter.ViewHolder>(){
+
+    // 클릭 이벤트를 처리할 리스너 인터페이스 정의
+    interface OnItemClickListener {
+        fun onItemClick(postId: Int)
+    }
+
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
