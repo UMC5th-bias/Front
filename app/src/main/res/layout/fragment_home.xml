@@ -101,15 +101,15 @@
 
                     <!-- 회원 프로필 -->
                     <FrameLayout
-                        android:layout_width="120dp"
-                        android:layout_height="110dp"
+                        android:layout_width="130dp"
+                        android:layout_height="120dp"
                         android:layout_gravity="center">
 
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/home_member_profile_civ"
-                            android:layout_width="120dp"
-                            android:layout_height="110dp"
+                            android:layout_width="130dp"
+                            android:layout_height="120dp"
                             app:civ_border_width="1dp"
                             app:civ_border_overlay="true"
                             android:src="@drawable/memberimg"
@@ -119,9 +119,9 @@
                         <!--아이콘 크기 통일 시 변경하기-->
                         <ImageView
                             android:id="@+id/home_member_icon_iv"
-                            android:layout_width="120dp"
-                            android:layout_height="110dp"
-                            android:scaleType="centerCrop"
+                            android:layout_width="130dp"
+                            android:layout_height="120dp"
+
                             app:srcCompat="@drawable/ic_shop1"/>
 
                     </FrameLayout>
@@ -149,7 +149,7 @@
                                 android:id="@+id/home_member_name_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="15dp"
+                                android:layout_marginTop="10dp"
                                 android:text="아이"
                                 android:textStyle="bold"
                                 android:textColor="@color/black"
@@ -157,9 +157,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="15dp"
+                                android:layout_marginTop="10dp"
                                 android:text=" 님,"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"
                                 android:textSize="20dp"/>
                         </LinearLayout>

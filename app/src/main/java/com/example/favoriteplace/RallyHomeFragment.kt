@@ -35,9 +35,8 @@ class RallyHomeFragment : Fragment() {
             
             val keyword = binding.searchEt.text.toString()
             if(keyword.isNotEmpty()){
-                searchRally(keyword)
             }else{
-                showToast("검색어를 입력하세요.")
+                Toast.makeText(context,"검색어를 입력하세요.",Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -183,9 +182,6 @@ class RallyHomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun searchRally(keyword: String) {
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -194,11 +190,12 @@ class RallyHomeFragment : Fragment() {
 
         if (!isLoggedIn()) {
             binding.interestedRallyCl.setOnClickListener {
-                showToast("로그인 후 이용 가능한 메뉴입니다.")
+                Toast.makeText(context,"로그인 후 이용 가능한 메뉴입니다.",Toast.LENGTH_SHORT).show()
             }
 
             binding.certificationBoardCl.setOnClickListener {
-                showToast("로그인 후 이용 가능한 메뉴입니다.")
+                Toast.makeText(context,"로그인 후 이용 가능한 메뉴입니다.",Toast.LENGTH_SHORT).show()
+
             }
         }
     }
@@ -221,18 +218,6 @@ class RallyHomeFragment : Fragment() {
         // 로그인 상태 확인 로직 구현
         // 예를 들어, SharedPreferences, 사용자 세션 확인 등
         return true // 임시로 true 반환
-    }
-
-    private fun showToast(message: String) {
-        val layout = layoutInflater.inflate(R.layout.custom_toast, binding.root as ViewGroup, false)
-        val textView: TextView = layout.findViewById(R.id.custom_toast_message)
-        textView.text = message
-
-        with(Toast(requireContext())) {
-            duration = Toast.LENGTH_SHORT
-            view = layout
-            show()
-        }
     }
 
 }
