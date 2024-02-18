@@ -186,13 +186,13 @@ class CommunityMainFragment: Fragment() {
 
 
 
-        binding.communityFreeIv.setOnClickListener {
+        binding.communityFreeBlackBoxCl.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frameLayout, CommunityFreeFragment())
                 .commitAllowingStateLoss()
         }
 
-        binding.communityRallyIv.setOnClickListener {
+        binding.communityRallyPinkBoxCl.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frameLayout, CommunityRallyFragment())
                 .commitAllowingStateLoss()
