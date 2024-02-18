@@ -1,6 +1,5 @@
 package com.example.favoriteplace
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -17,14 +16,6 @@ import retrofit2.Response
 class CommunityMainFragment: Fragment() {
 
     lateinit var binding: FragmentCommunityMainBinding
-    // postDetail로 이동하는 함수
-
-    private fun navigateToPostDetail(postId: Int) {
-        val intent = Intent(activity, PostDetailActivity::class.java).apply {
-            putExtra("POST_ID", postId) // 인텐트에 글의 고유 ID 추가
-        }
-        startActivity(intent) // PostDetailActivity 시작
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +43,6 @@ class CommunityMainFragment: Fragment() {
         var guestbookTopic: CommunityHomeTrendingGuestbook
         var monthlyTopic: List<CommunityHomeTrendingMonthUnit>
 
-
         // 오늘의 화제글 - 자유(홈) 불러오기
         fun setFreeBoard() {
             RetrofitAPI.communityHomeService.getTrendingFree().enqueue(object: Callback<CommunityHomeTrendingFree> {
@@ -66,12 +56,6 @@ class CommunityMainFragment: Fragment() {
                                 if((freeTopic.rank.size ?: 0) > i) {
                                     topicBoard["today"]?.get(i)?.visibility = View.VISIBLE
                                     topicBoard["today"]?.get(i)?.text = freeTopic.rank[i].title
-                                    topicBoard["today"]?.get(i)?.tag = responseData.rank[i].id.toInt() // 글의 고유 ID를 tag에 저장
-                                    topicBoard["today"]?.get(i)?.setOnClickListener {
-                                        // 클릭 시 postDetail 프래그먼트로 이동
-                                        val postId = it.tag as Int // tag에서 글의 고유 ID를 가져옴
-                                        navigateToPostDetail(postId)
-                                    }
                                 }
                                 else {
                                     topicBoard["today"]?.get(i)?.visibility = View.GONE
@@ -104,12 +88,6 @@ class CommunityMainFragment: Fragment() {
                                 if((guestbookTopic.rank.size ?: 0) > i) {
                                     topicBoard["today"]?.get(i)?.visibility = View.VISIBLE
                                     topicBoard["today"]?.get(i)?.text = guestbookTopic.rank[i].title
-                                    topicBoard["today"]?.get(i)?.tag = guestbookTopic.rank[i].id.toInt() // 글의 고유 ID를 tag에 저장
-                                    topicBoard["today"]?.get(i)?.setOnClickListener {
-                                        // 클릭 시 postDetail 프래그먼트로 이동
-                                        val postId = it.tag as Int // tag에서 글의 고유 ID를 가져옴
-                                        navigateToPostDetail(postId)
-                                    }
                                 }
                                 else {
                                     topicBoard["today"]?.get(i)?.visibility = View.GONE
@@ -142,12 +120,6 @@ class CommunityMainFragment: Fragment() {
                                 if(monthlyTopic.size > i) {
                                     topicBoard["month"]?.get(i)?.visibility = View.VISIBLE
                                     topicBoard["month"]?.get(i)?.text = monthlyTopic[i].title
-                                    topicBoard["month"]?.get(i)?.tag = monthlyTopic[i].id.toInt() // 글의 고유 ID를 tag에 저장
-                                    topicBoard["month"]?.get(i)?.setOnClickListener {
-                                        // 클릭 시 postDetail 프래그먼트로 이동
-                                        val postId = it.tag as Int // tag에서 글의 고유 ID를 가져옴
-                                        navigateToPostDetail(postId)
-                                    }
                                 }
                                 else {
                                     topicBoard["month"]?.get(i)?.visibility = View.GONE
