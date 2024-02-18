@@ -12,6 +12,8 @@ class MyGuestBookActivity:AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = FragmentMyGuestbookBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
     }
+
+
+
 }

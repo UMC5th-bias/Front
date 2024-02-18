@@ -106,27 +106,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
-
-    private fun sendLoginStatusToServer(isLoggedIn: String?) {
-
-        lifecycleScope.launch {
-            try {
-                // 로그인 상태를 서버에 전달
-                val response: Response<HomeService.LoginResponse> = homeService.getUserInfo(isLoggedIn)
-                if (response.isSuccessful) {
-                    Log.d("HomeFragment", ">> Login status sent to server: $isLoggedIn")
-                } else {
-                    Log.e("HomeFragment", "Failed to send login status to server: ${response.code()}")
-                }
-            } catch (e: Exception) {
-                Log.e("HomeFragment", "Error sending login status to server: ${e.message}", e)
-            }
-        }
-    }
-
-
-
     private fun setupTrendingPostsRecyclerView() {
 
         // TrendingPostsAdapter 초기화
@@ -245,8 +224,8 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // 비회원
     private fun fetchNonMember() {
-        // 비회원
         lifecycleScope.launch {
             try {
 
@@ -259,6 +238,7 @@ class HomeFragment : Fragment() {
                         data.trendingPosts?.let { trendingPosts ->
                             trendingPostsAdapter.submitList(trendingPosts)
                         }
+
                     }
                 }else{
                     // 비회원 게시물 요청이 실패

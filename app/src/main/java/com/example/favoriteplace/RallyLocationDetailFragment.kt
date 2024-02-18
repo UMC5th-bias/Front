@@ -140,15 +140,12 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-
-
     private fun fetchRallyInfo(rallyAnimationId: Long) {
 
         //토큰 유효성
         val token = sharedPreferences.getString("token", null)
         val rallyAnimationId = arguments?.getLong("rallyAnimationId") ?: -1
 
-//        if(token!=null){
         val call = rallyLocationDetailService.getRallyInfo("Bearer $token",rallyAnimationId)
         Log.d("RallyLocationDetail", ">> Bearer : $token ")
         Log.d("rallyAnimationId", ">> fetchRallyInfo: $rallyAnimationId")
@@ -172,7 +169,6 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                             displayRallyInfo(CertifiedRallyInfo)
                             Log.d("rallyLocationDetail", ">> modifiedRallyInfo: $CertifiedRallyInfo")
                             getCurrentLocation()
-                            //etCertify()
 
                         }
                     }else{
@@ -194,9 +190,6 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    private fun getCertify() {
-        //val
-    }
 
     // 사용자 현재 위치
     private fun getCurrentLocation(){
@@ -219,11 +212,6 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                         binding.rallyLocationdetailNcountCv.visibility = View.VISIBLE
 
 
-//                        val jsonObject = JSONObject().apply {
-//                            put("latitude", testLatitude)
-//                            put("longitude", testLongitude)
-//                        }
-                        //val jsonRequestBody = RequestBody.create("application/json".toMediaTypeOrNull(), jsonObject.toString())
                         // 헤더에 AccessToken 추가
                         val authorizationHeader = "Bearer $token"
 
@@ -234,8 +222,8 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                         Log.d("RallyLocationDetail", " 1번")
                         uploadPostRequest(rallyAnimationId, authorizationHeader,testLongitude,testLatitude )
                         Log.d("RallyLocationDetail", " 2번")
-//                        showDistanceAlertDialog()
-//                        Log.d("RallyLocationDetail", " 3")
+                        showDistanceAlertDialog()
+                        Log.d("RallyLocationDetail", " 3번")
                     }else{
 
                         Toast.makeText(context,"150m 반경에 있지 않습니다.",Toast.LENGTH_SHORT).show()
@@ -262,8 +250,10 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
             authorizationHeader,
             postData
         )
+        val token = sharedPreferences.getString("token", null)
+
         Log.d("RallyLocationDetail", " ４번")
-        Log.d("RallyLocationDetail", ">> pilgrimageId: $pilgrimageId")
+        Log.d("RallyLocationDetail", ">> pilgrimageId: $pilgrimageId \n $token" )
 
         call.enqueue(object : Callback<RallyCertifyService.RallyCertifyResponse>{
             override fun onResponse(
@@ -394,14 +384,5 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    // 사용자 로그인 상태 확인
-    private fun createOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().addInterceptor { chain ->
-            val original = chain.request()
-            val requestBuilder = original.newBuilder()
-                .header("Authorization", "Bearer ${sharedPreferences.getString("token", null)}")
-            val request = requestBuilder.build()
-            chain.proceed(request)
-        }.build()
-    }
+
 }

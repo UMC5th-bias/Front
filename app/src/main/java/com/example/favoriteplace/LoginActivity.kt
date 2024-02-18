@@ -13,13 +13,15 @@ import androidx.lifecycle.lifecycleScope
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.launch
 import android.os.Handler
+import android.widget.Toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class LoginActivity :AppCompatActivity() {
+class
+LoginActivity :AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
     lateinit var retrofit: Retrofit
@@ -54,13 +56,6 @@ class LoginActivity :AppCompatActivity() {
         // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-
-        // 이전에 로그인된 상태인지 확인
-//        if(isLoggedIn()){
-//            // 로그인된 상태인 경우 -> HomeFragment 이동
-//            startActivity(Intent(this,  MainActivity::class.java))
-//            finish()
-//        }
 
         // 로그인 버튼 틀릭 시
         binding.logoinBtn.setOnClickListener {
@@ -146,6 +141,8 @@ class LoginActivity :AppCompatActivity() {
                 } else {
                     // 응답 실패
                     Log.e("Login", "Login failed with error code: ${response.code()}")
+                    Toast.makeText(this@LoginActivity,"아이디 or 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+
                 }
             }
 

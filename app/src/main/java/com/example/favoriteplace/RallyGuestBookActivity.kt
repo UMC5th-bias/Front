@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -84,7 +85,6 @@ class RallyGuestBookActivity : AppCompatActivity() {
         binding.openGalleryIb.setOnClickListener {
             openGallery()
             Log.d("openGallery()", "사진 선택 완료!")
-            binding.cardview.visibility = View.GONE
         }
 
 
@@ -102,12 +102,12 @@ class RallyGuestBookActivity : AppCompatActivity() {
 
         val title = binding.guestbookTitleEt.text.toString().trim()
         val content = binding.guestbookContentEt.text.toString().trim()
-        val hashtags = binding.rallyGuestbookTag1Et.text.toString().split(" ").filter { it.isNotBlank() }
+        val hashtags = binding.rallyGuestbookTag1Et.text.toString().split(" ").filter { it.isNotBlank() }.map { "#$it" }
 
 
         // 제목, 내용 비워져 있으면-> toast 메세지
         if (title.isEmpty() || content.isEmpty()) {
-            showToast(this, "제목과 내용을 입력해주세요.")
+            Toast.makeText(this,"제목과 내용을 입력해주세요.",Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -154,7 +154,6 @@ class RallyGuestBookActivity : AppCompatActivity() {
     }
 
     private fun getAccessToken(): String? {
-        //val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
     }
 
@@ -274,18 +273,6 @@ class RallyGuestBookActivity : AppCompatActivity() {
         return true
     }
 
-    fun showToast(context: Context, message: String) {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.custom_toast, null)
-
-        val textView = layout.findViewById<TextView>(R.id.custom_toast_message)
-        textView.text = message
-
-        val toast = Toast(context)
-        toast.duration = Toast.LENGTH_SHORT
-        toast.view = layout
-        toast.show()
-    }
 
 
     private fun openGallery() {
@@ -294,6 +281,7 @@ class RallyGuestBookActivity : AppCompatActivity() {
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
         startActivityForResult(intent, REQUEST_CODE_GALLERY)
+
 
     }
 
@@ -341,14 +329,20 @@ class RallyGuestBookActivity : AppCompatActivity() {
             }
         }
 
-        val imageView = ImageView(this).apply {
-            layoutParams = FrameLayout.LayoutParams(800, 1000)
-            setImageURI(uri)
-        }
+        val imageView = ImageView(this)
+
+        val layoutParams = FrameLayout.LayoutParams(1000, 1000)
+        layoutParams.gravity = Gravity.CENTER
+        imageView.layoutParams = layoutParams
+
+        // 이미지 설정
+        imageView.setImageURI(uri)
 
 
         frameLayout.addView(imageView)
         binding.framelayout.addView(frameLayout)
         selectedImages.add(uri)
+
+        binding.cardview.visibility = View.GONE
     }
 }
