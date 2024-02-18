@@ -1,10 +1,12 @@
 package com.example.favoriteplace
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteplace.databinding.FragmentCommunityFreeCommendBinding
@@ -58,7 +60,14 @@ class CommunityFreeCommendFragment : Fragment() {
                             fetchPosts()    //재귀함수
 
                             //RVA 실행
-                            val commendRVAdapter=CommunityFreeCommendRVAdapter(freeCommendData)
+                            val commendRVAdapter=CommunityFreeCommendRVAdapter(freeCommendData, object : CommunityFreeCommendRVAdapter.OnItemClickListener{
+                                override fun onItemClick(postId: Int) {
+                                    val intent = Intent(context, PostDetailActivity::class.java).apply {
+                                        putExtra("POST_ID", postId)
+                                    }
+                                    startActivity(intent)
+                                }
+                            })
                             binding.communityFreeCommendRv.adapter=commendRVAdapter
                             binding.communityFreeCommendRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
                         }
