@@ -11,6 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="도쿄 성지순례 장소 추천해주세요:)"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textSize="15sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
