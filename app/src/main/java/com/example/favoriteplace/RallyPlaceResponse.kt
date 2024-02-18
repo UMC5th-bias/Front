@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import com.google.gson.annotations.SerializedName
 import java.net.URL
 
 data class Region(
@@ -13,10 +14,10 @@ data class DistrictDetail(
 )
 
 data class  RallyPlaceAnimation(
-    val id: Long,
-    val title: String,
-    val detailAddress: String,
-    val image: URL,
-    val latitude: Double,
-    val longitude: Double
+    @SerializedName("id") val id: Long,
+    @SerializedName("title") val title: String,
+    @SerializedName("detailAddress") val detailAddress: String,
+    @SerializedName("image") val image: URL,
+    @SerializedName("latitude") val latitude: String,
+    @SerializedName("longitude") val longitude: String
 )

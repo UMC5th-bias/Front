@@ -45,8 +45,31 @@ interface HomeService {
         val board: String
     )
 
+    data class NonMemberData(
+        @SerializedName("isLoggedIn") val isLoggedIn: Boolean,
+        @SerializedName("userInfo") val userInfo: String,
+        @SerializedName("rally") val rally: NonRally,
+        @SerializedName("trendingPosts") val trendingPosts: List<TrendingPosts>
+    )
+
+
+    data class NonRally(
+        val id: Int,
+        val name: String,
+        val backgroundImageUrl: String,
+        val pilgrimageNumber: Int,
+        val completeNumber: Int
+    )
+
+
     @GET("/home")
     suspend fun getUserInfo(
         @Header("Authorization") authorization: String?
     ): Response<LoginResponse>
+
+
+    // 비회원
+    @GET("/home")
+    suspend fun getNonMemberInfo(
+    ): Response<NonMemberData>
 }

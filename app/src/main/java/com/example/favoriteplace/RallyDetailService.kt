@@ -14,8 +14,4 @@ interface RallyDetailService {
     ): Call<RallyDetailData>
 
 
-    @POST("/pilgrimage/{rally_id}")
-    fun updateLikeStatus(
-        @Path("rally_id") rallyId: Long
-    ): Call<UpdateResponse>
 }

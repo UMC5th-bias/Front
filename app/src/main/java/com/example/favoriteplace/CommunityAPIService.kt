@@ -69,4 +69,14 @@ interface CommunityAPIService {
         @Path("post_id") postId: Long,
         @Body requestBody: RequestBody
     ): Call<ApplyResponse>
+
+    @GET("posts/free/search")
+    fun getFreeSearch(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("searchType") searchType: String,
+        @Query("keyword") keyword: String
+    ): Call<CommunityPost>
+
+
 }

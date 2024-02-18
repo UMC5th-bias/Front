@@ -3,6 +3,7 @@ package com.example.favoriteplace
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Path
 
 interface RallyLocationDetailService {
@@ -14,6 +15,8 @@ interface RallyLocationDetailService {
         @SerializedName("image") val image: String,
         @SerializedName("realImage") val realImage: String,
         @SerializedName("address") val address: String,
+        @SerializedName("addressEn") val addressEn: String,
+        @SerializedName("addressJp") val addressJp: String,
         @SerializedName("latitude") val latitude: Double,
         @SerializedName("longitude") val longitude: Double,
         @SerializedName("isCertified") val isCertified: Boolean,
@@ -22,5 +25,8 @@ interface RallyLocationDetailService {
     )
 
     @GET("/pilgrimage/detail/{pilgrimageId}")
-    fun getRallyInfo(): Call<RallyInfo>
+    fun getRallyInfo(
+        @Header("Authorization") authorization: String,
+        @Path("pilgrimageId") pilgrimageId: Long
+    ): Call<RallyInfo>
 }

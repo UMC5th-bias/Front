@@ -135,6 +135,19 @@ class RallyPlaceFragment: Fragment(), OnMapReadyCallback {
             binding.hokkaidoRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempHokkaido.first().detail, naverMap, ::markerAdd, ::markerClear)
             binding.hokkaidoRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
         }
+
+        //서울특별시
+        val tempSeoul = regionList.filter {it.state == "서울특별시" }
+        if(tempSeoul.isNotEmpty()) {
+            binding.seoulBT.visibility = View.VISIBLE
+            binding.seoulBT.setOnClickListener {
+                markerClear() // 모든 마커 지우기
+                if(binding.seoulRV.isVisible) binding.seoulRV.visibility = View.GONE
+                else binding.seoulRV.visibility = View.VISIBLE
+            }
+            binding.seoulRV.adapter = RallyPlaceCityRVAdapter(requireActivity(), tempSeoul.first().detail, naverMap, ::markerAdd, ::markerClear)
+            binding.seoulRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
+        }
     }
 
     //지도 준비됐을때 호출

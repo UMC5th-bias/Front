@@ -72,7 +72,7 @@ class RallyPlaceCityRVAdapter(
                                         animationList?.sortedBy { it.id } //정렬
 
                                         animationList?.forEach {
-                                            markerAdd(LatLng(it.latitude, it.longitude), it.title)
+                                            markerAdd(LatLng(it.latitude.toDouble(), it.longitude.toDouble()), it.title)
                                         }
 
                                         //애니메이션 rv 설정
