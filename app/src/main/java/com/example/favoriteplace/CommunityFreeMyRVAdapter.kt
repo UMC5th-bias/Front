@@ -6,7 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemCommunityFreeMyBinding
 import kotlin.collections.ArrayList
 
-class CommunityFreeMyRVAdapter(private val freeMyWriteList: ArrayList<Posts>): RecyclerView.Adapter<CommunityFreeMyRVAdapter.ViewHolder>(){
+class CommunityFreeMyRVAdapter(private val freeMyWriteList: ArrayList<Posts>,
+                               private val listener: CommunityFreeLatelyRVAdapter.OnItemClickListener
+): RecyclerView.Adapter<CommunityFreeMyRVAdapter.ViewHolder>(){
+
+    // 클릭 이벤트를 처리할 리스너 인터페이스 정의
+    interface OnItemClickListener {
+        fun onItemClick(postId: Int)
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemCommunityFreeMyBinding = ItemCommunityFreeMyBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup, false)
@@ -20,6 +27,15 @@ class CommunityFreeMyRVAdapter(private val freeMyWriteList: ArrayList<Posts>): R
         holder.bind(freeMyWriteList[position])
     }
     inner class ViewHolder(val binding: ItemCommunityFreeMyBinding): RecyclerView.ViewHolder(binding.root){
+        init {
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(freeMyWriteList[position].id)
+                }
+            }
+        }
+
         fun bind(freeRecommend: Posts){
             binding.itemCommunityFreeMyTitleTv.text=freeRecommend.title
             binding.itemCommunityFreeMyWriterTv.text=freeRecommend.nickname

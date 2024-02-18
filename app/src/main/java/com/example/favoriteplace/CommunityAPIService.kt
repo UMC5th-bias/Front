@@ -1,8 +1,12 @@
 package com.example.favoriteplace
 
+import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CommunityAPIService {
@@ -49,6 +53,23 @@ interface CommunityAPIService {
         @Query("size") size: Int
     ): Call<RallyMyComment>
 
+    @GET("/posts/free/{post_id}")
+    fun getFreePostDetail(
+        @Path("post_id") postId: Int
+    ): Call<PostDetailResponse>
+
+    @GET("/posts/free/{post_id}/comments")
+    fun getFreeCommentDetail(
+        @Path("post_id") postId: Long
+    ): Call<FreeCommentDetailResponse>
+
+    @POST("/posts/free/{post_id}/comments")
+    fun postFreeComment(
+        @Header("Authorization") authorization:String?,
+        @Path("post_id") postId: Long,
+        @Body requestBody: RequestBody
+    ): Call<ApplyResponse>
+
     @GET("posts/free/search")
     fun getFreeSearch(
         @Query("page") page: Int,
@@ -56,5 +77,6 @@ interface CommunityAPIService {
         @Query("searchType") searchType: String,
         @Query("keyword") keyword: String
     ): Call<CommunityPost>
+
 
 }
