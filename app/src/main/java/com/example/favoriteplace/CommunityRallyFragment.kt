@@ -93,7 +93,7 @@ class CommunityRallyFragment : Fragment(), SortBottomSheetFragment.OnSortOptionS
 
         //CommunityFreeSearchFragment()로 전환
         (context as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frameLayout, CommunityFreeSearchFragment().apply {
+            .replace(R.id.main_frameLayout, CommunityRallySearchFragment().apply {
                 arguments = Bundle().apply {
                     putString("SEARCH_TEXT", searchText) // SEARCH_TEXT 키로 사용자가 검색한 내용 저장
                     putString("SEARCH_TYPE", searchType)

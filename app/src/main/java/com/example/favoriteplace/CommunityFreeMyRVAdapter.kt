@@ -8,7 +8,7 @@ import com.example.favoriteplace.databinding.ItemCommunityFreeMyBinding
 import kotlin.collections.ArrayList
 
 class CommunityFreeMyRVAdapter(private val freeMyWriteList: ArrayList<Posts>,
-                               private val listener: CommunityFreeLatelyRVAdapter.OnItemClickListener
+                               private val listener: OnItemClickListener
 ): RecyclerView.Adapter<CommunityFreeMyRVAdapter.ViewHolder>(){
 
     // 클릭 이벤트를 처리할 리스너 인터페이스 정의

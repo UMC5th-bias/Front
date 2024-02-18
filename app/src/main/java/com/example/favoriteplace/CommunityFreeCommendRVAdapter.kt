@@ -7,7 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemCommunityFreeCommendBinding
 
 
-class CommunityFreeCommendRVAdapter (private val commendList: ArrayList<Comments>):RecyclerView.Adapter<CommunityFreeCommendRVAdapter.ViewHolder>() {
+class CommunityFreeCommendRVAdapter (private val commendList: ArrayList<Comments>,
+                                     private val listener: OnItemClickListener
+):RecyclerView.Adapter<CommunityFreeCommendRVAdapter.ViewHolder>() {
+
+    // 클릭 이벤트를 처리할 리스너 인터페이스 정의
+    interface OnItemClickListener {
+        fun onItemClick(postId: Int)
+    }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemCommunityFreeCommendBinding =ItemCommunityFreeCommendBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
 

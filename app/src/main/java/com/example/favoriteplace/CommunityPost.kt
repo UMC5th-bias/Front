@@ -117,3 +117,34 @@ data class Comment(
     val passedTime: String,
     val isWrite: Boolean
 )
+
+data class Pilgrimage(
+    val name: String,
+    val pilgrimageNumber: Int,
+    val completeNumber: Int,
+    val address: String,
+    val latitude: Double,
+    val longitude: Double,
+    val imageAnime: String,
+    val imageReal: String
+)
+
+data class RallyGuestBook(
+    val id: Long,
+    val title: String,
+    val content: String,
+    val views: Int,
+    val likes: Int,
+    val comments: Int,
+    val isLike: Boolean,
+    val isWrite: Boolean,
+    val passedTime: String,
+    val image: List<String>,
+    val hashTag: List<String>
+)
+
+data class RallyDetailResponse(
+    val userInfo: PostUserInfo,
+    val pilgrimage: Pilgrimage,
+    val guestBook: RallyGuestBook
+)

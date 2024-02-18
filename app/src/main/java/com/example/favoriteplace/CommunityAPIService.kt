@@ -86,4 +86,9 @@ interface CommunityAPIService {
         @Query("keyword") keyword: String
     ): Call<RallyPost>
 
+    @GET("/posts/guestbooks/{guestbook_id}")
+    fun getRallyPostDetail(
+        @Header("Authorization") authorization:String?,
+        @Path("guestbook_id") guestBookId: Long,
+    ): Call<RallyDetailResponse>
 }

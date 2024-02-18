@@ -9,7 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemCommunityRallyLatelyRecommendBinding
 import kotlin.collections.ArrayList
 
-class CommunityRallyLatelyRVAdapter(private val rallyLatelyList: ArrayList<GuestBook>, private val listener: OnItemClickListener): RecyclerView.Adapter<CommunityRallyLatelyRVAdapter.ViewHolder>(){
+class CommunityRallyLatelyRVAdapter(private val rallyLatelyList: ArrayList<GuestBook>
+): RecyclerView.Adapter<CommunityRallyLatelyRVAdapter.ViewHolder>(){
 
     // 클릭 이벤트를 처리할 리스너 인터페이스 정의
     interface OnItemClickListener {
@@ -36,13 +37,6 @@ class CommunityRallyLatelyRVAdapter(private val rallyLatelyList: ArrayList<Guest
 
         //ViewHolder 객체가 생성될 때 실행
         init {
-            binding.root.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    listener.onItemClick(rallyLatelyList[position].id)
-                }
-            }
-
             binding.root.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
 
                 //뷰가 윈도우에 연결될 때 호출

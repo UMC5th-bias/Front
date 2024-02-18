@@ -28,14 +28,14 @@ class ShopMainLimitedIconFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentShopDetailLimitedIconBinding.inflate(inflater,container,false)
+        binding = FragmentShopDetailLimitedIconBinding.inflate(inflater, container, false)
 // Bundle에서 ITEM_ID 추출 (기본값으로 0 지정)
         val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
 
         // 아이템 ID를 사용하여 API 호출
         fetchItemDetails(itemId)
 
-        binding.shopBannerDetailIconIb.setOnClickListener{
+        binding.shopBannerDetailIconIb.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frameLayout, ShopMainFragment())
                 .commitAllowingStateLoss()
@@ -48,31 +48,21 @@ class ShopMainLimitedIconFragment : Fragment() {
         return binding.root
     }
 
-    fun showToast(context: Context, message: String) {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.custom_toast, null)
-
-        val textView = layout.findViewById<TextView>(R.id.custom_toast_message)
-        textView.text = message
-
-        val toast = Toast(context)
-        toast.duration = Toast.LENGTH_SHORT
-        toast.view = layout
-        toast.show()
-    }
-
     //아이콘 구매 팝업창 띄우기
     private fun popupIconPurchaseClick() {
         val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0  // 이 줄은 예시일 뿐, 실제로는 클래스 변수를 사용할 것입니다.
 
         // 이미 구매한 경우 토스트 메시지 표시
         if (getAccessToken() == null) {
-            showToast(requireContext(), "로그인이 필요한 기능입니다. 로그인을 해주세요.")
-        } else if(alreadyBought) {
-            showToast(requireContext(), "이미 구매한 아이템입니다.")
+            Toast.makeText(requireActivity(), "로그인이 필요한 기능입니다. 로그인을 해주세요.", Toast.LENGTH_SHORT).show()
+        } else if (alreadyBought) {
+            Toast.makeText(requireActivity(), "이미 구매한 아이템입니다.", Toast.LENGTH_SHORT).show()
+
+        } else if (userPoint < itemPoint) {
+            Toast.makeText(requireActivity(), "포인트가 부족합니다.", Toast.LENGTH_SHORT).show()
         } else {
             // 구매 팝업창 띄우기
-            val iconPurchaseDialog =  IconPurchaseDialog()
+            val iconPurchaseDialog = IconPurchaseDialog()
 
             // Bundle 객체 생성 및 userPoint와 itemPoint 값 추가
             val args = Bundle().apply {

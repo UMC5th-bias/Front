@@ -11,6 +11,8 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="코난 성지순례 가보신 분?"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textSize="15sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"

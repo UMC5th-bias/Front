@@ -59,7 +59,7 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
         //돌아가기 버튼을 클릭했을 때
         binding.communityRallySearchIb.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frameLayout, CommunityFreeFragment().apply {
+                .replace(R.id.main_frameLayout, CommunityRallyFragment().apply {
                 })
                 .commitAllowingStateLoss()
         }
@@ -131,14 +131,7 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
 
                                 //RVA실행
                                 val latelywriteRVAdapter =
-                                    CommunityRallyLatelyRVAdapter(freeSearchData, object : CommunityRallyLatelyRVAdapter.OnItemClickListener{
-                                        override fun onItemClick(postId: Int) {
-                                            val intent = Intent(context, PostDetailActivity::class.java).apply {
-                                                putExtra("POST_ID", postId)
-                                            }
-                                            startActivity(intent)
-                                        }
-                                    })
+                                    CommunityRallyLatelyRVAdapter(freeSearchData)
                                 binding.communityRallyLatelyRv.adapter = latelywriteRVAdapter
                                 binding.communityRallyLatelyRv.layoutManager =
                                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

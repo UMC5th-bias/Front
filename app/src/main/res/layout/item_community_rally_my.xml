@@ -11,6 +11,8 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="날씨의 아이 덕후 투어 다녀왔어요:)"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textSize="15sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"

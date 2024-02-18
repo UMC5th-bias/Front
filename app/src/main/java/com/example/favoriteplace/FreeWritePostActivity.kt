@@ -190,19 +190,6 @@ class FreeWritePostActivity : AppCompatActivity() {
         return true
     }
 
-    fun showToast(context: Context, message: String) {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.custom_toast, null)
-
-        val textView = layout.findViewById<TextView>(R.id.custom_toast_message)
-        textView.text = message
-
-        val toast = Toast(context)
-        toast.duration = Toast.LENGTH_SHORT
-        toast.view = layout
-        toast.show()
-    }
-
     private fun getAccessToken(): String? {
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
@@ -215,7 +202,7 @@ class FreeWritePostActivity : AppCompatActivity() {
 
         // 제목, 내용 비워져 있으면-> toast 메세지
         if (title.isEmpty() || content.isEmpty()) {
-            showToast(this, "제목과 내용을 입력해주세요.")
+            Toast.makeText(this,"제목과 내용을 입력해주세요.",Toast.LENGTH_SHORT).show()
 
             return
         }
@@ -269,7 +256,7 @@ class FreeWritePostActivity : AppCompatActivity() {
                             Log.d("FreeWritePostActivity", "게시글을 성공적으로 등록했습니다. 메시지: ${response.body()?.message}")
 
                             // 서버로부터 받은 메시지를 Toast로 표시
-                            showToast(this@FreeWritePostActivity, responseData.message)
+                            //showToast(this@FreeWritePostActivity, responseData.message)
 
 //                            // CommunityFreeFragment 시작
 //                            supportFragmentManager.beginTransaction()

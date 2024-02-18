@@ -14,4 +14,11 @@ interface RallyDetailService {
     ): Call<RallyDetailData>
 
 
+    @POST("/pilgrimage/{rally_id}")
+    fun rallyLike(
+        @Path("rally_id") rallyId: Long,
+        @Header("Authorization") authorization: String
+    ): Call<isLikeResponse>
+
+
 }
