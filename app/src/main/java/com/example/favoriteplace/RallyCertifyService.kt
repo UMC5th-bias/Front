@@ -24,7 +24,7 @@ interface RallyCertifyService {
     )
 
 
-    @POST("/pilgrimage/certify/{pilgrimage_id}")
+    @POST("/pilgrimage/certified/{pilgrimage_id}")
     fun RallyCertify(
         @Path("pilgrimage_id") pilgrimageId: Long,
         @Header("Authorization") authorization: String,

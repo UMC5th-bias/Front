@@ -136,6 +136,3 @@ class RallyDetailFragment : Fragment() {
             e.printStackTrace()
         }
     }
-//    private fun isLoggedIn(): Boolean {
-//        return sharedPreferences.getBoolean("isLoggedIn", false)
-//    }
