@@ -55,7 +55,7 @@ class PostDetailActivity : AppCompatActivity() {
             if (comment.isNotEmpty()) {
                 sendCommentToServer(postId, comment)
             } else {
-                showToast(this,"댓글을 입력하세요.") // 댓글이 비어있을 경우 처리
+                Toast.makeText(this,"댓글을 입력해주세요.",Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -64,20 +64,6 @@ class PostDetailActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
     }
-
-    fun showToast(context: Context, message: String) {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.custom_toast, null)
-
-        val textView = layout.findViewById<TextView>(R.id.custom_toast_message)
-        textView.text = message
-
-        val toast = Toast(context)
-        toast.duration = Toast.LENGTH_SHORT
-        toast.view = layout
-        toast.show()
-    }
-
 
     private fun modalWithRoundCorner() {
         val modal = MyFilterBottomSheetFragment().apply {
