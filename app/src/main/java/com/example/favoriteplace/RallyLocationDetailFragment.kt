@@ -69,8 +69,8 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
 
     // test
-    private val testLatitude: Double = 35.69297366487135
-    private val testLongitude: Double = 139.69942224122263
+    private val testLatitude: Double = 37.520439
+    private val testLongitude: Double = 126.887816
 
 
 

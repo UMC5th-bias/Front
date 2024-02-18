@@ -211,17 +211,17 @@ class HomeFragment : Fragment() {
                     .into(binding.homeMemberProfileCiv) // 이미지를 설정할 ImageView
 
 
-                // 사용자 뱃지
+                // 사용자 아이콘
                 Glide.with(this)
-                    .load(userInfo.profileTitleUrl.toString())
+                    .load(userInfo.profileIconUrl.toString())
                     .placeholder(null)
                     .into(binding.homeMemberIconIv)
 
                 // 사용자 닉네임
                 binding.homeMemberNameTv.text = userInfo.nickname
 
-                // 사용자 아이콘
-                bind(binding.root.context, userInfo.profileIconUrl, binding.homeMemberIconIv)
+                // 사용자 칭호
+                bind(binding.root.context, userInfo.profileTitleUrl, binding.homeMemberBadgeIv)
             }
 
             homeData.rally?.let { rally ->
