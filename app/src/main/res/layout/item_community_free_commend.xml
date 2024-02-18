@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/item_community_free_commend_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="글 보니까 나고야도 한번 가보고 싶네요!"
         android:ellipsize="end"
@@ -45,7 +45,7 @@
         
         <TextView
             android:id="@+id/item_community_free_commend_title_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:text="8월 말 도쿄타워 투어하고 주변 다니.."
             android:ellipsize="end"

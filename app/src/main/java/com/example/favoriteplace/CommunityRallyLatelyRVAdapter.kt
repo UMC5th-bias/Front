@@ -48,10 +48,6 @@ class CommunityRallyLatelyRVAdapter(private val rallyLatelyList: ArrayList<Guest
 
                 }
             })
-
-            // 설정한 TextView에 ... 줄임 처리 설정
-            binding.itemCommunityRallyTitleTv.ellipsize = TextUtils.TruncateAt.END
-            binding.itemCommunityRallyTitleTv.maxLines = 1 // 최대 표시할 줄 수
         }
 
         fun bind(rallyLately: GuestBook){
@@ -62,18 +58,9 @@ class CommunityRallyLatelyRVAdapter(private val rallyLatelyList: ArrayList<Guest
             binding.itemCommunityRallyClockTv.text= rallyLately.passedTime
             binding.itemCommunityRallyCommentTv.text= rallyLately.comments.toString()
 
-            //만일 해시태그가 있다면
-            if(rallyLately.hashTags.isNotEmpty()){
-                binding.itemCommunityRallyTag1Tv.text= rallyLately.hashTags[0]
-                if(rallyLately.hashTags.size>=2){   //만일 해시태그가 두 개라면
-                    binding.itemCommunityRallyTag2Tv.text=rallyLately.hashTags[1]
-                } else {    //만일 해시태그가 하나라면
-                    binding.itemCommunityRallyTag2TextTv.visibility=View.INVISIBLE
-                }
-            } else {    //만일 해시태그가 없다면
-                binding.itemCommunityRallyTag1TextTv.visibility=View.INVISIBLE
-                binding.itemCommunityRallyTag2TextTv.visibility=View.INVISIBLE
-            }
+            // 설정한 TextView에 ... 줄임 처리 설정
+            binding.itemCommunityRallyTitleTv.ellipsize = TextUtils.TruncateAt.END
+            binding.itemCommunityRallyTitleTv.maxLines = 1 // 최대 표시할 줄 수
         }
 
         //이미지를 로드하는 함수

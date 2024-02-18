@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/item_community_rally_my_title_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="날씨의 아이 덕후 투어 다녀왔어요:)"
         android:ellipsize="end"

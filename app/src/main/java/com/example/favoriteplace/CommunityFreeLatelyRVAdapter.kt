@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -48,6 +49,10 @@ class CommunityFreeLatelyRVAdapter (private val latelyList: ArrayList<Posts>,
             binding.itemCommunityFreeLatelyLikeTv.text= latelywrite.likes.toString()
             binding.itemCommunityFreeLatelyClockTv.text= latelywrite.passedTime
             binding.itemCommunityFreeLatelyCommentNumTv.text= latelywrite.comments.toString()
+
+            // 설정한 TextView에 ... 줄임 처리 설정
+            binding.itemCommunityFreeLatelyTitleTv.ellipsize = TextUtils.TruncateAt.END
+            binding.itemCommunityFreeLatelyTitleTv.maxLines = 1 // 최대 표시할 줄 수
         }
 
     }
