@@ -139,7 +139,10 @@ class RallyHomeFragment : Fragment() {
         }
 
         //이달의 추천 랠리 불러오기
-        RetrofitAPI.rallyHomeService.getTrending("Bearer $userToken").enqueue(object: Callback<RallyHomeTrending> {
+        RetrofitAPI.rallyHomeService.getTrending(
+            if(userToken.isNotEmpty()) "Bearer $userToken"
+            else ""
+        ).enqueue(object: Callback<RallyHomeTrending> {
             override fun onResponse(call: Call<RallyHomeTrending>, response: Response<RallyHomeTrending>) {
                 if(response.isSuccessful) {
                     val responseData = response.body()
