@@ -43,6 +43,9 @@ class RallyDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 이전에 저장된 isLiked 값을 로드
+        loadLikeStatus()
+
         val rallyId = arguments?.getString("rallyId")
         val accessToken = sharedPreferences.getString("token", null)
 
@@ -71,6 +74,19 @@ class RallyDetailFragment : Fragment() {
 
     }
 
+    private fun loadLikeStatus() {
+        isLiked = sharedPreferences.getBoolean("isLiked", false)
+        // isLiked 값에 따라 이미지 설정
+        if (isLiked) {
+            binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_on)
+        } else {
+            binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_off)
+        }
+
+
+        Log.d("RallyDetailFragment", " loadLikeStatus():  isLiked = $isLiked")
+    }
+
 
     private fun setRallyDetail(rallyDetailData: RallyDetailData) {
             Glide.with(this)
@@ -89,12 +105,14 @@ class RallyDetailFragment : Fragment() {
             binding.rallydetailLikeBtn.setOnClickListener {
                 // 토큰 확인하여 로그인 여부 확인
                 val accessToken = sharedPreferences.getString("token", null)
-                Log.d("RallyDetailFragment", ">> $accessToken")
-                if(!accessToken.isNullOrEmpty()){
-                    // 토큰이 있는 경우 -> 로그인 상태
+                val rallyId = arguments?.getString("rallyId")
+                Log.d("RallyDetailFragment", ">> rallyId: $rallyId, \n $accessToken")
 
-                    // 클릭할 때마다 isLike 값을 토글
+                
+                if(!accessToken.isNullOrEmpty()){
+                    // 클릭할 때마다 isLike 값
                     isLiked = !isLiked
+
                     // isLike 값에 따라 이미지 변경
                     if (isLiked) {
                         binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_on)
@@ -102,9 +120,15 @@ class RallyDetailFragment : Fragment() {
                         binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_off)
                     }
 
-                    // isLike 값 업데이트
-                    rallyDetailData.isLike = isLiked
+                    // SharedPreferences에 "isLike" 값을 저장
+                    saveLikeStatus(isLiked)
 
+                    // isLike 값 업데이트
+                    //rallyDetailData.isLike = isLiked
+
+                    // 서버에 isLiked 값을 전달하여 찜 목록에 추가
+                    sendLikeStatusToServer(rallyId, accessToken)
+                    
                     Log.d("RallyDetailFragment", "isLike: $isLiked")
                     Log.d("RallyDetailFragment", ">> $rallyDetailData")
 
@@ -112,6 +136,56 @@ class RallyDetailFragment : Fragment() {
                     Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun sendLikeStatusToServer(rallyId: String?, accessToken: String) {
+        // rallyId를 Long으로 변환
+        val rallyIdLong = rallyId?.toLongOrNull()
+        if (rallyIdLong == null) {
+            Log.d("RallyDetailFragment", "Invalid rallyId: $rallyId")
+            return
+        }
+
+        Log.d("RallyDetailFragment", "Invalid isLiked: $isLiked")
+        //Log.d("RallyDetailFragment", "Invalid RallyDetailData: $RallyDetailData")
+
+        // rallyLike API 호출
+        if(isLiked){
+            RetrofitAPI.rallyDetailService.rallyLike(rallyIdLong, "Bearer $accessToken").enqueue(object : Callback<isLikeResponse> {
+                override fun onResponse(call: Call<isLikeResponse>, response: Response<isLikeResponse>) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody!=null) {
+                            val message = responseBody.message
+
+                            Log.d("RallyDetailFragment", "Response: $message")
+
+                        } else {
+                            Log.e("RallyDetailFragment", "Response body is null or success is false")
+                        }
+                    } else {
+                        Log.e("RallyDetailFragment", "Response is not successful: ${response.code()}")
+                        // 서버로부터 받은 오류 메시지 또는 기타 처리 가능
+                    }
+                }
+
+                override fun onFailure(call: Call<isLikeResponse>, t: Throwable) {
+                    // 통신 실패 처리
+                    Log.e("RallyDetailFragment", "onFailure: $t")
+                    // 통신 실패 메시지를 사용자에게 표시하거나 다른 방식으로 처리 가능
+                }
+            })
+        }
+
+
+    }
+
+
+    // SharedPreferences에 "isLike" 값을 저장
+    private fun saveLikeStatus(isLiked: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLiked", isLiked)
+        editor.apply()
     }
 
 }

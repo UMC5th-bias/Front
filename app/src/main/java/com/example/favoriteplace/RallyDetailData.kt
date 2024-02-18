@@ -14,10 +14,8 @@ data class RallyDetailData(
     @SerializedName(value = "isLike") var isLike:Boolean
 )
 
-data class UpdateResponse(
-    @SerializedName(value = "success") var success: Boolean,
-    @SerializedName(value = "message") var message:String,
-)
-{
 
-}
+data class isLikeResponse(
+    val success: Boolean,
+    val message: String
+)
