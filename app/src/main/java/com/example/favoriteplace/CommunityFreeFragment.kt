@@ -104,6 +104,7 @@ class CommunityFreeFragment : Fragment(), SortBottomSheetFragment.OnSortOptionSe
         searchType=binding.communityFreeSortTv.text.toString()
 
         //CommunityFreeSearchFragment()로 전환
+        //
         (context as MainActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.main_frameLayout, CommunityFreeSearchFragment().apply {
                 arguments = Bundle().apply {
