@@ -29,19 +29,13 @@ class RallyCategoryFragment : Fragment() {
         fun checkLoginStatus() {
             // SharedPreferences에서 액세스 토큰 가져오기
             val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-            var isLoggedIn = false
-            isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", true)
+            userToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, "") ?: ""
 
-            if (isLoggedIn) {
-                // 로그인 상태인 경우 사용자 정보를 가져옴
-                userToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, "") ?: ""
-                if (userToken.isNotEmpty()) {
-                    Log.d("HomeFragment", ">> 로그인 상태인 경우 사용자 정보를 가져옴, $userToken")
-                }
+            if (userToken.isNotEmpty()) {
+                Log.d("RallyCategoryFragment", ">> 로그인 상태입니다.")
             }else{
                 // 비회원 상태인 경우
-                Log.d("HomeFragment", ">> 비회원 상태입니다., $isLoggedIn")
-
+                Log.d("RallyCategoryFragment", ">> 비회원 상태입니다.")
             }
         }
 
