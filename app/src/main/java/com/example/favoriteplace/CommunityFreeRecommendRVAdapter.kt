@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -47,6 +48,10 @@ class CommunityFreeRecommendRVAdapter(private val freeRecommendList: ArrayList<P
             binding.itemCommunityFreeRecommendLikeTv.text=freeRecommend.likes.toString()
             binding.itemCommunityFreeRecommendClockTv.text= freeRecommend.passedTime
             binding.itemCommunityFreeRecommendCommentNumTv.text= freeRecommend.comments.toString()
+
+            // 설정한 TextView에 ... 줄임 처리 설정
+            binding.itemCommunityFreeRecommendTitleTv.ellipsize = TextUtils.TruncateAt.END
+            binding.itemCommunityFreeRecommendTitleTv.maxLines = 1 // 최대 표시할 줄 수
         }
 
     }

@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,14 @@ class CommunityRallyCommendRVAdapter (private val commendList: ArrayList<MyComme
             binding.itemCommunityRallyCommendLikeTv.text= commend.myGuestBookInfo.likes.toString()
             binding.itemCommunityRallyCommendClockTv.text= commend.myGuestBookInfo.passedTime
             binding.itemCommunityRallyCommendCommentNumTv.text= commend.myGuestBookInfo.comments.toString()
+
+            // 설정한 TextView에 ... 줄임 처리 설정
+            binding.itemCommunityRallyCommendTitleTv.ellipsize = TextUtils.TruncateAt.END
+            binding.itemCommunityRallyCommendTitleTv.maxLines = 1 // 최대 표시할 줄 수
+
+            // 설정한 TextView에 ... 줄임 처리 설정
+            binding.itemCommunityRallyCommendTv.ellipsize = TextUtils.TruncateAt.END
+            binding.itemCommunityRallyCommendTv.maxLines = 1 // 최대 표시할 줄 수
         }
 
     }

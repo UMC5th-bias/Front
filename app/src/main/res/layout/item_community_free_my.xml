@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/item_community_free_my_title_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="도쿄 성지순례 장소 추천해주세요:)"
         android:textSize="15sp"
