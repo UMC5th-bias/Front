@@ -55,7 +55,7 @@ class PostDetailActivity : AppCompatActivity() {
             if (comment.isNotEmpty()) {
                 sendCommentToServer(postId, comment)
             } else {
-                Toast.makeText(this, "댓글을 입력하세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"댓글을 입력해주세요.",Toast.LENGTH_SHORT).show()
             }
         }
     }
