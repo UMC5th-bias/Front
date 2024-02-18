@@ -88,29 +88,21 @@ class HomeFragment : Fragment() {
 
         // 앱이 처음 시작될 때 로그인 상태를 확인 후, 로그인 정보가 없으면 서버에 요청을 보냄
         checkLoginStatus()
-
+        getUserInfo(accessToken?:"")
     }
 
 
-    private fun checkLoginStatus() {
+    fun checkLoginStatus() {
         // SharedPreferences에서 액세스 토큰 가져오기
         val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-
-        accessToken = sharedPreferences.getString(ACCESS_TOKEN_KEY, null)
+        accessToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, "") ?: ""
         isLoggedIn = !accessToken.isNullOrEmpty()
 
-
-
         if (isLoggedIn) {
-            // 로그인 상태인 경우 사용자 정보를 가져옴
-            getUserInfo(accessToken!!)
-            Log.d("HomeFragment", ">> 로그인 상태 : $isLoggedIn, \n $accessToken")
-
+            Log.d("MyFragment", ">> 로그인 상태입니다.")
         }else{
             // 비회원 상태인 경우
-            Log.d("HomeFragment", ">> 비회원 상태입니다., $isLoggedIn")
-            fetchNonMember()
-
+            Log.d("MyFragment", ">> 비회원 상태입니다.")
         }
     }
 
@@ -161,6 +153,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun getUserInfo(userToken: String) {
+        if(userToken == "") {
+            Log.d("HomeFragment", "유저 토큰 없음")
+            return
+        }
         lifecycleScope.launch {
             try {
                 val response: Response<HomeService.LoginResponse> = homeService.getUserInfo("Bearer $userToken")
@@ -190,7 +186,6 @@ class HomeFragment : Fragment() {
     private fun updateUI(homeData: HomeService.LoginResponse?) {
 
         Log.d("HomeFragment", ">> $homeData")
-
 
 
         if (homeData != null ) {

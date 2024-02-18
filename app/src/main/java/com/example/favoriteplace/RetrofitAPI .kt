@@ -40,6 +40,9 @@ object RetrofitAPI {
     val rallyDetailService: RallyDetailService = retrofit.create(RallyDetailService::class.java)
 
     val communityHomeService: CommunityHomeService = retrofit.create(CommunityHomeService::class.java)
+
+    val myService: MyService = retrofit.create(MyService::class.java)
+
 }
 
 
