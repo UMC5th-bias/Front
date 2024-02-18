@@ -1,349 +1,442 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rallyPlaceContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"    >
+            android:id="@+id/rallyPlaceContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="커뮤니티"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="15dp"/>
-
-        <EditText
-            android:id="@+id/searchTextView"
-            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="검색어를 입력해주세요."
-            android:textColorHint="@color/gray"
-            android:paddingStart="27dp"
-            android:paddingEnd="13.67dp"
-            android:paddingVertical="12dp"
-            android:layout_marginTop="34.5dp"
-            android:layout_marginHorizontal="15dp"
-            android:textSize="12sp"
-            android:letterSpacing="0.06"
-            android:textColor="@color/black"
-            android:background="@drawable/search_bar_border"
-            android:drawableEnd="@drawable/search_icon"
-            android:maxLines="1"/>
+            android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="오늘의 화제글 🔥"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="42.47dp"
-            android:layout_marginStart="15dp"
-            android:textStyle="bold"/>
+                android:layout_width="wrap_content"
+                android:text="커뮤니티"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <EditText
+                android:id="@+id/searchTextView"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="검색어를 입력해주세요."
+                android:textColorHint="@color/gray"
+                android:paddingStart="27dp"
+                android:paddingEnd="13.67dp"
+                android:paddingVertical="12dp"
+                android:layout_marginTop="34.5dp"
+                android:layout_marginHorizontal="15dp"
+                android:textSize="15sp"
+                android:letterSpacing="0.06"
+                android:textColor="@color/black"
+                android:background="@drawable/search_bar_border"
+                android:drawableEnd="@drawable/search_icon"
+                android:maxLines="1"/>
 
-            <TextView
-                android:id="@+id/freeBoard"
+        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="자유게시판"
-                android:textSize="12sp"
-                android:textColor="@color/main"
-                android:layout_marginTop="25dp"
+                android:text="오늘의 화제글 🔥"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="42.47dp"
                 android:layout_marginStart="15dp"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/rallyCertification"
+        <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="성지순례인증"
-                android:textSize="12sp"
-                android:textColor="@color/gray"
-                android:layout_marginTop="25dp"
-                android:layout_marginStart="17.47dp"
-                android:textStyle="bold"/>
+                android:orientation="horizontal">
+
+            <TextView
+                    android:id="@+id/freeBoard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자유게시판"
+                    android:textSize="15sp"
+                    android:textColor="@color/main"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginStart="15dp"
+                    android:textStyle="bold"/>
+
+            <TextView
+                    android:id="@+id/rallyCertification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="성지순례인증"
+                    android:textSize="15sp"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginStart="17.47dp"
+                    android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginHorizontal="15dp"
-            android:paddingVertical="13.19dp"
-            android:paddingHorizontal="18.8dp"
-            android:background="@drawable/community_main_articlelist_background"
-            android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginHorizontal="15dp"
+                android:paddingVertical="13.19dp"
+                android:paddingHorizontal="18.8dp"
+                android:background="@drawable/community_main_articlelist_background"
+                android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/comminity_main_article_background"
-                android:paddingTop="9.51dp"
-                android:paddingBottom="7.56dp"
-                android:paddingEnd="8.77dp"
-                android:paddingStart="10.21dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginEnd="14.65dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/community_main_black_number_1"/>
-                <TextView
-                    android:id="@+id/topic_today_1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/black"
-                    android:text=""/>
+                    android:background="@drawable/comminity_main_article_background"
+                    android:paddingTop="9.51dp"
+                    android:paddingBottom="7.56dp"
+                    android:paddingEnd="8.77dp"
+                    android:paddingStart="10.21dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="14.65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/community_main_black_number_1"/>
+
+                <TextView
+                        android:id="@+id/topic_today_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textSize="17sp"
+                        android:ellipsize="end"
+                        android:textColor="@color/black"
+                        android:text=""/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/comminity_main_article_background"
-                android:paddingTop="9.51dp"
-                android:paddingBottom="7.56dp"
-                android:paddingEnd="8.77dp"
-                android:paddingStart="10.21dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginEnd="14.65dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/community_main_black_number_2"/>
-                <TextView
-                    android:id="@+id/topic_today_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/black"
-                    android:text=""/>
+                    android:background="@drawable/comminity_main_article_background"
+                    android:paddingTop="9.51dp"
+                    android:paddingBottom="7.56dp"
+                    android:paddingEnd="8.77dp"
+                    android:paddingStart="10.21dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="14.65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/community_main_black_number_2"/>
+
+                <TextView
+                        android:id="@+id/topic_today_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="17sp"
+                        android:textColor="@color/black"
+                        android:text=""/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/comminity_main_article_background"
-                android:paddingTop="9.51dp"
-                android:paddingBottom="7.56dp"
-                android:paddingEnd="8.77dp"
-                android:paddingStart="10.21dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginEnd="14.65dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/community_main_black_number_3"/>
-                <TextView
-                    android:id="@+id/topic_today_3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:ellipsize="end"
-                    android:text=""/>
+                    android:background="@drawable/comminity_main_article_background"
+                    android:paddingTop="9.51dp"
+                    android:paddingBottom="7.56dp"
+                    android:paddingEnd="8.77dp"
+                    android:paddingStart="10.21dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="14.65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/community_main_black_number_3"/>
+
+                <TextView
+                        android:id="@+id/topic_today_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textSize="17sp"
+                        android:textColor="@color/black"
+                        android:ellipsize="end"
+                        android:text=""/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/comminity_main_article_background"
-                android:paddingTop="9.51dp"
-                android:paddingBottom="7.56dp"
-                android:paddingEnd="8.77dp"
-                android:paddingStart="10.21dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginEnd="14.65dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/community_main_black_number_4"/>
-                <TextView
-                    android:id="@+id/topic_today_4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/black"
-                    android:text=""/>
+                    android:background="@drawable/comminity_main_article_background"
+                    android:paddingTop="9.51dp"
+                    android:paddingBottom="7.56dp"
+                    android:paddingEnd="8.77dp"
+                    android:paddingStart="10.21dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="14.65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/community_main_black_number_4"/>
+
+                <TextView
+                        android:id="@+id/topic_today_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="17sp"
+                        android:textColor="@color/black"
+                        android:text=""/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/comminity_main_article_background"
-                android:paddingTop="9.51dp"
-                android:paddingBottom="7.56dp"
-                android:paddingEnd="8.77dp"
-                android:paddingStart="10.21dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginEnd="14.65dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/community_main_black_number_5"/>
-                <TextView
-                    android:id="@+id/topic_today_5"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/black"
-                    android:text=""/>
+                    android:background="@drawable/comminity_main_article_background"
+                    android:paddingTop="9.51dp"
+                    android:paddingBottom="7.56dp"
+                    android:paddingEnd="8.77dp"
+                    android:paddingStart="10.21dp"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="14.65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/community_main_black_number_5"/>
+
+                <TextView
+                        android:id="@+id/topic_today_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:text=""/>
             </LinearLayout>
 
 
         </LinearLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/community_free_blackBox_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/rounded_black_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/animationRally_blackBox_cl">
 
-        <ImageView
-            android:id="@+id/community_free_iv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:adjustViewBounds="true"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/community_main_free_board"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/community_free_tv"
+                    android:text="자유게시판"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginBottom="35dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
-        <ImageView
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:id="@+id/community_rally_iv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="25dp"
-            android:src="@drawable/community_main_rally_certification"/>
+            <!-- 사진 -->
+            <ImageView
+                    android:id="@+id/community_free_photo_iv"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/write_ic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/community_free_blackBox_cl"
+                    app:layout_constraintTop_toTopOf="@id/community_free_blackBox_cl" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/community_rally_pinkBox_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/rounded_pink_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/animationRally_blackBox_cl">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/community_rally_tv"
+                    android:text="성지순례 인증"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginBottom="35dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <!-- 사진 -->
+            <ImageView
+                    android:id="@+id/community_rally_photo_iv"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/map_ic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/community_rally_pinkBox_cl"
+                    app:layout_constraintTop_toTopOf="@id/community_rally_pinkBox_cl" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="월간 화제글 👑"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="15dp"
-            android:textStyle="bold"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="월간 화제글 👑"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="50dp"
+                android:layout_marginStart="15dp"
+                android:textStyle="bold"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10.28dp"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginBottom="180dp"
-            android:paddingVertical="13.19dp"
-            android:paddingHorizontal="18.8dp"
-            android:background="@drawable/community_main_articlelist_background"
-            android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.28dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginBottom="180dp"
+                android:paddingVertical="13.19dp"
+                android:paddingHorizontal="18.8dp"
+                android:background="@drawable/community_main_articlelist_background"
+                android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/comminity_main_article_background"
-                android:paddingTop="9.51dp"
-                android:paddingBottom="7.56dp"
-                android:paddingEnd="8.77dp"
-                android:paddingStart="10.21dp"
-                android:layout_marginBottom="25dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginEnd="14.65dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/community_main_pink_number_1"/>
-                <TextView
-                    android:id="@+id/topic_monthly_1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/black"
-                    android:text="나고야 주변 성지순례 리스트 모음집.zip"/>
+                    android:background="@drawable/comminity_main_article_background"
+                    android:paddingTop="9.51dp"
+                    android:paddingBottom="7.56dp"
+                    android:paddingEnd="8.77dp"
+                    android:paddingStart="10.21dp"
+                    android:layout_marginBottom="25dp"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="14.65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/community_main_pink_number_1"/>
+
+                <TextView
+                        android:id="@+id/topic_monthly_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textSize="17sp"
+                        android:ellipsize="end"
+                        android:textColor="@color/black"
+                        android:text="나고야 주변 성지순례 리스트 모음집.zip"/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/comminity_main_article_background"
-                android:paddingTop="9.51dp"
-                android:paddingBottom="7.56dp"
-                android:paddingEnd="8.77dp"
-                android:paddingStart="10.21dp"
-                android:layout_marginBottom="25dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginEnd="14.65dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/community_main_pink_number_2"/>
-                <TextView
-                    android:id="@+id/topic_monthly_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/black"
-                    android:text="날씨의아이 성지순례 언제 가는게 좋은지 추천 해주세요"/>
+                    android:background="@drawable/comminity_main_article_background"
+                    android:paddingTop="9.51dp"
+                    android:paddingBottom="7.56dp"
+                    android:paddingEnd="8.77dp"
+                    android:paddingStart="10.21dp"
+                    android:layout_marginBottom="25dp"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="14.65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/community_main_pink_number_2"/>
+
+                <TextView
+                        android:id="@+id/topic_monthly_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textSize="17sp"
+                        android:ellipsize="end"
+                        android:textColor="@color/black"
+                        android:text="날씨의아이 성지순례 언제 가는게 좋은지 추천 해주세요"/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/comminity_main_article_background"
-                android:paddingTop="9.51dp"
-                android:paddingBottom="7.56dp"
-                android:paddingEnd="8.77dp"
-                android:paddingStart="10.21dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginEnd="14.65dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/community_main_pink_number_3"/>
-                <TextView
-                    android:id="@+id/topic_monthly_3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/black"
-                    android:text="8월 말 도쿄타워 투어하고 주변 다니면서 성지순례 한 후기"/>
+                    android:background="@drawable/comminity_main_article_background"
+                    android:paddingTop="9.51dp"
+                    android:paddingBottom="7.56dp"
+                    android:paddingEnd="8.77dp"
+                    android:paddingStart="10.21dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="14.65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/community_main_pink_number_3"/>
+
+                <TextView
+                        android:id="@+id/topic_monthly_3"
+                        android:textSize="17sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/black"
+                        android:text="8월 말 도쿄타워 투어하고 주변 다니면서 성지순례 한 후기"/>
             </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
-
-
-
-
-
 
 
 </ScrollView>
