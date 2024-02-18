@@ -78,5 +78,12 @@ interface CommunityAPIService {
         @Query("keyword") keyword: String
     ): Call<CommunityPost>
 
+    @GET("posts/guestbooks/search")
+    fun getRallySearch(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("searchType") searchType: String,
+        @Query("keyword") keyword: String
+    ): Call<RallyPost>
 
 }
