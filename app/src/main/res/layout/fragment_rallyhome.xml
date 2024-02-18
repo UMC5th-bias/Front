@@ -17,7 +17,7 @@
             android:padding="15dp"
             android:text="성지순례"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/rl_layout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,7 @@
                 android:padding="15dp"
                 android:paddingStart="30dp"
                 android:textColorHint="#CCCCCC"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
             <ImageView
                 android:id="@+id/search_iv"
@@ -69,7 +69,7 @@
             android:padding="15dp"
             android:text="이 달의 추천 랠리"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +118,7 @@
             android:elevation="4dp"
             android:text="날씨의 아이"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/recommend_rally_vw"
             app:layout_constraintStart_toStartOf="@id/recommend_rally_vw"
@@ -132,7 +132,7 @@
             android:elevation="4dp"
             android:text="0/6"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/recommend_rally_vw"
             app:layout_constraintStart_toEndOf="@id/recommend_rally_title_tv"
@@ -169,7 +169,7 @@
                 android:paddingBottom="4dp"
                 android:text="#애니"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -202,7 +202,7 @@
                 android:layout_marginTop="10dp"
                 android:text="애니메이션 랠리"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/pink_tag_tv"
                 app:layout_constraintTop_toBottomOf="@id/pink_tag_tv" />
@@ -215,7 +215,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="좋아하는 최애의 장소를 찾아보세요. 👀"
                 android:textColor="#FFFFFF"
-                android:textSize="11sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/animationRally_blackBox_cl"
                 app:layout_constraintStart_toStartOf="@id/animationRally_title_tv"
                 app:layout_constraintTop_toBottomOf="@id/animationRally_title_tv" />
@@ -249,7 +249,7 @@
                 android:paddingBottom="4dp"
                 android:text="#지역"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -282,7 +282,7 @@
                 android:layout_marginTop="10dp"
                 android:text="성지순례 장소"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/blue_tag_tv"
                 app:layout_constraintTop_toBottomOf="@id/blue_tag_tv" />
@@ -295,7 +295,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="지역마다 숨은 장소가 궁금하시다면 ✨"
                 android:textColor="#FFFFFF"
-                android:textSize="11sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/rallyPlace_blackBox_cl"
                 app:layout_constraintStart_toStartOf="@id/placeRally_title_tv"
                 app:layout_constraintTop_toBottomOf="@id/placeRally_title_tv" />
@@ -324,7 +324,7 @@
                 android:layout_margin="20dp"
                 android:text="관심있는 랠리 모아보기"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -354,7 +354,7 @@
                     android:layout_height="wrap_content"
                     android:text="관심있는 랠리가 아직 존재하지 않아요."
                     android:textColor="#969696"
-                    android:textSize="12sp"
+                    android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -428,7 +428,7 @@
                 android:layout_margin="20dp"
                 android:text="성지순례 인증글 모아보기"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -469,6 +469,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/certificatedRally_yesLogin_cl"
                 android:visibility="visible"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
