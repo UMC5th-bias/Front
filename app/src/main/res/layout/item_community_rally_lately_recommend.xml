@@ -43,6 +43,8 @@
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:text="도쿄타워 #러브라이브 성지순례!"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textStyle="bold"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/item_community_rally_iv"
