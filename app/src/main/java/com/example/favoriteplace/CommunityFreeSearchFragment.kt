@@ -2,6 +2,7 @@ package com.example.favoriteplace
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -14,7 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.favoriteplace.databinding.FragmentCommunityFreeSearchBinding
+import com.example.favoriteplace.databinding.FragmentCommunityFreeSearchingBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +26,7 @@ private var searchText=""
 
 class CommunityFreeSearchFragment : Fragment(), SortBottomSheetFragment.OnSortOptionSelectedListener{
 
-    lateinit var binding: FragmentCommunityFreeSearchBinding
+    lateinit var binding: FragmentCommunityFreeSearchingBinding
     private var freeSearchData=ArrayList<Posts>()
     private var currentPage=1
 
@@ -35,7 +36,7 @@ class CommunityFreeSearchFragment : Fragment(), SortBottomSheetFragment.OnSortOp
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCommunityFreeSearchBinding.inflate(inflater,container,false)
+        binding = FragmentCommunityFreeSearchingBinding.inflate(inflater,container,false)
 
         //서치 방식과 서치한 키워드를 반영
         binding.communityFreeSortSearchTv.text=searchType
@@ -129,7 +130,14 @@ class CommunityFreeSearchFragment : Fragment(), SortBottomSheetFragment.OnSortOp
 
                                     //RVA실행
                                     val latelywriteRVAdapter =
-                                        CommunityFreeLatelyRVAdapter(freeSearchData)
+                                        CommunityFreeLatelyRVAdapter(freeSearchData, object : CommunityFreeLatelyRVAdapter.OnItemClickListener{
+                                            override fun onItemClick(postId: Int) {
+                                                val intent = Intent(context, PostDetailActivity::class.java).apply {
+                                                    putExtra("POST_ID", postId)
+                                                }
+                                                startActivity(intent)
+                                            }
+                                        })
                                     binding.communityFreeLatelyRv.adapter = latelywriteRVAdapter
                                     binding.communityFreeLatelyRv.layoutManager =
                                         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
