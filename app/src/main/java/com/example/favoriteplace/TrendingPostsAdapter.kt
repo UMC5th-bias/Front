@@ -63,10 +63,11 @@ class TrendingPostsAdapter(private val trendingPost : List<HomeService.TrendingP
                     .placeholder(R.drawable.signup_default_profile_image) // 이미지 로딩 중에 표시할 placeholder 이미지
                     .into(profile)
 
-                Glide.with(itemView)
-                    .load(post.profileIconUrl)
-                    .placeholder(null) // 이미지 로딩 중에 표시할 placeholder 아이콘
-                    .into(icon)
+                // 사용자 아이콘
+                post.profileIconUrl?.let { url ->
+                    bind(binding.root.context, url, icon)
+                }
+
             }
         }
     }

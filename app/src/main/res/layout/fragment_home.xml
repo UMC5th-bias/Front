@@ -89,7 +89,8 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="3dp"
                 android:layout_gravity="center"
-                android:visibility="gone">
+                android:visibility="gone"
+                >
 
 
                 <LinearLayout
@@ -135,8 +136,8 @@
 
                         <ImageView
                             android:id="@+id/home_member_badge_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
                             android:src="@drawable/user_title"/>
 
                         <LinearLayout
@@ -188,21 +189,22 @@
                 <!--비회원 추천 랠리-->
                 <RelativeLayout
                     android:id="@+id/non_members_layout"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
+                    android:layout_width="180dp"
+                    android:layout_height="170dp"
                     android:gravity="center"
+
                     android:layout_marginStart="10dp">
 
                     <ImageView
                         android:id="@+id/home_recommend_iv"
-                        android:layout_width="170dp"
+                        android:layout_width="180dp"
                         android:layout_height="170dp"
                         android:scaleType="fitXY"
                         android:background="@drawable/round"
                         android:src="@drawable/img1" />
 
                     <ImageView
-                        android:layout_width="170dp"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:src="@drawable/black_bar" />
@@ -233,11 +235,12 @@
                 <!-- 회원 랠리 -->
                 <RelativeLayout
                     android:id="@+id/members_rally_layout"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
+                    android:layout_width="180dp"
+                    android:layout_height="170dp"
                     android:gravity="center"
                     android:layout_marginStart="10dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    >
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cv"
@@ -247,7 +250,7 @@
 
                         <ImageView
                             android:id="@+id/home_rally_iv"
-                            android:layout_width="170dp"
+                            android:layout_width="180dp"
                             android:layout_height="170dp"
                             android:background="@drawable/round"
                             android:scaleType="fitXY"
@@ -255,9 +258,9 @@
 
 
                         <ImageView
-                            android:layout_width="170dp"
+                            android:layout_width="180dp"
                             android:layout_height="wrap_content"
-                            android:scaleType="centerCrop"
+                            android:scaleType="fitXY"
                             android:src="@drawable/ic_black_b"
                             android:layout_gravity="bottom"/>
 
@@ -325,17 +328,24 @@
                 <!-- 신규 아이템 -->
                 <RelativeLayout
                     android:id="@+id/newitemlayout"
-                    android:layout_width="170dp"
+                    android:layout_width="180dp"
                     android:layout_height="170dp"
                     android:gravity="center"
                     android:layout_marginEnd="6dp">
 
                     <ImageView
                         android:id="@+id/home_new_item_iv"
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
+                        android:layout_width="180dp"
+                        android:layout_height="170dp"
+                        android:scaleType="fitXY"
                         android:background="@drawable/round"
                         android:src="@drawable/img2" />
+
+                    <ImageView
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/black_bar" />
 
                     <TextView
                         android:id="@+id/home_new_item_tv"
