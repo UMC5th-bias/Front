@@ -277,7 +277,7 @@
 
 
             <!-- 칭호 컨테이너 -->
-            <FrameLayout
+            <androidx.core.widget.NestedScrollView
                 android:id="@+id/limitedSaleContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -367,7 +367,7 @@
                         tools:listitem="@layout/item_shop_banner_new_fame"/>
 
                 </LinearLayout>
-            </FrameLayout>
+            </androidx.core.widget.NestedScrollView>
 
 
 

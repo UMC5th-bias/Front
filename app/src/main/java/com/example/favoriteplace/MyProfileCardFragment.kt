@@ -147,6 +147,7 @@ class MyProfileCardFragment : Fragment() {
                                 val isWear = if(it.isWear == true) "사용중" else ""
                                 unlimitedIconData.add(UnlimitedIcon(it.imageUrl, isWear, "", it.id.toInt()))
                             }
+                            Log.w("test", "$unlimitedIconData")
                             val limitedIconRVAdapter=ShopBannerNewLimitedIconRVAdapter(limitedIconData)
                             binding.myProfileCardIconLimitedRv.adapter=limitedIconRVAdapter
                             binding.myProfileCardIconLimitedRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
