@@ -27,6 +27,10 @@ class MyVerifyRallyFragment : Fragment() {
     ): View? {
         binding= FragmentMyVerifyRallyBinding.inflate(inflater,container,false)
 
+        binding.myVerifyRallyIb.setOnClickListener {
+            fragmentManager?.popBackStack()
+        }
+
         checkLoginStatus(requireActivity()) // 인증 정보 불러오기
 
         getMyRally(requireActivity()) // 렐리 목록 불러오기

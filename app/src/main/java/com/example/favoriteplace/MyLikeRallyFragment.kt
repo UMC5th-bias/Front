@@ -27,6 +27,9 @@ class MyLikeRallyFragment : Fragment() {
     ): View? {
         binding= FragmentMyLikeRallyBinding.inflate(inflater,container,false)
 
+        binding.myLikeRallyIb.setOnClickListener {
+            fragmentManager?.popBackStack()
+        }
 
         checkLoginStatus(requireActivity()) // 인증 정보 불러오기
 
