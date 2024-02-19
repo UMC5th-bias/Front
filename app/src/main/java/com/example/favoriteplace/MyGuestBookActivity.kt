@@ -167,14 +167,11 @@ class MyGuestBookActivity : AppCompatActivity() {
             // 생성한 TextView를 LinearLayout에 추가
             tagsContainer.addView(tagView)
 
+
         }
 
-        Log.d("MyGuestBook", "Upload Image : ${detail.guestBook.image[0]}")
-        Log.d("MyGuestBook", "Animation Image : ${detail.pilgrimage.imageAnime}")
-        Log.d("MyGuestBook", "Real Image : ${detail.pilgrimage.imageReal}")
-
         if (detail.guestBook.image.isEmpty()) {
-            binding.myGuestbookAnimationBoxCl.visibility = View.GONE
+            binding.myGuestbookUserimgCl.visibility = View.GONE
         } else {
             Glide.with(this@MyGuestBookActivity)
                 .load(detail.guestBook.image[0])
