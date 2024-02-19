@@ -12,9 +12,14 @@ import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemTrendingPostBinding
 
-class TrendingPostsAdapter(private val trendingPost : List<HomeService.TrendingPosts>) : RecyclerView.Adapter<TrendingPostsAdapter.TrendingPostViewHolder>() {
+class TrendingPostsAdapter(private val trendingPost : List<HomeService.TrendingPosts>,
+                           private val clickListener: TrendingPostClickListener
+) : RecyclerView.Adapter<TrendingPostsAdapter.TrendingPostViewHolder>() {
 
     private var trendingPosts: List<HomeService.TrendingPosts> = listOf()
+    interface TrendingPostClickListener {
+        fun onTrendingPostClicked(post: HomeService.TrendingPosts)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingPostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -70,6 +75,10 @@ class TrendingPostsAdapter(private val trendingPost : List<HomeService.TrendingP
 
                 svgBind(binding.root.context, post.profileIconUrl, binding.homeMemberIconIv1)
 
+            }
+
+            itemView.setOnClickListener {
+                clickListener.onTrendingPostClicked(post)
             }
         }
     }

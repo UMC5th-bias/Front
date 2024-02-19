@@ -1,6 +1,7 @@
 package com.example.favoriteplace
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -69,7 +70,15 @@ class CommunityRallyCommendFragment : Fragment() {
                             fetchPosts()    //재귀함수
 
                             //RVA 실행
-                            val commendRVAdapter=CommunityRallyCommendRVAdapter(rallyCommendData)
+                            val commendRVAdapter=CommunityRallyCommendRVAdapter(rallyCommendData, object : CommunityRallyCommendRVAdapter.RallyCommendClickListener{
+                                override fun onRallyCommendClicked(guestBookId: Long) {
+                                    Log.d("MyGuestBook", "클릭되었습니다.")
+                                    val intent = Intent(context, MyGuestBookActivity::class.java).apply {
+                                        putExtra("GUESTBOOK_ID", guestBookId)
+                                    }
+                                    startActivity(intent)
+                                }
+                            })
                             binding.communityRallyCommendRv.adapter=commendRVAdapter
                             binding.communityRallyCommendRv.layoutManager=
                                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
