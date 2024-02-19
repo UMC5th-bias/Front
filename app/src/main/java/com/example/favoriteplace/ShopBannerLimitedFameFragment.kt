@@ -128,13 +128,13 @@ class ShopBannerLimitedFameFragment: Fragment() {
 
     //데이터를 반영하여 화면에 보여주는 함수
     private fun setView(detail: ShopDetailsResponse) {
-        bind(binding.root.context,limitedFameData[0].imageUrl, binding.shopBannerDetailFameIv)  //svg 이미지를 가져오기 위한 함수
+        bind(binding.root.context,detail.imageUrl, binding.shopBannerDetailFameIv)  //svg 이미지를 가져오기 위한 함수
         binding.shopBannerDetailFameCostTv.text = detail.point.toString()
-        binding.shopBannerDetailFameBodyTv.text = limitedFameData[0].description
-        binding.shopBannerDetailFameTitleTv.text = limitedFameData[0].name
-        binding.shopBannerDetailFameUmcTv.text=limitedFameData[0].category
-        binding.shopBannerDetailFameLimitedTimeTv.text=limitedFameData[0].saleDeadline
-        binding.shopBannerDetailFameTimeTv.text=limitedFameData[0].saleDeadline
+        binding.shopBannerDetailFameBodyTv.text = detail.description
+        binding.shopBannerDetailFameTitleTv.text = detail.name
+        binding.shopBannerDetailFameUmcTv.text=detail.category
+        binding.shopBannerDetailFameLimitedTimeTv.text=detail.saleDeadline
+        binding.shopBannerDetailFameTimeTv.text=detail.saleDeadline
     }
 
     //svg 이미지를 가져오기 위한 함수
