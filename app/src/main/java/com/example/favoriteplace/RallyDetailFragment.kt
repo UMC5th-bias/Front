@@ -142,7 +142,7 @@ class RallyDetailFragment : Fragment() {
                 }
             })
     }
-    =
+
     private fun handleLikeButton(isLike: Boolean) {
         // 좋아요 버튼 클릭 리스너 설정
         binding.rallydetailLikeBtn.setOnClickListener {

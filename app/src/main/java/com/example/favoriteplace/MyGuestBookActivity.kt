@@ -4,12 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
@@ -165,23 +167,27 @@ class MyGuestBookActivity : AppCompatActivity() {
             // 생성한 TextView를 LinearLayout에 추가
             tagsContainer.addView(tagView)
 
+
         }
 
-        Glide.with(this@MyGuestBookActivity)
-            .load(detail.guestBook.image)
-            .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
-            .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
-            .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적
-            .into(binding.myGuestbookAddimgIv) // profileImageIv는 PNG 이미지를 로드할 ImageView의 ID입니다.
+        if (detail.guestBook.image.isEmpty()) {
+            binding.myGuestbookUserimgCl.visibility = View.GONE
+        } else {
+            Glide.with(this@MyGuestBookActivity)
+                .load(detail.guestBook.image[0])
+                .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
+                .error(R.drawable.memberimg) // 로딩 실패 시 표시할 기본 이미지
+                .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과
+                .into(binding.myGuestbookAddimgIv) // ImageView의 ID
+        }
 
-        Glide.with(this@MyGuestBookActivity)
-            .load(detail.pilgrimage.imageAnime)
-            .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
-            .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
-            .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적
-            .into(binding.myGuestbookRallyIv) // profileImageIv는 PNG 이미지를 로드할 ImageView의 ID입니다.
+        val imageUrls = listOf(detail.pilgrimage.imageAnime, detail.pilgrimage.imageReal).filterNotNull() // null이 아닌 URL만 리스트에 추가
+        val viewPager = findViewById<ViewPager2>(R.id.my_guestbook_rally_iv)
+        val adapter = ImageSliderAdapter(this, imageUrls)
+        viewPager.adapter = adapter
 
 
+        // 프로필 이미지
         Glide.with(this@MyGuestBookActivity)
             .load(detail.userInfo.profileImageUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
@@ -189,13 +195,14 @@ class MyGuestBookActivity : AppCompatActivity() {
             .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적
             .into(binding.myGuestbookProfileCiv) // profileImageIv는 PNG 이미지를 로드할 ImageView의 ID입니다.
 
-        // Coil을 사용하여 SVG 이미지 로딩 - 프로필 타이틀
+        // Coil을 사용하여 SVG 이미지 로딩
         val imageLoader = ImageLoader.Builder(this@MyGuestBookActivity)
             .availableMemoryPercentage(0.25) // 사용할 수 있는 메모리 비율 설정
             .crossfade(true) // 크로스페이드 효과 활성화
             .componentRegistry { add(SvgDecoder(this@MyGuestBookActivity)) }
             .build()
 
+        // 프로필 타이틀
         val request = ImageRequest.Builder(this@MyGuestBookActivity)
             .crossfade(true)
             .crossfade(300)
@@ -204,7 +211,7 @@ class MyGuestBookActivity : AppCompatActivity() {
             .build()
         imageLoader.enqueue(request)
 
-        // Coil을 사용하여 SVG 이미지 로딩 - 프로필 아이콘
+        // 프로필 아이콘
         val iconRequest = ImageRequest.Builder(this@MyGuestBookActivity)
             .crossfade(true)
             .crossfade(300)

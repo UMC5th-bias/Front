@@ -123,11 +123,10 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
 
-                    <ImageView
+                    <androidx.viewpager2.widget.ViewPager2
                             android:id="@+id/my_guestbook_rally_iv"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"/>
+                            android:layout_height="match_parent"/>
 
 
                 </androidx.cardview.widget.CardView>
@@ -152,6 +151,7 @@
                         android:textColor="@color/white"
                         android:textSize="17sp"
                         android:textStyle="bold"
+                        android:gravity="center"
                         app:layout_constraintTop_toTopOf="@id/my_guestbook_rally_vw"
                         app:layout_constraintBottom_toBottomOf="@id/my_guestbook_rally_vw"
                         app:layout_constraintStart_toStartOf="@id/my_guestbook_rally_vw"/>
@@ -177,7 +177,7 @@
             <androidx.cardview.widget.CardView
                     app:layout_constraintTop_toBottomOf="@id/my_guestbook_animation_box_cl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     app:cardCornerRadius="8dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/edge"
@@ -187,8 +187,8 @@
                 <ImageView
                         android:id="@+id/my_guestbook_addimg_iv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
+                        android:layout_height="200dp"
+                        android:layout_gravity="center"
                         android:src="@drawable/img1"/>
             </androidx.cardview.widget.CardView>
 
