@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
@@ -40,6 +41,35 @@ class MyGuestBookActivity : AppCompatActivity() {
         binding.myGuestbookTv.setOnClickListener {
             finish()
         }
+
+        //댓글 리스트 가져오기
+        RetrofitAPI.rallyLocationDetailService.getComments(
+            authorization = "Bearer ${getAccessToken()}",
+            guestbookId = guestBookId
+        ).enqueue(object: Callback<RallyLocationDetailComments> {
+            override fun onResponse(call: Call<RallyLocationDetailComments>, response: Response<RallyLocationDetailComments>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.d("getComments()", "Response: ${responseData}")
+                        val rallyLocationDetailRVAdapter =
+                            RallyLocationDetailRVAdapter(this@MyGuestBookActivity, responseData.comment ?: emptyList())
+                        binding.myGuestbookCommentRv.adapter = rallyLocationDetailRVAdapter
+                        binding.myGuestbookCommentRv.layoutManager =
+                            LinearLayoutManager(this@MyGuestBookActivity, LinearLayoutManager.VERTICAL, false)
+                    }
+                }
+                else {
+                    Log.e("getComments()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<RallyLocationDetailComments>, t: Throwable) {
+                Log.e("getComments()", "onFailure: $t")
+            }
+
+        })
+
     }
 
     private fun getAccessToken(): String? {
