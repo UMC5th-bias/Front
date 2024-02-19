@@ -34,6 +34,8 @@ class ShopBannerLimitedFameFragment: Fragment() {
     ): View? {
         binding = FragmentShopDetailLimitedFameBinding.inflate(inflater, container, false)
 
+        val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
+
         //api를 호출하는 코드
         callApi()
 
@@ -54,8 +56,6 @@ class ShopBannerLimitedFameFragment: Fragment() {
 
     //칭호 구매 팝업창 띄우기
     private fun popupFamePurchaseClick() {
-
-        //신상품 페이지 한정 칭호 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
         val itemIdJson = arguments?.getString("limitedFame")
         val itemId: Int = gson.fromJson(itemIdJson, Int::class.java)
 
@@ -67,10 +67,10 @@ class ShopBannerLimitedFameFragment: Fragment() {
             Toast.makeText(requireActivity(), "포인트가 부족합니다.", Toast.LENGTH_SHORT).show()
         } else {
             val args = Bundle().apply {
-                userPoint.let { putInt("newUserPoint", it) }
-                putInt("newItemPoint", itemPoint)
-                putInt("NewItemID", itemId)
-                putString("NewItemName",itemName)
+                userPoint.let { putInt("userPoint", it) }
+                putInt("itemPoint", itemPoint)
+                putInt("ITEM_ID", itemId)
+                putString("ITEM_NAME",itemName)
                 Log.d("itemName",itemName)
             }
             val dialog = FamePurchaseDialog()
