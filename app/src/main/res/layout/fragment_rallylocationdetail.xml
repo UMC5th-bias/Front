@@ -153,24 +153,26 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
-                            android:layout_marginBottom="6dp">
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="10dp">
 
-                            <TextView
-                                android:id="@+id/rally_locationdetail_name_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:text="날씨의 아이"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/rally_locationdetail_name_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="20dp"
+                                    android:text="날씨의 아이"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/rally_locationdetail_place_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="50dp"
-                                android:text="시부야 스크램블교차로"
-                                android:textColor="@color/white" />
+                                <TextView
+                                    android:id="@+id/rally_locationdetail_place_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="50dp"
+                                    android:text="시부야 스크램블교차로"
+                                    android:textColor="@color/white" />
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 

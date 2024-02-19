@@ -20,7 +20,7 @@ class SignUpConditionConfirmActivity: AppCompatActivity() {
 
 
         // 뒤로가기
-        binding.backPageIv.setOnClickListener {
+        binding.backIv.setOnClickListener {
             val intent = Intent(this@SignUpConditionConfirmActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()

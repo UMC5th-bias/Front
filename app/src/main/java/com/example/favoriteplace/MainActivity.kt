@@ -103,4 +103,14 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
+
+    fun setSelectedNavItem(itemId: Int) {
+        binding.mainBnv.selectedItemId = itemId
+    }
+
+    fun setRecommendRally(itemId: Int) {
+        binding.mainBnv.selectedItemId = itemId
+    }
+
+
 }
