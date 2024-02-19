@@ -43,6 +43,7 @@ class FamePurchaseDialog : DialogFragment() {
             // 사용자의 보유 포인트 정보를 저장할 변수
             var userPoint = arguments?.getInt("userPoint") // 기본값 0
             var itemPoint = arguments?.getInt("itemPoint") // 기본값 0
+
             var itemId = arguments?.getInt("ITEM_ID")?:0
             var itemName=arguments?.getString("ITEM_NAME")
 
@@ -73,8 +74,12 @@ class FamePurchaseDialog : DialogFragment() {
 
                 Log.d("ShopMainFragment", "Item ID : $itemId")
 
-                val call = RetrofitClient.shopService.purchaseItem(token, itemId)
-                call.enqueue(object : Callback<PurchaseResponse> {
+                itemId?.let { it1 ->
+                    RetrofitClient.shopService.purchaseItem(
+                        token,
+                        it1
+                    )
+                }?.enqueue(object : Callback<PurchaseResponse> {
                     override fun onResponse(
                         call: Call<PurchaseResponse>,
                         response: Response<PurchaseResponse>

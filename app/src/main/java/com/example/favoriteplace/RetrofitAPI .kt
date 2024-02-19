@@ -43,6 +43,8 @@ object RetrofitAPI {
 
     val myService: MyService = retrofit.create(MyService::class.java)
 
+    val rallyLocationDetailService: RallyLocationDetailService = retrofit.create(RallyLocationDetailService::class.java)
+
 }
 
 

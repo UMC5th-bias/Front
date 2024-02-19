@@ -66,6 +66,7 @@ class ShopBannerLimitedIconFragment : Fragment() {
             Toast.makeText(requireActivity(), "포인트가 부족합니다.", Toast.LENGTH_SHORT).show()
         } else {
             val args = Bundle().apply {
+
                 userPoint.let { putInt("userPoint", it) }
                 putInt("itemPoint", itemPoint)
                 putInt("ITEM_ID", itemId)

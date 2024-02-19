@@ -56,8 +56,6 @@ class ShopBannerLimitedFameFragment: Fragment() {
 
     //칭호 구매 팝업창 띄우기
     private fun popupFamePurchaseClick() {
-
-//        신상품 페이지 한정 칭호 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
         val itemIdJson = arguments?.getString("limitedFame")
         val itemId: Int = gson.fromJson(itemIdJson, Int::class.java)
 

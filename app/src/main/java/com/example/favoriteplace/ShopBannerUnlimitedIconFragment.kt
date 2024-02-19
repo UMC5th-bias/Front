@@ -50,7 +50,6 @@ class ShopBannerUnlimitedIconFragment : Fragment() {
 
     //아이콘 구매 팝업창 띄우기
     private fun popupIconPurchaseClick() {
-//        신상품 페이지 상시 아이콘 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
         val itemIdJson = arguments?.getString("unlimitedIcon")
         val itemId: Int = gson.fromJson(itemIdJson, Int::class.java)
 
@@ -62,6 +61,7 @@ class ShopBannerUnlimitedIconFragment : Fragment() {
             Toast.makeText(requireActivity(), "포인트가 부족합니다.", Toast.LENGTH_SHORT).show()
         } else {
             val args = Bundle().apply {
+
                 userPoint.let { putInt("userPoint", it) }
                 putInt("itemPoint", itemPoint)
                 putInt("ITEM_ID", itemId)
