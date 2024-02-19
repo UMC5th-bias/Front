@@ -6,8 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteplace.databinding.ItemCommunityRallyCommendBinding
 
-class CommunityRallyCommendRVAdapter (private val commendList: ArrayList<MyComments>):
+class CommunityRallyCommendRVAdapter (private val commendList: ArrayList<MyComments>,
+                                      private val clickListener: CommunityRallyCommendRVAdapter.RallyCommendClickListener
+):
     RecyclerView.Adapter<CommunityRallyCommendRVAdapter.ViewHolder>() {
+
+    interface RallyCommendClickListener {
+        fun onRallyCommendClicked(guestBookId: Long)
+    }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemCommunityRallyCommendBinding = ItemCommunityRallyCommendBinding.inflate(
             LayoutInflater.from(viewGroup.context),viewGroup,false)
@@ -22,6 +28,16 @@ class CommunityRallyCommendRVAdapter (private val commendList: ArrayList<MyComme
     }
 
     inner class ViewHolder(val binding: ItemCommunityRallyCommendBinding): RecyclerView.ViewHolder(binding.root){
+        init {
+            // ViewHolder 객체가 생성될 때 실행
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val guestBookId = commendList[position].myGuestBookInfo.id
+                    clickListener.onRallyCommendClicked(guestBookId)
+                }
+            }
+        }
         fun bind(commend: MyComments){
             binding.itemCommunityRallyCommendDayTv.text=commend.passedTime
             binding.itemCommunityRallyCommendTv.text=commend.content

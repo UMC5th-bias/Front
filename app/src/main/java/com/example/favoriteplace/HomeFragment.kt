@@ -40,8 +40,8 @@ class HomeFragment : Fragment() {
 
     private var nonMemberData: HomeService.NonMemberData? = null // 비회원 데이터 변수 추가
 
-    companion object{
-        const val LOGIN_REQUEST_CODE=101
+    companion object {
+        const val LOGIN_REQUEST_CODE = 101
         const val ACCESS_TOKEN_KEY = "token" // SharedPreferences 키 상수
     }
 
@@ -82,7 +82,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         // Retrofit 객체 생성
         retrofit = Retrofit.Builder()
             .baseUrl("http://favoriteplace.store:8080")
@@ -93,12 +92,10 @@ class HomeFragment : Fragment() {
 
 
         val bannerAdapter = BannerVPAdapter(this)
-        binding.homeBannerVp.adapter=bannerAdapter
-        binding.homeBannerVp.orientation=ViewPager2.ORIENTATION_HORIZONTAL
+        binding.homeBannerVp.adapter = bannerAdapter
+        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_banner1))
         bannerAdapter.addFragment(BannerFragment(R.drawable.demo))
-
-
 
 
         //로그인 버튼
@@ -131,7 +128,7 @@ class HomeFragment : Fragment() {
             getUserInfo(accessToken!!)
             Log.d("HomeFragment", ">> 로그인 상태 : $isLoggedIn, \n $accessToken")
 
-        }else{
+        } else {
             // 비회원 상태인 경우
             Log.d("HomeFragment", ">> 비회원 상태입니다., $isLoggedIn")
             fetchNonMember()
@@ -142,8 +139,23 @@ class HomeFragment : Fragment() {
     private fun setupTrendingPostsRecyclerView() {
 
         // TrendingPostsAdapter 초기화
-        trendingPostsAdapter = TrendingPostsAdapter(trendingPostsData)
-        binding.trendingPostsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        trendingPostsAdapter = TrendingPostsAdapter(trendingPostsData, object :
+            TrendingPostsAdapter.TrendingPostClickListener {
+            override fun onTrendingPostClicked(post: HomeService.TrendingPosts) {
+                val intent = when (post.board) {
+                    "자유게시판" -> Intent(context, PostDetailActivity::class.java).apply {
+                        putExtra("POST_ID", post.id) // "자유게시판"의 경우 "POST_ID" 사용
+                    }
+                    "성지순례 인증" -> Intent(context, MyGuestBookActivity::class.java).apply {
+                        putExtra("GUESTBOOK_ID", post.id) // "성지순례 인증"의 경우 "GUESTBOOK_ID" 사용
+                    }
+                    else -> return
+                }
+                startActivity(intent)
+            }
+        })
+        binding.trendingPostsRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.trendingPostsRecyclerView.adapter = trendingPostsAdapter
 
     }
@@ -168,21 +180,21 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 val response: Response<HomeService.LoginResponse> = homeService.getUserInfo("Bearer $userToken")
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     // 로그인 상태인 경우
                     // 서버로부터 사용자 정보를 성공적으로 받아왔을 때 UI 업데이트
                     val loginResponse: HomeService.LoginResponse? = response.body()
-                    if(loginResponse != null){
+                    if (loginResponse != null) {
                         updateUI(loginResponse)
                         Log.d("HomeFragment", "$loginResponse")
                         Log.d("HomeFragment", ">> Home Login Success")
 
                     }
-                }else{
+                } else {
                     // 로그인 상태가 아닌 경우
                     Log.e("HomeFragment", "Failed to get home data: ${response.code()}")
                 }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 // 오류
                 Log.e("HomeFragment", "Error fetching user info: ${e.message}", e)
             }
@@ -195,15 +207,12 @@ class HomeFragment : Fragment() {
 
         Log.d("HomeFragment", ">> $homeData")
 
+        if (homeData != null) {
+            binding.userLayout.visibility = View.VISIBLE
+            binding.unUserLayout.visibility = View.GONE
 
-
-        if (homeData != null ) {
-            binding.userLayout.visibility=View.VISIBLE
-            binding.unUserLayout.visibility=View.GONE
-
-            binding.nonMembersLayout.visibility=View.GONE
-            binding.membersRallyLayout.visibility=View.VISIBLE
-
+            binding.nonMembersLayout.visibility = View.GONE
+            binding.membersRallyLayout.visibility = View.VISIBLE
 
             // 사용자 정보가 제대로 반환되었을 때만 UI 업데이트
             homeData.userInfo?.let { userInfo ->
@@ -213,7 +222,6 @@ class HomeFragment : Fragment() {
                     .placeholder(R.drawable.signup_default_profile_image) // 이미지를 불러오는 동안 보여줄 임시 이미지
                     .error(R.drawable.signup_default_profile_image) // 이미지 로드 실패 시 보여줄 이미지
                     .into(binding.homeMemberProfileCiv) // 이미지를 설정할 ImageView
-
 
                 // 사용자 아이콘
                 val profileIconUrl = userInfo.profileIconUrl
@@ -235,9 +243,9 @@ class HomeFragment : Fragment() {
             }
 
             homeData.rally?.let { rally ->
-                binding.homeRallyingTv.text=rally.name
-                binding.rallyLocationdetailTotalTv.text=rally.pilgrimageNumber.toString()
-                binding.rallyLocationdetailCheckTv.text=rally.completeNumber.toString()
+                binding.homeRallyingTv.text = rally.name
+                binding.rallyLocationdetailTotalTv.text = rally.pilgrimageNumber.toString()
+                binding.rallyLocationdetailCheckTv.text = rally.completeNumber.toString()
 
                 // 회원랠리화면
                 Glide.with(this)
@@ -252,8 +260,7 @@ class HomeFragment : Fragment() {
                 trendingPostsAdapter.submitList(trendingPosts)
             }
 
-        }
-        else{
+        } else {
             // 비회원
             binding.userLayout.visibility = View.GONE
             binding.unUserLayout.visibility = View.VISIBLE
@@ -265,8 +272,8 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             try {
 
-                val response : Response<HomeService.NonMemberData> = homeService.getNonMemberInfo()
-                if(response.isSuccessful){
+                val response: Response<HomeService.NonMemberData> = homeService.getNonMemberInfo()
+                if (response.isSuccessful) {
                     val nonMemberData = response.body()
 
                     nonMemberData?.let { data ->
@@ -274,7 +281,7 @@ class HomeFragment : Fragment() {
                         data.trendingPosts?.let { trendingPosts ->
                             trendingPostsAdapter.submitList(trendingPosts)
 
-                            Log.d("HomeFragment",">> 비회원 : $nonMemberData")
+                            Log.d("HomeFragment", ">> 비회원 : $nonMemberData")
 
                             // 회원랠리화면
                             Glide.with(requireContext())
@@ -285,12 +292,12 @@ class HomeFragment : Fragment() {
                         }
 
                     }
-                }else{
+                } else {
                     // 비회원 게시물 요청이 실패
                     Log.e("HomeFragment", "Failed to retrieve non-member posts: ${response.code()}")
                 }
 
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 // 오류 발생 시 처리
                 Log.e("HomeFragment", "Error fetching non-member posts: ${e.message}", e)
             }
@@ -298,7 +305,7 @@ class HomeFragment : Fragment() {
     }
 
     //svg 이미지를 가져오기 위한 함수
-    fun bind(context: Context,iconImageUrl: String?, imageView: ImageView) {
+    fun bind(context: Context, iconImageUrl: String?, imageView: ImageView) {
         try {
             // iconImageUrl이 null이 아닌 경우에는 해당 이미지를 로드하여 설정
             iconImageUrl?.let {
