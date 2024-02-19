@@ -131,7 +131,14 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
 
                                 //RVA실행
                                 val latelywriteRVAdapter =
-                                    CommunityRallyLatelyRVAdapter(freeSearchData)
+                                    CommunityRallyLatelyRVAdapter(freeSearchData, object : CommunityRallyLatelyRVAdapter.OnItemClickListener{
+                                        override fun onItemClick(guestBookId: Long) {
+                                            val intent = Intent(context, MyGuestBookActivity::class.java).apply {
+                                                putExtra("GUESTBOOK_ID", guestBookId)
+                                            }
+                                            startActivity(intent)
+                                        }
+                                    })
                                 binding.communityRallyLatelyRv.adapter = latelywriteRVAdapter
                                 binding.communityRallyLatelyRv.layoutManager =
                                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

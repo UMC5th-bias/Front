@@ -9,7 +9,9 @@ import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemCommunityRallyLatelyRecommendBinding
 import java.util.ArrayList
 
-class CommunityRallyRecommendRVAdapter (private val rallyRecommendList: ArrayList<GuestBook>): RecyclerView.Adapter<CommunityRallyRecommendRVAdapter.ViewHolder>(){
+class CommunityRallyRecommendRVAdapter (private val rallyRecommendList: ArrayList<GuestBook>,
+                                        private val listener: OnItemClickListener
+    ): RecyclerView.Adapter<CommunityRallyRecommendRVAdapter.ViewHolder>(){
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -18,6 +20,11 @@ class CommunityRallyRecommendRVAdapter (private val rallyRecommendList: ArrayLis
             LayoutInflater.from(viewGroup.context),viewGroup, false)
 
         return ViewHolder(binding)
+    }
+
+    // 클릭 이벤트를 처리할 리스너 인터페이스 정의
+    interface OnItemClickListener {
+        fun onItemClick(guestBookId: Long)
     }
 
     override fun getItemCount(): Int=rallyRecommendList.size
@@ -30,6 +37,14 @@ class CommunityRallyRecommendRVAdapter (private val rallyRecommendList: ArrayLis
 
         //ViewHolder 객체가 생성될 때 실행
         init {
+            // ViewHolder 객체가 생성될 때 실행
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(rallyRecommendList[position].id)
+                }
+            }
+
             binding.root.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
 
                 //뷰가 윈도우에 연결될 때 호출

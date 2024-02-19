@@ -85,7 +85,15 @@ class CommunityRallyLatelyFragment : Fragment() {
 
                                 //RVA실행
                                 val latelywriteRVAdapter =
-                                    CommunityRallyLatelyRVAdapter(rallyLatelyWriteData)
+                                    CommunityRallyLatelyRVAdapter(rallyLatelyWriteData, object : CommunityRallyLatelyRVAdapter.OnItemClickListener{
+                                        override fun onItemClick(guestBookId: Long) {
+                                            Log.d("MyGuestBook", "클릭되었습니다.")
+                                            val intent = Intent(context, MyGuestBookActivity::class.java).apply {
+                                                putExtra("GUESTBOOK_ID", guestBookId)
+                                            }
+                                            startActivity(intent)
+                                        }
+                                    })
                                 binding.communityRallyLatelyRv.adapter = latelywriteRVAdapter
                                 binding.communityRallyLatelyRv.layoutManager =
                                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

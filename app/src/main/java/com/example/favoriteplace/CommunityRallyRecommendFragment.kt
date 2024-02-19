@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,7 +29,15 @@ class CommunityRallyRecommendFragment: Fragment() {
 
         fetchPosts()
 
-        val rallyRecommendRVAdapter=CommunityRallyRecommendRVAdapter(rallyRecommendWriteData)
+        val rallyRecommendRVAdapter=CommunityRallyRecommendRVAdapter(rallyRecommendWriteData, object : CommunityRallyRecommendRVAdapter.OnItemClickListener{
+            override fun onItemClick(guestBookId: Long) {
+                Log.d("MyGuestBook", "클릭되었습니다.")
+                val intent = Intent(context, MyGuestBookActivity::class.java).apply {
+                    putExtra("GUESTBOOK_ID", guestBookId)
+                }
+                startActivity(intent)
+            }
+        })
         binding.communityRallyLatelyRv.adapter=rallyRecommendRVAdapter
         binding.communityRallyLatelyRv.layoutManager=
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
@@ -68,7 +77,15 @@ class CommunityRallyRecommendFragment: Fragment() {
 
                                 //RVA실행
                                 val recommendRVAdapter =
-                                    CommunityRallyRecommendRVAdapter(rallyRecommendWriteData)
+                                    CommunityRallyRecommendRVAdapter(rallyRecommendWriteData, object : CommunityRallyRecommendRVAdapter.OnItemClickListener{
+                                        override fun onItemClick(guestBookId: Long) {
+                                            Log.d("MyGuestBook", "클릭되었습니다.")
+                                            val intent = Intent(context, MyGuestBookActivity::class.java).apply {
+                                                putExtra("GUESTBOOK_ID", guestBookId)
+                                            }
+                                            startActivity(intent)
+                                        }
+                                    })
                                 binding.communityRallyLatelyRv.adapter = recommendRVAdapter
                                 binding.communityRallyLatelyRv.layoutManager =
                                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
