@@ -1,10 +1,12 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.favoriteplace.databinding.FragmentShopDetailUnlimitedFameBinding
 import com.google.gson.Gson
@@ -16,7 +18,10 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
     lateinit var binding: FragmentShopDetailUnlimitedFameBinding
     private var gson: Gson = Gson()
     private var unlimitedFameData = ArrayList<ShopDetailsResponse>()
-    private var isLogIn=true
+    private var alreadyBought: Boolean = false
+    private var userPoint: Int = 0 // 사용자 포인트를 저장할 변수
+    private var itemPoint: Int = 0 // 아이템 가격을 저장할 변수
+    private var itemName: String="" // 아이템 이름을 저장할 변수
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +50,28 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
 
     //칭호 구매 팝업창 띄우기
     private fun popupFamePurchaseClick() {
-        FamePurchaseDialog().show(parentFragmentManager,"")
+        //신상품 페이지 한정 칭호 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
+        val itemIdJson = arguments?.getString("unlimitedFame")
+        val itemId: Int = gson.fromJson(itemIdJson, Int::class.java)
+
+        if (getAccessToken()==null){
+            Toast.makeText(requireActivity(), "로그인이 필요한 기능입니다. 로그인을 해주세요.", Toast.LENGTH_SHORT).show()
+        } else if (alreadyBought) {
+            Toast.makeText(requireActivity(), "이미 구매한 아이템입니다.", Toast.LENGTH_SHORT).show()
+        } else if (userPoint < itemPoint) {
+            Toast.makeText(requireActivity(), "포인트가 부족합니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            val args = Bundle().apply {
+                userPoint.let { putInt("newUserPoint", it) }
+                putInt("newItemPoint", itemPoint)
+                putInt("NewItemID", itemId)
+                putString("NewItemName",itemName)
+                Log.d("itemName",itemName)
+            }
+            val dialog = FamePurchaseDialog()
+            dialog.arguments = args
+            dialog.show(parentFragmentManager, "")
+        }
     }
 
     private fun callApi() {
@@ -53,15 +79,12 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
         //신상품 페이지 상시 칭호 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
         val itemIdJson = arguments?.getString("unlimitedFame")
         val itemId: Int = gson.fromJson(itemIdJson, Int::class.java)
-        var accessToken: String? =null
 
-        //로그인 중이라면 토큰을 서버에 전달
-        if (isLogIn){
-            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzanUwODIyN0BkdWtzdW5nLmFjLmtyIiwiaWF0IjoxNzA3OTY0MjU2LCJleHAiOjE3MTA1NTYyNTZ9.3BlIUX0to5XHybHHUoNPFlraGSA9S3STlMDMwMjOhsc"
-        }
+        val accessToken = getAccessToken() // 액세스 토큰 가져오기
+        val authorizationHeader = "Bearer $accessToken"
 
         //서버에서 해당 아이템의 데이터를 가져오는 코드
-        RetrofitClient.shopService.getDetailItem("Bearer $accessToken", itemId)
+        RetrofitClient.shopService.getDetailItem(authorizationHeader, itemId)
             .enqueue(object : Callback<ShopDetailsResponse> {
                 override fun onResponse(
                     call: Call<ShopDetailsResponse>,
@@ -76,7 +99,15 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
                             unlimitedFameData.clear()
                             unlimitedFameData.add(it)
 
-                            setView()   //데이터를 반영하여 화면에 보여주는 함수
+                            // 여기서 itemDetails를 기반으로 alreadyBought 값을 업데이트
+                            alreadyBought = detailsResponse.alreadyBought ?: false
+
+                            // 여기서 userPoint와 itemPoint 값을 업데이트
+                            userPoint = detailsResponse.userPoint ?: 0
+                            itemPoint = detailsResponse.point ?: 0
+                            itemName=detailsResponse.name
+
+                            setView(it)   //데이터를 반영하여 화면에 보여주는 함수
                         }
                     } else {
                         Log.d("Response_test","Fail")
@@ -88,11 +119,17 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
                 }
             })
     }
-    private fun setView() {
-        ShopBannerLimitedFameFragment().bind(binding.root.context,unlimitedFameData[0].imageUrl, binding.shopBannerDetailFameIv)  //svg 이미지를 가져오기 위한 함수
-        binding.shopBannerDetailFameCostTv.text = unlimitedFameData[0].point.toString()
-        binding.shopBannerDetailFameBodyTv.text = unlimitedFameData[0].description
-        binding.shopBannerDetailFameTitleTv.text = unlimitedFameData[0].name
-        binding.shopBannerDetailFameUmcTv.text=unlimitedFameData[0].category
+    private fun setView(detail: ShopDetailsResponse) {
+        ShopBannerLimitedFameFragment().bind(binding.root.context,detail.imageUrl, binding.shopBannerDetailFameIv)  //svg 이미지를 가져오기 위한 함수
+        binding.shopBannerDetailFameCostTv.text = detail.point.toString()
+        binding.shopBannerDetailFameBodyTv.text = detail.description
+        binding.shopBannerDetailFameTitleTv.text = detail.name
+        binding.shopBannerDetailFameUmcTv.text=detail.category
+    }
+
+    // sharePreferences에 저장된 액세스 토큰 반환하는 메소드
+    private fun getAccessToken(): String? {
+        val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
     }
 }

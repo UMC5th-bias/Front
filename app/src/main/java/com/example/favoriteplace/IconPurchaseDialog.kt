@@ -27,13 +27,23 @@ class IconPurchaseDialog : DialogFragment(){
         super.onViewCreated(view, savedInstanceState)
 
         // 사용자의 보유 포인트 정보를 저장할 변수
-        val userPoint = arguments?.getInt("userPoint", 0) // 기본값 0
-        val itemPoint = arguments?.getInt("itemPoint", 0) // 기본값 0
-        val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
+        var userPoint = arguments?.getInt("userPoint", 0) // 기본값 0
+        var itemPoint = arguments?.getInt("itemPoint", 0) // 기본값 0
+        var itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
+        var itemName=arguments?.getString("ITEM_NAME")
+
+        if(itemId==0){
+            userPoint=arguments?.getInt("newUserPoint")
+            itemPoint=arguments?.getInt("newItemPoint")
+            itemId= arguments?.getInt("NewItemID")!!
+            itemName=arguments?.getString("NewItemName")
+            Log.d("newUserPoint2", userPoint.toString())
+        }
 
         Log.d("ShopMainFragment", "User Point: $userPoint, Item Point: $itemPoint,  Item ID : $itemId")
 
         binding.dialogShopDetailPurchaseIconCurrentTv.text = userPoint.toString()
+        binding.dialogShopDetailPurchaseIconNameTv.text=itemName
 
         val remainingPoint = userPoint?.minus(itemPoint!!)
         binding.dialogShopDetailPurchaseIconAfterTv.text =remainingPoint.toString()
@@ -59,7 +69,9 @@ class IconPurchaseDialog : DialogFragment(){
                     if (response.isSuccessful) {
                         val purchaseResponse = response.body()
                         Log.d("ShopMainFragment", "canBuy : ${response.body()}")
-                        popupIconApplyClick(itemId)
+                        if (itemName != null) {
+                            popupIconApplyClick(itemId, itemName)
+                        }
                         dismiss()
 
                     } else {
@@ -88,11 +100,12 @@ class IconPurchaseDialog : DialogFragment(){
         return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
     }
 
-    private fun popupIconApplyClick(itemId: Int) {
+    private fun popupIconApplyClick(itemId: Int, itemName: String) {
         if (isAdded && !isRemoving) {
             val dialog = IconApplyDialog()
             val args = Bundle().apply {
                 putInt("ITEM_ID", itemId)
+                putString("ITEM_NAME",itemName)
             }
             dialog.arguments = args
             dialog.show(parentFragmentManager, "")

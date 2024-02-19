@@ -95,7 +95,9 @@ class FamePurchaseDialog : DialogFragment() {
                             val purchaseResponse = response.body()
                             Log.d("ShopMainFragment", "canBuy : $purchaseResponse")
 
-                            popupFameApplyClick(itemId)
+                            if (itemName != null) {
+                                popupFameApplyClick(itemId, itemName)
+                            }
                             dismiss()
                         } else {
                             // 요청 실패 처리, 로그 출력
@@ -125,11 +127,12 @@ class FamePurchaseDialog : DialogFragment() {
         return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
     }
 
-    private fun popupFameApplyClick(itemId: Int) {
+    private fun popupFameApplyClick(itemId: Int, itemName: String) {
         if (isAdded && !isRemoving) {
             val dialog = FameApplyDialog()
             val args = Bundle().apply {
                 putInt("ITEM_ID", itemId)
+                putString("ITEM_NAME",itemName)
             }
             dialog.arguments = args
             dialog.show(parentFragmentManager, "")
