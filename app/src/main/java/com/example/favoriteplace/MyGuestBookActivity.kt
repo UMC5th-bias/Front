@@ -17,6 +17,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.favoriteplace.databinding.FragmentMyGuestbookBinding
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.MapFragment
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.overlay.Marker
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +29,7 @@ import retrofit2.Response
 
 class MyGuestBookActivity : AppCompatActivity() {
     lateinit var binding: FragmentMyGuestbookBinding
+    private lateinit var naverMap: NaverMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,6 +177,31 @@ class MyGuestBookActivity : AppCompatActivity() {
             .build()
         imageLoader.enqueue(iconRequest)
 
+        // 이 부분은 지도가 준비되는 방식에 따라 다를 수 있으므로, 실제 구현에 맞게 조정 필요
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.guestbook_rally_place_mv) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                supportFragmentManager.beginTransaction().add(R.id.guestbook_rally_place_mv, it).commit()
+            }
+        mapFragment.getMapAsync { naverMap ->
+            this.naverMap = naverMap
+            // 서버로부터 받은 위도와 경도로 마커 위치 설정 (초기 마커 추가)
+            markerAdd(LatLng(detail.pilgrimage.latitude, detail.pilgrimage.longitude), detail.pilgrimage.address)
+
+            // 추가된 마커를 중심으로 지도 카메라 이동
+            val cameraUpdate = CameraUpdate.scrollTo(LatLng(detail.pilgrimage.latitude, detail.pilgrimage.longitude))
+            naverMap.moveCamera(cameraUpdate)
+        }
+
+
+    }
+
+    // 마커 기록
+    private fun markerAdd(latLng: LatLng, title: String) {
+        val marker = Marker()
+        marker.position = latLng
+        marker.captionText = title
+        marker.map = naverMap
     }
 
 
