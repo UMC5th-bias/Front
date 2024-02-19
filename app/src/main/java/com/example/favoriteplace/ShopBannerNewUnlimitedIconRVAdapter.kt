@@ -48,7 +48,6 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
     inner class ViewHolder(val binding: ItemShopBannerNewIconBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(unlimitedIcon: UnlimitedIcon){
             try {
-                Log.w("test", "id: ${unlimitedIcon.id}, img: ${unlimitedIcon.iconImg}")
                 val imageLoader = ImageLoader.Builder(binding.root.context)
                     .componentRegistry {
                         add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
