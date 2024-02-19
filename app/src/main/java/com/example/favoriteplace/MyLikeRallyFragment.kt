@@ -37,7 +37,7 @@ class MyLikeRallyFragment : Fragment() {
 
     fun getMyRally(context: FragmentActivity) {
         //내 프로필 정보 불러오기
-        RetrofitAPI.myService.getMyRallys("Bearer $userToken").enqueue(object: Callback<List<MyRally>> {
+        RetrofitAPI.myService.getMyLikeRallys("Bearer $userToken").enqueue(object: Callback<List<MyRally>> {
             override fun onResponse(call: Call<List<MyRally>>, response: Response<List<MyRally>>) {
                 if(response.isSuccessful) {
                     val responseData = response.body()

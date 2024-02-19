@@ -57,6 +57,14 @@ class MyFragment : Fragment(){
             }
         }
 
+        // 인증한 성지순례
+        binding.myVerifyRallyTv.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.main_frameLayout, MyVerifyRallyFragment())
+                addToBackStack(null)
+            }
+        }
+
         // 고객센터
         binding.myCsTv.setOnClickListener {
             parentFragmentManager.commit {

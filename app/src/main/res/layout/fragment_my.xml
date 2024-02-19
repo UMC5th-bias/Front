@@ -357,6 +357,7 @@
                     android:textSize="13dp"
                     android:layout_marginBottom="30dp"/>
                 <TextView
+                    android:id="@+id/my_verify_rally_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="인증한 성지순례"

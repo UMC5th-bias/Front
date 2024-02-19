@@ -29,7 +29,12 @@ interface MyService {
     ): Call<MyItems>
 
     @GET("/my/guestbooks/like")
-    fun getMyRallys(
+    fun getMyLikeRallys(
+        @Header("Authorization") authorization: String?,
+    ): Call<List<MyRally>>
+
+    @GET("/my/guestbooks/visited")
+    fun getMyVisitedRallys(
         @Header("Authorization") authorization: String?,
     ): Call<List<MyRally>>
 }
