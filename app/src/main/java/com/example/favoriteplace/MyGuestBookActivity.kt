@@ -221,8 +221,7 @@ class MyGuestBookActivity : AppCompatActivity() {
         // 프로필 이미지
         Glide.with(this@MyGuestBookActivity)
             .load(detail.userInfo.profileImageUrl)
-            .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
-            .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
+            .error(R.drawable.signup_default_profile_image) // 로딩 실패 시 표시할 이미지
             .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적
             .into(binding.myGuestbookProfileCiv) // profileImageIv는 PNG 이미지를 로드할 ImageView의 ID입니다.
 
