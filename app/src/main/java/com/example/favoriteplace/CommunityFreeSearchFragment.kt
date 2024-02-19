@@ -29,6 +29,7 @@ class CommunityFreeSearchFragment : Fragment(), SortBottomSheetFragment.OnSortOp
     lateinit var binding: FragmentCommunityFreeSearchingBinding
     private var freeSearchData=ArrayList<Posts>()
     private var currentPage=1
+    private var searchValue=false   //서치 값이 있는지 반영하기 위한 부스
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -41,6 +42,12 @@ class CommunityFreeSearchFragment : Fragment(), SortBottomSheetFragment.OnSortOp
         //서치 방식과 서치한 키워드를 반영
         binding.communityFreeSortSearchTv.text=searchType
         binding.searchTextView.text = Editable.Factory.getInstance().newEditable(searchText)
+
+        binding.communityFreeSearchTv.text= searchText
+        binding.searchText1Tv.visibility=View.VISIBLE
+        binding.searchText2Tv.visibility=View.VISIBLE
+        binding.searchText3Tv.visibility=View.VISIBLE
+        binding.communityFreeSearchTv.visibility=View.VISIBLE
 
         //서치 방식에 따라 변수명 변경
         when (searchType){
@@ -126,7 +133,8 @@ class CommunityFreeSearchFragment : Fragment(), SortBottomSheetFragment.OnSortOp
                                     })
 
                                     currentPage++   //다음 페이지를 받아오기 위해 현재 페이지를 1 증가 시킴
-                                    fetchPosts()    //재귀함수
+                                    fetchPosts() //재귀함수
+                                    searchValue=true    //검색 값이 있을 때
 
                                     //RVA실행
                                     val latelywriteRVAdapter =
@@ -144,6 +152,7 @@ class CommunityFreeSearchFragment : Fragment(), SortBottomSheetFragment.OnSortOp
                                 }
                             }
                         }
+                        onCheck()
                     }
 
                     override fun onFailure(call: Call<CommunityPost>, t: Throwable) {
@@ -214,6 +223,22 @@ class CommunityFreeSearchFragment : Fragment(), SortBottomSheetFragment.OnSortOp
                 binding.communityFreeSortSearchTv.text="닉네임"
                 searchType="닉네임"
             }
+        }
+    }
+
+    //검색값 여부에 따라 텍스트 출력
+    private fun onCheck(){
+        if(!searchValue){
+            binding.communityFreeSearchTv.text= searchText
+            binding.searchText1Tv.visibility=View.VISIBLE
+            binding.searchText2Tv.visibility=View.VISIBLE
+            binding.searchText3Tv.visibility=View.VISIBLE
+            binding.communityFreeSearchTv.visibility=View.VISIBLE
+        } else {
+            binding.searchText1Tv.visibility=View.INVISIBLE
+            binding.searchText2Tv.visibility=View.INVISIBLE
+            binding.searchText3Tv.visibility=View.INVISIBLE
+            binding.communityFreeSearchTv.visibility=View.INVISIBLE
         }
     }
 }
