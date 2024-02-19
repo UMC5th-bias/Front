@@ -15,7 +15,7 @@ data class RallyDetailData(
 )
 
 
-data class isLikeResponse(
+data class UpdateLikeResponse(
     val success: Boolean,
     val message: String
 )
