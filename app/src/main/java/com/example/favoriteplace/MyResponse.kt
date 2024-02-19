@@ -30,3 +30,11 @@ data class MyItem(
     val imageUrl: String,
     val isWear: Boolean
 )
+
+data class MyRally(
+    val id: Long,
+    val title: String,
+    val pilgrimageNumber: Long,
+    val myPilgrimageNumber: Long,
+    val imageUrl: String
+)

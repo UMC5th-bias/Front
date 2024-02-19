@@ -27,4 +27,9 @@ interface MyService {
         @Header("Authorization") authorization: String?,
         @Query("type") type: String
     ): Call<MyItems>
+
+    @GET("/my/guestbooks/like")
+    fun getMyRallys(
+        @Header("Authorization") authorization: String?,
+    ): Call<List<MyRally>>
 }
