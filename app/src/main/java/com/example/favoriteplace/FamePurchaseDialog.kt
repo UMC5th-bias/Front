@@ -41,10 +41,20 @@ class FamePurchaseDialog : DialogFragment() {
             super.onViewCreated(view, savedInstanceState)
 
             // 사용자의 보유 포인트 정보를 저장할 변수
-            val userPoint = arguments?.getInt("userPoint", 0) // 기본값 0
-            val itemPoint = arguments?.getInt("itemPoint", 0) // 기본값 0
-            val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
+            var userPoint = arguments?.getInt("userPoint") // 기본값 0
+            var itemPoint = arguments?.getInt("itemPoint") // 기본값 0
+            var itemId = arguments?.getInt("ITEM_ID")
+            var itemName=arguments?.getString("ITEM_NAME")
 
+            Log.d("newUserPoint", userPoint.toString())
+
+            if(itemId==0){
+                userPoint=arguments?.getInt("newUserPoint")
+                itemPoint=arguments?.getInt("newItemPoint")
+                itemId=arguments?.getInt("NewItemID")
+                itemName=arguments?.getString("NewItemName")
+                Log.d("newUserPoint2", userPoint.toString())
+            }
             // 로그 출력
             Log.d(
                 "ShopMainFragment",
@@ -52,6 +62,7 @@ class FamePurchaseDialog : DialogFragment() {
             )
 
             binding.dialogShopDetailPurchaseFameCurrentTv.text = userPoint.toString()
+            binding.dialogShopDetailPurchaseFameNameTv.text=itemName
 
             val remainingPoint = userPoint?.minus(itemPoint!!)
             binding.dialogShopDetailPurchaseFameAfterTv.text = remainingPoint.toString()
@@ -70,8 +81,12 @@ class FamePurchaseDialog : DialogFragment() {
 
                 Log.d("ShopMainFragment", "Item ID : $itemId")
 
-                val call = RetrofitClient.shopService.purchaseItem(token, itemId)
-                call.enqueue(object : Callback<PurchaseResponse> {
+                itemId?.let { it1 ->
+                    RetrofitClient.shopService.purchaseItem(
+                        token,
+                        it1
+                    )
+                }?.enqueue(object : Callback<PurchaseResponse> {
                     override fun onResponse(
                         call: Call<PurchaseResponse>,
                         response: Response<PurchaseResponse>

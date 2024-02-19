@@ -22,6 +22,7 @@ class ShopMainLimitedFameFragment: Fragment() {
     private var alreadyBought: Boolean = false
     private var userPoint: Int = 0 // 사용자 포인트를 저장할 변수
     private var itemPoint: Int = 0 // 아이템 가격을 저장할 변수
+    private var itemName: String="" // 아이템 이름을 저장할 변수
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,6 +70,7 @@ class ShopMainLimitedFameFragment: Fragment() {
                 putInt("userPoint", userPoint)
                 putInt("itemPoint", itemPoint)
                 putInt("ITEM_ID", itemId)
+                putString("ITEM_NAME",itemName)
             }
             famePurchaseDialog.arguments = args // Bundle을 Dialog에 설정
 
@@ -111,6 +113,7 @@ class ShopMainLimitedFameFragment: Fragment() {
                     // 여기서 userPoint와 itemPoint 값을 업데이트
                     userPoint = itemDetails?.userPoint ?: 0
                     itemPoint = itemDetails?.point ?: 0
+                    itemName=itemDetails?.name.toString()
 
                     updateUI(itemDetails)
                 }
