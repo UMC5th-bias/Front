@@ -23,11 +23,13 @@ import retrofit2.Response
 //변수 값 지정
 private var searchType=""
 private var searchText=""
+
 class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortOptionSelectedListener{
 
     lateinit var binding: FragmentCommunityRallySearchBinding
     private var freeSearchData=ArrayList<GuestBook>()
     private var currentPage=1
+    private var searchValue=false   //서치 값이 있는지 반영하기 위한 부스
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -55,6 +57,7 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
         }
 
         fetchPosts()
+
 
         //돌아가기 버튼을 클릭했을 때
         binding.communityRallySearchIb.setOnClickListener {
@@ -128,6 +131,7 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
 
                                 currentPage++   //다음 페이지를 받아오기 위해 현재 페이지를 1 증가 시킴
                                 fetchPosts()    //재귀함수
+                                searchValue=true    //검색 값이 있을 때
 
                                 //RVA실행
                                 val latelywriteRVAdapter =
@@ -145,6 +149,7 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
                             }
                         }
                     }
+                    onCheck()
                 }
 
                 override fun onFailure(call: Call<RallyPost>, t: Throwable) {
@@ -173,7 +178,7 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
 
         //프래그먼트를 다시 실행하는 함수
         (context as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frameLayout, CommunityFreeSearchFragment().apply {
+            .replace(R.id.main_frameLayout, CommunityRallySearchFragment().apply {
                 arguments = Bundle().apply {
                     putString("SEARCH_TEXT", searchText) // SEARCH_TEXT 키로 사용자가 검색한 내용 저장
                     putString("SEARCH_TYPE", searchType) // SEARCH_TYPE 키로 사용자가 입력한 서치 방식 저장
@@ -215,6 +220,22 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
                 binding.communityRallySortSearchTv.text="닉네임"
                 searchType="닉네임"
             }
+        }
+    }
+
+    //검색값 여부에 따라 텍스트 출력
+    private fun onCheck(){
+        if(!searchValue){
+            binding.communityFreeSearchTv.text= searchText
+            binding.searchText1Tv.visibility=View.VISIBLE
+            binding.searchText2Tv.visibility=View.VISIBLE
+            binding.searchText3Tv.visibility=View.VISIBLE
+            binding.communityFreeSearchTv.visibility=View.VISIBLE
+        } else {
+            binding.searchText1Tv.visibility=View.INVISIBLE
+            binding.searchText2Tv.visibility=View.INVISIBLE
+            binding.searchText3Tv.visibility=View.INVISIBLE
+            binding.communityFreeSearchTv.visibility=View.INVISIBLE
         }
     }
 }
