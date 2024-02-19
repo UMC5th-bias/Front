@@ -31,14 +31,14 @@ class IconPurchaseDialog : DialogFragment(){
         var itemPoint = arguments?.getInt("itemPoint", 0) // 기본값 0
         var itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
         var itemName=arguments?.getString("ITEM_NAME")
-
-        //itemId가 0일 때 (신상품 페이지에서 이동했을 때 변수 지정)
-        if(itemId==0){
-            userPoint=arguments?.getInt("newUserPoint")
-            itemPoint=arguments?.getInt("newItemPoint")
-            itemId= arguments?.getInt("NewItemID")!!
-            itemName=arguments?.getString("NewItemName")
-        }
+//
+//        //itemId가 0일 때 (신상품 페이지에서 이동했을 때 변수 지정)
+//        if(itemId==0){
+//            userPoint=arguments?.getInt("newUserPoint")
+//            itemPoint=arguments?.getInt("newItemPoint")
+//            itemId= arguments?.getInt("NewItemID")!!
+//            itemName=arguments?.getString("NewItemName")
+//        }
 
         Log.d("ShopMainFragment", "User Point: $userPoint, Item Point: $itemPoint,  Item ID : $itemId")
 

@@ -50,7 +50,32 @@ class ShopBannerUnlimitedIconFragment : Fragment() {
 
     //아이콘 구매 팝업창 띄우기
     private fun popupIconPurchaseClick() {
-        //신상품 페이지 상시 아이콘 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
+//        val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0  // 이 줄은 예시일 뿐, 실제로는 클래스 변수를 사용할 것입니다.
+//
+//        if (getAccessToken() == null) {
+//            Toast.makeText(requireActivity(), "로그인이 필요한 기능입니다. 로그인을 해주세요.", Toast.LENGTH_SHORT).show()
+//        } else if(alreadyBought) {
+//            Toast.makeText(requireActivity(), "이미 구매한 아이템입니다.", Toast.LENGTH_SHORT).show()
+//        } else if (userPoint < itemPoint) {
+//            Toast.makeText(requireActivity(), "포인트가 부족합니다.", Toast.LENGTH_SHORT).show()
+//        } else {
+//            // 구매 팝업창 띄우기
+//            val iconPurchaseDialog =  IconPurchaseDialog()
+//
+//            // Bundle 객체 생성 및 userPoint와 itemPoint 값 추가
+//            val args = Bundle().apply {
+//                putInt("userPoint", userPoint)
+//                putInt("itemPoint", itemPoint)
+//                putString("ITEM_NAME",itemName)
+//                putInt("ITEM_ID", itemId)
+//            }
+//            iconPurchaseDialog.arguments = args // Bundle을 Dialog에 설정
+//
+//            // Dialog를 표시
+//            iconPurchaseDialog.show(parentFragmentManager, "FamePurchaseDialog")
+//        }
+
+//        신상품 페이지 상시 아이콘 RVA로부터 아이템 아이디를 gson으로 가져오는 코드
         val itemIdJson = arguments?.getString("unlimitedIcon")
         val itemId: Int = gson.fromJson(itemIdJson, Int::class.java)
 
@@ -62,10 +87,10 @@ class ShopBannerUnlimitedIconFragment : Fragment() {
             Toast.makeText(requireActivity(), "포인트가 부족합니다.", Toast.LENGTH_SHORT).show()
         } else {
             val args = Bundle().apply {
-                userPoint.let { putInt("newUserPoint", it) }
-                putInt("newItemPoint", itemPoint)
-                putInt("NewItemID", itemId)
-                putString("NewItemName", itemName)
+                userPoint.let { putInt("userPoint", it) }
+                putInt("itemPoint", itemPoint)
+                putInt("ITEM_ID", itemId)
+                putString("ITEM_NAME", itemName)
                 Log.d("itemName", itemName)
             }
             val dialog = IconPurchaseDialog()
