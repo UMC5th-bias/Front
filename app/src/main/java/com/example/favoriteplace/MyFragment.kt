@@ -127,9 +127,9 @@ class MyFragment : Fragment(){
                         Log.d("getMyProfile()", "Response: ${responseData}")
                         binding.myNameTv.text = responseData.nickname
                         binding.myPointTv.text = responseData.point.toString()
-                        bindImg(responseData.profileImg, binding.myProfileCiv)
-                        bindImg(responseData.userIconImg, binding.myIconIv)
-                        bindSvgImg(responseData.userTitleImg, binding.myBadgeIv)
+                        if(responseData.profileImg != null) bindImg(responseData.profileImg, binding.myProfileCiv)
+                        if(responseData.userIconImg != null) bindSvgImg(responseData.userIconImg, binding.myIconIv)
+                        if(responseData.userTitleImg != null) bindSvgImg(responseData.userTitleImg, binding.myBadgeIv)
                     }
                 }
                 else {

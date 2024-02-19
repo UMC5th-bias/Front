@@ -10,11 +10,11 @@ data class MyInfo(
 )
 
 data class MyProfile(
-    val nickname: String,
+    val nickname: String?,
     val introducation: String,
     val point: Long,
-    val profileImg: String,
-    val userTitleImg: String,
-    val userIconImg: String,
-    val email: String
+    val profileImg: String?,
+    val userTitleImg: String?,
+    val userIconImg: String?,
+    val email: String?
 )
