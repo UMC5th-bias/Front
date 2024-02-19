@@ -64,9 +64,33 @@ class MyFragment : Fragment(){
             }
         }
 
-        binding.myLogoutTv.setOnClickListener {
+        checkLoginStatus() //유저 인증정보 가져오기
 
-            checkLoginStatus() //유저 인증정보 가져오기
+        //내 정보(완료한 성지순례, 방문한 장소, 작성글, 댓글 불러오기)
+        RetrofitAPI.myService.getMyInfo("Bearer $userToken").enqueue(object: Callback<MyInfo> {
+            override fun onResponse(call: Call<MyInfo>, response: Response<MyInfo>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.d("getMyInfo()", "Response: ${responseData}")
+                        binding.myCleanRallyTv.text = responseData.doneRally.toString()
+                        binding.myVisitPlaceTv.text = responseData.visitedPlace.toString()
+                        binding.myGuestbookTv.text = responseData.posts.toString()
+                        binding.myCommentTv.text = responseData.comments.toString()
+                    }
+                }
+                else {
+                    Log.e("getMyInfo()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MyInfo>, t: Throwable) {
+                Log.e("getMyInfo()", "onFailure: $t")
+            }
+
+        })
+
+        binding.myLogoutTv.setOnClickListener {
 
             if(userToken.isEmpty()) return@setOnClickListener
 
@@ -76,16 +100,17 @@ class MyFragment : Fragment(){
                     if(response.isSuccessful) {
                         val responseData = response.body()
                         if(responseData != null) {
-                            Log.d("Retrofit:logout()", "Response: ${responseData}")
+                            Log.d("logout()", "Response: ${responseData}")
                         }
                     }
                     else {
-                        Log.e("Retrofit:logout()", "notSuccessful: ${response.code()}")
+                        Log.e("logout()", "notSuccessful: ${response.code()}")
                     }
                 }
 
                 override fun onFailure(call: Call<String>, t: Throwable) {
-                    Log.e("Retrofit:logout()", "onFailure: $t")
+                    //로그아웃 성공했을 때 failure가 실행됨
+                    Log.e("logout()", "onFailure: $t")
                     sharedPreferences.edit {
                         putBoolean("isLoggedIn", false)
                         putString(LoginActivity.ACCESS_TOKEN_KEY, null)
