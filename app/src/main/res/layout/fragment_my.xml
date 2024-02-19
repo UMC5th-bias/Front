@@ -365,6 +365,14 @@
                     android:textSize="13dp"
                     android:layout_marginBottom="30dp"/>
                 <TextView
+                    android:id="@+id/my_done_rally_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="완료한 성지순례"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    android:layout_marginBottom="30dp"/>
+                <TextView
                     android:id="@+id/my_ask_rally_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

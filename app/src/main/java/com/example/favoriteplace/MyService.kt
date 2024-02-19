@@ -37,4 +37,9 @@ interface MyService {
     fun getMyVisitedRallys(
         @Header("Authorization") authorization: String?,
     ): Call<List<MyRally>>
+
+    @GET("/my/guestbooks/done")
+    fun getMyDoneRallys(
+        @Header("Authorization") authorization: String?,
+    ): Call<List<MyRally>>
 }

@@ -65,6 +65,14 @@ class MyFragment : Fragment(){
             }
         }
 
+        // 완료한 성지순례
+        binding.myDoneRallyTv.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.main_frameLayout, MyCompleteRallyFragment())
+                addToBackStack(null)
+            }
+        }
+
         // 고객센터
         binding.myCsTv.setOnClickListener {
             parentFragmentManager.commit {
