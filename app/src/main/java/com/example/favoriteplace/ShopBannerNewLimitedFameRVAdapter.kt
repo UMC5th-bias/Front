@@ -69,6 +69,9 @@ class ShopBannerNewLimitedFameRVAdapter(private val limitedFameList: ArrayList<L
                 imageLoader.enqueue(imageRequest)
 
                 binding.itemShopBannerNewFameTv.text = limitedFame.cost
+                if(limitedFame.cost == "사용중" || limitedFame.cost == "") {  // 마이페이지 프로필 카드 편집용
+                    binding.itemShopBannerPTv.text = ""
+                }
 
             } catch (e: Exception) {
                 Log.e("ViewHolder", "Error loading image: ${e.message}")

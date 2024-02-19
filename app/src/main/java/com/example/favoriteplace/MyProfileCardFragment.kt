@@ -140,10 +140,12 @@ class MyProfileCardFragment : Fragment() {
                             limitedIconData = ArrayList()
                             unlimitedIconData = ArrayList()
                             responseData.limited.forEach {
-                                limitedIconData.add(LimitedIcon(it.imageUrl, "", "", it.id.toInt()))
+                                val isWear = if(it.isWear == true) "사용중" else ""
+                                limitedIconData.add(LimitedIcon(it.imageUrl, isWear, "", it.id.toInt()))
                             }
                             responseData.always.forEach {
-                                unlimitedIconData.add(UnlimitedIcon(it.imageUrl, "", "", it.id.toInt()))
+                                val isWear = if(it.isWear == true) "사용중" else ""
+                                unlimitedIconData.add(UnlimitedIcon(it.imageUrl, isWear, "", it.id.toInt()))
                             }
                             val limitedIconRVAdapter=ShopBannerNewLimitedIconRVAdapter(limitedIconData)
                             binding.myProfileCardIconLimitedRv.adapter=limitedIconRVAdapter
@@ -157,10 +159,12 @@ class MyProfileCardFragment : Fragment() {
                             limitedFameData = ArrayList()
                             unlimitedFameData = ArrayList()
                             responseData.limited.forEach {
-                                limitedFameData.add(LimitedFame(it.imageUrl, "", it.id.toInt()))
+                                val isWear = if(it.isWear == true) "사용중" else ""
+                                limitedFameData.add(LimitedFame(it.imageUrl, isWear, it.id.toInt()))
                             }
                             responseData.always.forEach {
-                                unlimitedFameData.add(UnlimitedFame(it.imageUrl, "", it.id.toInt()))
+                                val isWear = if(it.isWear == true) "사용중" else ""
+                                unlimitedFameData.add(UnlimitedFame(it.imageUrl, isWear, it.id.toInt()))
                             }
 
                             val limitedFameRVAdapter=ShopBannerNewLimitedFameRVAdapter(limitedFameData)

@@ -64,6 +64,9 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
                 imageLoader.enqueue(imageRequest)
 
                 binding.itemShopBannerNewIconCostTv.text=unlimitedIcon.cost
+                if(unlimitedIcon.cost == "사용중" || unlimitedIcon.cost == "") {  // 마이페이지 프로필 카드 편집용
+                    binding.itemShopBannerPTv.text = ""
+                }
                 binding.itemShopBannerNewIconTitleTv.text=unlimitedIcon.title
 
             } catch (e: Exception) {
