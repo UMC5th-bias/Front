@@ -46,13 +46,6 @@ class FamePurchaseDialog : DialogFragment() {
             var itemId = arguments?.getInt("ITEM_ID")?:0
             var itemName=arguments?.getString("ITEM_NAME")
 
-//            //itemId가 0일 때 (신상품 페이지에서 이동했을 때 변수 지정)
-//            if(itemId==0){
-//                userPoint=arguments?.getInt("newUserPoint")
-//                itemPoint=arguments?.getInt("newItemPoint")
-//                itemId=arguments?.getInt("NewItemID")
-//                itemName=arguments?.getString("NewItemName")
-//            }
             // 로그 출력
             Log.d(
                 "ShopMainFragment",
@@ -107,37 +100,6 @@ class FamePurchaseDialog : DialogFragment() {
                         dismiss()
                     }
                 })
-//                itemId?.let { it1 ->
-//                    RetrofitClient.shopService.purchaseItem(
-//                        token,
-//                        it1
-//                    )
-//                }?.enqueue(object : Callback<PurchaseResponse> {
-//                    override fun onResponse(
-//                        call: Call<PurchaseResponse>,
-//                        response: Response<PurchaseResponse>
-//                    ) {
-//                        if (response.isSuccessful) {
-//                            val purchaseResponse = response.body()
-//                            Log.d("ShopMainFragment", "canBuy : $purchaseResponse")
-//
-//                            if (itemName != null) {
-//                                popupFameApplyClick(itemId, itemName)
-//                            }
-//                            dismiss()
-//                        } else {
-//                            // 요청 실패 처리, 로그 출력
-//                            Log.d("ShopMainFragment", "요청 실패: ${response.errorBody()?.string()}")
-//                            dismiss()
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<PurchaseResponse>, t: Throwable) {
-//                        // 네트워크 오류 등의 실패 처리, 로그 출력
-//                        Log.d("ShopMainFragment", "네트워크 오류: ${t.message}")
-//                        dismiss()
-//                    }
-//                })
             }
         } else {
             Log.d("DEBUG", "Fragment not attached to a context.")
