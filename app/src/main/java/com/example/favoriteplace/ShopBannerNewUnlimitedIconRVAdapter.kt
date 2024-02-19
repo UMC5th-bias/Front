@@ -29,7 +29,7 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
     ): ShopBannerNewUnlimitedIconRVAdapter.ViewHolder {
         val binding: ItemShopBannerNewIconBinding= ItemShopBannerNewIconBinding.inflate(
             LayoutInflater.from(viewGroup.context),viewGroup,false)
-        Log.w("test2", "$unlimitedIconList")
+
         return ViewHolder(binding)
     }
 
@@ -39,7 +39,6 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
         holder: ShopBannerNewUnlimitedIconRVAdapter.ViewHolder,
         position: Int
     ) {
-        Log.w("check", "${unlimitedIconList[position]}")
         holder.bind(unlimitedIconList[position])
         holder.itemView.setOnClickListener{
             mItemClickListener.onItemUnlimitedIconClick(unlimitedIconList[position])
@@ -48,8 +47,6 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
 
     inner class ViewHolder(val binding: ItemShopBannerNewIconBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(unlimitedIcon: UnlimitedIcon){
-            Log.w("test", "id: ${unlimitedIcon.id}, img: ${unlimitedIcon.iconImg}")
-
             try {
                 val imageLoader = ImageLoader.Builder(binding.root.context)
                     .componentRegistry {
