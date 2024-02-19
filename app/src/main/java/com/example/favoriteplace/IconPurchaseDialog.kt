@@ -27,13 +27,24 @@ class IconPurchaseDialog : DialogFragment(){
         super.onViewCreated(view, savedInstanceState)
 
         // 사용자의 보유 포인트 정보를 저장할 변수
-        val userPoint = arguments?.getInt("userPoint", 0) // 기본값 0
-        val itemPoint = arguments?.getInt("itemPoint", 0) // 기본값 0
-        val itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
+        var userPoint = arguments?.getInt("userPoint", 0) // 기본값 0
+        var itemPoint = arguments?.getInt("itemPoint", 0) // 기본값 0
+        var itemId = arguments?.getInt("ITEM_ID", 0) ?: 0
+        var itemName=arguments?.getString("ITEM_NAME")
+
+        //itemId가 0일 때 (신상품 페이지에서 이동했을 때 변수 지정)
+        if(itemId==0){
+            userPoint=arguments?.getInt("newUserPoint")
+            itemPoint=arguments?.getInt("newItemPoint")
+            itemId= arguments?.getInt("NewItemID")!!
+            itemName=arguments?.getString("NewItemName")
+        }
 
         Log.d("ShopMainFragment", "User Point: $userPoint, Item Point: $itemPoint,  Item ID : $itemId")
 
+        //유저 포인트와 아이템 이름 적용
         binding.dialogShopDetailPurchaseIconCurrentTv.text = userPoint.toString()
+        binding.dialogShopDetailPurchaseIconNameTv.text=itemName
 
         val remainingPoint = userPoint?.minus(itemPoint!!)
         binding.dialogShopDetailPurchaseIconAfterTv.text =remainingPoint.toString()
@@ -41,10 +52,12 @@ class IconPurchaseDialog : DialogFragment(){
         //팝업창 모서리 둥글게 만들기
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        //구매하지 않기 버튼을 클릭했을 때 팝업창 삭제
         binding.dialogShopDetailPurchaseNoBtn.setOnClickListener{
             dismiss()
         }
 
+        //구매하기 버튼을 클릭했을 때 아이템 적용 팝업창 띄우기, 이 팝업창은 삭제
         binding.dialogShopDetailPurchaseYesBtn.setOnClickListener {
             val token = "Bearer ${getAccessToken()}"
 
@@ -59,7 +72,9 @@ class IconPurchaseDialog : DialogFragment(){
                     if (response.isSuccessful) {
                         val purchaseResponse = response.body()
                         Log.d("ShopMainFragment", "canBuy : ${response.body()}")
-                        popupIconApplyClick(itemId)
+                        if (itemName != null) {
+                            popupIconApplyClick(itemId, itemName)
+                        }
                         dismiss()
 
                     } else {
@@ -88,11 +103,12 @@ class IconPurchaseDialog : DialogFragment(){
         return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
     }
 
-    private fun popupIconApplyClick(itemId: Int) {
+    private fun popupIconApplyClick(itemId: Int, itemName: String) {
         if (isAdded && !isRemoving) {
             val dialog = IconApplyDialog()
             val args = Bundle().apply {
                 putInt("ITEM_ID", itemId)
+                putString("ITEM_NAME",itemName)
             }
             dialog.arguments = args
             dialog.show(parentFragmentManager, "")

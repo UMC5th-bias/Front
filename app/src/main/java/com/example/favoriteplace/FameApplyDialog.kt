@@ -19,6 +19,7 @@ import retrofit2.Response
 class FameApplyDialog : DialogFragment(){
     private lateinit var binding: DialogShopDetailApplyFameBinding
     private var itemId: Int = 0 // 아이템 ID를 저장할 변수
+    private var itemName: String="" //아이템 이름을 저장할 변수
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +31,7 @@ class FameApplyDialog : DialogFragment(){
 
         // Bundle에서 아이템 ID를 가져옴
         itemId = requireArguments().getInt("ITEM_ID")
+        itemName= requireArguments().getString("ITEM_NAME").toString()
 
         //팝업창 모서리 둥글게 만들기
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -38,6 +40,9 @@ class FameApplyDialog : DialogFragment(){
             Toast.makeText(context,"취소되었습니다.",Toast.LENGTH_SHORT).show()
             dismiss()
         }
+
+        //아이템 이름 보여주기
+        binding.dialogShopDetailApplyFameNameTv.text=itemName
 
         binding.dialogShopDetailApplyYesBtn.setOnClickListener {
             applyItem(itemId)

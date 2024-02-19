@@ -19,6 +19,7 @@ import retrofit2.Response
 class IconApplyDialog : DialogFragment(){
     private lateinit var binding: DialogShopDetailApplyIconBinding
     private var itemId: Int = 0 // 아이템 ID를 저장할 변수
+    private var itemName: String=""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +31,7 @@ class IconApplyDialog : DialogFragment(){
 
         // Bundle에서 아이템 ID를 가져옴
         itemId = requireArguments().getInt("ITEM_ID")
-
+        itemName= requireArguments().getString("ITEM_NAME").toString()
 
         //팝업창 모서리 둥글게 만들기
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -43,6 +44,9 @@ class IconApplyDialog : DialogFragment(){
         binding.dialogShopDetailApplyYesBtn.setOnClickListener {
             applyItem(itemId)
         }
+
+        //아이템 이름 보여주기
+        binding.dialogShopDetailApplyIconNameTv.text=itemName
 
         return view
     }
