@@ -46,14 +46,12 @@ class FamePurchaseDialog : DialogFragment() {
             var itemId = arguments?.getInt("ITEM_ID")
             var itemName=arguments?.getString("ITEM_NAME")
 
-            Log.d("newUserPoint", userPoint.toString())
-
+            //itemId가 0일 때 (신상품 페이지에서 이동했을 때 변수 지정)
             if(itemId==0){
                 userPoint=arguments?.getInt("newUserPoint")
                 itemPoint=arguments?.getInt("newItemPoint")
                 itemId=arguments?.getInt("NewItemID")
                 itemName=arguments?.getString("NewItemName")
-                Log.d("newUserPoint2", userPoint.toString())
             }
             // 로그 출력
             Log.d(
@@ -61,6 +59,7 @@ class FamePurchaseDialog : DialogFragment() {
                 "User Point: $userPoint, Item Point: $itemPoint, Item ID : $itemId"
             )
 
+            //유저 포인트와 아이템 이름 적용
             binding.dialogShopDetailPurchaseFameCurrentTv.text = userPoint.toString()
             binding.dialogShopDetailPurchaseFameNameTv.text=itemName
 
