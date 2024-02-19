@@ -28,6 +28,18 @@ class CommunityFreeCommendRVAdapter (private val commendList: ArrayList<Comments
     }
 
     inner class ViewHolder(val binding: ItemCommunityFreeCommendBinding): RecyclerView.ViewHolder(binding.root){
+
+        init {
+            // ViewHolder 객체가 생성될 때 실행
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val postId = commendList[position].post.id
+                    listener.onItemClick(postId)
+                }
+            }
+        }
+
         fun bind(commend: Comments){
             binding.itemCommunityFreeCommendDayTv.text=commend.passedTime
             binding.itemCommunityFreeCommendTv.text=commend.content
