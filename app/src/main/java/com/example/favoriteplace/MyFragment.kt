@@ -7,10 +7,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
+import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.FragmentMyBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
@@ -86,6 +91,54 @@ class MyFragment : Fragment(){
 
             override fun onFailure(call: Call<MyInfo>, t: Throwable) {
                 Log.e("getMyInfo()", "onFailure: $t")
+            }
+
+        })
+
+        //Glide로 이미지 등록
+        fun bindImg(img: String, target: ImageView) {
+            Glide.with(requireActivity())
+                .load(img)
+                .placeholder(null)
+                .into(target)
+        }
+
+        //svg이미지 로더
+        val imageLoader = ImageLoader.Builder(requireContext())
+            .componentRegistry {
+                add(SvgDecoder(requireContext())) // SVG 이미지 처리를 위해 SvgDecoder 추가
+            }
+            .build()
+        //Glide로 svg이미지 등록
+        fun bindSvgImg(img: String, target: ImageView) {
+            val imageRequest = ImageRequest.Builder(requireContext())
+                .data(img)
+                .target(target)  // 해당 이미지뷰를 타겟으로 svg 삽입
+                .build()
+            imageLoader.enqueue(imageRequest)
+        }
+
+        //내 프로필 정보 불러오기
+        RetrofitAPI.myService.getMyProfile("Bearer $userToken").enqueue(object: Callback<MyProfile> {
+            override fun onResponse(call: Call<MyProfile>, response: Response<MyProfile>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.d("getMyProfile()", "Response: ${responseData}")
+                        binding.myNameTv.text = responseData.nickname
+                        binding.myPointTv.text = responseData.point.toString()
+                        bindImg(responseData.profileImg, binding.myProfileCiv)
+                        bindImg(responseData.userIconImg, binding.myIconIv)
+                        bindSvgImg(responseData.userTitleImg, binding.myBadgeIv)
+                    }
+                }
+                else {
+                    Log.e("getMyProfile()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MyProfile>, t: Throwable) {
+                Log.e("getMyProfile()", "onFailure: $t")
             }
 
         })
