@@ -1,12 +1,14 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemRallyHeartVerifyBinding
 import java.util.ArrayList
 
-class MyLikeRallyRVAdapter (private val myLikeRallyList: ArrayList<MyLikeRally>): RecyclerView.Adapter<MyLikeRallyRVAdapter.ViewHolder>(){
+class MyLikeRallyRVAdapter (private val context: Context, private val myLikeRallyList: List<MyRally>): RecyclerView.Adapter<MyLikeRallyRVAdapter.ViewHolder>(){
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -24,11 +26,14 @@ class MyLikeRallyRVAdapter (private val myLikeRallyList: ArrayList<MyLikeRally>)
     }
 
     inner class ViewHolder(val binding: ItemRallyHeartVerifyBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(myLikeRally: MyLikeRally){
+        fun bind(myLikeRally: MyRally){
             binding.itemRallyHeartVerifyTitleTv.text=myLikeRally.title
-            binding.itemRallyHeartVerifyRallyNowTv.text= myLikeRally.progress.toString()
-            binding.itemRallyHeartVerifyRallyTotalTv.text= myLikeRally.total.toString()
-            binding.itemRallyHeartVerifyRallyIv.setImageResource(myLikeRally.coverImg!!)
+            binding.itemRallyHeartVerifyRallyNowTv.text= myLikeRally.myPilgrimageNumber.toString()
+            binding.itemRallyHeartVerifyRallyTotalTv.text= myLikeRally.pilgrimageNumber.toString()
+            Glide.with(context)
+                .load(myLikeRally.imageUrl)
+                .placeholder(null)
+                .into(binding.itemRallyHeartVerifyRallyIv)
         }
 
     }
