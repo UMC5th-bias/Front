@@ -19,7 +19,7 @@ import retrofit2.Response
 class FameApplyDialog : DialogFragment(){
     private lateinit var binding: DialogShopDetailApplyFameBinding
     private var itemId: Int = 0 // 아이템 ID를 저장할 변수
-    private var itemName: String=""
+    private var itemName: String="" //아이템 이름을 저장할 변수
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +41,7 @@ class FameApplyDialog : DialogFragment(){
             dismiss()
         }
 
+        //아이템 이름 보여주기
         binding.dialogShopDetailApplyFameNameTv.text=itemName
 
         binding.dialogShopDetailApplyYesBtn.setOnClickListener {

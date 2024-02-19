@@ -33,7 +33,6 @@ class IconApplyDialog : DialogFragment(){
         itemId = requireArguments().getInt("ITEM_ID")
         itemName= requireArguments().getString("ITEM_NAME").toString()
 
-
         //팝업창 모서리 둥글게 만들기
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -46,6 +45,7 @@ class IconApplyDialog : DialogFragment(){
             applyItem(itemId)
         }
 
+        //아이템 이름 보여주기
         binding.dialogShopDetailApplyIconNameTv.text=itemName
 
         return view
