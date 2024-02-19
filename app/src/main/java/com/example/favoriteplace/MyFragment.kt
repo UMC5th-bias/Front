@@ -7,10 +7,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
+import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.FragmentMyBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
@@ -64,9 +69,81 @@ class MyFragment : Fragment(){
             }
         }
 
-        binding.myLogoutTv.setOnClickListener {
+        checkLoginStatus() //유저 인증정보 가져오기
 
-            checkLoginStatus() //유저 인증정보 가져오기
+        //내 정보(완료한 성지순례, 방문한 장소, 작성글, 댓글 불러오기)
+        RetrofitAPI.myService.getMyInfo("Bearer $userToken").enqueue(object: Callback<MyInfo> {
+            override fun onResponse(call: Call<MyInfo>, response: Response<MyInfo>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.d("getMyInfo()", "Response: ${responseData}")
+                        binding.myCleanRallyTv.text = responseData.doneRally.toString()
+                        binding.myVisitPlaceTv.text = responseData.visitedPlace.toString()
+                        binding.myGuestbookTv.text = responseData.posts.toString()
+                        binding.myCommentTv.text = responseData.comments.toString()
+                    }
+                }
+                else {
+                    Log.e("getMyInfo()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MyInfo>, t: Throwable) {
+                Log.e("getMyInfo()", "onFailure: $t")
+            }
+
+        })
+
+        //Glide로 이미지 등록
+        fun bindImg(img: String, target: ImageView) {
+            Glide.with(requireActivity())
+                .load(img)
+                .placeholder(null)
+                .into(target)
+        }
+
+        //svg이미지 로더
+        val imageLoader = ImageLoader.Builder(requireContext())
+            .componentRegistry {
+                add(SvgDecoder(requireContext())) // SVG 이미지 처리를 위해 SvgDecoder 추가
+            }
+            .build()
+        //Glide로 svg이미지 등록
+        fun bindSvgImg(img: String, target: ImageView) {
+            val imageRequest = ImageRequest.Builder(requireContext())
+                .data(img)
+                .target(target)  // 해당 이미지뷰를 타겟으로 svg 삽입
+                .build()
+            imageLoader.enqueue(imageRequest)
+        }
+
+        //내 프로필 정보 불러오기
+        RetrofitAPI.myService.getMyProfile("Bearer $userToken").enqueue(object: Callback<MyProfile> {
+            override fun onResponse(call: Call<MyProfile>, response: Response<MyProfile>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.d("getMyProfile()", "Response: ${responseData}")
+                        binding.myNameTv.text = responseData.nickname
+                        binding.myPointTv.text = responseData.point.toString()
+                        if(responseData.profileImg != null) bindImg(responseData.profileImg, binding.myProfileCiv)
+                        if(responseData.userIconImg != null) bindSvgImg(responseData.userIconImg, binding.myIconIv)
+                        if(responseData.userTitleImg != null) bindSvgImg(responseData.userTitleImg, binding.myBadgeIv)
+                    }
+                }
+                else {
+                    Log.e("getMyProfile()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MyProfile>, t: Throwable) {
+                Log.e("getMyProfile()", "onFailure: $t")
+            }
+
+        })
+
+        binding.myLogoutTv.setOnClickListener {
 
             if(userToken.isEmpty()) return@setOnClickListener
 
@@ -76,16 +153,17 @@ class MyFragment : Fragment(){
                     if(response.isSuccessful) {
                         val responseData = response.body()
                         if(responseData != null) {
-                            Log.d("Retrofit:logout()", "Response: ${responseData}")
+                            Log.d("logout()", "Response: ${responseData}")
                         }
                     }
                     else {
-                        Log.e("Retrofit:logout()", "notSuccessful: ${response.code()}")
+                        Log.e("logout()", "notSuccessful: ${response.code()}")
                     }
                 }
 
                 override fun onFailure(call: Call<String>, t: Throwable) {
-                    Log.e("Retrofit:logout()", "onFailure: $t")
+                    //로그아웃 성공했을 때 failure가 실행됨
+                    Log.e("logout()", "onFailure: $t")
                     sharedPreferences.edit {
                         putBoolean("isLoggedIn", false)
                         putString(LoginActivity.ACCESS_TOKEN_KEY, null)
