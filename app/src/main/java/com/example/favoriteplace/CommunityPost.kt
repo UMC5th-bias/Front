@@ -38,7 +38,7 @@ data class RallyPost(
 )
 
 data class GuestBook(
-    val id: Int,
+    val id: Long,
     val title: String,
     val nickname: String,
     val thumbnail: String?,
@@ -56,7 +56,7 @@ data class RallyMy(
 )
 
 data class GuestMy(
-    val id: Int,
+    val id: Long,
     val title: String,
     val nickname: String,
     val views: Int,

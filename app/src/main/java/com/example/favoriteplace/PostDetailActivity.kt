@@ -27,7 +27,10 @@ import retrofit2.Response
 class PostDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityPostDetailBinding
 
-
+    // 사용자의 로그인 상태를 확인하는 메소드
+    private fun isLoggedIn(): Boolean {
+        return getAccessToken() != null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +77,16 @@ class PostDetailActivity : AppCompatActivity() {
 
     private fun fetchPostDetail(postId: Int) {
 
-        RetrofitClient.communityService.getFreePostDetail(postId).enqueue(object :
+        val authorizationHeader : String?
+
+        if(isLoggedIn()) {
+            authorizationHeader = "Bearer ${getAccessToken()}"
+        } else {
+            authorizationHeader = null
+        }
+
+
+        RetrofitClient.communityService.getFreePostDetail(authorizationHeader, postId).enqueue(object :
             Callback<PostDetailResponse> {
             override fun onResponse(call: Call<PostDetailResponse>, response: Response<PostDetailResponse>) {
                 if (response.isSuccessful) {
@@ -160,7 +172,7 @@ class PostDetailActivity : AppCompatActivity() {
         })
 
         // 댓글 정보를 받아오는 Retrofit 요청
-        RetrofitClient.communityService.getFreeCommentDetail(postId.toLong()).enqueue(object :
+        RetrofitClient.communityService.getFreeCommentDetail(authorizationHeader, postId.toLong()).enqueue(object :
             Callback<FreeCommentDetailResponse> {
             override fun onResponse(call: Call<FreeCommentDetailResponse>, response: Response<FreeCommentDetailResponse>) {
                 if (response.isSuccessful) {
