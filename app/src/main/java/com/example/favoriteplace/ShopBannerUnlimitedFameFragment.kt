@@ -62,10 +62,10 @@ class ShopBannerUnlimitedFameFragment: Fragment() {
             Toast.makeText(requireActivity(), "포인트가 부족합니다.", Toast.LENGTH_SHORT).show()
         } else {
             val args = Bundle().apply {
-                userPoint.let { putInt("newUserPoint", it) }
-                putInt("newItemPoint", itemPoint)
-                putInt("NewItemID", itemId)
-                putString("NewItemName",itemName)
+                userPoint.let { putInt("userPoint", it) }
+                putInt("itemPoint", itemPoint)
+                putInt("ITEM_ID", itemId)
+                putString("ITEM_NAME",itemName)
                 Log.d("itemName",itemName)
             }
             val dialog = FamePurchaseDialog()

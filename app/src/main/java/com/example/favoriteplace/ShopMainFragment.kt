@@ -609,6 +609,7 @@ class ShopMainFragment : Fragment() {
                     }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, fragment)
+                        .addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 BackStack에 추가
                         .commitAllowingStateLoss()
                 }
             })
@@ -628,6 +629,7 @@ class ShopMainFragment : Fragment() {
                     }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, fragment)
+                        .addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 BackStack에 추가
                         .commitAllowingStateLoss()
                 }
 
@@ -647,6 +649,7 @@ class ShopMainFragment : Fragment() {
                     }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, fragment)
+                        .addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 BackStack에 추가
                         .commitAllowingStateLoss()
                 }
             })
@@ -664,6 +667,7 @@ class ShopMainFragment : Fragment() {
                     }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, fragment)
+                        .addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 BackStack에 추가
                         .commitAllowingStateLoss()
                 }
             })
@@ -690,6 +694,7 @@ class ShopMainFragment : Fragment() {
                     }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, fragment)
+                        .addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 BackStack에 추가
                         .commitAllowingStateLoss()
                 }
             })
@@ -707,6 +712,7 @@ class ShopMainFragment : Fragment() {
                     }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, fragment)
+                        .addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 BackStack에 추가
                         .commitAllowingStateLoss()
                 }
             })
@@ -726,6 +732,7 @@ class ShopMainFragment : Fragment() {
                     }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, fragment)
+                        .addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 BackStack에 추가
                         .commitAllowingStateLoss()
                 }
             })
@@ -744,6 +751,7 @@ class ShopMainFragment : Fragment() {
                     }
                     (context as MainActivity).supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frameLayout, fragment)
+                        .addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 BackStack에 추가
                         .commitAllowingStateLoss()
                 }
             })

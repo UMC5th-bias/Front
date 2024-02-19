@@ -113,7 +113,9 @@ class ShopMainLimitedFameFragment: Fragment() {
                     // 여기서 userPoint와 itemPoint 값을 업데이트
                     userPoint = itemDetails?.userPoint ?: 0
                     itemPoint = itemDetails?.point ?: 0
-                    itemName=itemDetails?.name.toString()
+                    itemName= itemDetails?.name.toString()
+
+                    Log.d("ShopMainFragment", "item Name: $itemName")
 
                     updateUI(itemDetails)
                 }

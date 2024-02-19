@@ -9,13 +9,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import com.example.favoriteplace.databinding.FragmentMyGuestbookBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -46,6 +46,40 @@ class MyGuestBookActivity : AppCompatActivity() {
         binding.myGuestbookTv.setOnClickListener {
             finish()
         }
+
+        //댓글 리스트 가져오기
+        getComments(guestBookId)
+
+    }
+
+    //댓글 리스트 가져오기
+    private fun getComments(guestbookId: Long) {
+        RetrofitAPI.rallyLocationDetailService.getComments(
+            authorization = "Bearer ${getAccessToken()}",
+            guestbookId = guestbookId
+        ).enqueue(object: Callback<RallyLocationDetailComments> {
+            override fun onResponse(call: Call<RallyLocationDetailComments>, response: Response<RallyLocationDetailComments>) {
+                if(response.isSuccessful) {
+                    val responseData = response.body()
+                    if(responseData != null) {
+                        Log.d("getComments()", "Response: ${responseData}")
+                        val rallyLocationDetailRVAdapter =
+                            RallyLocationDetailRVAdapter(this@MyGuestBookActivity, responseData.comment ?: emptyList())
+                        binding.myGuestbookCommentRv.adapter = rallyLocationDetailRVAdapter
+                        binding.myGuestbookCommentRv.layoutManager =
+                            LinearLayoutManager(this@MyGuestBookActivity, LinearLayoutManager.VERTICAL, false)
+                    }
+                }
+                else {
+                    Log.e("getComments()", "notSuccessful: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<RallyLocationDetailComments>, t: Throwable) {
+                Log.e("getComments()", "onFailure: $t")
+            }
+
+        })
     }
 
     private fun getAccessToken(): String? {
@@ -108,6 +142,8 @@ class MyGuestBookActivity : AppCompatActivity() {
         binding.myGuestbookCommentCntTv.text = detail.guestBook.comments.toString()
         binding.myGuestbookViewsCntTv.text = detail.guestBook.views.toString()
         binding.myGuestbookTimeTv.text = detail.guestBook.passedTime
+        binding.rallyMapPlaceEnTv.text = detail.pilgrimage.addressEn
+        binding.rallyMapPlaceJpTv.text = detail.pilgrimage.addressJp
 
 
         // RallyDetailResponse 객체에서 해시태그 정보를 가져와 LinearLayout에 추가하는 과정
@@ -132,7 +168,7 @@ class MyGuestBookActivity : AppCompatActivity() {
         }
 
         Glide.with(this@MyGuestBookActivity)
-            .load(detail.pilgrimage.imageReal)
+            .load(detail.guestBook.image)
             .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
             .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
             .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적
