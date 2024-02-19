@@ -59,6 +59,9 @@ class ShopBannerNewUnlimitedFameRVAdapter (private val unlimitedFameList: ArrayL
                 imageLoader.enqueue(imageRequest)
 
                 binding.itemShopBannerNewFameTv.text = unlimitedFame.cost
+                if(unlimitedFame.cost == "사용중" || unlimitedFame.cost == "") { // 마이페이지 프로필 카드 편집용
+                    binding.itemShopBannerPTv.text = ""
+                }
 
             } catch (e: Exception) {
                 Log.e("ViewHolder", "Error loading image: ${e.message}")

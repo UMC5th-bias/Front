@@ -54,6 +54,9 @@ class ShopBannerNewLimitedIconRVAdapter (private val limitedIconList: ArrayList<
                 imageLoader.enqueue(imageRequest)
 
                 binding.itemShopBannerNewIconCostTv.text = limitedIcon.cost
+                if(limitedIcon.cost == "사용중" || limitedIcon.cost == "") {  // 마이페이지 프로필 카드 편집용
+                    binding.itemShopBannerPTv.text = ""
+                }
                 binding.itemShopBannerNewIconTitleTv.text=limitedIcon.title
 
             } catch (e: Exception) {

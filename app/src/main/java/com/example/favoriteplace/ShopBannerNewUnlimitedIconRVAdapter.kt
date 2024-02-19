@@ -48,6 +48,7 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
     inner class ViewHolder(val binding: ItemShopBannerNewIconBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(unlimitedIcon: UnlimitedIcon){
             try {
+                Log.w("test", "id: ${unlimitedIcon.id}, img: ${unlimitedIcon.iconImg}")
                 val imageLoader = ImageLoader.Builder(binding.root.context)
                     .componentRegistry {
                         add(SvgDecoder(binding.root.context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
@@ -63,6 +64,9 @@ class ShopBannerNewUnlimitedIconRVAdapter (private val unlimitedIconList: ArrayL
                 imageLoader.enqueue(imageRequest)
 
                 binding.itemShopBannerNewIconCostTv.text=unlimitedIcon.cost
+                if(unlimitedIcon.cost == "사용중" || unlimitedIcon.cost == "") {  // 마이페이지 프로필 카드 편집용
+                    binding.itemShopBannerPTv.text = ""
+                }
                 binding.itemShopBannerNewIconTitleTv.text=unlimitedIcon.title
 
             } catch (e: Exception) {
