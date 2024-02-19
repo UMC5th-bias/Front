@@ -147,7 +147,7 @@ class ShopMainLimitedFameFragment: Fragment() {
             val imageRequest = ImageRequest.Builder(binding.root.context)
                 .crossfade(true)
                 .crossfade(300)
-                .data(it.imageUrl)
+                .data(it.imageCenterUrl)
                 .target(binding.shopBannerDetailFameIv)
                 .build()
             imageLoader.enqueue(imageRequest)
