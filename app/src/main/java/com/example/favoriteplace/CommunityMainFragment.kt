@@ -26,6 +26,13 @@ class CommunityMainFragment: Fragment() {
         startActivity(intent) // PostDetailActivity 시작
     }
 
+    private fun navigateToRallyDetail(guestBookId: Long) {
+        val intent = Intent(activity, MyGuestBookActivity::class.java).apply {
+            putExtra("GUESTBOOK_ID", guestBookId) // 인텐트에 글의 고유 ID 추가
+        }
+        startActivity(intent) // PostDetailActivity 시작
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -107,8 +114,8 @@ class CommunityMainFragment: Fragment() {
                                     topicBoard["today"]?.get(i)?.tag = guestbookTopic.rank[i].id.toInt() // 글의 고유 ID를 tag에 저장
                                     topicBoard["today"]?.get(i)?.setOnClickListener {
                                         // 클릭 시 postDetail 프래그먼트로 이동
-                                        val postId = it.tag as Int // tag에서 글의 고유 ID를 가져옴
-                                        navigateToPostDetail(postId)
+                                        val guestBookId = it.tag as Long
+                                        navigateToRallyDetail(guestBookId)
                                     }
                                 }
                                 else {
