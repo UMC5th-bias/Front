@@ -191,7 +191,15 @@ class HomeFragment : Fragment() {
 
 
                 // 사용자 아이콘
-                bind(binding.root.context, userInfo.profileIconUrl, binding.homeMemberIconIv)
+                val profileIconUrl = userInfo.profileIconUrl
+                if (profileIconUrl != null) {
+                    bind(binding.root.context, profileIconUrl, binding.homeMemberIconIv)
+                    binding.homeMemberIconIv.visibility = View.VISIBLE
+                } else {
+                    // 아이콘이 없는 경우, 기본 이미지를 설정하거나 숨겨진 이미지를 보여줄 수 있습니다.
+                    // 기본 이미지를 설정하는 경우
+                    binding.homeMemberIconIv.visibility = View.GONE
+                }
 
 
                 // 사용자 닉네임

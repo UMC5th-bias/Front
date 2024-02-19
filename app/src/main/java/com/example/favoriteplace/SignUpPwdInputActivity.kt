@@ -24,7 +24,7 @@ class SignUpPwdInputActivity: AppCompatActivity() {
 
 
         // 뒤로가기
-        binding.backPageIv.setOnClickListener {
+        binding.backIv.setOnClickListener {
             val intent = Intent(this@SignUpPwdInputActivity, SignUpEmailVerificationActivity::class.java)
             startActivity(intent)
             finish()
