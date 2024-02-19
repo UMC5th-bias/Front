@@ -71,7 +71,8 @@ class CommunityFreeCommendFragment : Fragment() {
                             fetchPosts()    //재귀함수
 
                             //RVA 실행
-                            val commendRVAdapter=CommunityFreeCommendRVAdapter(freeCommendData, object : CommunityFreeCommendRVAdapter.OnItemClickListener{
+                            val commendRVAdapter =
+                                CommunityFreeCommendRVAdapter(freeCommendData, object : CommunityFreeCommendRVAdapter.OnItemClickListener{
                                 override fun onItemClick(postId: Int) {
                                     val intent = Intent(context, PostDetailActivity::class.java).apply {
                                         putExtra("POST_ID", postId)
@@ -80,7 +81,8 @@ class CommunityFreeCommendFragment : Fragment() {
                                 }
                             })
                             binding.communityFreeCommendRv.adapter=commendRVAdapter
-                            binding.communityFreeCommendRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+                            binding.communityFreeCommendRv.layoutManager=LinearLayoutManager(
+                                context, LinearLayoutManager.VERTICAL,false)
                         }
                     }
                 }

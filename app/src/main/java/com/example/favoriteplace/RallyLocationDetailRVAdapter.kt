@@ -45,8 +45,10 @@ class RallyLocationDetailRVAdapter(
             Glide.with(context)
                 .load(comment.userInfo.profileImageUrl)
                 .placeholder(R.drawable.signup_default_profile_image)
-                .into(binding.commentDetailMyIconIv)
-            bindSvgImg(comment.userInfo.profileIconUrl, binding.commentDetailMyIconIv)
+                .into(binding.profileImgIv)
+
+
+            //bindSvgImg(comment.userInfo.profileIconUrl, binding.commentDetailMyIconIv)
             bindSvgImg(comment.userInfo.profileTitleUrl, binding.commentTag)
             binding.commentTimeTv.text = comment.passedTime
             binding.commentTv.text = comment.content
