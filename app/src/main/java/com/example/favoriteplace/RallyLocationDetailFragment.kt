@@ -27,6 +27,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
@@ -255,6 +256,9 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
         Log.d("RallyLocationDetail", " ４번")
         Log.d("RallyLocationDetail", ">> pilgrimageId: $pilgrimageId \n $token" )
 
+        val rallyAnimationId = arguments?.getLong("rallyAnimationId") ?: -1
+
+
         call.enqueue(object : Callback<RallyCertifyService.RallyCertifyResponse>{
             override fun onResponse(
                 call: Call<RallyCertifyService.RallyCertifyResponse>,
@@ -265,6 +269,12 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                     if(responseData!=null){
                         Log.d("RallyLocationDetail", " 인증 성공! \n" +
                                 "메시지: ${response.body()?.message}")
+
+                        binding.rallyLocationdetailGuestbookCv.setOnClickListener {
+                            val intent = Intent(requireContext(), RallyGuestBookActivity::class.java)
+                            intent.putExtra("rallyAnimationId", rallyAnimationId)
+                            startActivity(intent)
+                        }
                     }else{
                         Log.d("RallyLocationDetail", "API Error: ${response.errorBody()?.string()}")
                     }
