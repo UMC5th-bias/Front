@@ -20,6 +20,7 @@ import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.example.favoriteplace.LoginActivity.Companion.ACCESS_TOKEN_KEY
 import com.example.favoriteplace.databinding.FragmentHomeBinding
+import com.example.favoriteplace.databinding.FragmentShopBannerNewBinding
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -37,6 +38,7 @@ class HomeFragment : Fragment() {
     private var isLoggedIn = false // 로그인 상태를 나타내는 변수
     private var accessToken: String? = null // 액세스 토큰을 저장할 변수
 
+    private var nonMemberData: HomeService.NonMemberData? = null // 비회원 데이터 변수 추가
 
     companion object{
         const val LOGIN_REQUEST_CODE=101
@@ -49,6 +51,29 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+
+        // 신상품 페이지 이동
+        binding.homeNewItemMoreBtn.setOnClickListener {
+
+            val shopBannerNewFragment = ShopBannerNewFragment() // newItemFragment 인스턴스 생성
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.main_frameLayout, shopBannerNewFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+
+            // 바텀 네비게이션 바에서 상점 아이템을 선택된 상태로 설정
+            (requireActivity() as MainActivity).setSelectedNavItem(R.id.shopFragment)
+        }
+
+
+        // 추천 랠리 이동
+        binding.homeRecommendMoreBtn.setOnClickListener {
+            (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
+
+        }
+
+
 
         return binding.root
     }
@@ -248,6 +273,15 @@ class HomeFragment : Fragment() {
                         setupTrendingPostsRecyclerView()
                         data.trendingPosts?.let { trendingPosts ->
                             trendingPostsAdapter.submitList(trendingPosts)
+
+                            Log.d("HomeFragment",">> 비회원 : $nonMemberData")
+
+                            // 회원랠리화면
+                            Glide.with(requireContext())
+                                .load(nonMemberData.rally.backgroundImageUrl.toString())
+                                .placeholder(null)
+                                .into(binding.homeRecommendIv)
+
                         }
 
                     }

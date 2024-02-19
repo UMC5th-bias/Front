@@ -62,8 +62,7 @@
                         android:id="@+id/home_member_icon_iv1"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_shop1" />
+                        android:scaleType="fitXY" />
                 </LinearLayout>
 
             </FrameLayout>
