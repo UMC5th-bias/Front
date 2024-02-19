@@ -15,4 +15,9 @@ interface MyService {
     fun getMyInfo(
         @Header("Authorization") authorization: String?
     ): Call<MyInfo>
+
+    @GET("/my/profile")
+    fun getMyProfile(
+        @Header("Authorization") authorization: String?
+    ): Call<MyProfile>
 }
