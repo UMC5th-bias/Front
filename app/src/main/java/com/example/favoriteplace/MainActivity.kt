@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.collection.arraySetOf
 import androidx.core.content.edit
 import com.example.favoriteplace.HomeFragment.Companion.ACCESS_TOKEN_KEY
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 }
 
     private fun checkToken() {
-        val accessToken = sharedPreferences.getString("token", null)
+        accessToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
         if (accessToken != null) {
 
             Log.d("MainActivity", ">> login 상태 ")
@@ -85,10 +86,16 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.myFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, MyFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
+                    checkToken()
+                    if(accessToken.isNullOrEmpty()) {
+                        Toast.makeText(this, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.main_frameLayout, MyFragment())
+                            .commitAllowingStateLoss()
+                        return@setOnItemSelectedListener true
+                    }
 
                 }
 

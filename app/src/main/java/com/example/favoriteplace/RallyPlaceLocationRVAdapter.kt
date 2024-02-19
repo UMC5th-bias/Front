@@ -17,6 +17,7 @@ import retrofit2.Response
 class RallyPlaceLocationRVAdapter(
     private val context: Context,
     private val locationInfoList:  List<RallyPlaceAnimation>,
+    private var userToken: String = ""
 
 ) : RecyclerView.Adapter<RallyPlaceLocationRVAdapter.viewHolder>() {
     override fun onCreateViewHolder(
@@ -37,8 +38,8 @@ class RallyPlaceLocationRVAdapter(
         holder.itemView.setOnClickListener {
             val itemId = locationInfoList[position].id  // 클릭한 아이템의 ID 가져오기
 
-
-            if(!isLoggedIn()){
+            checkLoginStatus() //인증 정보 가져오기
+            if(userToken.isEmpty()){
                 // 비회원인 경우
                 Toast.makeText(context, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
 
@@ -72,10 +73,16 @@ class RallyPlaceLocationRVAdapter(
     }
 
 
-    private fun isLoggedIn(): Boolean {
+    fun checkLoginStatus() {
         // SharedPreferences에서 액세스 토큰 가져오기
         val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        Log.w("test", "${sharedPreferences.getBoolean("isLoggedIn", false)}")
-        return sharedPreferences.getBoolean("isLoggedIn", false)
+        userToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, "") ?: ""
+
+        if (userToken.isNotEmpty()) {
+            Log.d("RallyHomeFragment", ">> 로그인 상태입니다.")
+        }else{
+            // 비회원 상태인 경우
+            Log.d("RallyHomeFragment", ">> 비회원 상태입니다.")
+        }
     }
 }
