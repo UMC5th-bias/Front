@@ -29,7 +29,7 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
     lateinit var binding: FragmentCommunityRallySearchBinding
     private var freeSearchData=ArrayList<GuestBook>()
     private var currentPage=1
-    private var searchValue=false
+    private var searchValue=false   //서치 값이 있는지 반영하기 위한 부스
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -131,7 +131,7 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
 
                                 currentPage++   //다음 페이지를 받아오기 위해 현재 페이지를 1 증가 시킴
                                 fetchPosts()    //재귀함수
-                                searchValue=true
+                                searchValue=true    //검색 값이 있을 때
 
                                 //RVA실행
                                 val latelywriteRVAdapter =
@@ -222,6 +222,8 @@ class CommunityRallySearchFragment : Fragment(), SortBottomSheetFragment.OnSortO
             }
         }
     }
+
+    //검색값 여부에 따라 텍스트 출력
     private fun onCheck(){
         if(!searchValue){
             binding.communityFreeSearchTv.text= searchText
