@@ -125,6 +125,7 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
                     "Storage permission denied. Unable to access images.",
                     Toast.LENGTH_SHORT
                 ).show()
+
             }
         }
     }
