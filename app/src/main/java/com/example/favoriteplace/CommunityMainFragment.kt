@@ -111,7 +111,7 @@ class CommunityMainFragment: Fragment() {
                                 if((guestbookTopic.rank.size ?: 0) > i) {
                                     topicBoard["today"]?.get(i)?.visibility = View.VISIBLE
                                     topicBoard["today"]?.get(i)?.text = guestbookTopic.rank[i].title
-                                    topicBoard["today"]?.get(i)?.tag = guestbookTopic.rank[i].id.toInt() // 글의 고유 ID를 tag에 저장
+                                    topicBoard["today"]?.get(i)?.tag = guestbookTopic.rank[i].id // 글의 고유 ID를 tag에 저장
                                     topicBoard["today"]?.get(i)?.setOnClickListener {
                                         // 클릭 시 postDetail 프래그먼트로 이동
                                         val guestBookId = it.tag as Long
