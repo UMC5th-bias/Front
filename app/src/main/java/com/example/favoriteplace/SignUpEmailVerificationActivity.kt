@@ -38,7 +38,7 @@ class SignUpEmailVerificationActivity: AppCompatActivity() {
 
 
         // 뒤로가기
-        binding.backPageIv.setOnClickListener {
+        binding.backIv.setOnClickListener {
             val intent = Intent(this@SignUpEmailVerificationActivity, SignUpEmailInputActivity::class.java)
             startActivity(intent)
             finish()

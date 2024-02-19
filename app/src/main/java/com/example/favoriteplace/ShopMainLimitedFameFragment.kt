@@ -113,7 +113,9 @@ class ShopMainLimitedFameFragment: Fragment() {
                     // 여기서 userPoint와 itemPoint 값을 업데이트
                     userPoint = itemDetails?.userPoint ?: 0
                     itemPoint = itemDetails?.point ?: 0
-                    itemName=itemDetails?.name.toString()
+                    itemName= itemDetails?.name.toString()
+
+                    Log.d("ShopMainFragment", "item Name: $itemName")
 
                     updateUI(itemDetails)
                 }
@@ -145,7 +147,7 @@ class ShopMainLimitedFameFragment: Fragment() {
             val imageRequest = ImageRequest.Builder(binding.root.context)
                 .crossfade(true)
                 .crossfade(300)
-                .data(it.imageUrl)
+                .data(it.imageCenterUrl)
                 .target(binding.shopBannerDetailFameIv)
                 .build()
             imageLoader.enqueue(imageRequest)

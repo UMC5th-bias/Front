@@ -58,7 +58,7 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
         }
 
         // 뒤로가기
-        binding.backPageIv.setOnClickListener {
+        binding.backIv.setOnClickListener {
             val intent = Intent(this@SignUpProfileSettingActivity, SignUpPwdInputActivity::class.java)
             startActivity(intent)
             finish()
@@ -101,7 +101,7 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
             // 이미 권한이 부여되지 않은 경우 권한 요청
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES),
+                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
                 STORAGE_PERMISSION_REQUEST_CODE)
         }else{
             openGallery()
@@ -125,6 +125,7 @@ class SignUpProfileSettingActivity: AppCompatActivity() {
                     "Storage permission denied. Unable to access images.",
                     Toast.LENGTH_SHORT
                 ).show()
+
             }
         }
     }

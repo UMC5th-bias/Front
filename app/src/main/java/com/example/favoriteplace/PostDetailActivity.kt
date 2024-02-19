@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -57,6 +58,14 @@ class PostDetailActivity : AppCompatActivity() {
             val comment = binding.commentRegisterEt.text.toString()
             if (comment.isNotEmpty()) {
                 sendCommentToServer(postId, comment)
+
+                // EditText의 내용 지우기
+                binding.commentRegisterEt.text.clear()
+
+                // 소프트 키보드 숨기기
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.commentRegisterEt.windowToken, 0)
+
             } else {
                 Toast.makeText(this,"댓글을 입력해주세요.",Toast.LENGTH_SHORT).show()
             }

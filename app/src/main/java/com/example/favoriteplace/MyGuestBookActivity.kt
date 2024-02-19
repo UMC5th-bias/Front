@@ -4,12 +4,15 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
@@ -22,6 +25,8 @@ import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,12 +52,25 @@ class MyGuestBookActivity : AppCompatActivity() {
             finish()
         }
 
-        //댓글 리스트 가져오기
-        getComments(guestBookId)
+
+        binding.myGuestbookUploadBtn.setOnClickListener{
+            val comment = binding.myGuestbookCommentEt.text.toString()
+            if (comment.isNotEmpty()) {
+                sendCommentToServer(guestBookId, comment)
+
+                // EditText의 내용 지우기
+                binding.myGuestbookCommentEt.text.clear()
+
+                // 소프트 키보드 숨기기
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.myGuestbookCommentEt.windowToken, 0)
+            } else {
+                Toast.makeText(this,"댓글을 입력해주세요.",Toast.LENGTH_SHORT).show()
+            }
+        }
 
     }
 
-    //댓글 리스트 가져오기
     private fun getComments(guestbookId: Long) {
         RetrofitAPI.rallyLocationDetailService.getComments(
             authorization = "Bearer ${getAccessToken()}",
@@ -124,6 +142,10 @@ class MyGuestBookActivity : AppCompatActivity() {
                 Log.d("MyGuestBood", "Network error: ${t.message}")
             }
         })
+
+        //댓글 리스트 가져오기
+        getComments(guestBookId)
+
     }
 
     private fun displayPostDetails(detail: RallyDetailResponse) {
@@ -142,6 +164,8 @@ class MyGuestBookActivity : AppCompatActivity() {
         binding.myGuestbookCommentCntTv.text = detail.guestBook.comments.toString()
         binding.myGuestbookViewsCntTv.text = detail.guestBook.views.toString()
         binding.myGuestbookTimeTv.text = detail.guestBook.passedTime
+        binding.rallyMapPlaceEnTv.text = detail.pilgrimage.addressEn
+        binding.rallyMapPlaceJpTv.text = detail.pilgrimage.addressJp
 
 
         // RallyDetailResponse 객체에서 해시태그 정보를 가져와 LinearLayout에 추가하는 과정
@@ -163,23 +187,27 @@ class MyGuestBookActivity : AppCompatActivity() {
             // 생성한 TextView를 LinearLayout에 추가
             tagsContainer.addView(tagView)
 
+
         }
 
-        Glide.with(this@MyGuestBookActivity)
-            .load(detail.pilgrimage.imageReal)
-            .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
-            .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
-            .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적
-            .into(binding.myGuestbookAddimgIv) // profileImageIv는 PNG 이미지를 로드할 ImageView의 ID입니다.
+        if (detail.guestBook.image.isEmpty()) {
+            binding.myGuestbookUserimgCl.visibility = View.GONE
+        } else {
+            Glide.with(this@MyGuestBookActivity)
+                .load(detail.guestBook.image[0])
+                .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
+                .error(R.drawable.memberimg) // 로딩 실패 시 표시할 기본 이미지
+                .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과
+                .into(binding.myGuestbookAddimgIv) // ImageView의 ID
+        }
 
-        Glide.with(this@MyGuestBookActivity)
-            .load(detail.pilgrimage.imageAnime)
-            .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
-            .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
-            .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적
-            .into(binding.myGuestbookRallyIv) // profileImageIv는 PNG 이미지를 로드할 ImageView의 ID입니다.
+        val imageUrls = listOf(detail.pilgrimage.imageAnime, detail.pilgrimage.imageReal).filterNotNull() // null이 아닌 URL만 리스트에 추가
+        val viewPager = findViewById<ViewPager2>(R.id.my_guestbook_rally_iv)
+        val adapter = ImageSliderAdapter(this, imageUrls)
+        viewPager.adapter = adapter
 
 
+        // 프로필 이미지
         Glide.with(this@MyGuestBookActivity)
             .load(detail.userInfo.profileImageUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
@@ -187,13 +215,14 @@ class MyGuestBookActivity : AppCompatActivity() {
             .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적
             .into(binding.myGuestbookProfileCiv) // profileImageIv는 PNG 이미지를 로드할 ImageView의 ID입니다.
 
-        // Coil을 사용하여 SVG 이미지 로딩 - 프로필 타이틀
+        // Coil을 사용하여 SVG 이미지 로딩
         val imageLoader = ImageLoader.Builder(this@MyGuestBookActivity)
             .availableMemoryPercentage(0.25) // 사용할 수 있는 메모리 비율 설정
             .crossfade(true) // 크로스페이드 효과 활성화
             .componentRegistry { add(SvgDecoder(this@MyGuestBookActivity)) }
             .build()
 
+        // 프로필 타이틀
         val request = ImageRequest.Builder(this@MyGuestBookActivity)
             .crossfade(true)
             .crossfade(300)
@@ -202,7 +231,7 @@ class MyGuestBookActivity : AppCompatActivity() {
             .build()
         imageLoader.enqueue(request)
 
-        // Coil을 사용하여 SVG 이미지 로딩 - 프로필 아이콘
+        // 프로필 아이콘
         val iconRequest = ImageRequest.Builder(this@MyGuestBookActivity)
             .crossfade(true)
             .crossfade(300)
@@ -236,6 +265,32 @@ class MyGuestBookActivity : AppCompatActivity() {
         marker.position = latLng
         marker.captionText = title
         marker.map = naverMap
+    }
+    private fun sendCommentToServer(guestBookId: Long, commentContent: String) {
+        // 댓글 내용을 JSON 형식의 문자열로 변환합니다.
+        val jsonComment = "{\"content\": \"$commentContent\"}"
+
+        // RequestBody를 생성하여 JSON 형식의 문자열을 전달합니다.
+        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), jsonComment)
+
+        // 헤더에 AccessToken 추가
+        val authorizationHeader = "Bearer ${getAccessToken()}"
+
+        // Retrofit 클라이언트 인터페이스에서 정의한 API 메서드를 사용하여 댓글을 등록하는 요청을 만듭니다.
+        RetrofitClient.communityService.postRallyComment(authorizationHeader, guestBookId, requestBody).enqueue(object : Callback<ApplyResponse> {
+            override fun onResponse(call: Call<ApplyResponse>, response: Response<ApplyResponse>) {
+                if (response.isSuccessful) {
+                    Log.e("MyGuestBook", "댓글이 등록되었습니다.")
+                    getComments(guestBookId)
+                } else {
+                    Log.e("MyGuestBook", "댓글 등록에 실패했습니다.")
+                }
+            }
+
+            override fun onFailure(call: Call<ApplyResponse>, t: Throwable) {
+                Log.e("PostDetailActivity", "네트워크 오류: ${t.message}")
+            }
+        })
     }
 
 

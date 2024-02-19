@@ -1,9 +1,14 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemTrendingPostBinding
 
@@ -63,12 +68,34 @@ class TrendingPostsAdapter(private val trendingPost : List<HomeService.TrendingP
                     .placeholder(R.drawable.signup_default_profile_image) // 이미지 로딩 중에 표시할 placeholder 이미지
                     .into(profile)
 
-                // 사용자 아이콘
-                post.profileIconUrl?.let { url ->
-                    bind(binding.root.context, url, icon)
-                }
+                svgBind(binding.root.context, post.profileIconUrl, binding.homeMemberIconIv1)
 
             }
+        }
+    }
+
+    fun svgBind(context: Context, iconImageUrl: String?, imageView: ImageView) {
+        try {
+            // iconImageUrl이 null이 아닌 경우에는 해당 이미지를 로드하여 설정
+            iconImageUrl?.let {
+                val imageLoader = ImageLoader.Builder(context)
+                    .componentRegistry {
+                        add(SvgDecoder(context)) // SVG 이미지 처리를 위해 SvgDecoder 추가
+                    }
+                    .build()
+
+                val imageRequest = ImageRequest.Builder(context)
+                    .data(it)
+                    .target(imageView)  // 해당 이미지뷰를 타겟으로 svg 삽입
+                    .build()
+                imageLoader.enqueue(imageRequest)
+            } ?: run {
+                // iconImageUrl이 null인 경우에는 기본 이미지를 설정
+            }
+
+        } catch (e: Exception) {
+            Log.e("ShopBannerDetailFragment", "Error loading image: ${e.message}")
+            e.printStackTrace()
         }
     }
 }

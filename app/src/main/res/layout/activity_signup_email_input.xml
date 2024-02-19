@@ -12,14 +12,17 @@
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/back_page_iv"
-            android:layout_width="8.5dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:src="@drawable/ic_black_left_arrow"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="19.75dp"
             android:text="회원가입"
+            android:textSize="25sp"
+            android:textStyle="bold"
             android:textColor="@color/black"/>
     </LinearLayout>
 
@@ -170,7 +173,7 @@
                 android:layout_marginStart="16.19dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/main"
-                android:textSize="11sp"
+                android:textSize="13dp"
                 android:visibility="gone"
                 android:text="올바른 이메일 형식이 아닙니다."/>
         </FrameLayout>
@@ -237,7 +240,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="9sp"
+                    android:textSize="13dp"
                     android:layout_marginStart="7.25dp"
                     android:text="입력하신 이메일 주소로 메일을 전송하였습니다."/>
             </LinearLayout>
@@ -247,6 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -268,7 +272,7 @@
             android:layout_marginStart="16.19dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/main"
-            android:textSize="11sp"
+            android:textSize="13dp"
             android:text="인증 코드가 올바르지 않습니다."
             android:visibility="gone"/>
 

@@ -22,6 +22,7 @@ class ShopMainUnlimitedFameFragment : Fragment() {
     private var alreadyBought: Boolean = false
     private var userPoint: Int = 0 // 사용자 포인트를 저장할 변수
     private var itemPoint: Int = 0 // 아이템 가격을 저장할 변수
+    private var itemName: String="" // 아이템 이름을 저장할 변수
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +66,7 @@ class ShopMainUnlimitedFameFragment : Fragment() {
             val args = Bundle().apply {
                 putInt("userPoint", userPoint)
                 putInt("itemPoint", itemPoint)
+                putString("ITEM_NAME",itemName)
                 putInt("ITEM_ID", itemId)
             }
             famePurchaseDialog.arguments = args // Bundle을 Dialog에 설정
@@ -104,6 +106,7 @@ class ShopMainUnlimitedFameFragment : Fragment() {
                     // 여기서 userPoint와 itemPoint 값을 업데이트
                     userPoint = itemDetails?.userPoint ?: 0
                     itemPoint = itemDetails?.point ?: 0
+                    itemName= itemDetails?.name.toString()
 
                     updateUI(itemDetails)
                 }
@@ -135,7 +138,7 @@ class ShopMainUnlimitedFameFragment : Fragment() {
             val imageRequest = ImageRequest.Builder(binding.root.context)
                 .crossfade(true)
                 .crossfade(300)
-                .data(it.imageUrl)
+                .data(it.imageCenterUrl)
                 .target(binding.shopBannerDetailFameIv)
                 .build()
             imageLoader.enqueue(imageRequest)

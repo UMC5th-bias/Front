@@ -93,4 +93,12 @@ interface CommunityAPIService {
         @Header("Authorization") authorization:String?,
         @Path("guestbook_id") guestBookId: Long,
     ): Call<RallyDetailResponse>
+
+    @POST("/posts/guestbooks/{guestbook_id}/comments")
+    fun postRallyComment(
+        @Header("Authorization") authorization:String?,
+        @Path("guestbook_id") guestBookId: Long,
+        @Body requestBody: RequestBody
+    ): Call<ApplyResponse>
+
 }
