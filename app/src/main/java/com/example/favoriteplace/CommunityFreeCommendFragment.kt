@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +20,6 @@ class CommunityFreeCommendFragment : Fragment() {
     lateinit var binding: FragmentCommunityFreeCommendBinding
     private var freeCommendData=ArrayList<Comments>()
     private var currentPage=1
-    private var isLogIn=true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,14 +33,25 @@ class CommunityFreeCommendFragment : Fragment() {
         return binding.root
     }
 
+
+    // 사용자의 로그인 상태를 확인하는 메소드
+    private fun isLoggedIn(): Boolean {
+        return getAccessToken() != null
+    }
+
+    private fun getAccessToken(): String? {
+        val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences?.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
+    }
+
     //서버에서 내가 쓴 댓글을 가져오는 코드
     private fun fetchPosts() {
 
         var accessToken: String? =null
 
         //로그인 중이라면 토큰을 서버에 전달
-        if (isLogIn){
-            accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlejcwM0BuYXZlci5jb20iLCJpYXQiOjE3MDc5ODUzNDUsImV4cCI6MTcxMDU3NzM0NX0.xFCNj09c3M0CkiCV_Luqq2w6gjhW2Z6-kJM82NF0MtU"
+        if (isLoggedIn()){
+            accessToken = getAccessToken()
         }
 
         RetrofitClient.communityService.getMyComments("Bearer $accessToken",currentPage,10)
