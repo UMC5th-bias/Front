@@ -18,3 +18,15 @@ data class MyProfile(
     val userIconImg: String?,
     val email: String?
 )
+
+data class MyItems(
+    val limited: List<MyItem>,
+    val always: List<MyItem>,
+    val prilgrimage: List<MyItem>
+)
+
+data class MyItem(
+    val id: Long,
+    val imageUrl: String,
+    val isWear: Boolean
+)

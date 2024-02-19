@@ -40,6 +40,14 @@ class MySettingFragment : Fragment() {
             }
         }
 
+        //프로필 카트 편집
+        binding.mySettingProfileCardBtn.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.main_frameLayout, MyProfileCardFragment())
+                addToBackStack(null)
+            }
+        }
+
         checkLoginStatus(requireActivity()) // 인증 정보 가져오기
 
         getMyProfile(requireActivity()) //내 프로필 정보 가져오기
