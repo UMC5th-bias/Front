@@ -16,7 +16,6 @@ import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import com.example.favoriteplace.databinding.FragmentMyGuestbookBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -49,9 +48,15 @@ class MyGuestBookActivity : AppCompatActivity() {
         }
 
         //댓글 리스트 가져오기
+        getComments(guestBookId)
+
+    }
+
+    //댓글 리스트 가져오기
+    private fun getComments(guestbookId: Long) {
         RetrofitAPI.rallyLocationDetailService.getComments(
             authorization = "Bearer ${getAccessToken()}",
-            guestbookId = guestBookId
+            guestbookId = guestbookId
         ).enqueue(object: Callback<RallyLocationDetailComments> {
             override fun onResponse(call: Call<RallyLocationDetailComments>, response: Response<RallyLocationDetailComments>) {
                 if(response.isSuccessful) {
@@ -75,7 +80,6 @@ class MyGuestBookActivity : AppCompatActivity() {
             }
 
         })
-
     }
 
     private fun getAccessToken(): String? {
