@@ -22,7 +22,7 @@ import retrofit2.Response
 
 class RallyDetailFragment : Fragment() {
 
-    lateinit var binding:FragmentRallydetailBinding
+    lateinit var binding : FragmentRallydetailBinding
     private lateinit var sharedPreferences: SharedPreferences
 
     private var isLiked: Boolean = false // 좋아요 상태 추적
@@ -118,17 +118,14 @@ class RallyDetailFragment : Fragment() {
                         val responseBody = response.body()
                         if (responseBody != null) {
                             val message = responseBody.message
-                            val isLike = isLiked
+                            val success = responseBody.success
 
-
-                            Log.d("RallyDetailFragment", "Response: $message, $isLike")
-                            if(message=="찜 목록에 추가됐습니다."){
+                            Log.d("RallyDetailFragment", "Response: $message, $success")
+                            if(success==true){
                                 binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_on)
                             }else{
                                 binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_off)
                             }
-
-
                         } else {
                             Log.e("RallyDetailFragment", "Response body is null")
                         }
@@ -145,7 +142,7 @@ class RallyDetailFragment : Fragment() {
                 }
             })
     }
-
+    =
     private fun handleLikeButton(isLike: Boolean) {
         // 좋아요 버튼 클릭 리스너 설정
         binding.rallydetailLikeBtn.setOnClickListener {
