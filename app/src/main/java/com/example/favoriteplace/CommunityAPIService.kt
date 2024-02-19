@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -101,4 +102,15 @@ interface CommunityAPIService {
         @Body requestBody: RequestBody
     ): Call<ApplyResponse>
 
+    @PUT("posts/free/{post_id}/like")
+    fun sendFreeLike(
+        @Header("Authorization") authorization:String?,
+        @Path("post_id") postId: Int,
+    ): Call<PostDetail>
+
+    @POST("posts/guestbooks/{guestbook_id}/like")
+    fun sendRallyLike(
+        @Header("Authorization") authorization:String?,
+        @Path("guestbook_id") guestbookId: Long,
+    ): Call<PostDetail>
 }
