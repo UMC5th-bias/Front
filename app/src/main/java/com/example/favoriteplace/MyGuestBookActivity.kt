@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -24,6 +25,8 @@ import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,12 +52,25 @@ class MyGuestBookActivity : AppCompatActivity() {
             finish()
         }
 
-        //댓글 리스트 가져오기
-        getComments(guestBookId)
+
+        binding.myGuestbookUploadBtn.setOnClickListener{
+            val comment = binding.myGuestbookCommentEt.text.toString()
+            if (comment.isNotEmpty()) {
+                sendCommentToServer(guestBookId, comment)
+
+                // EditText의 내용 지우기
+                binding.myGuestbookCommentEt.text.clear()
+
+                // 소프트 키보드 숨기기
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.myGuestbookCommentEt.windowToken, 0)
+            } else {
+                Toast.makeText(this,"댓글을 입력해주세요.",Toast.LENGTH_SHORT).show()
+            }
+        }
 
     }
 
-    //댓글 리스트 가져오기
     private fun getComments(guestbookId: Long) {
         RetrofitAPI.rallyLocationDetailService.getComments(
             authorization = "Bearer ${getAccessToken()}",
@@ -126,6 +142,10 @@ class MyGuestBookActivity : AppCompatActivity() {
                 Log.d("MyGuestBood", "Network error: ${t.message}")
             }
         })
+
+        //댓글 리스트 가져오기
+        getComments(guestBookId)
+
     }
 
     private fun displayPostDetails(detail: RallyDetailResponse) {
@@ -245,6 +265,32 @@ class MyGuestBookActivity : AppCompatActivity() {
         marker.position = latLng
         marker.captionText = title
         marker.map = naverMap
+    }
+    private fun sendCommentToServer(guestBookId: Long, commentContent: String) {
+        // 댓글 내용을 JSON 형식의 문자열로 변환합니다.
+        val jsonComment = "{\"content\": \"$commentContent\"}"
+
+        // RequestBody를 생성하여 JSON 형식의 문자열을 전달합니다.
+        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), jsonComment)
+
+        // 헤더에 AccessToken 추가
+        val authorizationHeader = "Bearer ${getAccessToken()}"
+
+        // Retrofit 클라이언트 인터페이스에서 정의한 API 메서드를 사용하여 댓글을 등록하는 요청을 만듭니다.
+        RetrofitClient.communityService.postRallyComment(authorizationHeader, guestBookId, requestBody).enqueue(object : Callback<ApplyResponse> {
+            override fun onResponse(call: Call<ApplyResponse>, response: Response<ApplyResponse>) {
+                if (response.isSuccessful) {
+                    Log.e("MyGuestBook", "댓글이 등록되었습니다.")
+                    getComments(guestBookId)
+                } else {
+                    Log.e("MyGuestBook", "댓글 등록에 실패했습니다.")
+                }
+            }
+
+            override fun onFailure(call: Call<ApplyResponse>, t: Throwable) {
+                Log.e("PostDetailActivity", "네트워크 오류: ${t.message}")
+            }
+        })
     }
 
 

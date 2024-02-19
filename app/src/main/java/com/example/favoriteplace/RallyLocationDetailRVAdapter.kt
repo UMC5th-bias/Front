@@ -1,6 +1,7 @@
 package com.example.favoriteplace
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -35,6 +36,10 @@ class RallyLocationDetailRVAdapter(
     inner class ViewHolder(val binding: ItemCommentBinding): RecyclerView.ViewHolder(binding.root){
 
         fun bind(comment: RallyLocationDetailComment){
+            if(comment.isWrite) {
+                binding.commentBackgroundCl.setBackgroundColor(Color.parseColor("#FFF2F8"))
+            }
+            binding.commentNicknameTv.text = comment.userInfo.nickname
 
 
             Glide.with(context)
