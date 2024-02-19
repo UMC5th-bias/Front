@@ -29,4 +29,11 @@ interface RallyLocationDetailService {
         @Header("Authorization") authorization: String,
         @Path("pilgrimageId") pilgrimageId: Long
     ): Call<RallyInfo>
+
+    @GET("/posts/guestbooks/{guestbook_id}/comments")
+    fun getComments(
+        @Header("Authorization") authorization: String,
+        @Path("guestbook_id") guestbookId: Long
+    ): Call<RallyLocationDetailComments>
+
 }
