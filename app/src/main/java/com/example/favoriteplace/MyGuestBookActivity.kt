@@ -142,6 +142,8 @@ class MyGuestBookActivity : AppCompatActivity() {
         binding.myGuestbookCommentCntTv.text = detail.guestBook.comments.toString()
         binding.myGuestbookViewsCntTv.text = detail.guestBook.views.toString()
         binding.myGuestbookTimeTv.text = detail.guestBook.passedTime
+        binding.rallyMapPlaceEnTv.text = detail.pilgrimage.addressEn
+        binding.rallyMapPlaceJpTv.text = detail.pilgrimage.addressJp
 
 
         // RallyDetailResponse 객체에서 해시태그 정보를 가져와 LinearLayout에 추가하는 과정
@@ -166,7 +168,7 @@ class MyGuestBookActivity : AppCompatActivity() {
         }
 
         Glide.with(this@MyGuestBookActivity)
-            .load(detail.pilgrimage.imageReal)
+            .load(detail.guestBook.image)
             .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
             .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
             .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적

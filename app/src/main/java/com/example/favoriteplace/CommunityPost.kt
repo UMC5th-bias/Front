@@ -126,7 +126,9 @@ data class Pilgrimage(
     val latitude: Double,
     val longitude: Double,
     val imageAnime: String,
-    val imageReal: String
+    val imageReal: String,
+    val addressEn: String,
+    val addressJp: String
 )
 
 data class RallyGuestBook(

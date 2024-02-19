@@ -109,7 +109,7 @@ class MyFragment : Fragment(){
                 add(SvgDecoder(requireContext())) // SVG 이미지 처리를 위해 SvgDecoder 추가
             }
             .build()
-        //Glide로 svg이미지 불러오기
+            
         fun bindSvgImg(img: String, target: ImageView) {
             val imageRequest = ImageRequest.Builder(requireContext())
                 .data(img)
