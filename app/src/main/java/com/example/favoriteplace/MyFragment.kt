@@ -41,7 +41,7 @@ class MyFragment : Fragment(){
 
 
 
-        // 프로필 카드 환경설정
+        // 프로필 카드 설정
         binding.mySettingIv.setOnClickListener {
             parentFragmentManager.commit {
                 replace(R.id.main_frameLayout, MySettingFragment())
@@ -49,6 +49,13 @@ class MyFragment : Fragment(){
             }
         }
 
+        // 찜해둔 성지순례
+        binding.myLikeRallyTv.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.main_frameLayout, MyLikeRallyFragment())
+                addToBackStack(null)
+            }
+        }
 
         // 고객센터
         binding.myCsTv.setOnClickListener {
