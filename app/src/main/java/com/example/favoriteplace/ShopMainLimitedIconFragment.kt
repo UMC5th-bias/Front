@@ -143,7 +143,7 @@ class ShopMainLimitedIconFragment : Fragment() {
             val imageRequest = ImageRequest.Builder(binding.root.context)
                 .crossfade(true)
                 .crossfade(300)
-                .data(it.imageUrl)
+                .data(it.imageCenterUrl)
                 .target { drawable ->
                     // 첫 번째 ImageView에 이미지 적용
                     binding.shopBannerDetailIconIv.setImageDrawable(drawable)
