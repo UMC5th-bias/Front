@@ -767,8 +767,8 @@ class ShopMainFragment : Fragment() {
             Glide.with(binding.root.context)
                 .load(userInfo.profileImageUrl)
                 .apply(RequestOptions().circleCrop()) // RequestOptions를 사용하여 circleCrop 적용
-                .placeholder(R.drawable.memberimg) // 로딩 중에 표시할 플레이스홀더 이미지
-                .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
+                .placeholder(R.drawable.signup_default_profile_image) // 로딩 중에 표시할 플레이스홀더 이미지
+                .error(R.drawable.signup_default_profile_image) // 로딩 실패 시 표시할 이미지
                 .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적용
                 .into(binding.shopMainMyProfileCiv) // 이미지를 표시할 ImageView
 // Glide CircleCrop으로 표시

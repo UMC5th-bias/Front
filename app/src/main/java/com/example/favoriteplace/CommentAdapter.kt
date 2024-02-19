@@ -1,5 +1,6 @@
 package com.example.favoriteplace
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -33,6 +34,9 @@ class CommentAdapter(private val comments: List<Comment>) : RecyclerView.Adapter
 
         fun bind(comment: Comment) {
             binding.apply {
+                if(comment.isWrite) {
+                    binding.commentBackgroundCl.setBackgroundColor(Color.parseColor("#FFF2F8"))
+                }
                 commentNicknameTv.text = comment.userInfo.nickname
 
                 Glide.with(commentNicknameTv.context)

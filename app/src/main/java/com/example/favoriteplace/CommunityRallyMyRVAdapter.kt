@@ -2,12 +2,21 @@ package com.example.favoriteplace
 
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.favoriteplace.databinding.ItemCommunityRallyMyBinding
 import java.util.ArrayList
 
-class CommunityRallyMyRVAdapter(private val rallyMyWriteList: ArrayList<GuestMy>): RecyclerView.Adapter<CommunityRallyMyRVAdapter.ViewHolder>(){
+class CommunityRallyMyRVAdapter(private val rallyMyWriteList: ArrayList<GuestMy>,
+                                private val listener: CommunityRallyMyRVAdapter.OnItemClickListener
+): RecyclerView.Adapter<CommunityRallyMyRVAdapter.ViewHolder>(){
+
+    // 클릭 이벤트를 처리할 리스너 인터페이스 정의
+    interface OnItemClickListener {
+        fun onItemClick(guestBookId: Long)
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemCommunityRallyMyBinding = ItemCommunityRallyMyBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup, false)
@@ -21,6 +30,16 @@ class CommunityRallyMyRVAdapter(private val rallyMyWriteList: ArrayList<GuestMy>
         holder.bind(rallyMyWriteList[position])
     }
     inner class ViewHolder(val binding: ItemCommunityRallyMyBinding): RecyclerView.ViewHolder(binding.root){
+        init {
+            // ViewHolder 객체가 생성될 때 실행
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(rallyMyWriteList[position].id)
+                }
+            }
+        }
+
         fun bind(freeRecommend: GuestMy){
             binding.itemCommunityRallyMyTitleTv.text=freeRecommend.title
             binding.itemCommunityRallyMyWriterTv.text=freeRecommend.nickname
@@ -33,6 +52,7 @@ class CommunityRallyMyRVAdapter(private val rallyMyWriteList: ArrayList<GuestMy>
             binding.itemCommunityRallyMyTitleTv.ellipsize = TextUtils.TruncateAt.END
             binding.itemCommunityRallyMyTitleTv.maxLines = 1 // 최대 표시할 줄 수
         }
+
 
     }
 }

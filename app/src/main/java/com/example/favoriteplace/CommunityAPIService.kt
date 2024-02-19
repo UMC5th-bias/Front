@@ -55,11 +55,13 @@ interface CommunityAPIService {
 
     @GET("/posts/free/{post_id}")
     fun getFreePostDetail(
+        @Header("Authorization") authorization:String?,
         @Path("post_id") postId: Int
     ): Call<PostDetailResponse>
 
     @GET("/posts/free/{post_id}/comments")
     fun getFreeCommentDetail(
+        @Header("Authorization") authorization:String?,
         @Path("post_id") postId: Long
     ): Call<FreeCommentDetailResponse>
 
