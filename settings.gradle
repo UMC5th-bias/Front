@@ -3,17 +3,15 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven { url "https://naver.jfrog.io/artifactory/maven/" }
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
-
-        maven {
-            url 'https://naver.jfrog.io/artifactory/maven/'
-        }
+        maven { url 'https://repository.map.naver.com/archive/maven' }
     }
 }
 rootProject.name = "FavoritePlace"
