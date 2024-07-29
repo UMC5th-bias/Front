@@ -70,8 +70,8 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
 
     // test
-    private val testLatitude: Double = 37.520439
-    private val testLongitude: Double = 126.887816
+//    private val testLatitude: Double = 37.520439
+//    private val testLongitude: Double = 126.887816
 
 
 
@@ -200,8 +200,8 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 location?.let {
-                    //currentUserLocation=LatLng(location.latitude, location.longitude)
-                    currentUserLocation = LatLng(testLatitude, testLongitude) // test
+                    currentUserLocation=LatLng(location.latitude, location.longitude)
+                    //currentUserLocation = LatLng(testLatitude, testLongitude) // test
                     val distance = currentUserLocation.distanceTo(targetLocation)
 
                     if(distance <=150){
@@ -218,10 +218,10 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
                         val rallyAnimationId = arguments?.getLong("rallyAnimationId") ?: -1
 
-                        Log.d("RallyLocationDetail", " Latitude: $testLatitude, Longitude: $testLongitude ")
+                        Log.d("RallyLocationDetail", " Latitude: $location.latitude, Longitude: $location.longitude ")
 
                         Log.d("RallyLocationDetail", " 1번")
-                        uploadPostRequest(rallyAnimationId, authorizationHeader,testLongitude,testLatitude )
+                        uploadPostRequest(rallyAnimationId, authorizationHeader,location.longitude,location.latitude )
                         Log.d("RallyLocationDetail", " 2번")
                         showDistanceAlertDialog()
                         Log.d("RallyLocationDetail", " 3번")
