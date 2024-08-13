@@ -18,7 +18,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "MyFirebaseMsgService"
-        private const val CHANNEL_ID = "FavoritePlaceChannel"
+        private const val CHANNEL_ID = "default_notification_channel_id"
         private const val CHANNEL_NAME = "Favorite Place Notifications"
         private const val NOTIFICATION_ID = 0
     }
@@ -30,24 +30,35 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d("FCM", "onMessageReceived 함수 호출됨.")
 
         // 메시지 로깅
-        Log.d("FCM", "From: ${remoteMessage.from}")
+        Log.d(TAG, "From: ${remoteMessage.from}")
 
-        // 알림 메시지 처리
-        remoteMessage.notification?.let {
-            Log.d("FCM", "Notification Message Body: ${it.body}")
-            sendNotification(it.title, it.body)
+//        // 알림 메시지 처리
+//        remoteMessage.notification?.let {
+//            Log.d("FCM", "Notification Message Body: ${it.body}")
+//            sendNotification(it.title, it.body)
+//        }
+//
+//        // 데이터 메시지 처리
+//        remoteMessage.data.isNotEmpty().let {
+//            Log.d("FCM", "Data Message: ${remoteMessage.data}")
+//            handleDataMessage(remoteMessage.data)
+//        }
+
+        // notification
+        if(remoteMessage.notification != null) { //포그라운드
+            Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
+            sendNotification(remoteMessage.notification?.title!!, remoteMessage.notification?.body!!);
         }
 
-        // 데이터 메시지 처리
-        remoteMessage.data.isNotEmpty().let {
-            Log.d("FCM", "Data Message: ${remoteMessage.data}")
-            handleDataMessage(remoteMessage.data)
+        // data
+        if (remoteMessage.data.isNotEmpty()) { //백그라운드
+            Log.d(TAG, "Data Message: ${remoteMessage.data["body"]}")
+            remoteMessage.data["title"]?.let { sendNotification(it, remoteMessage.data["body"]!!) };
         }
     }
-
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d("FCM", "Refreshed token: $token")
+        Log.d(TAG, "Refreshed token: $token")
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
         // 로그인 상태 확인
@@ -58,26 +69,35 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendNotification(title: String?, messageBody: String?) {
+        Log.d(TAG, "호출")
+
         // 알림을 클릭했을 때 MainActivity를 여는 Intent 생성
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         // PendingIntent 생성: 알림 클릭 시 실행할 작업 정의
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
-
-        // 알림 채널 ID 설정
-        val channelId = getString(R.string.default_notification_channel_id)
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        )
+//
+//        // 알림 채널 생성
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//
+//        // Android 8.0 이상에서는 알림 채널을 설정해야 합니다.
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+//            notificationManager.createNotificationChannel(channel)
+//        }
 
         // NotificationCompat.Builder를 사용하여 알림 구성
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification) // 알림 아이콘 설정
             .setContentTitle(title) // 알림 제목 설정
             .setContentText(messageBody) // 알림 내용 설정
             .setAutoCancel(true) // 알림 클릭 시 자동으로 제거
             .setContentIntent(pendingIntent) // 알림 클릭 시 실행할 PendingIntent 설정
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(0, notificationBuilder.build())
+        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
     }
 
     private fun handleDataMessage(data: Map<String, String>) {
@@ -95,14 +115,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         RetrofitClient.notificationApiService.registerToken(tokenRequest).enqueue(object : retrofit2.Callback<Void> {
             override fun onResponse(call: retrofit2.Call<Void>, response: retrofit2.Response<Void>) {
                 if (response.isSuccessful) {
-                    Log.d("MyFirebaseMessagingService", "Token successfully sent to server.")
+                    Log.d(TAG, "Token successfully sent to server.")
                 } else {
-                    Log.e("MyFirebaseMessagingService", "Failed to send token to server. Response code: ${response.code()}")
+                    Log.e(TAG, "Failed to send token to server. Response code: ${response.code()}")
                 }
             }
 
             override fun onFailure(call: retrofit2.Call<Void>, t: Throwable) {
-                Log.e("MyFirebaseMessagingService", "Failed to send token to server", t)
+                Log.e(TAG, "Failed to send token to server", t)
             }
         })
     }

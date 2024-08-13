@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.example.favoriteplace.databinding.ActivityMainBinding
+import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 
@@ -25,18 +26,34 @@ class MainActivity : AppCompatActivity() {
     internal var accessToken: String? = null // 액세스 토큰을 저장할 변수
     private val REQUEST_CODE_POST_NOTIFICATIONS = 1
 
+    companion object {
+        private const val CHANNEL_ID = "FavoritePlaceChannel"
+        private const val CHANNEL_NAME = "Favorite Place Notifications"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Firebase 초기화
         FirebaseApp.initializeApp(this)
 
+
         binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
         setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        // 앱 실행 시 토큰 값 확인
-        checkToken()
+
+//        FirebaseMessaging.getInstance().token
+//            .addOnCompleteListener { task: Task<String> ->
+//                if (!task.isSuccessful) {
+//                    Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+//                    return@addOnCompleteListener
+//                }
+//                val token = task.result
+//                Log.d("FCM", "Current token: $token")
+//
+//            }
+//        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
         // 알림 채널을 생성
         createNotificationChannel()
@@ -44,23 +61,28 @@ class MainActivity : AppCompatActivity() {
         // 알림 권한 요청
         requestNotificationPermission()
 
-        // 로그인 상태 확인 후 FCM 토큰 전송
-        if (isLoggedIn()) {
-            val fcmToken = sharedPreferences.getString("fcm_token", null)
-            fcmToken?.let {
-                sendRegistrationToServer(it)
-            } ?: run {
-                FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val token = task.result
-                        saveTokenToPrefs(token)
-                        sendRegistrationToServer(token)
-                    } else {
-                        Log.d("FCM Token", "FCM Token not yet generated.")
-                    }
-                }
-            }
-        }
+        // 앱 실행 시 토큰 값 확인 및 FCM 토큰 전송
+        checkAndSendFCMToken()
+
+
+
+//        // 로그인 상태 확인 후 FCM 토큰 전송
+//        if (isLoggedIn()) {
+//            val fcmToken = sharedPreferences.getString("fcm_token", null)
+//            fcmToken?.let {
+//                sendRegistrationToServer(it)
+//            } ?: run {
+//                FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+//                    if (task.isSuccessful) {
+//                        val token = task.result
+//                        saveTokenToPrefs(token)
+//                        sendRegistrationToServer(token)
+//                    } else {
+//                        Log.d("FCM Token", "FCM Token not yet generated.")
+//                    }
+//                }
+//            }
+//        }
 
 //        // FCM 토큰 갱신 처리
 //        if (isLoggedIn()) {
@@ -75,16 +97,35 @@ class MainActivity : AppCompatActivity() {
         initBottomNavigation()
 }
 
-    private fun checkToken() {
-        accessToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
-        if (accessToken != null) {
-            Log.d("MainActivity", ">> login 상태 ")
-        } else {
-            Log.d("MainActivity", ">> Token 없음 ")
-        }
+    private fun checkAndSendFCMToken() {
+        // FCM 토큰 가져오기 및 저장
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task: Task<String> ->
+                if (!task.isSuccessful) {
+                    Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                    return@addOnCompleteListener
+                }
+                val token = task.result
+                Log.d("FCM", "Current token: $token")
+                saveTokenToPrefs(token)
+
+                // 로그인 상태 확인 후 FCM 토큰 전송
+                if (isLoggedIn()) {
+                    sendRegistrationToServer(token)
+                }
+            }
     }
+//    private fun checkToken() {
+//        accessToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
+//        if (accessToken != null) {
+//            Log.d("MainActivity", ">> login 상태 ")
+//        } else {
+//            Log.d("MainActivity", ">> Token 없음 ")
+//        }
+//    }
 
     private fun isLoggedIn(): Boolean {
+        accessToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
         return !accessToken.isNullOrEmpty()
     }
     override fun onDestroy() {
@@ -130,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.myFragment -> {
-                    checkToken()
+                    checkAndSendFCMToken()
                     if(accessToken.isNullOrEmpty()) {
                         Toast.makeText(this, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
                     }
@@ -158,8 +199,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = getString(R.string.default_notification_channel_id)
-            val channelName = "Default Channel"
+            val channelId = CHANNEL_ID
+            val channelName = CHANNEL_NAME
             val channelDescription = "Default Channel for App Notifications"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(channelId, channelName, importance).apply {
@@ -175,7 +216,7 @@ class MainActivity : AppCompatActivity() {
         val tokenRequest = TokenRequest(token)
         RetrofitClient.notificationApiService.registerToken(tokenRequest).enqueue(object : retrofit2.Callback<Void> {
             override fun onResponse(call: retrofit2.Call<Void>, response: retrofit2.Response<Void>) {
-                Log.d("FCM", "token = ${token}")
+                Log.d("FCM", "Token = $token")
 
                 if (response.isSuccessful) {
                     Log.d("MainActivity", "Token successfully sent to server.")
@@ -190,12 +231,12 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun setLoggedIn(isLoggedIn: Boolean) {
-        sharedPreferences.edit {
-            putBoolean("isLoggedIn", isLoggedIn)
-        }
-        Log.d("MainActivity", "로그인 상태 변경: $isLoggedIn")
-    }
+//    private fun setLoggedIn(isLoggedIn: Boolean) {
+//        sharedPreferences.edit {
+//            putBoolean("isLoggedIn", isLoggedIn)
+//        }
+//        Log.d("MainActivity", "로그인 상태 변경: $isLoggedIn")
+//    }
 
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -209,10 +250,8 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_POST_NOTIFICATIONS) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // 권한이 허용되었습니다.
                 Log.d("MainActivity", "Notification permission granted.")
             } else {
-                // 권한이 거부되었습니다.
                 Toast.makeText(this, "알림 권한이 거부되었습니다. 알림을 받을 수 없습니다.", Toast.LENGTH_SHORT).show()
             }
         }
