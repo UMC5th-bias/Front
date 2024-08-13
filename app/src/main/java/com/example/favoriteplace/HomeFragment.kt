@@ -119,8 +119,9 @@ class HomeFragment : Fragment() {
         val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
         accessToken = sharedPreferences.getString(ACCESS_TOKEN_KEY, null)
+        // TODO : 로그인 상태 다시 돌려놓기
         isLoggedIn = !accessToken.isNullOrEmpty()
-
+//        isLoggedIn = false;
 
 
         if (isLoggedIn) {

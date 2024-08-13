@@ -66,33 +66,33 @@ class MainActivity : AppCompatActivity() {
 
 
 
-//        // 로그인 상태 확인 후 FCM 토큰 전송
-//        if (isLoggedIn()) {
-//            val fcmToken = sharedPreferences.getString("fcm_token", null)
-//            fcmToken?.let {
-//                sendRegistrationToServer(it)
-//            } ?: run {
-//                FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        val token = task.result
-//                        saveTokenToPrefs(token)
-//                        sendRegistrationToServer(token)
-//                    } else {
-//                        Log.d("FCM Token", "FCM Token not yet generated.")
-//                    }
-//                }
-//            }
-//        }
+        // 로그인 상태 확인 후 FCM 토큰 전송
+        if (isLoggedIn()) {
+            val fcmToken = sharedPreferences.getString("fcm_token", null)
+            fcmToken?.let {
+                sendRegistrationToServer(it)
+            } ?: run {
+                FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val token = task.result
+                        saveTokenToPrefs(token)
+                        sendRegistrationToServer(token)
+                    } else {
+                        Log.d("FCM Token", "FCM Token not yet generated.")
+                    }
+                }
+            }
+        }
 
-//        // FCM 토큰 갱신 처리
-//        if (isLoggedIn()) {
-//            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    val fcmToken = task.result
-//                    sendRegistrationToServer(fcmToken)
-//                }
-//            }
-//        }
+        // FCM 토큰 갱신 처리
+        if (isLoggedIn()) {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val fcmToken = task.result
+                    sendRegistrationToServer(fcmToken)
+                }
+            }
+        }
 
         initBottomNavigation()
 }
@@ -127,6 +127,7 @@ class MainActivity : AppCompatActivity() {
     private fun isLoggedIn(): Boolean {
         accessToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
         return !accessToken.isNullOrEmpty()
+//        return false;
     }
     override fun onDestroy() {
         super.onDestroy()
