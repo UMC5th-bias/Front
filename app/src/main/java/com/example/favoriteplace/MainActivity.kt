@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
@@ -13,7 +14,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
+import androidx.fragment.app.Fragment
 import com.example.favoriteplace.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
@@ -33,70 +34,72 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Firebase 초기화
         FirebaseApp.initializeApp(this)
-
-
-        binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-//        FirebaseMessaging.getInstance().token
-//            .addOnCompleteListener { task: Task<String> ->
-//                if (!task.isSuccessful) {
-//                    Log.w("FCM", "Fetching FCM registration token failed", task.exception)
-//                    return@addOnCompleteListener
-//                }
-//                val token = task.result
-//                Log.d("FCM", "Current token: $token")
-//
-//            }
-//        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        // 초기 프래그먼트 설정 및 기타 설정
+        setupInitialFragment(savedInstanceState)
 
-        // 알림 채널을 생성
         createNotificationChannel()
-
-        // 알림 권한 요청
         requestNotificationPermission()
-
-        // 앱 실행 시 토큰 값 확인 및 FCM 토큰 전송
-        checkAndSendFCMToken()
-
-
-
-        // 로그인 상태 확인 후 FCM 토큰 전송
-        if (isLoggedIn()) {
-            val fcmToken = sharedPreferences.getString("fcm_token", null)
-            fcmToken?.let {
-                sendRegistrationToServer(it)
-            } ?: run {
-                FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val token = task.result
-                        saveTokenToPrefs(token)
-                        sendRegistrationToServer(token)
-                    } else {
-                        Log.d("FCM Token", "FCM Token not yet generated.")
-                    }
-                }
-            }
-        }
-
-        // FCM 토큰 갱신 처리
-        if (isLoggedIn()) {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val fcmToken = task.result
-                    sendRegistrationToServer(fcmToken)
-                }
-            }
-        }
-
         initBottomNavigation()
-}
+        checkAndSendFCMToken()
+    }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        intent.getStringExtra("type")?.let { type ->
+            val fragment = when (type) {
+                "home" -> HomeFragment()
+                "animation" -> RallyHomeFragment()
+                "shop" -> ShopMainFragment()
+                else -> HomeFragment()
+            }
+            navigateToFragment(fragment)
+            setSelectedNavItem(fragment)
+        }
+    }
+
+    private fun navigateToFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frameLayout, fragment)
+            .commitAllowingStateLoss()
+    }
+
+    private fun setSelectedNavItem(fragment: Fragment) {
+        val itemId = when (fragment) {
+            is HomeFragment -> R.id.homeFragment
+            is RallyHomeFragment -> R.id.rallyhomeFragment
+            is ShopMainFragment -> R.id.shopFragment
+            is CommunityMainFragment -> R.id.communityFragment
+            is MyFragment -> R.id.myFragment
+            else -> R.id.homeFragment
+        }
+        binding.mainBnv.selectedItemId = itemId
+    }
+
+    private fun initBottomNavigation() {
+        binding.mainBnv.setOnItemSelectedListener { item ->
+            val fragment = when (item.itemId) {
+                R.id.homeFragment -> HomeFragment()
+                R.id.rallyhomeFragment -> RallyHomeFragment()
+                R.id.communityFragment -> CommunityMainFragment()
+                R.id.shopFragment -> ShopMainFragment()
+                R.id.myFragment -> MyFragment()
+                else -> HomeFragment()
+            }
+            navigateToFragment(fragment)
+            true
+        }
+    }
     private fun checkAndSendFCMToken() {
         // FCM 토큰 가져오기 및 저장
         FirebaseMessaging.getInstance().token
@@ -115,15 +118,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
-//    private fun checkToken() {
-//        accessToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
-//        if (accessToken != null) {
-//            Log.d("MainActivity", ">> login 상태 ")
-//        } else {
-//            Log.d("MainActivity", ">> Token 없음 ")
-//        }
-//    }
-
     private fun isLoggedIn(): Boolean {
         accessToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
         return !accessToken.isNullOrEmpty()
@@ -136,60 +130,21 @@ class MainActivity : AppCompatActivity() {
     private fun saveTokenToPrefs(token: String) {
         sharedPreferences.edit().putString("fcm_token", token).apply()
     }
-    private fun initBottomNavigation(){
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frameLayout, HomeFragment())
-            .commitAllowingStateLoss()
 
-
-        binding.mainBnv.setOnItemSelectedListener { item->
-            when (item.itemId){
-
-                R.id.homeFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, HomeFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.rallyhomeFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, RallyHomeFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.communityFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, CommunityMainFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.shopFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frameLayout, ShopMainFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.myFragment -> {
-                    checkAndSendFCMToken()
-                    if(accessToken.isNullOrEmpty()) {
-                        Toast.makeText(this, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
-                    }
-                    else {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_frameLayout, MyFragment())
-                            .commitAllowingStateLoss()
-                        return@setOnItemSelectedListener true
-                    }
-
-                }
-
+    private fun setupInitialFragment(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            val initialFragment = when (intent.getStringExtra("type")) {
+                "shop" -> ShopMainFragment()
+                "animation" -> RallyHomeFragment()
+                "home" -> HomeFragment()
+                else -> HomeFragment()
             }
-            false
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frameLayout, initialFragment)
+                .commitAllowingStateLoss()
+            setSelectedNavItem(initialFragment)
         }
     }
-
     fun setSelectedNavItem(itemId: Int) {
         binding.mainBnv.selectedItemId = itemId
     }
@@ -231,13 +186,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
-//    private fun setLoggedIn(isLoggedIn: Boolean) {
-//        sharedPreferences.edit {
-//            putBoolean("isLoggedIn", isLoggedIn)
-//        }
-//        Log.d("MainActivity", "로그인 상태 변경: $isLoggedIn")
-//    }
 
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

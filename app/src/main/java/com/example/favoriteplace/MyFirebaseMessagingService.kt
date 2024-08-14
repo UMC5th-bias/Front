@@ -23,7 +23,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         private const val NOTIFICATION_ID = 0
     }
 
-
+    override fun onCreate() {
+        super.onCreate()
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        createNotificationChannel() // 알림 채널 생성
+    }
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         Log.d(TAG, "onMessageReceived 함수 호출됨.")
@@ -31,51 +35,24 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // 메시지 로깅
         Log.d(TAG, "From: ${remoteMessage.from}")
 
-//        // 알림 메시지 처리
-//        remoteMessage.notification?.let {
-//            Log.d("FCM", "Notification Message Body: ${it.body}")
-//            sendNotification(it.title, it.body)
-//        }
-//
-//        // 데이터 메시지 처리
-//        remoteMessage.data.isNotEmpty().let {
-//            Log.d("FCM", "Data Message: ${remoteMessage.data}")
-//            handleDataMessage(remoteMessage.data)
-//        }
+        remoteMessage.data.isNotEmpty().let {
+            // notification
+            if(remoteMessage.notification != null) { //포그라운드
+                Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
+            }
 
-        val type = remoteMessage.data["type"]
+            // data
+            if (remoteMessage.data.isNotEmpty()) { //백그라운드
+                Log.d(TAG, "Data Message: ${remoteMessage.data["type"]}")
+            }
 
-        // 적절한 인텐트를 생성하여 특정 화면으로 이동
-        val intent = when (type) {
-            "home" -> Intent(this, MainActivity::class.java)
-//            "notification_center" -> Intent(this, NotificationCenterActivity::class.java)
-            "animation" -> Intent(this, RallyHomeFragment::class.java)
-            "shop" -> Intent(this, ShopMainFragment::class.java)
-            else -> Intent(this, MainActivity::class.java)
+            val type = remoteMessage.data["type"]
+            val title = remoteMessage.data["title"] ?: "Default title"
+            val message = remoteMessage.data["message"] ?: "Default message"
+
+            sendNotification(type, title, message)
         }
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val title = remoteMessage.data["title"]
-        val messageBody = remoteMessage.data["message"]
-
-        sendNotification(title, messageBody, pendingIntent)
-
-//        // notification
-//        if(remoteMessage.notification != null) { //포그라운드
-//            Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
-//            sendNotification(remoteMessage.notification?.title!!, remoteMessage.notification?.body!!);
-//        }
-//
-//        // data
-//        if (remoteMessage.data.isNotEmpty()) { //백그라운드
-//            Log.d(TAG, "Data Message: ${remoteMessage.data["body"]}")
-//            remoteMessage.data["title"]?.let { sendNotification(it, remoteMessage.data["body"]!!) };
-//        }
     }
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -89,54 +66,36 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun sendNotification(title: String?, messageBody: String?, pendingIntent: PendingIntent) {
-        Log.d(TAG, "sendNotification 호출")
+    private fun sendNotification(type: String?, title: String, message: String) {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            putExtra("type", type) // 타입을 인텐트에 추가
+        }
 
-//        // 알림을 클릭했을 때 MainActivity를 여는 Intent 생성
-//        val intent = Intent(this, MainActivity::class.java)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//
-//        // PendingIntent 생성: 알림 클릭 시 실행할 작업 정의
-//        val pendingIntent = PendingIntent.getActivity(
-//            this, 0, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
-//        )
-////
-////        // 알림 채널 생성
-//        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-////
-////        // Android 8.0 이상에서는 알림 채널을 설정해야 합니다.
-////        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-////            notificationManager.createNotificationChannel(channel)
-////        }
-//
-//        // NotificationCompat.Builder를 사용하여 알림 구성
-//        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-//            .setSmallIcon(R.drawable.ic_notification) // 알림 아이콘 설정
-//            .setContentTitle(title) // 알림 제목 설정
-//            .setContentText(messageBody) // 알림 내용 설정
-//            .setAutoCancel(true) // 알림 클릭 시 자동으로 제거
-//            .setContentIntent(pendingIntent) // 알림 클릭 시 실행할 PendingIntent 설정
-//
-//        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val channelId = getString(R.string.default_notification_channel_id)
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
-            .setContentText(messageBody)
+            .setContentText(message)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
-        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(0, notificationBuilder.build())
     }
 
-//    private fun handleDataMessage(data: Map<String, String>) {
-//        // 데이터 메시지 처리
-//        val title = data["title"]
-//        val body = data["body"]
-//        sendNotification(title, body)
-//    }
-
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+            channel.description = "Default Channel for App Notifications"
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
     private fun sendRegistrationToServer(token: String) {
         // 토큰을 포함하는 요청 객체 생성
         val tokenRequest = TokenRequest(token)
@@ -156,6 +115,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
         })
     }
+
+
 
 
 }
