@@ -41,8 +41,15 @@ class MainActivity : AppCompatActivity() {
         // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-        // 초기 프래그먼트 설정 및 기타 설정
-        setupInitialFragment(savedInstanceState)
+        // 알림으로 전달된 intent가 있는 경우 이를 처리
+        handleIntent(intent)
+
+        // 초기 프래그먼트 설정 (백그라운드에서 앱이 열릴 때는 이 부분은 건너뜀)
+        if (savedInstanceState == null) {
+            setupInitialFragment()
+        }
+//         초기 프래그먼트 설정 및 기타 설정
+//        setupInitialFragment(savedInstanceState)
 
         createNotificationChannel()
         requestNotificationPermission()
@@ -56,8 +63,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleIntent(intent: Intent) {
-        intent.getStringExtra("type")?.let { type ->
-            val fragment = when (type) {
+        val postId = intent.getIntExtra("POST_ID", -1)
+        val type = intent.getStringExtra("type")
+        Log.d("FCM", "PostId 넘어옴 : ${postId}")
+
+
+        // type이 "post"이고 postId가 유효한 경우 PostDetailActivity로 이동
+        if (type == "post" && postId != -1) {
+            val detailIntent = Intent(this, PostDetailActivity::class.java).apply {
+                putExtra("POST_ID", postId)
+            }
+            startActivity(detailIntent)
+            setSelectedNavItem(HomeFragment())
+            return // post일 경우 Activity로 이동했으므로 나머지 로직 실행 안함
+        }
+
+        // type이 다른 경우에만 프래그먼트로 이동
+        type?.let { typeValue ->
+            val fragment = when (typeValue) {
                 "home" -> HomeFragment()
                 "animation" -> RallyHomeFragment()
                 "shop" -> ShopMainFragment()
@@ -74,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             .commitAllowingStateLoss()
     }
 
-    private fun setSelectedNavItem(fragment: Fragment) {
+    fun setSelectedNavItem(fragment: Fragment) {
         val itemId = when (fragment) {
             is HomeFragment -> R.id.homeFragment
             is RallyHomeFragment -> R.id.rallyhomeFragment
@@ -83,6 +106,10 @@ class MainActivity : AppCompatActivity() {
             is MyFragment -> R.id.myFragment
             else -> R.id.homeFragment
         }
+        binding.mainBnv.selectedItemId = itemId
+    }
+
+    fun setSelectedNavItem(itemId: Int) {
         binding.mainBnv.selectedItemId = itemId
     }
 
@@ -131,7 +158,38 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences.edit().putString("fcm_token", token).apply()
     }
 
-    private fun setupInitialFragment(savedInstanceState: Bundle?) {
+//    private fun setupInitialFragment(savedInstanceState: Bundle?) {
+//        if (savedInstanceState == null) {
+//            val postId = intent.getIntExtra("POST_ID", -1)
+//            val type = intent.getStringExtra("type")
+//            Log.d("FCM", "PostId 넘어옴 : ${postId}")
+//
+//
+//            // type이 "post"이고 postId가 유효한 경우 PostDetailActivity로 이동
+//            if (type == "post" && postId != -1) {
+//                val detailIntent = Intent(this, PostDetailActivity::class.java).apply {
+//                    putExtra("POST_ID", postId)
+//                }
+//                startActivity(detailIntent)
+//                setSelectedNavItem(HomeFragment())
+//                return // post일 경우 Activity로 이동했으므로 나머지 로직 실행 안함
+//            }
+//
+//            val initialFragment = when (intent.getStringExtra("type")) {
+//                "shop" -> ShopMainFragment()
+//                "animation" -> RallyHomeFragment()
+//                "home" -> HomeFragment()
+//                else -> HomeFragment()
+//            }
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.main_frameLayout, initialFragment)
+//                .commitAllowingStateLoss()
+//            setSelectedNavItem(initialFragment)
+//        }
+//    }
+
+    /*
+    fun setSelectedNavItem(private fun setupInitialFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             val initialFragment = when (intent.getStringExtra("type")) {
                 "shop" -> ShopMainFragment()
@@ -144,9 +202,18 @@ class MainActivity : AppCompatActivity() {
                 .commitAllowingStateLoss()
             setSelectedNavItem(initialFragment)
         }
-    }
-    fun setSelectedNavItem(itemId: Int) {
+    }itemId: Int) {
         binding.mainBnv.selectedItemId = itemId
+    }
+    */
+
+    private fun setupInitialFragment() {
+        // 앱이 처음 실행되었을 때 초기 프래그먼트를 설정
+        val initialFragment = HomeFragment() // 기본은 HomeFragment
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frameLayout, initialFragment)
+            .commitAllowingStateLoss()
+        setSelectedNavItem(initialFragment)
     }
 
     fun setRecommendRally(itemId: Int) {

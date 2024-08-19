@@ -51,6 +51,8 @@ class PostDetailActivity : AppCompatActivity() {
         if (postId != -1) {
             fetchPostDetail(postId)
         } else {
+            Log.d("FCM", "postId를 찾을 수 없습니다.")
+
             // 적절한 오류 처리 또는 사용자에게 피드백 제공
         }
 

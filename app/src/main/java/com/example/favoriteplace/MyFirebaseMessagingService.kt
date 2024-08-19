@@ -37,22 +37,23 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         remoteMessage.data.isNotEmpty().let {
             // notification
-            if(remoteMessage.notification != null) { //포그라운드
+            if (remoteMessage.notification != null) { //포그라운드
                 Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
             }
 
             // data
             if (remoteMessage.data.isNotEmpty()) { //백그라운드
-                Log.d(TAG, "Data Message: ${remoteMessage.data["type"]}")
+                Log.d(TAG, "Data Message Type: ${remoteMessage.data["type"]}")
+                Log.d(TAG, "Data Message postId: ${remoteMessage.data["postId"]}")
             }
 
             val type = remoteMessage.data["type"]
             val title = remoteMessage.data["title"] ?: "Default title"
             val message = remoteMessage.data["message"] ?: "Default message"
+            val postId = remoteMessage.data["postId"]?.toIntOrNull() // postId를 Int로 변환
 
-            sendNotification(type, title, message)
+            sendNotification(type, title, message, postId)
         }
-
     }
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -66,10 +67,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun sendNotification(type: String?, title: String, message: String) {
+    private fun sendNotification(type: String?, title: String, message: String, postId: Int?) {
         val intent = Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             putExtra("type", type) // 타입을 인텐트에 추가
+            putExtra("POST_ID", postId) // postId 추가
+            Log.d("FCM", "postId = ${postId}")
         }
 
         val pendingIntent = PendingIntent.getActivity(
@@ -78,7 +81,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val channelId = getString(R.string.default_notification_channel_id)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_notification)
+            .setSmallIcon(R.drawable.ic_app)
             .setContentTitle(title)
             .setContentText(message)
             .setAutoCancel(true)
