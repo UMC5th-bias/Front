@@ -32,6 +32,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
         Log.d(TAG, "onMessageReceived 함수 호출됨.")
 
+        // 알림 수신 여부 확인
+        val isNotificationAllowed = sharedPreferences.getBoolean("isNotificationAllowed", true)
+        if (!isNotificationAllowed) {
+            Log.d(TAG, "알림 수신이 거부됨.")
+            return
+        }
+
         // 메시지 로깅
         Log.d(TAG, "From: ${remoteMessage.from}")
 

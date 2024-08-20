@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.edit
@@ -38,6 +39,9 @@ class MyFragment : Fragment(){
         binding = FragmentMyBinding.inflate(inflater, container, false)
 
         sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+        // 스위치 설정 (my_notification)
+        setupNotificationSwitch()
 
 
 
@@ -97,6 +101,26 @@ class MyFragment : Fragment(){
         }
 
         return binding.root
+    }
+
+    // 스위치 설정 및 상태 유지
+    private fun setupNotificationSwitch() {
+        // SharedPreferences에서 저장된 상태를 불러와 스위치 상태 설정
+        val isNotificationAllowed = sharedPreferences.getBoolean("isNotificationAllowed", true)
+        binding.myNotificationSwitch.isChecked = isNotificationAllowed
+
+        // 스위치 상태가 변경될 때 알림 수신 여부를 SharedPreferences에 저장
+        binding.myNotificationSwitch.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
+            sharedPreferences.edit {
+                putBoolean("isNotificationAllowed", isChecked)
+            }
+
+            if (isChecked) {
+                Toast.makeText(requireContext(), "알림이 허용되었습니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "알림이 차단되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     fun logout(context: FragmentActivity) {
