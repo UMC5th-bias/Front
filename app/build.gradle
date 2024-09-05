@@ -102,4 +102,8 @@ dependencies {
     //google location
     implementation 'com.google.android.gms:play-services-location:20.0.0'
 
+
+    // kakao login
+    implementation "com.kakao.sdk:v2-user:2.12.1"
+
 }
