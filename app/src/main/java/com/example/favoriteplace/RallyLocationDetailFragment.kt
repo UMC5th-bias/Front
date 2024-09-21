@@ -33,13 +33,16 @@ import androidx.core.app.ActivityCompat
 import com.google.firebase.annotations.concurrent.UiThread
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 import ua.naiksoftware.stomp.dto.StompHeader
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.resume
 
 
 class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
@@ -71,6 +74,8 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
     private val testLatitude: Double = 37.520439
     private val testLongitude: Double = 126.887816
 
+    // 5초마다 소켓으로 위도, 경도 전송 활성화 유무
+    private var isLocationEventEnabled = true
 
 
     // SharedPreferences
@@ -221,7 +226,7 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
             showDistanceAlertDialog()
         }
 
-        // connect 이벤트 발행
+        // connect 이벤트 발행 (최초 1회만)
         Log.d("RallyLocationDetail", "connect 이벤트 발행하기 >> pilgrimageId: $pilgrimageId")
         stompClient.send("/app/connect/$pilgrimageId").subscribe(
             {
@@ -232,20 +237,53 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
             }
         )
 
-        // location 이벤트 구독 및 메시지 발행
-        Log.d("RallyLocationDetail", "location 이벤트 발행하기 >> pilgrimageId: $pilgrimageId")
-        stompClient.send("/app/location/$pilgrimageId", "{\"latitude\": $testLatitude, \"longitude\": $testLongitude }").subscribe(
-            {
-                Log.d("RallyLocationDetail", "location 이벤트 발행 성공")
-            },
-            {
-                Log.e("RallyLocationDetail", "location 이벤트 발행 실패", it)
+        // 15초마다 location 이벤트 구독 및 메시지 발행 (비동기)
+        isLocationEventEnabled = true
+        CoroutineScope(Dispatchers.IO).launch {
+            while (isLocationEventEnabled) {
+                Log.d("RallyLocationDetail", "location 이벤트 발행하기 >> pilgrimageId: $pilgrimageId")
+
+                // 위치 전송이 완료된 후에 다음 작업을 실행
+                sendLocation(pilgrimageId)
+
+                // 위치 전송 후 15초 대기
+                delay(15000)
             }
-        )
+        }
     }
 
+    private suspend fun sendLocation(pilgrimageId: Int) {
+        return suspendCancellableCoroutine { continuation ->
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    location?.let {
+                        stompClient.send(
+                            "/app/location/$pilgrimageId",
+                            "{\"latitude\": ${location.latitude}, \"longitude\": ${location.longitude} }"
+//                            "{\"latitude\": $testLatitude, \"longitude\": $testLongitude }" //test
+                        ).subscribe(
+                            {
+                                Log.d("RallyLocationDetail", "location 이벤트 발행 성공")
+                                // 전송이 완료되었으면 continuation을 완료시켜줌
+                                continuation.resume(Unit)
+                            },
+                            { error ->
+                                Log.e("RallyLocationDetail", "location 이벤트 발행 실패", error)
+                                // 에러 발생 시 continuation도 완료시켜줌
+                                continuation.resume(Unit)
+                            }
+                        )
+                    } ?: continuation.resume(Unit) // 위치가 null인 경우에도 종료 처리
+                }
+            } else {
+                // 권한이 없는 경우 즉시 종료 처리
+                continuation.resume(Unit)
+            }
+        }
+    }
 
-    private fun requestLocationPermission() {
+    private  fun requestLocationPermission() {
         if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
             // 사용자가 이전에 권한을 거부한 경우
             // 권한이 필요한 이유에 대해 설명하는 다이얼로그를 표시
@@ -504,14 +542,14 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap // naverMap 초기화
-
         fetchRallyInfo(rallyAnimationId)
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        stompClient.disconnect()
+        stompClient.disconnect() // 소켓 연결 종료
+        isLocationEventEnabled = false // 주기적으로 소켓으로 위도, 경도 전송 활성화 중지
     }
 
 
