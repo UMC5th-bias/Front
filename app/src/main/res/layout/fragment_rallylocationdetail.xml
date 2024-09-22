@@ -312,7 +312,7 @@
                 android:layout_marginEnd="15dp"
                 android:padding="20dp"
                 app:cardCornerRadius="8dp"
-                android:visibility="gone"
+                android:visibility="invisible"
                 android:background="@color/gray">
 
                 <TextView
@@ -338,7 +338,7 @@
                 android:layout_marginBottom="30dp"
                 android:background="@color/gray"
                 android:padding="20dp"
-                android:visibility="gone"
+                android:visibility="invisible"
                 app:cardCornerRadius="10dp">
 
 

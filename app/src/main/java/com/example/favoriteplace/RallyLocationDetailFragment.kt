@@ -28,6 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.firebase.annotations.concurrent.UiThread
@@ -115,6 +116,11 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
         requestLocationPermission()
+
+        // 기본적으로 안보임으로 설정
+        binding.rallyLocationdetailCv.visibility = View.INVISIBLE
+        binding.rallyLocationdetailGuestbookCv.visibility = View.INVISIBLE
+        binding.rallyLocationdetailNcountCv.visibility = View.INVISIBLE
 
 
         return binding.root
@@ -260,8 +266,8 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                     location?.let {
                         stompClient.send(
                             "/app/location/$pilgrimageId",
-                            "{\"latitude\": ${location.latitude}, \"longitude\": ${location.longitude} }"
-//                            "{\"latitude\": $testLatitude, \"longitude\": $testLongitude }" //test
+//                            "{\"latitude\": ${location.latitude}, \"longitude\": ${location.longitude} }"
+                            "{\"latitude\": $testLatitude, \"longitude\": $testLongitude }" //test
                         ).subscribe(
                             {
                                 Log.d("RallyLocationDetail", "location 이벤트 발행 성공")
@@ -316,6 +322,7 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
         Log.d("rallyAnimationId", ">> fetchRallyInfo: $rallyAnimationId")
 
         call.enqueue(object : Callback<RallyLocationDetailService.RallyInfo> {
+            @SuppressLint("CheckResult")
             override fun onResponse(
                 call: Call<RallyLocationDetailService.RallyInfo>,
                 response: Response<RallyLocationDetailService.RallyInfo>
@@ -337,6 +344,28 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                         }
                         // STOMP 클라이언트 연결
                         connectStompClient(rallyAnimationId.toInt())
+
+                        // 성지순례 인증하기 버튼 설정
+                        binding.rallyLocationdetailCv.setOnClickListener() {
+                            // certify 이벤트 발행 (성지순례 인증하기)
+                            Log.d("RallyLocationDetail", "certify 이벤트 발행하기 >> pilgrimageId: $rallyAnimationId.toInt()")
+                            stompClient.send("/app/certify/${rallyAnimationId.toInt()}").subscribe(
+                                {
+                                    Log.d("RallyLocationDetail", "certify 이벤트 발행 성공")
+                                }, {
+                                    Log.e("RallyLocationDetail", "certify 이벤트 발행 실패", it)
+
+                                }
+                            )
+                        }
+
+                        // 성지순례 방명록 쓰러가기 버튼 설정
+                        binding.rallyLocationdetailGuestbookCv.setOnClickListener() {
+                            Log.d("rallyAnimationId", "방명록 쓰러가기 >> $rallyAnimationId")
+                            val intent = Intent(requireContext(), RallyGuestBookActivity::class.java)
+                            intent.putExtra("rallyAnimationId", rallyAnimationId)
+                            startActivity(intent)
+                        }
                     }else{
                         // 응답 바디가 null인 경우
                         Log.e("RallyLocationDetail", "Response body is null")
@@ -355,96 +384,6 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
 
     }
-
-
-    // 사용자 현재 위치
-//    private fun getCurrentLocation(){
-//        val token = sharedPreferences.getString("token", null)
-//
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-//        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-//            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-//                location?.let {
-//                    //currentUserLocation=LatLng(location.latitude, location.longitude)
-//                    currentUserLocation = LatLng(targetLocation.latitude, targetLocation.longitude) // test
-//                    val distance = currentUserLocation.distanceTo(targetLocation)
-//
-//                    if(distance <=150){
-//                        // 거리가 150m 이내인 경우 다이얼로그 보여주기
-//                        Toast.makeText(context,"성지순례 인증하기 20P를 얻으셨습니다!",Toast.LENGTH_SHORT).show()
-//
-//                        binding.rallyLocationdetailCv.visibility = View.GONE
-//                        binding.rallyLocationdetailGuestbookCv.visibility = View.VISIBLE
-//                        binding.rallyLocationdetailNcountCv.visibility = View.VISIBLE
-//
-//
-//                        // 헤더에 AccessToken 추가
-//                        val authorizationHeader = "Bearer $token"
-//
-//                        val rallyAnimationId = arguments?.getLong("rallyAnimationId") ?: -1
-//
-//                        Log.d("RallyLocationDetail", " Latitude: ${targetLocation.latitude}, Longitude: ${targetLocation.longitude} ")
-//
-//                        uploadPostRequest(rallyAnimationId, authorizationHeader, targetLocation.longitude, targetLocation.latitude )
-//                        showDistanceAlertDialog()
-//                    }else{
-//
-//                        Toast.makeText(context,"150m 반경에 있지 않습니다.",Toast.LENGTH_SHORT).show()
-//                        binding.rallyLocationdetailCv.visibility = View.VISIBLE
-//                        binding.rallyLocationdetailGuestbookCv.visibility = View.GONE
-//                        binding.rallyLocationdetailNcountCv.visibility = View.GONE
-//
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-//    private fun uploadPostRequest(
-//        pilgrimageId: Long,
-//        authorizationHeader: String,
-//        longitude: Double,
-//        latitude: Double
-//    ) {
-//        val postData = RallyCertifyService.PostData(longitude, latitude)
-//
-//        val call = rallyCertifyService.RallyCertify(
-//            pilgrimageId,
-//            authorizationHeader,
-//            postData
-//        )
-//        val token = sharedPreferences.getString("token", null)
-//
-//        Log.d("RallyLocationDetail", " ４번")
-//        Log.d("RallyLocationDetail", ">> pilgrimageId: $pilgrimageId \n $token" )
-//
-//        call.enqueue(object : Callback<RallyCertifyService.RallyCertifyResponse>{
-//            override fun onResponse(
-//                call: Call<RallyCertifyService.RallyCertifyResponse>,
-//                response: Response<RallyCertifyService.RallyCertifyResponse>
-//            ) {
-//                if(response.isSuccessful){
-//                    val responseData = response.body()
-//                    if(responseData!=null){
-//                        Log.d("RallyLocationDetail", " 인증 성공! \n" +
-//                                "메시지: ${response.body()?.message}")
-//                    }else{
-//                        Log.d("RallyLocationDetail", "API Error: ${response.errorBody()?.string()}")
-//                    }
-//                }else{
-//                    val errorBody = response.errorBody()?.string()
-//                    Log.d("RallyLocationDetail", "API Error: $errorBody")
-//                }
-//            }
-//
-//            override fun onFailure(
-//                call: Call<RallyCertifyService.RallyCertifyResponse>,
-//                t: Throwable
-//            ) {
-//                Log.e("RallyGuestBookActivity", "Network Error: ${t.message}")
-//            }
-//        })
-//    }
 
 
     private fun showDistanceAlertDialog() {
@@ -512,19 +451,6 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
             .load(rallyInfo.realImage)
             .into(binding.rallyLocationdetailPlaceIv)
 
-//
-//        if (rallyInfo.isMultiWritable) {
-//            binding.rallyLocationdetailNcountCv.visibility = View.VISIBLE
-//        } else {
-//            binding.rallyLocationdetailNcountCv.visibility = View.INVISIBLE
-//        }
-//
-//        if (rallyInfo.isWritable) {
-//            binding.rallyLocationdetailGuestbookCv.visibility = View.VISIBLE
-//        } else {
-//            binding.rallyLocationdetailNcountCv.visibility = View.INVISIBLE
-//        }
-
 
         val latitude = rallyInfo.latitude ?: 0.0
         val longitude = rallyInfo.longitude ?: 0.0
@@ -548,8 +474,29 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("RallyLocationDetail", "onDestroy: 소켓 연결 종료")
         stompClient.disconnect() // 소켓 연결 종료
         isLocationEventEnabled = false // 주기적으로 소켓으로 위도, 경도 전송 활성화 중지
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("RallyLocationDetail", "onPause: 소켓 연결 종료")
+        stompClient.disconnect() // 소켓 연결 종료
+        isLocationEventEnabled = false // 주기적으로 소켓으로 위도, 경도 전송 활성화 중지
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("RallyLocationDetail", "onStop: 소켓 연결 종료")
+        stompClient.disconnect() // 소켓 연결 종료
+        isLocationEventEnabled = false // 주기적으로 소켓으로 위도, 경도 전송 활성화 중지
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("RallyLocationDetail", "onResume: fetchRallyInfo()")
+        fetchRallyInfo(rallyAnimationId)
     }
 
 
