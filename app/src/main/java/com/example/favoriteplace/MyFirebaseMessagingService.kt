@@ -58,8 +58,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val title = remoteMessage.data["title"] ?: "Default title"
             val message = remoteMessage.data["message"] ?: "Default message"
             val postId = remoteMessage.data["postId"]?.toIntOrNull() // postId를 Int로 변환
+            val guestBookId = remoteMessage.data["guestBookId"]?.toIntOrNull() // postId를 Int로 변환
+            val notificationId = remoteMessage.data["notificationId"]?.toIntOrNull() // postId를 Int로 변환
 
-            sendNotification(type, title, message, postId)
+            sendNotification(type, title, message, postId, guestBookId, notificationId)
         }
     }
     override fun onNewToken(token: String) {
@@ -74,12 +76,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun sendNotification(type: String?, title: String, message: String, postId: Int?) {
+    private fun sendNotification(type: String?, title: String, message: String, postId: Int?, guestBookId: Int?, notificationId: Int?) {
         val intent = Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             putExtra("type", type) // 타입을 인텐트에 추가
             putExtra("POST_ID", postId) // postId 추가
-            Log.d("FCM", "postId = ${postId}")
+            putExtra("GUESTBOOK_ID", guestBookId)
+            putExtra("NOTIFICATION_ID", notificationId)
+
+            Log.d(TAG, "postId = ${postId}")
+            Log.d(TAG, "guestBookId = ${guestBookId}")
+            Log.d(TAG, "notificationId = ${notificationId}")
         }
 
         val pendingIntent = PendingIntent.getActivity(

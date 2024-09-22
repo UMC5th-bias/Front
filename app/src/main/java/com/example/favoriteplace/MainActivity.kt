@@ -64,8 +64,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleIntent(intent: Intent) {
         val postId = intent.getIntExtra("POST_ID", -1)
+        val guestbookId = intent.getIntExtra("GUESTBOOK_ID", -1)
+        val notificationId = intent.getIntExtra("NOTIFICATION_ID", -1)
         val type = intent.getStringExtra("type")
-        Log.d("FCM", "PostId 넘어옴 : ${postId}")
+        Log.d("FCM", "postId 넘어옴 : ${postId}")
+        Log.d("FCM", "guestbookId 넘어옴 : ${guestbookId}")
+        Log.d("FCM", "notificationId 넘어옴 : ${notificationId}")
 
 
         // type이 "post"이고 postId가 유효한 경우 PostDetailActivity로 이동
@@ -76,6 +80,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(detailIntent)
             setSelectedNavItem(HomeFragment())
             return // post일 경우 Activity로 이동했으므로 나머지 로직 실행 안함
+        } else if (type == "guestBook" && guestbookId != -1) {
+            val detailIntent = Intent(this, MyGuestBookActivity::class.java).apply {
+                putExtra("GUESTBOOK_ID", guestbookId)
+            }
+            startActivity(detailIntent)
+            setSelectedNavItem(HomeFragment())
+            return // guestBook일 경우 Activity로 이동했으므로 나머지 로직 실행 안함
         }
 
         // type이 다른 경우에만 프래그먼트로 이동
