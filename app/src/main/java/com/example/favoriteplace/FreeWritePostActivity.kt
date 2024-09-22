@@ -10,6 +10,7 @@ import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
@@ -19,6 +20,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.setMargins
 import com.example.favoriteplace.databinding.ActivityFreeWritePostBinding
 import com.google.gson.Gson
@@ -34,8 +36,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
 import java.io.InputStream
-import java.util.Locale
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FreeWritePostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFreeWritePostBinding
@@ -44,6 +48,7 @@ class FreeWritePostActivity : AppCompatActivity() {
     private val REQUEST_CODE_GALLERY = 100
     private val REQUEST_IMAGE_CAPTURE = 1
     private val selectedImages = mutableListOf<Uri>()
+    private lateinit var currentPhotoPath: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,10 +80,55 @@ class FreeWritePostActivity : AppCompatActivity() {
     }
 
     private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(packageManager)?.also {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        try {
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                // Ensure that there's a camera activity to handle the intent
+                takePictureIntent.resolveActivity(packageManager)?.also {
+                    // Create the File where the photo should go
+                    val photoFile: File? = try {
+                        createImageFile()
+                    } catch (ex: IOException) {
+                        Log.e("FreeWritePostActivity", "Error creating image file", ex)
+                        null
+                    }
+                    // Continue only if the File was successfully created
+                    photoFile?.also {
+                        val photoURI: Uri = FileProvider.getUriForFile(
+                            this,
+                            "${packageName}.fileprovider",
+                            it
+                        )
+                        // Granting URI permissions
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                        takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                        takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                    } ?: run {
+                        Toast.makeText(this, "이미지용 파일을 만들 수 없습니다", Toast.LENGTH_SHORT).show()
+                    }
+                } ?: run {
+                    Toast.makeText(this, "카메라 앱을 찾을 수 없습니다", Toast.LENGTH_SHORT).show()
+                }
             }
+        } catch (e: Exception) {
+            Log.e("FreeWritePostActivity", "Camera intent failed", e)
+            Toast.makeText(this, "카메라를 여는데 실패했습니다", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
         }
     }
 
@@ -146,12 +196,12 @@ class FreeWritePostActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                marginEnd = 10
+                marginEnd = 20
             }
         }
 
         val imageView = ImageView(this).apply {
-            layoutParams = FrameLayout.LayoutParams(100, 100)
+            layoutParams = FrameLayout.LayoutParams(180, 180)
             scaleType = ImageView.ScaleType.CENTER_CROP
             setImageURI(uri)
         }
@@ -165,6 +215,8 @@ class FreeWritePostActivity : AppCompatActivity() {
                 setMargins(10)
             }
             setImageResource(R.drawable.ic_delete_btn) // 커스텀 이미지 사용
+            scaleType = ImageView.ScaleType.CENTER_INSIDE // 이미지를 버튼 안에 맞춤
+            setPadding(0, 0, 0, 0) // 패딩을 0으로 설정하여 이미지 크기를 최대화
             background = null // 배경을 투명하게 설정
             setOnClickListener {
                 removeImageFromLayout(frameLayout, uri)
