@@ -26,7 +26,6 @@ class RallyDetailFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
 
     private var isLiked: Boolean = false // 좋아요 상태 추적
-    var clickCount = 0 // 클릭 횟수를 추적하기 위한 변수
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,9 +46,6 @@ class RallyDetailFragment : Fragment() {
         val rallyId = arguments?.getString("rallyId")
         val accessToken = sharedPreferences.getString("token", null)
 
-        Log.d("RallyDetailFragment", "--------> : $accessToken")
-
-
         if(!accessToken.isNullOrEmpty()){
             RetrofitAPI.rallyDetailService.getRallyDetail(rallyId?.toLong() ?: 1, accessToken).enqueue(object :
                 Callback<RallyDetailData> {
@@ -63,7 +59,6 @@ class RallyDetailFragment : Fragment() {
                             Log.d("RallyDetailFragment", "Response: ${responseData}")
                             setRallyDetail(responseData)
                             handleLikeButton(isLiked)
-                            Log.d("RallyDetailFragment", "--------> : ${isLiked}")
                         }
                     } else {
                         Log.e("RallyDetailFragment", "notSuccessful: ${response.code()}")
@@ -77,6 +72,14 @@ class RallyDetailFragment : Fragment() {
             })
 
         }
+        // 앱이 시작될 때 사용자의 좋아요 상태를 로드하고 이미지를 업데이트
+        loadLikeStatus()
+    }
+
+    // SharedPreferences에서 좋아요 상태를 로드하고 이미지를 업데이트
+    private fun loadLikeStatus() {
+        isLiked = sharedPreferences.getBoolean("isLiked", false)
+        updateLikeButtonImage(isLiked)
     }
 
     private fun setRallyDetail(rallyDetailData: RallyDetailData) {
@@ -102,16 +105,18 @@ class RallyDetailFragment : Fragment() {
     }
 
     private fun sendLikeStatusToServer(rallyId: String?, accessToken: String?, isLiked: Boolean) {
+        val token = sharedPreferences.getString("token", null)
+
+
         // rallyId를 Long으로 변환
         val rallyIdLong = rallyId?.toLongOrNull()
         if (rallyIdLong == null) {
             Log.d("RallyDetailFragment", "Invalid rallyId: $rallyId")
             return
         }
-        val accessToken = sharedPreferences.getString("token", null)
 
         // 서버에 좋아요 상태 업데이트를 요청하는 Retrofit 호출
-        RetrofitAPI.rallyDetailService.updateLikeStatus(rallyIdLong, "Bearer $accessToken")
+        RetrofitAPI.rallyDetailService.updateLikeStatus(rallyIdLong, "Bearer $token")
             .enqueue(object : Callback<UpdateLikeResponse> {
                 override fun onResponse(call: Call<UpdateLikeResponse>, response: Response<UpdateLikeResponse>) {
                     if (response.isSuccessful) {
@@ -121,11 +126,20 @@ class RallyDetailFragment : Fragment() {
                             val success = responseBody.success
 
                             Log.d("RallyDetailFragment", "Response: $message, $success")
-                            if(success==true){
-                                binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_on)
-                            }else{
-                                binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_off)
+
+                            if (success == true) {
+                                // 좋아요 상태 저장
+                                saveLikeStatus(true)
+                                // 이미지 업데이트
+                                updateLikeButtonImage(true)
+                            } else {
+                                // 좋아요 상태 저장
+                                saveLikeStatus(false)
+                                // 이미지 업데이트
+                                updateLikeButtonImage(false)
                             }
+
+
                         } else {
                             Log.e("RallyDetailFragment", "Response body is null")
                         }
@@ -143,7 +157,26 @@ class RallyDetailFragment : Fragment() {
             })
     }
 
+    // 좋아요 상태를 SharedPreferences에 저장
+    private fun saveLikeStatus(isLiked: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLiked", isLiked)
+        editor.apply()
+
+        Log.d("RallyDetailFragment", "saveLikeStatus 값: $isLiked")
+    }
+
+    private fun updateLikeButtonImage(isLiked: Boolean) {
+        // isLiked 값에 따라 이미지 변경
+        if (isLiked) {
+            binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_on)
+        } else {
+            binding.rallydetailLikeBtn.setImageResource(R.drawable.ic_like_off)
+        }
+    }
+
     private fun handleLikeButton(isLike: Boolean) {
+
         // 좋아요 버튼 클릭 리스너 설정
         binding.rallydetailLikeBtn.setOnClickListener {
             val rallyId = arguments?.getString("rallyId")
@@ -154,7 +187,7 @@ class RallyDetailFragment : Fragment() {
                 // 클릭할 때마다 isLike 값 설정
                 val updatedIsLiked  = !isLike
                 // 서버에 좋아요 상태 업데이트 요청 보내기
-                Log.d("RallyDetailFragment", "2번 isLike : $isLike")
+                Log.d("RallyDetailFragment", "2번 isLike : $updatedIsLiked ")
                 sendLikeStatusToServer(rallyId, accessToken, isLiked)
             } else {
                 Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()

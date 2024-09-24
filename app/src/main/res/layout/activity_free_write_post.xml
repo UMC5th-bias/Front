@@ -64,12 +64,11 @@
 
     <LinearLayout
         android:id="@+id/imageContainer"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/writePost_registerLayout_cl"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="15dp">
         <!-- 이미지 뷰들을 여기에 동적으로 추가 -->
     </LinearLayout>

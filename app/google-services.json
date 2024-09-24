@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "838314211171",
-    "project_id": "favoriteplace-fb473",
-    "storage_bucket": "favoriteplace-fb473.appspot.com"
+    "project_number": "153700212048",
+    "project_id": "moemoe-29487",
+    "storage_bucket": "moemoe-29487.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:838314211171:android:0b2df0fd677a925f354556",
+        "mobilesdk_app_id": "1:153700212048:android:c7f1bfbf030ec86f2aa055",
         "android_client_info": {
           "package_name": "com.example.favoriteplace"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDzxuIsfq-uAMT8NWyACUu004l8koaqbK0"
+          "current_key": "AIzaSyAZq0Dczd0_W2FDuV6dxgCGZj0tIq5V9ys"
         }
       ],
       "services": {

@@ -12,21 +12,33 @@ object RetrofitClient {
         level = HttpLoggingInterceptor.Level.BODY  // BODY 레벨로 설정하여 요청/응답의 본문 내용까지 로그로 출력
     }
 
+    // TODO 실제 주소로 변경해야함.
     private const val BASE_URL = "http://favoriteplace.store:8080" // 실제 API 기본 URL로 대체
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(OkHttpClient.Builder().addInterceptor(logging).build()) // 로깅 인터셉터 추가
+    private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(logging)
         .build()
 
-    val shopService: ShopService = retrofit.create(ShopService::class.java)
+    private val retrofit: Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(okHttpClient)
+        .build()
 
-    val postService: PostService = retrofit.create(PostService::class.java)
+    val shopService: ShopService by lazy {
+        retrofit.create(ShopService::class.java)
+    }
 
-    val communityService: CommunityAPIService= retrofit.create(CommunityAPIService::class.java)
+    val postService: PostService by lazy {
+        retrofit.create(PostService::class.java)
+    }
 
+    val communityService: CommunityAPIService by lazy {
+        retrofit.create(CommunityAPIService::class.java)
+    }
 
-
+    val notificationApiService: NotificationApiService by lazy {
+        retrofit.create(NotificationApiService::class.java)
+    }
 
 }

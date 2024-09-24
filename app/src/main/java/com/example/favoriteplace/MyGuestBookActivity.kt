@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.favoriteplace.databinding.FragmentMyGuestbookBinding
+import com.google.gson.Gson
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -57,6 +58,16 @@ class MyGuestBookActivity : AppCompatActivity() {
             val comment = binding.myGuestbookCommentEt.text.toString()
             if (comment.isNotEmpty()) {
                 sendCommentToServer(guestBookId, comment)
+        binding.myGuestbookRecommendTv.setOnClickListener {
+//            sendLike(guestBookId)
+        }
+
+        binding.myGuestbookRecommendTv.setOnClickListener {
+//            sendLike(guestBookId)
+        }
+
+        //댓글 리스트 가져오기
+        getComments(guestBookId)
 
                 // EditText의 내용 지우기
                 binding.myGuestbookCommentEt.text.clear()
@@ -210,8 +221,7 @@ class MyGuestBookActivity : AppCompatActivity() {
         // 프로필 이미지
         Glide.with(this@MyGuestBookActivity)
             .load(detail.userInfo.profileImageUrl)
-            .diskCacheStrategy(DiskCacheStrategy.ALL) // 이미지 캐싱 전략
-            .error(R.drawable.memberimg) // 로딩 실패 시 표시할 이미지
+            .error(R.drawable.signup_default_profile_image) // 로딩 실패 시 표시할 이미지
             .transition(DrawableTransitionOptions.withCrossFade()) // 크로스페이드 효과 적
             .into(binding.myGuestbookProfileCiv) // profileImageIv는 PNG 이미지를 로드할 ImageView의 ID입니다.
 
@@ -291,6 +301,38 @@ class MyGuestBookActivity : AppCompatActivity() {
                 Log.e("PostDetailActivity", "네트워크 오류: ${t.message}")
             }
         })
+    }
+
+    //서버에 추천 보내는 함수
+    private fun sendLike(postId: Long){
+        // 헤더에 AccessToken 추가
+        val authorizationHeader = "Bearer ${getAccessToken()}"
+
+        RetrofitClient.communityService.sendRallyLike(authorizationHeader, postId)
+            .enqueue(object : Callback<PostDetail>{
+                override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
+                    if (response.isSuccessful){
+                        fetchPostDetail(postId) //다시 실행
+                    } else {
+                        val errorBody = response.errorBody()?.string()
+                        val errorResponse = Gson().fromJson(errorBody, PostDetail::class.java)
+
+                        //이 부분 수정 필요, 서버에 전달 예정
+                        if (errorResponse != null) {
+                            Toast.makeText(
+                                applicationContext,
+                                "${errorResponse.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<PostDetail>, t: Throwable) {
+                    Log.e("LikePost", "네트워크 오류가 발생했습니다: ${t.message}")
+                }
+
+            })
     }
 
 

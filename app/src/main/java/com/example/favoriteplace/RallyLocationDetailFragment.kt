@@ -287,7 +287,7 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private  fun requestLocationPermission() {
+    private fun requestLocationPermission() {
         if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
             // 사용자가 이전에 권한을 거부한 경우
             // 권한이 필요한 이유에 대해 설명하는 다이얼로그를 표시
@@ -448,6 +448,19 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
         Glide.with(requireContext())
             .load(rallyInfo.realImage)
             .into(binding.rallyLocationdetailPlaceIv)
+
+
+        if (rallyInfo.isMultiWritable) {
+            binding.rallyLocationdetailNcountCv.visibility = View.VISIBLE
+        } else {
+            binding.rallyLocationdetailNcountCv.visibility = View.INVISIBLE
+        }
+
+        if (rallyInfo.isWritable) {
+            binding.rallyLocationdetailGuestbookCv.visibility = View.VISIBLE
+        } else {
+            binding.rallyLocationdetailNcountCv.visibility = View.INVISIBLE
+        }
 
 
         val latitude = rallyInfo.latitude ?: 0.0

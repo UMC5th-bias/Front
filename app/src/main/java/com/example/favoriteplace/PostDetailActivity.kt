@@ -3,7 +3,6 @@ package com.example.favoriteplace
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -19,6 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.favoriteplace.databinding.ActivityPostDetailBinding
+import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -51,6 +51,8 @@ class PostDetailActivity : AppCompatActivity() {
         if (postId != -1) {
             fetchPostDetail(postId)
         } else {
+            Log.d("FCM", "postId를 찾을 수 없습니다.")
+
             // 적절한 오류 처리 또는 사용자에게 피드백 제공
         }
 
@@ -69,6 +71,10 @@ class PostDetailActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this,"댓글을 입력해주세요.",Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.contentBestIv.setOnClickListener {
+            sendLike(postId)
         }
     }
 
@@ -230,6 +236,38 @@ class PostDetailActivity : AppCompatActivity() {
                 Log.e("PostDetailActivity", "네트워크 오류: ${t.message}")
             }
         })
+    }
+
+    //서버에 추천 보내는 함수
+    private fun sendLike(postId: Int){
+        // 헤더에 AccessToken 추가
+        val authorizationHeader = "Bearer ${getAccessToken()}"
+
+        RetrofitClient.communityService.sendFreeLike(authorizationHeader, postId)
+            .enqueue(object : Callback<PostDetail>{
+                override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
+                    if (response.isSuccessful){
+                        fetchPostDetail(postId) //다시 실행
+                    } else {
+                        val errorBody = response.errorBody()?.string()
+                        val errorResponse = Gson().fromJson(errorBody, PostDetail::class.java)
+
+                        //이 부분 수정 필요, 서버에 전달 예정
+                        if (errorResponse != null) {
+                            Toast.makeText(
+                                applicationContext,
+                                "${errorResponse.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<PostDetail>, t: Throwable) {
+                    Log.e("LikePost", "네트워크 오류가 발생했습니다: ${t.message}")
+                }
+
+            })
     }
 
 
