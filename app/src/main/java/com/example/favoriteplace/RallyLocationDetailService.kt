@@ -36,4 +36,6 @@ interface RallyLocationDetailService {
         @Path("guestbook_id") guestbookId: Long
     ): Call<RallyLocationDetailComments>
 
+
+
 }
