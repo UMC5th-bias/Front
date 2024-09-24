@@ -29,7 +29,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.firebase.annotations.concurrent.UiThread
 import kotlinx.coroutines.CoroutineScope
@@ -71,7 +70,7 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
     // STOMP 클라이언트
     private lateinit var stompClient: StompClient
 
-    // test
+    // 테스트용 위치(UMC 데모데이 장소 위치)
     private val testLatitude: Double = 37.520439
     private val testLongitude: Double = 126.887816
 
@@ -87,6 +86,9 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        /* 이 위치에 view 요소 설정 코드를 추가하지 마세요. 지도가 준비되기 전에 view property를 수정하면 에러가 발생할 수 있습니다.
+               view property는 onMapReady()에서 설정되어야 합니다. */
+
 
         binding = FragmentRallylocationdetailBinding.inflate(inflater, container, false)
 
@@ -116,12 +118,6 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
         requestLocationPermission()
-
-        // 기본적으로 안보임으로 설정
-        binding.rallyLocationdetailCv.visibility = View.INVISIBLE
-        binding.rallyLocationdetailGuestbookCv.visibility = View.INVISIBLE
-        binding.rallyLocationdetailNcountCv.visibility = View.INVISIBLE
-
 
         return binding.root
     }
@@ -186,38 +182,40 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                 Log.d("RallyLocationDetail", "[Websocket] guestbookButtonEnabled: ${rallyLocationDetailStatusUpdate.guestbookButtonEnabled}")
                 Log.d("RallyLocationDetail", "[Websocket] multiGuestbookButtonEnabled: ${rallyLocationDetailStatusUpdate.multiGuestbookButtonEnabled}")
 
-                // 인증 불가 에러 메시지 보이기
-                if(!rallyLocationDetailStatusUpdate.certifyButtonEnabled
-                    && !rallyLocationDetailStatusUpdate.guestbookButtonEnabled
-                    && !rallyLocationDetailStatusUpdate.multiGuestbookButtonEnabled) {
-                    binding.rallyLocationdetailErrorCv.visibility = View.VISIBLE
-                }
-                else {
-                    binding.rallyLocationdetailErrorCv.visibility = View.GONE
-                }
+                requireActivity().runOnUiThread { // ui를 변경하는 코드이기 때문에 ui 스레드에서 실행함.
+                    // 인증 불가 에러 메시지 보이기
+                    if(!rallyLocationDetailStatusUpdate.certifyButtonEnabled
+                        && !rallyLocationDetailStatusUpdate.guestbookButtonEnabled
+                        && !rallyLocationDetailStatusUpdate.multiGuestbookButtonEnabled) {
+                        binding.rallyLocationdetailErrorCv.visibility = View.VISIBLE
+                    }
+                    else {
+                        binding.rallyLocationdetailErrorCv.visibility = View.GONE
+                    }
 
-                // 인증하기 버튼 활성화 여부
-                if (rallyLocationDetailStatusUpdate.certifyButtonEnabled) {
-                    binding.rallyLocationdetailCv.visibility = View.VISIBLE
-                }
-                else {
-                    binding.rallyLocationdetailCv.visibility = View.GONE
-                }
+                    // 인증하기 버튼 활성화 여부
+                    if (rallyLocationDetailStatusUpdate.certifyButtonEnabled) {
+                        binding.rallyLocationdetailCv.visibility = View.VISIBLE
+                    }
+                    else {
+                        binding.rallyLocationdetailCv.visibility = View.GONE
+                    }
 
-                // 방명록(Guestbook) 쓰기 버튼 활성화 여부
-                if (rallyLocationDetailStatusUpdate.guestbookButtonEnabled) {
-                    binding.rallyLocationdetailGuestbookCv.visibility = View.VISIBLE
-                }
-                else {
-                    binding.rallyLocationdetailGuestbookCv.visibility = View.GONE
-                }
+                    // 방명록(Guestbook) 쓰기 버튼 활성화 여부
+                    if (rallyLocationDetailStatusUpdate.guestbookButtonEnabled) {
+                        binding.rallyLocationdetailGuestbookCv.visibility = View.VISIBLE
+                    }
+                    else {
+                        binding.rallyLocationdetailGuestbookCv.visibility = View.GONE
+                    }
 
-                // 다회차 인증글 쓰기 버튼 활성화 여부
-                if (rallyLocationDetailStatusUpdate.multiGuestbookButtonEnabled) {
-                    binding.rallyLocationdetailNcountCv.visibility = View.VISIBLE
-                }
-                else {
-                    binding.rallyLocationdetailNcountCv.visibility = View.GONE
+                    // 다회차 인증글 쓰기 버튼 활성화 여부
+                    if (rallyLocationDetailStatusUpdate.multiGuestbookButtonEnabled) {
+                        binding.rallyLocationdetailNcountCv.visibility = View.VISIBLE
+                    }
+                    else {
+                        binding.rallyLocationdetailNcountCv.visibility = View.GONE
+                    }
                 }
 
             } catch (e: Exception) {
@@ -266,8 +264,8 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
                     location?.let {
                         stompClient.send(
                             "/app/location/$pilgrimageId",
-//                            "{\"latitude\": ${location.latitude}, \"longitude\": ${location.longitude} }"
-                            "{\"latitude\": $testLatitude, \"longitude\": $testLongitude }" //test
+                            "{\"latitude\": ${location.latitude}, \"longitude\": ${location.longitude} }"
+//                            "{\"latitude\": $testLatitude, \"longitude\": $testLongitude }" //테스트용 코드
                         ).subscribe(
                             {
                                 Log.d("RallyLocationDetail", "location 이벤트 발행 성공")
@@ -469,7 +467,6 @@ class RallyLocationDetailFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap // naverMap 초기화
         fetchRallyInfo(rallyAnimationId)
-
     }
 
     override fun onDestroy() {

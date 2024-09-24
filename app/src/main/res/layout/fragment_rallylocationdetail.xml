@@ -263,9 +263,10 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
+                android:layout_marginBottom="30dp"
                 android:padding="20dp"
                 app:cardCornerRadius="8dp"
-                android:layout_marginBottom="30dp"
+                android:visibility="gone"
                 android:background="@color/gray">
 
                 <TextView
@@ -286,9 +287,10 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
+                android:layout_marginBottom="30dp"
                 android:padding="20dp"
                 app:cardCornerRadius="8dp"
-                android:layout_marginBottom="30dp"
+                android:visibility="gone"
                 android:background="@color/gray">
 
                 <TextView
@@ -310,9 +312,10 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
+                android:layout_marginBottom="30dp"
                 android:padding="20dp"
                 app:cardCornerRadius="8dp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 android:background="@color/gray">
 
                 <TextView
@@ -338,7 +341,7 @@
                 android:layout_marginBottom="30dp"
                 android:background="@color/gray"
                 android:padding="20dp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:cardCornerRadius="10dp">
 
 
