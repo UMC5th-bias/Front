@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
+    android:background="@drawable/dialog_round">
+
+    <TextView
+        android:id="@+id/dialog_shop_detail_apply_icon_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="아이템 적용"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/dialog_shop_detail_apply_icon_line_iv"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"
+        android:layout_marginTop="15dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_shop_detail_apply_icon_title_tv"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dialog_shop_detail_apply_icon_line_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/dialog_shop_detail_apply_icon_apo_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="'"
+            android:lineSpacingExtra="3dp"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:letterSpacing="0000.1"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/dialog_shop_detail_apply_icon_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="유닝이"
+            android:lineSpacingExtra="3dp"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:letterSpacing="0000.1"
+            app:layout_constraintStart_toEndOf="@id/dialog_shop_detail_apply_icon_apo_tv"
+            app:layout_constraintTop_toTopOf="@id/dialog_shop_detail_apply_icon_apo_tv"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="' 아이콘 구매를"
+            android:lineSpacingExtra="3dp"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:letterSpacing="0000.1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/dialog_shop_detail_apply_icon_name_tv"
+            app:layout_constraintTop_toTopOf="@id/dialog_shop_detail_apply_icon_name_tv"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/dialog_shop_detail_apply_icon_finish_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="완료했습니다!"
+        android:lineSpacingExtra="3dp"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:letterSpacing="0000.1"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="70dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_shop_detail_apply_icon_line_iv"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구입한 아이템은 설정에서 확인 가능해요."
+        android:textColor="@color/main"
+        app:layout_constraintTop_toBottomOf="@id/dialog_shop_detail_apply_icon_finish_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+
+        <TextView
+            android:id="@+id/dialog_shop_detail_apply_icon_question_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지금 바로 적용하시겠어요?"
+            android:textStyle="normal"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialog_shop_detail_apply_icon_finish_tv"
+            android:layout_marginTop="60dp"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_shop_detail_apply_icon_question_tv"
+        android:layout_marginTop="50dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dialog_shop_detail_apply_no_btn"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_no_button_round"
+            android:text="괜찮아요"
+            android:textColor="@color/dark_gray"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dialog_shop_detail_apply_yes_btn"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:background="@drawable/dialog_yes_button_round"
+            android:text="적용할래요!" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

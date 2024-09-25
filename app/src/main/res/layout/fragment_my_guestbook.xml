@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+            android:id="@+id/my_guestbook_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="성지순례"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <!-- ScrollView  -->
+    <ScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            app:layout_constraintTop_toBottomOf="@+id/my_guestbook_tv">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/my_guestbook_animation_title_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp">
+
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/my_guestbook_animation_title_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="25dp"
+                    app:cardBackgroundColor="@color/main"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:id="@+id/my_guestbook_title_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="날씨의 아이"
+                            android:textColor="@color/white"
+                            android:textSize="13dp"
+                            android:textStyle="bold"/>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="right"
+                            android:orientation="horizontal">
+
+                        <TextView
+                                android:id="@+id/my_guestbook_check_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="15dp"
+                                android:text="2"
+                                android:textColor="@color/white"
+                                android:textSize="13dp"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="5dp"
+                                android:text="/"
+                                android:textColor="@color/white"
+                                android:textSize="13dp"
+                                android:textStyle="bold"/>
+
+                        <TextView
+                                android:id="@+id/my_guestbook_total_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginEnd="15dp"
+                                android:text="6"
+                                android:textColor="@color/white"
+                                android:textSize="13dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/my_guestbook_animation_box_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_animation_title_cv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="30dp">
+
+                <!-- 애니 정보 -->
+                <androidx.cardview.widget.CardView
+                        android:id="@+id/my_guestbook_vp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:elevation="2dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardPreventCornerOverlap="false"
+                        app:layout_constraintDimensionRatio="H,16:9"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/my_guestbook_rally_iv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <View
+                        android:id="@+id/my_guestbook_rally_vw"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/rounded_overlay"
+                        android:elevation="3dp"
+                        app:layout_constraintBottom_toBottomOf="@id/my_guestbook_vp"
+                        app:layout_constraintEnd_toEndOf="@id/my_guestbook_vp"
+                        app:layout_constraintStart_toStartOf="@id/my_guestbook_vp"/>
+
+                <TextView
+                        android:id="@+id/recommend_rally_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:elevation="4dp"
+                        android:text="날씨의 아이"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        app:layout_constraintTop_toTopOf="@id/my_guestbook_rally_vw"
+                        app:layout_constraintBottom_toBottomOf="@id/my_guestbook_rally_vw"
+                        app:layout_constraintStart_toStartOf="@id/my_guestbook_rally_vw"/>
+
+                <TextView
+                        android:id="@+id/recommend_rally_detail_address_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:elevation="4dp"
+                        android:text="시부야 스크램블교차로"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="@id/recommend_rally_title_tv"
+                        app:layout_constraintBottom_toBottomOf="@id/recommend_rally_title_tv"
+                        app:layout_constraintStart_toEndOf="@id/recommend_rally_title_tv"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!-- 사용자가 추가한 이미지 -->
+            <androidx.cardview.widget.CardView
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_animation_box_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:cardCornerRadius="8dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/edge"
+                    android:id="@+id/my_guestbook_userimg_cl"
+                    app:cardElevation="0dp">
+
+                <ImageView
+                        android:id="@+id/my_guestbook_addimg_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/img1"/>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                    android:id="@+id/my_guestbook_map_place_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/edge"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/my_guestbook_userimg_cl">
+
+                <!-- 장소 이름  -->
+                <TextView
+                        android:id="@+id/rally_map_place_en_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp"
+                        android:textStyle="bold"
+                        android:paddingStart="15dp"
+                        android:text="Shibuya Scramble Crossing"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+                <TextView
+                        android:id="@+id/rally_map_place_jp_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:paddingStart="15dp"
+                        android:text="渋谷スクランブル交差点"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+            </LinearLayout>
+            <!-- 장소 이름  -->
+<!--            <TextView-->
+<!--                    android:id="@+id/my_guestbook_map_place_tv"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:background="@drawable/edge"-->
+<!--                    android:padding="15dp"-->
+<!--                    android:paddingStart="15dp"-->
+<!--                    android:text="Shibuya Scramble Crossing \n渋谷スクランブル交差点"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="12dp"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/my_guestbook_userimg_cl"/>-->
+
+            <!-- 지도 첨부 (내위치)  -->
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/my_guestbook_map_box_cv"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/my_guestbook_map_place_tv">
+
+                <com.example.favoriteplace.CustomMapView
+                        android:id="@+id/guestbook_rally_place_mv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edge"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
+                    android:id="@+id/my_guestbook_userbox_ll"
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_map_box_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="10dp">
+
+
+                    <!-- 회원 프로필 -->
+                    <FrameLayout
+                            android:layout_width="80dp"
+                            android:layout_height="70dp">
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/my_guestbook_profile_civ"
+                                android:layout_width="80dp"
+                                android:layout_height="70dp"
+                                app:civ_border_width="1dp"
+                                app:civ_border_overlay="true"
+                                android:src="@drawable/memberimg"
+                                app:civ_border_color="@color/gray"/>
+
+
+                        <LinearLayout
+                                android:layout_width="80dp"
+                                android:layout_height="70dp"
+                                android:orientation="horizontal"
+                                android:elevation="3dp"
+                                android:layout_gravity="center">
+
+                            <ImageView
+                                    android:id="@+id/my_guestbook_icon_civ"
+                                    android:layout_width="80dp"
+                                    android:layout_height="70dp"
+                                    android:scaleType="fitXY"
+                                    app:srcCompat="@drawable/ic_shop2"/>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="15dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/my_guestbook_badge_iv"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="20dp"
+                                android:src="@drawable/user_title2"/>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                                app:layout_constraintTop_toBottomOf="@id/my_guestbook_badge_iv"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    android:id="@+id/my_guestbook_name_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="아이"
+                                    android:textStyle="bold"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    android:textColor="@color/black"
+                                    android:textSize="20dp"/>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="님"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:layout_marginStart="5dp"
+                                    app:layout_constraintStart_toEndOf="@id/my_guestbook_name_tv"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:textSize="20dp"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                <ImageView
+                        android:id="@+id/my_guestbook_menu_iv"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:src="@drawable/ic_cricle_more"/>
+
+
+            </LinearLayout>
+
+
+            <TextView
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_userbox_ll"
+                    android:id="@+id/my_guestbook_subject_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="8월 말 도쿄타워 투어하고 주변 구경했어요"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"/>
+
+            <TextView
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_subject_tv"
+                    android:id="@+id/my_guestbook_text_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="25dp"
+                    android:text="도쿄에서 3박 4일로 둘째날 저녁에 시부야 스크램블 교차로 방문했어요."
+                    android:textColor="@color/black"
+                    android:textSize="15dp"/>
+
+
+            <!--서버에 태그 넘길때는 '#' 텍스트를 파라미터로 추가-->
+            <LinearLayout
+                    android:id="@+id/my_guestbook_tagbox_ll"
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_text_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
+
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_tagbox_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/my_guestbook_upperLine_iv"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/ic_line"/>
+
+
+            <LinearLayout
+                    android:id="@+id/my_guestbook_statusbox_ll"
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_upperLine_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                <!--추천-->
+                <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_cmm_rmm"/>
+
+                <TextView
+                        android:id="@+id/my_guestbook_recommend_cnt_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textColor="@color/main"/>
+
+
+                <!--댓글-->
+                <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="15dp"
+                        android:src="@drawable/ic_cmm_cmm"/>
+
+                <TextView
+                        android:id="@+id/my_guestbook_comment_cnt_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textColor="@color/main"/>
+
+
+                <!--조회수-->
+                <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="15dp"
+                        android:src="@drawable/ic_eye"/>
+
+                <TextView
+                        android:id="@+id/my_guestbook_views_cnt_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textColor="@color/dark_gray"/>
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                <!--시간-->
+                <TextView
+                        android:id="@+id/my_guestbook_time_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="14:20"
+                        android:textColor="@color/dark_gray"/>
+            </LinearLayout>
+
+
+            <ImageView
+                    android:id="@+id/my_guestbook_downLine_iv"
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_statusbox_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_line"/>
+
+
+            <androidx.cardview.widget.CardView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_downLine_iv"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/my_guestbook_recommend_cv"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp">
+
+                <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+
+                    <!-- 추천 아이콘 수정하기 -->
+                    <TextView
+                            android:id="@+id/my_guestbook_recommend_tv"
+                            android:layout_width="65dp"
+                            android:layout_height="28dp"
+                            android:text="추천"
+                            android:textColor="@color/white"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:drawablePadding="-10dp"
+                            android:background="@drawable/btn_round"
+                            android:drawableLeft="@drawable/ic_comm"
+                            android:layout_marginTop="10dp"/>
+
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <FrameLayout
+                    android:id="@+id/my_guestbook_commentInput_fl"
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_recommend_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edge_fill_gray"/>
+
+                <EditText
+                        android:id="@+id/my_guestbook_comment_et"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:inputType="textMultiLine"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="15dp"
+                        android:textColorHint="@color/dark_gray"
+                        android:hint="댓글을 입력하세요.."/>
+
+                <!-- 등록 버튼 -->
+                <Button
+                        android:id="@+id/my_guestbook_upload_btn"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center|right"
+                        android:gravity="center"
+                        android:textSize="13dp"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="10dp"
+                        android:text="등록"/>
+            </FrameLayout>
+
+
+            <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/my_guestbook_commentInput_fl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/my_guestbook_comment_rv"
+                        android:layout_width="match_parent"
+                        tools:listitem="@layout/item_comment"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"/>
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

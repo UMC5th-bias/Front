@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="15dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/back_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_black_left_arrow"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19.75dp"
+            android:text="회원가입"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="35dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="63.29dp">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="16.46dp"
+                    android:layout_height="16.46dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/signup_progress_pink"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="11.91sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3.97dp">
+                <ImageView
+                    android:layout_width="16.46dp"
+                    android:layout_height="16.46dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/signup_progress_pink"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:textSize="11.91sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3.97dp">
+                <ImageView
+                    android:layout_width="16.46dp"
+                    android:layout_height="16.46dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/signup_progress_pink"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textSize="11.91sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3.97dp">
+                <ImageView
+                    android:layout_width="16.46dp"
+                    android:layout_height="16.46dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/signup_progress_gray"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:textSize="11.91sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31.47dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="6sp"
+            android:textColor="@color/black"
+            android:text="사용하실 비밀번호를\n입력해주세요."/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34.77dp"
+            android:textSize="12sp"
+            android:text="비밀번호"
+            android:textColor="@color/black"/>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/pwd_input_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="비밀번호를 입력해주세요."
+                android:background="@drawable/signup_edittext_background"
+                android:layout_marginTop="6.63dp"
+                android:paddingVertical="15dp"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:id="@+id/pwd_error_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:src="@drawable/ic_error" />
+
+            <ImageView
+                android:id="@+id/pwd_checked_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:src="@drawable/ic_check" />
+        </FrameLayout>
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/pwd_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/main"
+                android:textSize="11sp"
+                android:text="비밀번호는 특수문자와 숫자를 포함해야 합니다."
+                android:visibility="gone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:textSize="12sp"
+                android:text="비밀번호 확인"
+                android:textColor="@color/black"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/pwd_reinput_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="비밀번호 재확인"
+                android:inputType="textPassword"
+                android:background="@drawable/signup_edittext_background"
+                android:layout_marginTop="6.52dp"
+                android:paddingVertical="15dp"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:id="@+id/repwd_error_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:src="@drawable/ic_error" />
+
+            <ImageView
+                android:id="@+id/repwd_checked_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:src="@drawable/ic_check" />
+
+        </FrameLayout>
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/signup_dot_icon"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13dp"
+                        android:layout_marginStart="7.25dp"
+                        android:text="비밀번호는 8자 이상이어야 합니다."/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/signup_dot_icon"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13dp"
+                        android:layout_marginStart="7.25dp"
+                        android:text="비밀번호는 특수문자와 숫자를 모두 포함해야 합니다."/>
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/pwd_nomatch_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/main"
+                android:textSize="11sp"
+                android:text="비밀번호 확인이 일치하지 않습니다."
+                android:visibility="gone"/>
+        </FrameLayout>
+        <Button
+            android:id="@+id/next_btn"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="@color/gray"
+            android:text="확인"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+</LinearLayout>
