@@ -41,6 +41,8 @@ import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+//게시글 상세
+
 class FreeWritePostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFreeWritePostBinding
     private lateinit var postService: PostService
