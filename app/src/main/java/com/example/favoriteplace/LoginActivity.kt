@@ -16,6 +16,10 @@ import androidx.core.content.edit
 import com.example.favoriteplace.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
+import androidx.lifecycle.lifecycleScope
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import kotlinx.coroutines.launch
+import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Retrofit 객체 생성
         retrofit = Retrofit.Builder()
+
             .baseUrl("http://favoriteplace.store:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -145,6 +150,14 @@ class LoginActivity : AppCompatActivity() {
                         }
                         setLoggedIn(true)
 
+                        // FCM 토큰을 서버에 등록
+                        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val fcmToken = task.result
+                                sendRegistrationToServer(fcmToken)
+                            }
+                        }
+
                         val resultIntent = Intent(this@LoginActivity, MainActivity::class.java).apply {
                             putExtra(ACCESS_TOKEN_KEY, accessToken)
                             putExtra("isLoggedIn", true)
@@ -234,3 +247,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
 }
+    private fun sendRegistrationToServer(token: String) {
+        val tokenRequest = TokenRequest(token)
+        RetrofitClient.notificationApiService.registerToken(tokenRequest).enqueue(object : retrofit2.Callback<Void> {
+            override fun onResponse(call: retrofit2.Call<Void>, response: retrofit2.Response<Void>) {
+                if (response.isSuccessful) {
+                    Log.d("LoginActivity", "Token successfully sent to server.")
+                } else {
+                    Log.e("LoginActivity", "Failed to send token to server. Response code: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<Void>, t: Throwable) {
+                Log.e("LoginActivity", "Failed to send token to server", t)
+            }
+        })
+    }
+
+}
+

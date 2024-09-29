@@ -30,7 +30,6 @@
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_logo_title" />
-
             </RelativeLayout>
 
 

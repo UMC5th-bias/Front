@@ -256,7 +256,29 @@
                     android:layout_height="match_parent"/>
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/rally_locationdetail_error_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="30dp"
+                android:padding="20dp"
+                app:cardCornerRadius="8dp"
+                android:visibility="gone"
+                android:background="@color/gray">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center"
+                    android:padding="10dp"
+                    android:paddingStart="10dp"
+                    android:text="성지순례 장소 근처에서 성지순례를 인증할 수 있습니다"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/rally_locationdetail_cv"
@@ -265,9 +287,10 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
+                android:layout_marginBottom="30dp"
                 android:padding="20dp"
                 app:cardCornerRadius="8dp"
-                android:layout_marginBottom="30dp"
+                android:visibility="gone"
                 android:background="@color/gray">
 
                 <TextView
@@ -289,6 +312,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
+                android:layout_marginBottom="30dp"
                 android:padding="20dp"
                 app:cardCornerRadius="8dp"
                 android:visibility="gone"

@@ -444,6 +444,15 @@
                     android:textSize="15dp"
                     android:layout_marginBottom="30dp"/>
 
+                <Switch
+                    android:id="@+id/my_notification_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="알림 수신 허용"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    android:layout_marginBottom="30dp" />
+
                 <TextView
                     android:id="@+id/my_cs_tv"
                     android:layout_width="match_parent"
