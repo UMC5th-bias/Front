@@ -14,6 +14,7 @@ import androidx.core.content.edit
 import com.example.favoriteplace.HomeFragment.Companion.ACCESS_TOKEN_KEY
 import com.example.favoriteplace.HomeFragment.Companion.LOGIN_REQUEST_CODE
 import com.example.favoriteplace.databinding.ActivityMainBinding
+import com.kakao.sdk.common.util.Utility
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -24,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)   //초기화
         setContentView(binding.root)
 

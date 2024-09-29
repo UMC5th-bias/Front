@@ -216,7 +216,11 @@ class LoginActivity : AppCompatActivity() {
                             putString(ACCESS_TOKEN_KEY, receivedAccessToken)
                             putString(REFRESH_TOKEN_KEY, receivedRefreshToken)
                         }
-
+                        sharedPreferences.edit {
+                            putString(ACCESS_TOKEN_KEY, accessToken)
+                            putString(REFRESH_TOKEN_KEY, refreshToken)
+                        }
+                        setLoggedIn(true)
                     }
                 } else {
                     Log.e("kakaoLogin", "카카오 토큰 서버 전송 실패: ${response.code()}")
