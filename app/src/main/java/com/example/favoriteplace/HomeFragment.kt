@@ -53,6 +53,10 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
 
+        // SharedPreferences에서 토큰 삭제
+        // TODO : Test를 위해 토큰 지움
+//        clearAccessToken()
+
         // 신상품 페이지 이동
         binding.homeNewItemMoreBtn.setOnClickListener {
 
@@ -330,7 +334,15 @@ class HomeFragment : Fragment() {
             e.printStackTrace()
         }
     }
+
+    private fun clearAccessToken() {
+        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.remove(ACCESS_TOKEN_KEY)  // 토큰 삭제
+        editor.apply()  // 변경 사항을 적용
+    }
 }
+
 
 
 
