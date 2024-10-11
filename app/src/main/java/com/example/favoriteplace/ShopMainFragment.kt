@@ -157,12 +157,16 @@ class ShopMainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        startAutoSlide()
 
-        // include로 가져온 레이아웃도 다시 업데이트
-        val memberProfileLayout = binding.root.findViewById<View>(R.id.shopMain_memberProfile_cl)
-        val notLoginLayout = binding.root.findViewById<View>(R.id.shopMain_notLogin_cl)
-        updateLoginStatusView(memberProfileLayout, notLoginLayout)
+        if (isLoggedIn()) {
+            fetchSalesData()
+        } else {
+            // include로 가져온 레이아웃도 다시 업데이트
+            val memberProfileLayout = binding.root.findViewById<View>(R.id.shopMain_memberProfile_cl)
+            val notLoginLayout = binding.root.findViewById<View>(R.id.shopMain_notLogin_cl)
+            updateLoginStatusView(memberProfileLayout, notLoginLayout)
+        }
+        startAutoSlide()
     }
 
     override fun onPause() {
@@ -180,8 +184,12 @@ class ShopMainFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val accessToken = getAccessToken()
-                val authorizationHeader = "Bearer $accessToken"
 
+                val authorizationHeader = if (accessToken != null) {
+                    "Bearer $accessToken"
+                } else {
+                    null
+                }
                 // API 호출 로그
                 Log.d("ShopMainFragment", "Fetching sales data with access token: $accessToken")
 
@@ -192,6 +200,9 @@ class ShopMainFragment : Fragment() {
                 if (limitedSalesResponse.isSuccessful && unlimitedSalesResponse.isSuccessful) {
                     Log.d("ShopMainFragment", "Limited sales API success: ${limitedSalesResponse.body()}")
                     Log.d("ShopMainFragment", "Unlimited sales API success: ${unlimitedSalesResponse.body()}")
+
+                    // 데이터 초기화하는 코드
+                    clearSalesData()
 
                     // 로그인 상태에 따른 UI 업데이트를 호출
                     limitedSalesResponse.body()?.let {
@@ -209,6 +220,18 @@ class ShopMainFragment : Fragment() {
                 Log.d("ShopMainFragment", "Network Error: ${e.message}")
             }
         }
+    }
+
+    // 기존 리스트 데이터 초기화하는 메서드
+    private fun clearSalesData() {
+        limitedNewFrameData.clear()
+        limitedNewIconData.clear()
+        limitedUMCFrameData.clear()
+        limitedUMCIconData.clear()
+        regularFrameData.clear()
+        regularNormalIconData.clear()
+        regularFrameNormalData.clear()
+        regularNewIconData.clear()
     }
 
     // memberProfile UI를 업데이트하는 메서드
