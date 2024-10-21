@@ -108,9 +108,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    fun navigateToFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frameLayout, fragment)
+            .addToBackStack(null) // 뒤로가기 가능하게 추가
             .commitAllowingStateLoss()
     }
 
