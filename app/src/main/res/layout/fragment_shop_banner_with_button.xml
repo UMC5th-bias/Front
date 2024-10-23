@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -13,35 +14,35 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/shop_goTo_cl"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="59dp"
+        android:layout_height="18dp"
+        android:layout_gravity="bottom|center_horizontal"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="@id/shopMain_shopBanner2_iv"
-        android:layout_gravity="bottom|center_horizontal">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/shop_go_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="보러가기"
+            android:textColor="@android:color/black"
             android:textSize="13sp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:textColor="@android:color/black"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iconImageView"
             android:layout_width="13dp"
             android:layout_height="13dp"
-            android:src="@drawable/ic_black_right_arrow"
             android:layout_centerVertical="true"
-            app:layout_constraintTop_toTopOf="@id/shop_go_tv"
-            app:layout_constraintBottom_toBottomOf="@id/shop_go_tv"
             android:layout_marginStart="5dp"
-            app:layout_constraintStart_toEndOf="@id/shop_go_tv"/>
+            android:src="@drawable/ic_black_right_arrow"
+            app:layout_constraintBottom_toBottomOf="@id/shop_go_tv"
+            app:layout_constraintStart_toEndOf="@id/shop_go_tv"
+            app:layout_constraintTop_toTopOf="@id/shop_go_tv" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

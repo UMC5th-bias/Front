@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
+        clearAccessToken()
+
         // 알림으로 전달된 intent가 있는 경우 이를 처리
         handleIntent(intent)
 
@@ -106,9 +108,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    fun navigateToFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frameLayout, fragment)
+            .addToBackStack(null) // 뒤로가기 가능하게 추가
             .commitAllowingStateLoss()
     }
 
@@ -287,5 +290,12 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "알림 권한이 거부되었습니다. 알림을 받을 수 없습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun clearAccessToken() {
+        val sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.remove(HomeFragment.ACCESS_TOKEN_KEY)  // 토큰 삭제
+        editor.apply()  // 변경 사항을 적용
     }
 }

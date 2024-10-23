@@ -80,14 +80,6 @@
         <activity android:name=".PostDetailActivity"/>
         <activity android:name=".RallyGuestBookActivity"/>
         <activity android:name=".MyGuestBookActivity"/>
-        <activity android:name=".ShopMainActivity"
-                  android:exported="true">
-            <intent-filter>
-                <action android:name="FCM_SHOP_ACTIVITY" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <service
                 android:name=".MyFirebaseMessagingService"
                 android:exported="true">

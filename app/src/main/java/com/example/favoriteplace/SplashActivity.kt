@@ -7,7 +7,11 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.favoriteplace.databinding.ActivitySplashBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity(){
 
@@ -21,37 +25,38 @@ class SplashActivity : AppCompatActivity(){
         setContentView(binding.root)
 
 
-        showSplashScreen1()
+//        showSplashScreen1()
 
-        // 일정 시간 지연 이후 실행하기 위한 코드
-        Handler(Looper.getMainLooper()).postDelayed({
+        // 코루틴으로 지연처리
+        lifecycleScope.launch(Dispatchers.Main) {
             showSplashScreen2()
-        }, 2000)
+            delay(2000)
+
+            // MainActivity로 이동
+            moveToMainActivity()
+        }
 
     }
 
 
     private fun showSplashScreen1() {
-        binding.splashScreen1Layout.visibility = View.VISIBLE
+        updateSplashVisibility(View.VISIBLE, View.GONE)
     }
 
-
     private fun showSplashScreen2() {
+        updateSplashVisibility(View.GONE, View.VISIBLE)
+    }
 
-        binding.splashScreen1Layout.visibility = View.GONE
-        binding.splashScreen2Layout.visibility = View.VISIBLE
+    // 스플래시 화면의 가시성 업데이트 함수
+    private fun updateSplashVisibility(screen1Visibility: Int, screen2Visibility: Int) {
+        binding.splashScreen1Layout.visibility = screen1Visibility
+        binding.splashScreen2Layout.visibility = screen2Visibility
+    }
 
-        // 일정 시간 지연 이후 실행하기 위한 코드
-        Handler(Looper.getMainLooper()).postDelayed({
-
-            // 일정 시간이 지나면 MainActivity로 이동
-            val intent= Intent( this,MainActivity::class.java)
-            startActivity(intent)
-
-            // 이전 키를 눌렀을 때 스플래스 스크린 화면으로 이동을 방지하기 위해
-            // 이동한 다음 사용안함으로 finish 처리
-            finish()
-
-        }, 2000)
+    // MainActivity로 이동하는 함수
+    private fun moveToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish() // 이전 화면으로 돌아오지 않도록 SplashActivity 종료
     }
 }

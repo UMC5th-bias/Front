@@ -232,7 +232,7 @@
                     android:checked="true"
                     android:textColor="@color/white"
                     android:thumb="@drawable/thumb_selector"
-                    app:track="@drawable/track_selector" />
+                    android:track="@drawable/track_selector" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

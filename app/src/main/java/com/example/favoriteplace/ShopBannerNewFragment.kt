@@ -64,34 +64,34 @@ class ShopBannerNewFragment : Fragment() {
                             limitedFameData.clear()
                             limitedIconData.clear()
 
-                            //칭호의 status가 LIMITED_SALE일 때 LimitedFame에 imageUrl, point를 저장함
-                            it.titles.forEach { status ->
-                                when (status.status) {
-                                    "LIMITED_SALE" -> {
-                                        limitedFameData.addAll(status.itemList.map { item ->
-                                            Log.d("Limited_fame",item.id.toString())
-                                            LimitedFame(item.imageUrl, item.point.toString(), item.id)
-                                        })
+                            it.titles?.let { titles ->
+                                titles.forEach { status ->
+                                    when (status.status) {
+                                        "LIMITED_SALE" -> {
+                                            status.itemList?.let { itemList ->  // itemList가 null인지 체크
+                                                limitedFameData.addAll(itemList.map { item ->
+                                                    LimitedFame(item.imageUrl, item.point.toString(), item.id)
+                                                })
+                                            } ?: Log.d("ShopBannerNewFragment", "Item list is null for LIMITED_SALE")
+                                        }
                                     }
                                 }
-                                Log.d("LimitedFame_check",LimitedFame().toString())
-                            }
+                            } ?: Log.d("ShopBannerNewFragment", "Titles list is null")
 
-                            //아이콘의 status가 LIMITED_SALE일 때 LimitedIcon에 imageUrl, point, name을 저장함
-                            it.icons.forEach { status ->
-                                when (status.status) {
-                                    "LIMITED_SALE" -> {
-                                        limitedIconData.addAll(status.itemList.map { item ->
-                                            LimitedIcon(
-                                                item.imageUrl,
-                                                item.point.toString(),
-                                                item.name,
-                                                item.id
-                                            )
-                                        })
+                            it.icons?.let { icons ->
+                                icons.forEach { status ->
+                                    when (status.status) {
+                                        "LIMITED_SALE" -> {
+                                            status.itemList?.let { itemList ->  // itemList가 null인지 체크
+                                                limitedIconData.addAll(itemList.map { item ->
+                                                    LimitedIcon(item.imageUrl, item.point.toString(), item.name, item.id)
+                                                })
+                                            } ?: Log.d("ShopBannerNewFragment", "Item list is null for LIMITED_SALE")
+                                        }
                                     }
                                 }
-                            }
+                            } ?: Log.d("ShopBannerNewFragment", "Icons list is null")
+
                             updateLimitedSalesUI() //한정판매 데이터를 반영하여 보여주는 함수
                         }
                     }
@@ -119,31 +119,35 @@ class ShopBannerNewFragment : Fragment() {
                             unlimitedIconData.clear()
 
                             //칭호의 status가 LIMITED_SALE일 때 UnlimitedFame에 imageUrl, point를 저장함
-                            it.titles.forEach { status ->
-                                when (status.status) {
-                                    "ALWAYS_ON_SALE" -> {
-                                        unlimitedFameData.addAll(status.itemList.map { item ->
-                                            UnlimitedFame(item.imageUrl, item.point.toString(), item.id)
-                                        })
+                            it.titles?.let { titles ->
+                                titles.forEach { status ->
+                                    when (status.status) {
+                                        "ALWAYS_ON_SALE" -> {
+                                            status.itemList?.let { itemList ->  // itemList가 null인지 체크
+                                                unlimitedFameData.addAll(itemList.map { item ->
+                                                    UnlimitedFame(item.imageUrl, item.point.toString(), item.id)
+                                                })
+                                            } ?: Log.d("ShopBannerNewFragment", "Item list is null for ALWAYS_ON_SALE")
+                                        }
                                     }
                                 }
-                            }
+                            } ?: Log.d("ShopBannerNewFragment", "Titles list is null")
 
                             //아이콘의 status가 LIMITED_SALE일 때 LimitedIcon에 imageUrl, point, name을 저장함
-                            it.icons.forEach { status ->
-                                when (status.status) {
-                                    "ALWAYS_ON_SALE" -> {
-                                        unlimitedIconData.addAll(status.itemList.map { item ->
-                                            UnlimitedIcon(
-                                                item.imageUrl,
-                                                item.point.toString(),
-                                                item.name,
-                                                item.id
-                                            )
-                                        })
+                            it.icons?.let { icons ->
+                                icons.forEach { status ->
+                                    when (status.status) {
+                                        "ALWAYS_ON_SALE" -> {
+                                            status.itemList?.let { itemList ->  // itemList가 null인지 체크
+                                                unlimitedIconData.addAll(itemList.map { item ->
+                                                    UnlimitedIcon(item.imageUrl, item.point.toString(), item.name, item.id)
+                                                })
+                                            } ?: Log.d("ShopBannerNewFragment", "Item list is null for ALWAYS_ON_SALE")
+                                        }
                                     }
                                 }
-                            }
+                            } ?: Log.d("ShopBannerNewFragment", "Icons list is null")
+
                             updateUnlimitedSalesUI() //상시판매 데이터를 반영하여 보여주는 함수
                         }
                     }

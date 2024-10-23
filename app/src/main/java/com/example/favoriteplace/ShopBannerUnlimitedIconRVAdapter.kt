@@ -42,8 +42,13 @@ class ShopBannerUnlimitedIconRVAdapter(private val unlimitedIconList: ArrayList<
     ) {
         val unlimitedIcon = unlimitedIconList[position]
         holder.bind(unlimitedIcon)
+
         holder.itemView.setOnClickListener {
-            mItemClickListener.onItemClick(unlimitedIcon.id)
+            if (::mItemClickListener.isInitialized) { // 리스너가 초기화된 경우에만 실행
+                mItemClickListener.onItemClick(unlimitedIcon.id)
+            } else {
+                Log.e("ShopBannerUnlimitedIconRVAdapter", "ItemClickListener is not initialized")
+            }
         }
     }
 

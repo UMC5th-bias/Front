@@ -263,6 +263,3 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-
-}
-
