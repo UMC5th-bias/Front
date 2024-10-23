@@ -1,4 +1,5 @@
 package com.example.favoriteplace
+
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,8 @@ import com.example.favoriteplace.databinding.FragmentRallyhomeBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Url
+import java.net.URL
 
 class RallyHomeFragment : Fragment() {
 
@@ -31,22 +34,23 @@ class RallyHomeFragment : Fragment() {
 
         // searchEditText에 검색어 입력 후 drawableEnd로 설정되있는 이미지 버튼을 누르면 서버에서 정보를 가져와 해당 검색 결과를 반환
         binding.searchIv.setOnClickListener {
-            
+
             val keyword = binding.searchEt.text.toString()
-            if(keyword.isNotEmpty()){
-            }else{
-                Toast.makeText(context,"검색어를 입력하세요.",Toast.LENGTH_SHORT).show()
+            if (keyword.isNotEmpty()) {
+            } else {
+                Toast.makeText(context, "검색어를 입력하세요.", Toast.LENGTH_SHORT).show()
             }
         }
 
         fun checkLoginStatus() {
             // SharedPreferences에서 액세스 토큰 가져오기
-            val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+            val sharedPreferences =
+                requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
             userToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, "") ?: ""
 
             if (userToken.isNotEmpty()) {
                 Log.d("RallyHomeFragment", ">> 로그인 상태입니다.")
-            }else{
+            } else {
                 // 비회원 상태인 경우
                 Log.d("RallyHomeFragment", ">> 비회원 상태입니다.")
             }
@@ -63,10 +67,9 @@ class RallyHomeFragment : Fragment() {
         }
 
         binding.animationRallyBlackBoxCl.setOnClickListener {
-            if(userToken == "") {
+            if (userToken == "") {
                 Toast.makeText(context, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
-            }
-            else {
+            } else {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frameLayout, RallyCategoryFragment())
                     .addToBackStack(null)
@@ -76,7 +79,8 @@ class RallyHomeFragment : Fragment() {
 
         fun setTrendingRally(rallyHomeTrending: RallyHomeTrending) {
             binding.recommendRallyTitleTv.text = rallyHomeTrending.name
-            binding.recommendRallyProgressTv.text = "${rallyHomeTrending.myPilgrimageNumber}/${rallyHomeTrending.pilgrimageNumber}"
+            binding.recommendRallyProgressTv.text =
+                "${rallyHomeTrending.myPilgrimageNumber}/${rallyHomeTrending.pilgrimageNumber}"
             Glide.with(this)
                 .load(rallyHomeTrending.image)
                 .into(binding.recommendRallyIv)
@@ -103,10 +107,12 @@ class RallyHomeFragment : Fragment() {
                 interestedRallyItems.add(InterestedRallyItem(it.name, it.image))
             }
             //데이터 없을 때 에러메세지
-            if(interestedRallyItems.isEmpty()) binding.interestedRallyNotLoginCl.visibility = View.VISIBLE
+            if (interestedRallyItems.isEmpty()) binding.interestedRallyNotLoginCl.visibility =
+                View.VISIBLE
             else binding.interestedRallyNotLoginCl.visibility = View.GONE
 
-            val interestedAdapter = RallyHomeInterestedRVAdapter(interestedRallyItems, context as MainActivity)
+            val interestedAdapter =
+                RallyHomeInterestedRVAdapter(interestedRallyItems, context as MainActivity)
             binding.rallyHomeInterestedRallyRv.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.rallyHomeInterestedRallyRv.adapter = interestedAdapter
@@ -118,8 +124,8 @@ class RallyHomeFragment : Fragment() {
                 certificationRallyItems.add(
                     CertifiedRallyItem(
                         title = it.title,
-                        tag1 = if(it.hashTag.size >= 1) it.hashTag[0] else "",
-                        tag2 = if(it.hashTag.size >= 2) it.hashTag[1] else "",
+                        tag1 = if (it.hashTag.size >= 1) it.hashTag[0] else "",
+                        tag2 = if (it.hashTag.size >= 2) it.hashTag[1] else "",
                         imageResId = it.image,
                         time = it.createdAt
 
@@ -127,30 +133,45 @@ class RallyHomeFragment : Fragment() {
                 )
             }
             //데이터 없을 때 에러메세지
-            if(certificationRallyItems.isEmpty()) binding.certificatedRallyNotLoginCl.visibility = View.VISIBLE
+            if (certificationRallyItems.isEmpty()) binding.certificatedRallyNotLoginCl.visibility =
+                View.VISIBLE
             else binding.certificatedRallyNotLoginCl.visibility = View.GONE
 
             // 어댑터 생성 및 설정
-            val certifiedAdapter = RallyHomeCertificationRVAdapter(certificationRallyItems, context as MainActivity)
+            val certifiedAdapter =
+                RallyHomeCertificationRVAdapter(certificationRallyItems, context as MainActivity)
             binding.rallyHomeCertificatedRallyRv.layoutManager = LinearLayoutManager(context)
             binding.rallyHomeCertificatedRallyRv.adapter = certifiedAdapter
         }
 
         //이달의 추천 랠리 불러오기
         RetrofitAPI.rallyHomeService.getTrending(
-            if(userToken.isNotEmpty()) "Bearer $userToken"
+            if (userToken.isNotEmpty()) "Bearer $userToken"
             else ""
-        ).enqueue(object: Callback<RallyHomeTrending> {
-            override fun onResponse(call: Call<RallyHomeTrending>, response: Response<RallyHomeTrending>) {
-                if(response.isSuccessful) {
+        ).enqueue(object : Callback<RallyHomeTrending> {
+            override fun onResponse(
+                call: Call<RallyHomeTrending>,
+                response: Response<RallyHomeTrending>
+            ) {
+                if (response.isSuccessful) {
                     val responseData = response.body()
-                    if(responseData != null) {
+                    if (responseData != null) {
                         Log.d("Retrofit:getTrending()", "Response: ${responseData}")
                         setTrendingRally(responseData)
                     }
-                }
-                else {
+                } else {
                     Log.e("Retrofit:getTrending()", "notSuccessful: ${response.code()}")
+                    setTrendingRally(
+                        RallyHomeTrending(
+                            id = 4,
+                            name = "최애의 아이",
+                            pilgrimageNumber = 5,
+                            myPilgrimageNumber = 0,
+                            image = URL(
+                                "https://favoriteplace-image.s3.ap-northeast-2.amazonaws.com/%E1%84%8E%E1%85%AC%E1%84%8B%E1%85%A2%E1%84%8B%E1%85%B4%E1%84%8B%E1%85%A1%E1%84%8B%E1%85%B5-%E1%84%83%E1%85%A2%E1%84%91%E1%85%AD.jpg"
+                            )
+                        )
+                    )
                 }
             }
 
@@ -161,25 +182,28 @@ class RallyHomeFragment : Fragment() {
         })
 
         //관심있는 랠리, 성지순레 인증글 모아보기 불러오기
-        RetrofitAPI.rallyHomeService.getMyRally("Bearer $userToken").enqueue(object: Callback<RallyHomeResponseMyRally> {
-            override fun onResponse(call: Call<RallyHomeResponseMyRally>, response: Response<RallyHomeResponseMyRally>) {
-                if(response.isSuccessful) {
-                    val responseData = response.body()
-                    if(responseData != null) {
-                        Log.d("Retrofit:getMyRally()", "Response: ${responseData}")
-                        setMyRally(responseData)
+        RetrofitAPI.rallyHomeService.getMyRally("Bearer $userToken")
+            .enqueue(object : Callback<RallyHomeResponseMyRally> {
+                override fun onResponse(
+                    call: Call<RallyHomeResponseMyRally>,
+                    response: Response<RallyHomeResponseMyRally>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseData = response.body()
+                        if (responseData != null) {
+                            Log.d("Retrofit:getMyRally()", "Response: ${responseData}")
+                            setMyRally(responseData)
+                        }
+                    } else {
+                        Log.e("Retrofit:getMyRally()", "notSuccessful: ${response.code()}")
                     }
                 }
-                else {
-                    Log.e("Retrofit:getMyRally()", "notSuccessful: ${response.code()}")
+
+                override fun onFailure(call: Call<RallyHomeResponseMyRally>, t: Throwable) {
+                    Log.e("Retrofit:getMyRally()", "onFailure: $t")
                 }
-            }
 
-            override fun onFailure(call: Call<RallyHomeResponseMyRally>, t: Throwable) {
-                Log.e("Retrofit:getMyRally()", "onFailure: $t")
-            }
-
-        })
+            })
 
         return binding.root
     }
@@ -192,11 +216,11 @@ class RallyHomeFragment : Fragment() {
 
         if (!isLoggedIn()) {
             binding.interestedRallyCl.setOnClickListener {
-                Toast.makeText(context,"로그인 후 이용 가능한 메뉴입니다.",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
             }
 
             binding.certificationBoardCl.setOnClickListener {
-                Toast.makeText(context,"로그인 후 이용 가능한 메뉴입니다.",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
 
             }
         }
