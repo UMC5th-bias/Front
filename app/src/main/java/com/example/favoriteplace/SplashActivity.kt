@@ -27,14 +27,12 @@ class SplashActivity : AppCompatActivity(){
 
 //        showSplashScreen1()
 
-        // 코루틴으로 지연처리
-        lifecycleScope.launch(Dispatchers.Main) {
-            showSplashScreen2()
-            delay(2000)
 
-            // MainActivity로 이동
-            moveToMainActivity()
-        }
+        // 일정 시간 지연 이후 실행하기 위한 코드
+//        Handler(Looper.getMainLooper()).postDelayed({
+            showSplashScreen2()
+//        }, 2000)
+
 
     }
 

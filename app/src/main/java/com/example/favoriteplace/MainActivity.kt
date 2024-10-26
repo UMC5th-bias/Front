@@ -45,7 +45,11 @@ class MainActivity : AppCompatActivity() {
         // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-        clearAccessToken()
+        // 앱 실행 시 토큰 값 확인
+        checkToken()
+
+//      clearAccessToken()
+
 
         // 알림으로 전달된 intent가 있는 경우 이를 처리
         handleIntent(intent)
@@ -113,6 +117,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.main_frameLayout, fragment)
             .addToBackStack(null) // 뒤로가기 가능하게 추가
             .commitAllowingStateLoss()
+
     }
 
     fun setSelectedNavItem(fragment: Fragment) {
@@ -125,7 +130,19 @@ class MainActivity : AppCompatActivity() {
             else -> R.id.homeFragment
         }
         binding.mainBnv.selectedItemId = itemId
+
     }
+
+    private fun checkToken() {
+        accessToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
+        if (accessToken != null) {
+            Log.d("MainActivity", ">> login 상태 ")
+
+        } else {
+            Log.d("MainActivity", ">> Token 없음 ")
+        }
+    }
+
 
     fun setSelectedNavItem(itemId: Int) {
         binding.mainBnv.selectedItemId = itemId
@@ -133,18 +150,54 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBottomNavigation() {
         binding.mainBnv.setOnItemSelectedListener { item ->
-            val fragment = when (item.itemId) {
-                R.id.homeFragment -> HomeFragment()
-                R.id.rallyhomeFragment -> RallyHomeFragment()
-                R.id.communityFragment -> CommunityMainFragment()
-                R.id.shopFragment -> ShopMainFragment()
-                R.id.myFragment -> MyFragment()
-                else -> HomeFragment()
+            when (item.itemId) {
+                R.id.homeFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, HomeFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.rallyhomeFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, RallyHomeFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.communityFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, CommunityMainFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.shopFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frameLayout, ShopMainFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.myFragment -> {
+                    checkToken()
+                    if (accessToken.isNullOrEmpty()) {
+                        Toast.makeText(this, "로그인 후 이용 가능한 메뉴입니다.", Toast.LENGTH_SHORT).show()
+                        false
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.main_frameLayout, MyFragment())
+                            .commitAllowingStateLoss()
+                        return@setOnItemSelectedListener true
+                    }
+                }
+
+                else -> false
             }
-            navigateToFragment(fragment)
-            true
         }
+
     }
+
     private fun checkAndSendFCMToken() {
         // FCM 토큰 가져오기 및 저장
         FirebaseMessaging.getInstance().token
@@ -163,11 +216,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
+
     private fun isLoggedIn(): Boolean {
         accessToken = sharedPreferences.getString(LoginActivity.ACCESS_TOKEN_KEY, null)
         return !accessToken.isNullOrEmpty()
 //        return false;
     }
+
     override fun onDestroy() {
         super.onDestroy()
     }
@@ -256,38 +311,58 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendRegistrationToServer(token: String) {
         val tokenRequest = TokenRequest(token)
-        RetrofitClient.notificationApiService.registerToken(tokenRequest).enqueue(object : retrofit2.Callback<Void> {
-            override fun onResponse(call: retrofit2.Call<Void>, response: retrofit2.Response<Void>) {
-                Log.d("FCM", "Token = $token")
+        RetrofitClient.notificationApiService.registerToken(tokenRequest)
+            .enqueue(object : retrofit2.Callback<Void> {
+                override fun onResponse(
+                    call: retrofit2.Call<Void>,
+                    response: retrofit2.Response<Void>
+                ) {
+                    Log.d("FCM", "Token = $token")
 
-                if (response.isSuccessful) {
-                    Log.d("MainActivity", "Token successfully sent to server.")
-                } else {
-                    Log.e("MainActivity", "Failed to send token to server. Response code: ${response.code()}")
+                    if (response.isSuccessful) {
+                        Log.d("MainActivity", "Token successfully sent to server.")
+                    } else {
+                        Log.e(
+                            "MainActivity",
+                            "Failed to send token to server. Response code: ${response.code()}"
+                        )
+                    }
                 }
-            }
 
-            override fun onFailure(call: retrofit2.Call<Void>, t: Throwable) {
-                Log.e("MainActivity", "Failed to send token to server", t)
-            }
-        })
+                override fun onFailure(call: retrofit2.Call<Void>, t: Throwable) {
+                    Log.e("MainActivity", "Failed to send token to server", t)
+                }
+            })
     }
 
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_CODE_POST_NOTIFICATIONS)
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_CODE_POST_NOTIFICATIONS
+                )
             }
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_POST_NOTIFICATIONS) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 Log.d("MainActivity", "Notification permission granted.")
             } else {
-                Toast.makeText(this, "알림 권한이 거부되었습니다. 알림을 받을 수 없습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "알림 권한이 거부되었습니다. 알림을 받을 수 없습니다.", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
