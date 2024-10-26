@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/shopMain_myProfile_civ"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_margin="15dp"
+        android:src="@drawable/memberimg"
+        app:civ_border_color="@color/gray"
+        app:civ_border_overlay="true"
+        app:civ_border_width="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_margin="15dp"
+        android:elevation="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/my_icon_iv"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:srcCompat="@drawable/ic_shop2" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/shopMain_profileTag_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:adjustViewBounds="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/profile_tag_512h"
+        app:layout_constraintBottom_toTopOf="@id/profile_nickname_tv"
+        app:layout_constraintStart_toEndOf="@id/shopMain_myProfile_civ"
+        app:layout_constraintTop_toTopOf="@id/shopMain_myProfile_civ"/>
+
+    <TextView
+        android:id="@+id/profile_nickname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
+        android:text="아이"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/shopMain_profileTag_iv"
+        app:layout_constraintTop_toBottomOf="@id/shopMain_profileTag_iv" />
+
+    <TextView
+        android:id="@+id/profile_nickname_nim_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="님"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/profile_nickname_tv"
+        app:layout_constraintStart_toEndOf="@id/profile_nickname_tv"
+        app:layout_constraintTop_toTopOf="@id/profile_nickname_tv" />
+
+    <TextView
+        android:id="@+id/profile_savePoint_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="보유포인트"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@id/profile_nickname_tv"
+        app:layout_constraintTop_toBottomOf="@id/profile_nickname_tv" />
+
+    <TextView
+        android:id="@+id/profile_userPoint_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="100000"
+        android:textColor="@color/main"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/profile_savePoint_tv"
+        app:layout_constraintStart_toEndOf="@id/profile_savePoint_tv" />
+
+    <TextView
+        android:id="@+id/profile_P_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="P"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/profile_savePoint_tv"
+        app:layout_constraintStart_toEndOf="@id/profile_userPoint_tv"
+        app:layout_constraintTop_toTopOf="@id/profile_savePoint_tv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

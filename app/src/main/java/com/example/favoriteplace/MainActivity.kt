@@ -48,6 +48,9 @@ class MainActivity : AppCompatActivity() {
         // 앱 실행 시 토큰 값 확인
         checkToken()
 
+//      clearAccessToken()
+
+
         // 알림으로 전달된 intent가 있는 경우 이를 처리
         handleIntent(intent)
 
@@ -109,9 +112,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    fun navigateToFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frameLayout, fragment)
+            .addToBackStack(null) // 뒤로가기 가능하게 추가
             .commitAllowingStateLoss()
 
     }
@@ -361,5 +365,12 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    private fun clearAccessToken() {
+        val sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.remove(HomeFragment.ACCESS_TOKEN_KEY)  // 토큰 삭제
+        editor.apply()  // 변경 사항을 적용
     }
 }

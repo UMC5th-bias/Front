@@ -38,8 +38,13 @@ class ShopBannerUnlimitedFameRVAdapter(private val unlimitedFameList: ArrayList<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(unlimitedFameList[position])
         holder.itemView.setOnClickListener {
-            // 아이템 클릭 시 해당 아이템의 ID를 리스너에 전달
-            mItemClickListener.onItemClick(unlimitedFameList[position].id)
+            if (::mItemClickListener.isInitialized) {
+                // 아이템 클릭 시 해당 아이템의 ID를 리스너에 전달
+                mItemClickListener.onItemClick(unlimitedFameList[position].id)
+                Log.d("ShopBannerUnlimitedFameRVAdapter", "Item clicked: ${unlimitedFameList[position].id}")
+            } else {
+                Log.e("ShopBannerUnlimitedFameRVAdapter", "ItemClickListener not initialized")
+            }
         }
     }
 

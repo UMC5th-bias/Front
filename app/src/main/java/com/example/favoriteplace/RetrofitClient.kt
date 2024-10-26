@@ -1,6 +1,7 @@
 package com.example.favoriteplace
 
 import com.example.favoriteplace.RetrofitAPI.okHttpClient
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,6 +23,7 @@ object RetrofitClient {
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())  // 추가
         .client(okHttpClient)
         .build()
 

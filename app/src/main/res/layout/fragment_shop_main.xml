@@ -9,11 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- 상단 타이틀 -->
         <TextView
             android:id="@+id/shopMain_topTitle_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/shop_margin"
             android:autoSizeMaxTextSize="20sp"
             android:text="상점"
             android:textColor="@color/black"
@@ -23,179 +24,37 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/shopMain_memberProfile_cl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/shopMain_login_cl"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/shopMain_topTitle_tv">
+            app:layout_constraintTop_toBottomOf="@id/shopMain_topTitle_tv"
+            android:layout_margin="@dimen/shop_margin"
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/shopMain_yesLogin_cl"
+            <!-- 로그인 프로필 컨테이너 -->
+            <include
+                android:visibility="visible"
+                android:id="@+id/shopMain_memberProfile_cl"
+                layout="@layout/view_member_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:paddingTop="100dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"/>
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/shopMain_myProfile_civ"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="15dp"
-                    android:src="@drawable/memberimg"
-                    app:civ_border_color="@color/gray"
-                    app:civ_border_overlay="true"
-                    app:civ_border_width="1dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <!--아이콘 크기 통일 시 변경하기-->
-                <LinearLayout
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="15dp"
-                    android:elevation="3dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/my_icon_iv"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        app:srcCompat="@drawable/ic_shop2" />
-
-
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/shopMain_profileTag_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:adjustViewBounds="true"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/profile_tag_512h"
-                    app:layout_constraintBottom_toTopOf="@id/profile_nickname_tv"
-                    app:layout_constraintStart_toEndOf="@id/shopMain_myProfile_civ"
-                    app:layout_constraintTop_toTopOf="@id/shopMain_myProfile_civ" />
-
-                <TextView
-                    android:id="@+id/profile_nickname_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
-                    android:text="아이"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@id/shopMain_profileTag_iv"
-                    app:layout_constraintTop_toBottomOf="@id/shopMain_profileTag_iv" />
-
-                <TextView
-                    android:id="@+id/profile_nickname_nim_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="님"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    app:layout_constraintBottom_toBottomOf="@id/profile_nickname_tv"
-                    app:layout_constraintStart_toEndOf="@id/profile_nickname_tv"
-                    app:layout_constraintTop_toTopOf="@id/profile_nickname_tv" />
-
-                <TextView
-                    android:id="@+id/profile_savePoint_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="보유포인트"
-                    android:textColor="@color/black"
-                    android:textSize="13dp"
-                    app:layout_constraintStart_toStartOf="@id/profile_nickname_tv"
-                    app:layout_constraintTop_toBottomOf="@id/profile_nickname_tv" />
-
-                <TextView
-                    android:id="@+id/profile_userPoint_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="100000"
-                    android:textColor="@color/main"
-                    android:textSize="13dp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/profile_savePoint_tv"
-                    app:layout_constraintStart_toEndOf="@id/profile_savePoint_tv"
-                    app:layout_constraintTop_toTopOf="@id/profile_savePoint_tv" />
-
-                <TextView
-                    android:id="@+id/profile_P_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="P"
-                    android:textColor="@color/black"
-                    android:textSize="13dp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/profile_savePoint_tv"
-                    app:layout_constraintStart_toEndOf="@id/profile_userPoint_tv"
-                    app:layout_constraintTop_toTopOf="@id/profile_savePoint_tv" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <!--로그인 화면-->
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- 로그인 필요 컨테이너 -->
+            <include
+                android:visibility="gone"
                 android:id="@+id/shopMain_notLogin_cl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/round_gray_background"
-                android:padding="10dp"
-                android:visibility="gone"
+                layout="@layout/view_login_required"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/shopMain_notLoginMessage_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:gravity="center"
-                    android:text="로그인이 필요한 서비스입니다."
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/shopMain_loginButton_btn"
-                    android:layout_width="140dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/rounded_pink_background"
-                    android:text="로그인"
-                    android:textColor="@color/white"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/shopMain_notLoginMessage_tv" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+                app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <!-- 스위치 -->
         <RelativeLayout
             android:id="@+id/shopMain_switch_rl"
             android:layout_width="match_parent"
@@ -206,9 +65,10 @@
             android:background="@drawable/bg_switch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/shopMain_memberProfile_cl">
+            app:layout_constraintTop_toBottomOf="@id/shopMain_login_cl">
 
 
+            <!-- 스위치 본체 -->
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/shopMain_switchOnOff_sc"
                 android:layout_width="match_parent"
@@ -216,11 +76,12 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:checked="true"
-                android:textColor="@color/white"
+                android:checked="false"
                 android:thumb="@drawable/thumb_selector"
+                app:switchMinWidth="102dp"
                 app:track="@drawable/track_selector" />
 
+            <!-- 스위치 라벨 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -235,7 +96,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="한정판매"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -247,15 +108,14 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="상시판매"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-
-
         </RelativeLayout>
 
+        <!-- 배너 ViewPager -->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/shopMain_Banner_vp2"
             android:layout_width="match_parent"
@@ -264,6 +124,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/shopMain_switch_rl" />
 
+        <!-- 아이콘 및 칭호 컨테이너 -->
         <TextView
             android:id="@+id/shopMain_frame_tv"
             android:layout_width="match_parent"
@@ -273,13 +134,12 @@
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="최애의장소 칭호"
+            android:text="모애모애 칭호"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/shopMain_Banner_vp2" />
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/frameContainer_cl"
@@ -297,7 +157,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="20dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -334,8 +194,9 @@
                     android:id="@+id/limited_frame_umc_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/limited_frame_new_cl">
 
                     <TextView
                         android:id="@+id/limitedFrameUMC_tv"
@@ -371,7 +232,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="20dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -449,7 +310,7 @@
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="최애의장소 아이콘"
+            android:text="모애모애 아이콘"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -472,7 +333,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="20dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -497,7 +358,7 @@
 
                     <HorizontalScrollView
                         android:id="@+id/shopMain_limitedIconNew_hs"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="20dp"
@@ -530,8 +391,9 @@
                     android:id="@+id/limited_icon_umc_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/limited_icon_new_cl">
 
                     <TextView
                         android:id="@+id/limitedIconUMC_tv"
@@ -589,7 +451,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="20dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
