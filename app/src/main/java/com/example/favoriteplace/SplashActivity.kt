@@ -21,12 +21,12 @@ class SplashActivity : AppCompatActivity(){
         setContentView(binding.root)
 
 
-        showSplashScreen1()
+//        showSplashScreen1()
 
         // 일정 시간 지연 이후 실행하기 위한 코드
-        Handler(Looper.getMainLooper()).postDelayed({
+//        Handler(Looper.getMainLooper()).postDelayed({
             showSplashScreen2()
-        }, 2000)
+//        }, 2000)
 
     }
 

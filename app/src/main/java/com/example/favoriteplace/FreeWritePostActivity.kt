@@ -310,10 +310,10 @@ class FreeWritePostActivity : AppCompatActivity() {
                             // 서버로부터 받은 메시지를 Toast로 표시
                             //showToast(this@FreeWritePostActivity, responseData.message)
 
-//                            // CommunityFreeFragment 시작
-//                            supportFragmentManager.beginTransaction()
-//                                .replace(R.id.main_frameLayout, CommunityFreeFragment())
-//                                .commitAllowingStateLoss()
+                            // CommunityFreeFragment 시작
+                            supportFragmentManager.beginTransaction()
+                                .replace(R.id.main_frameLayout, CommunityFreeFragment())
+                                .commitAllowingStateLoss()
 
                             // 현재 액티비티를 종료
                             finish()
