@@ -108,7 +108,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/community_recomment_icon"
+                android:src="@drawable/ic_add_place"
                 android:background="@null"/>
 
             <TextView
