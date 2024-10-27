@@ -5,6 +5,7 @@ import android.os.Binder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -49,12 +50,17 @@ class SplashActivity : AppCompatActivity(){
     private fun updateSplashVisibility(screen1Visibility: Int, screen2Visibility: Int) {
         binding.splashScreen1Layout.visibility = screen1Visibility
         binding.splashScreen2Layout.visibility = screen2Visibility
+        Handler(Looper.getMainLooper()).postDelayed({
+            moveToMainActivity()
+        }, 2000)
+
     }
 
     // MainActivity로 이동하는 함수
     private fun moveToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        Log.d("??","??")
         finish() // 이전 화면으로 돌아오지 않도록 SplashActivity 종료
     }
 }
