@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -20,13 +19,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.favoriteplace.databinding.ActivityPostDetailBinding
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class PostDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityPostDetailBinding
+    private var commentData=ArrayList<Comment>()
 
     // 사용자의 로그인 상태를 확인하는 메소드
     private fun isLoggedIn(): Boolean {
@@ -48,6 +48,7 @@ class PostDetailActivity : AppCompatActivity() {
 
         // 인텐트에서 post_id 값을 추출
         val postId = intent.getIntExtra("POST_ID", -1)
+        Log.d("POSTID",postId.toString())
         if (postId != -1) {
             fetchPostDetail(postId)
         } else {
@@ -95,7 +96,7 @@ class PostDetailActivity : AppCompatActivity() {
         val authorizationHeader : String?
 
         if(isLoggedIn()) {
-            authorizationHeader = "Bearer ${getAccessToken()}"
+            authorizationHeader = "${getAccessToken()}"
         } else {
             authorizationHeader = null
         }
@@ -152,7 +153,7 @@ class PostDetailActivity : AppCompatActivity() {
                         binding.commentNumTv.text = it.postInfo.comments.toString()
                         binding.contentTimeTv.text = it.postInfo.passedTime
 
-                        postDetail?.postInfo?.image?.let { images ->
+                        postDetail.postInfo.image.let { images ->
                             if (images.isNotEmpty()) {
                                 val imageViews = listOf(
                                     binding.postDetailImg1Iv,
@@ -186,18 +187,20 @@ class PostDetailActivity : AppCompatActivity() {
             }
         })
 
-        // 댓글 정보를 받아오는 Retrofit 요청
+        //댓글 정보를 받아오는 Retrofit 요청
         RetrofitClient.communityService.getFreeCommentDetail(authorizationHeader, postId.toLong()).enqueue(object :
             Callback<FreeCommentDetailResponse> {
             override fun onResponse(call: Call<FreeCommentDetailResponse>, response: Response<FreeCommentDetailResponse>) {
                 if (response.isSuccessful) {
-                    val postDetail = response.body()
-                    postDetail?.let {
-                        // 데이터를 가져왔으므로 어댑터에 설정
-                        val commentAdapter = CommentAdapter(postDetail.comment)
-                        binding.commentRv.adapter = commentAdapter
-                        binding.commentRv.layoutManager = LinearLayoutManager(this@PostDetailActivity)
+                    commentData.clear()
+                    response.body()?.let{comment->
+                        commentData.addAll(comment.parentComment)
                     }
+
+                    //RVA 실행
+                    val commentAdapter = CommentAdapter(commentData)
+                    binding.commentRv.adapter = commentAdapter
+                    binding.commentRv.layoutManager = LinearLayoutManager(this@PostDetailActivity)
                 } else {
                     // 댓글 정보를 받아오는 데 실패한 경우
                     Log.e("PostDetailActivity", "Fetch comment detail failed: ${response.errorBody()?.string()}")
@@ -216,7 +219,7 @@ class PostDetailActivity : AppCompatActivity() {
         val jsonComment = "{\"content\": \"$commentContent\"}"
 
         // RequestBody를 생성하여 JSON 형식의 문자열을 전달합니다.
-        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), jsonComment)
+        val requestBody = jsonComment.toRequestBody("application/json".toMediaTypeOrNull())
 
         // 헤더에 AccessToken 추가
         val authorizationHeader = "Bearer ${getAccessToken()}"
