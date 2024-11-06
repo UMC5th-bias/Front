@@ -107,7 +107,7 @@ data class PostInfo(
 data class FreeCommentDetailResponse(
     val page: Int,
     val size: Int,
-    val comment: List<Comment>
+    val parentComment: List<Comment>
 )
 
 data class Comment(
@@ -115,7 +115,8 @@ data class Comment(
     val id: Int,
     val content: String,
     val passedTime: String,
-    val isWrite: Boolean
+    val isWrite: Boolean,
+    val subComments: List<Comment>
 )
 
 data class Pilgrimage(
