@@ -14,14 +14,27 @@
             android:id="@+id/shopMain_topTitle_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/shop_margin"
-            android:autoSizeMaxTextSize="20sp"
+            android:padding="15dp"
             android:text="상점"
             android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/notification_iv"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/notification_iv"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="Notification Icon"
+            android:src="@drawable/notification_icon"
+            app:layout_constraintBottom_toBottomOf="@id/shopMain_topTitle_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/shopMain_topTitle_tv"
+            app:layout_constraintTop_toTopOf="@id/shopMain_topTitle_tv" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

@@ -28,7 +28,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.net.URL
 
 class HomeFragment : Fragment() {
-    lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
     lateinit var retrofit: Retrofit
     private lateinit var homeService: HomeService
     private lateinit var trendingPostsAdapter: TrendingPostsAdapter // Adapter 선언
@@ -43,6 +45,7 @@ class HomeFragment : Fragment() {
     companion object {
         const val LOGIN_REQUEST_CODE = 101
         const val ACCESS_TOKEN_KEY = "token" // SharedPreferences 키 상수
+        private const val TAG = "HomeFragment"
     }
 
     override fun onCreateView(
@@ -50,72 +53,105 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-
-        // SharedPreferences에서 토큰 삭제
-        // TODO : Test를 위해 토큰 지움
-//        clearAccessToken()
-
-        // 신상품 페이지 이동
-        binding.homeNewItemMoreBtn.setOnClickListener {
-
-            val shopBannerNewFragment = ShopBannerNewFragment() // newItemFragment 인스턴스 생성
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.main_frameLayout, shopBannerNewFragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-
-            // 바텀 네비게이션 바에서 상점 아이템을 선택된 상태로 설정
-            (requireActivity() as MainActivity).setSelectedNavItem(R.id.shopFragment)
-        }
-
-
-        // 추천 랠리 이동
-        binding.homeRecommendMoreBtn.setOnClickListener {
-            (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
-
-        }
-
-
-
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
+
+//
+//        // SharedPreferences에서 토큰 삭제
+//        // TODO : Test를 위해 토큰 지움
+////        clearAccessToken()
+//
+//        // 신상품 페이지 이동
+//        binding.homeNewItemMoreBtn.setOnClickListener {
+//
+//            val shopBannerNewFragment = ShopBannerNewFragment() // newItemFragment 인스턴스 생성
+//            val transaction = parentFragmentManager.beginTransaction()
+//            transaction.replace(R.id.main_frameLayout, shopBannerNewFragment)
+//            transaction.addToBackStack(null)
+//            transaction.commit()
+//
+//            // 바텀 네비게이션 바에서 상점 아이템을 선택된 상태로 설정
+//            (requireActivity() as MainActivity).setSelectedNavItem(R.id.shopFragment)
+//        }
+//
+//
+//        // 추천 랠리 이동
+//        binding.homeRecommendMoreBtn.setOnClickListener {
+//            (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
+//
+//        }
+//
+//
+//
+//        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // View Binding 해제
+    }
 
-
-        // Retrofit 객체 생성
+    private fun setupRetrofit() {
         retrofit = Retrofit.Builder()
             .baseUrl("http://favoriteplace.store:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         homeService = retrofit.create(HomeService::class.java)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
 
+        setupRetrofit()
+        setupViewPager()
+
+        //로그인 버튼
+        setupClickListeners()
+
+        // 앱이 처음 시작될 때 로그인 상태를 확인 후, 로그인 정보가 없으면 서버에 요청을 보냄
+        checkLoginStatus()
+
+        // 알림 상태 처리
+        // TODO : 로그인 시 서버에서 사용자 알림 존재 여부 가져오기
+        updateNotificationIcon(hasNotification = false) // 기본값으로 알림 없음 설정
+
+    }
+
+    private fun setupViewPager() {
         val bannerAdapter = BannerVPAdapter(this)
         binding.homeBannerVp.adapter = bannerAdapter
         binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_banner1))
         bannerAdapter.addFragment(BannerFragment(R.drawable.demo))
+    }
 
-
-        //로그인 버튼
-        binding.homeLoginBtn.setOnClickListener {
-            val intent = Intent(requireActivity(), LoginActivity::class.java)
-            try {
-                startActivityForResult(intent, LOGIN_REQUEST_CODE)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+    private fun setupClickListeners() {
+        binding.homeNewItemMoreBtn.setOnClickListener {
+            navigateToFragment(ShopBannerNewFragment(), R.id.shopFragment)
         }
 
-        // 앱이 처음 시작될 때 로그인 상태를 확인 후, 로그인 정보가 없으면 서버에 요청을 보냄
-        checkLoginStatus()
+        binding.homeRecommendMoreBtn.setOnClickListener {
+            (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
+        }
 
+        binding.homeLoginBtn.setOnClickListener {
+            startActivityForResult(
+                Intent(requireActivity(), LoginActivity::class.java),
+                LOGIN_REQUEST_CODE
+            )
+        }
     }
+
+    private fun navigateToFragment(fragment: Fragment, navItemId: Int) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_frameLayout, fragment)
+            .addToBackStack(null)
+            .commit()
+        (requireActivity() as MainActivity).setSelectedNavItem(navItemId)
+    }
+
 
 
     private fun checkLoginStatus() {
@@ -184,129 +220,89 @@ class HomeFragment : Fragment() {
     private fun getUserInfo(userToken: String) {
         lifecycleScope.launch {
             try {
-                val response: Response<HomeService.LoginResponse> = homeService.getUserInfo("Bearer $userToken")
+                val response = homeService.getUserInfo("Bearer $userToken")
                 if (response.isSuccessful) {
-                    // 로그인 상태인 경우
-                    // 서버로부터 사용자 정보를 성공적으로 받아왔을 때 UI 업데이트
-                    val loginResponse: HomeService.LoginResponse? = response.body()
-                    if (loginResponse != null) {
-                        updateUI(loginResponse)
-                        Log.d("HomeFragment", "$loginResponse")
-                        Log.d("HomeFragment", ">> Home Login Success")
-
-                    }
+                    updateUI(response.body())
                 } else {
-                    // 로그인 상태가 아닌 경우
-                    Log.e("HomeFragment", "Failed to get home data: ${response.code()}")
+                    Log.e(TAG, "Failed to get user info: ${response.code()}")
                 }
             } catch (e: Exception) {
-                // 오류
-                Log.e("HomeFragment", "Error fetching user info: ${e.message}", e)
+                Log.e(TAG, "Error fetching user info: ${e.message}", e)
             }
         }
-
     }
 
 
     private fun updateUI(homeData: HomeService.LoginResponse?) {
-
-        Log.d("HomeFragment", ">> $homeData")
-
-        if (homeData != null) {
-            binding.userLayout.visibility = View.VISIBLE
-            binding.unUserLayout.visibility = View.GONE
-
-            binding.nonMembersLayout.visibility = View.GONE
-            binding.membersRallyLayout.visibility = View.VISIBLE
-
-            // 사용자 정보가 제대로 반환되었을 때만 UI 업데이트
-            homeData.userInfo?.let { userInfo ->
-                // 사용자 이미지
-                Glide.with(this)
-                    .load(userInfo.profileImageUrl.toString()) // 서버에 저장된 이미지 URI
-                    .placeholder(R.drawable.signup_default_profile_image) // 이미지를 불러오는 동안 보여줄 임시 이미지
-                    .error(R.drawable.signup_default_profile_image) // 이미지 로드 실패 시 보여줄 이미지
-                    .into(binding.homeMemberProfileCiv) // 이미지를 설정할 ImageView
-
-                // 사용자 아이콘
-                val profileIconUrl = userInfo.profileIconUrl
-                if (profileIconUrl != null) {
-                    bind(binding.root.context, profileIconUrl, binding.homeMemberIconIv)
-                    binding.homeMemberIconIv.visibility = View.VISIBLE
-                } else {
-                    // 아이콘이 없는 경우, 기본 이미지를 설정하거나 숨겨진 이미지를 보여줄 수 있습니다.
-                    // 기본 이미지를 설정하는 경우
-                    binding.homeMemberIconIv.visibility = View.GONE
-                }
-
-
-                // 사용자 닉네임
-                binding.homeMemberNameTv.text = userInfo.nickname
-
-                // 사용자 칭호
-                bind(binding.root.context, userInfo.profileTitleUrl, binding.homeMemberBadgeIv)
-            }
-
-            homeData.rally?.let { rally ->
-                binding.homeRallyingTv.text = rally.name
-                binding.rallyLocationdetailTotalTv.text = rally.pilgrimageNumber.toString()
-                binding.rallyLocationdetailCheckTv.text = rally.completeNumber.toString()
-
-                // 회원랠리화면
-                Glide.with(this)
-                    .load(rally.backgroundImageUrl.toString())
-                    .placeholder(null)
-                    .into(binding.homeRallyIv)
-            }
-
-
-            setupTrendingPostsRecyclerView()
-            homeData?.trendingPosts?.let { trendingPosts ->
-                trendingPostsAdapter.submitList(trendingPosts)
-            }
-
-        } else {
-            // 비회원
+        if (homeData == null) {
             binding.userLayout.visibility = View.GONE
             binding.unUserLayout.visibility = View.VISIBLE
+            return
         }
+
+        binding.userLayout.visibility = View.VISIBLE
+        binding.unUserLayout.visibility = View.GONE
+
+        homeData.userInfo?.let { userInfo ->
+            loadImage(userInfo.profileImageUrl, binding.homeMemberProfileCiv)
+            loadImage(userInfo.profileIconUrl, binding.homeMemberIconIv)
+            binding.homeMemberIconIv.visibility =
+                if (userInfo.profileIconUrl != null) View.VISIBLE else View.GONE
+            binding.homeMemberNameTv.text = userInfo.nickname
+            loadImage(userInfo.profileTitleUrl, binding.homeMemberBadgeIv)
+        }
+
+        homeData.rally?.let { rally ->
+            binding.homeRallyingTv.text = rally.name
+            binding.rallyLocationdetailTotalTv.text = rally.pilgrimageNumber.toString()
+            binding.rallyLocationdetailCheckTv.text = rally.completeNumber.toString()
+            loadImage(rally.backgroundImageUrl, binding.homeRallyIv)
+        }
+
+        setupTrendingPostsRecyclerView()
+        homeData.trendingPosts?.let { trendingPostsAdapter.submitList(it) }
     }
 
     // 비회원
     private fun fetchNonMember() {
         lifecycleScope.launch {
             try {
-
-                val response: Response<HomeService.NonMemberData> = homeService.getNonMemberInfo()
+                val response = homeService.getNonMemberInfo()
                 if (response.isSuccessful) {
-                    val nonMemberData = response.body()
-
-                    nonMemberData?.let { data ->
+                    response.body()?.let { nonMemberData ->
                         setupTrendingPostsRecyclerView()
-                        data.trendingPosts?.let { trendingPosts ->
-                            trendingPostsAdapter.submitList(trendingPosts)
-
-                            Log.d("HomeFragment", ">> 비회원 : $nonMemberData")
-
-                            // 회원랠리화면
-                            Glide.with(requireContext())
-                                .load(nonMemberData.rally.backgroundImageUrl.toString())
-                                .placeholder(null)
-                                .into(binding.homeRecommendIv)
-
-                        }
-
+                        nonMemberData.trendingPosts?.let { trendingPostsAdapter.submitList(it) }
+                        loadImage(nonMemberData.rally.backgroundImageUrl, binding.homeRecommendIv)
                     }
                 } else {
-                    // 비회원 게시물 요청이 실패
-                    Log.e("HomeFragment", "Failed to retrieve non-member posts: ${response.code()}")
+                    Log.e(TAG, "Failed to retrieve non-member data: ${response.code()}")
                 }
-
             } catch (e: Exception) {
-                // 오류 발생 시 처리
-                Log.e("HomeFragment", "Error fetching non-member posts: ${e.message}", e)
+                Log.e(TAG, "Error fetching non-member data: ${e.message}", e)
             }
         }
+    }
+
+    private fun updateNotificationIcon(hasNotification: Boolean) {
+        // 알림 아이콘을 위한 View ID 가져오기
+        val notificationIconDefault = binding.notificationIv
+        val notificationIconWithBadge = binding.notificationWithBadgeIv
+
+        if (hasNotification) {
+            notificationIconDefault.visibility = View.GONE // 기본 아이콘 숨기기
+            notificationIconWithBadge.visibility = View.VISIBLE // 배지 아이콘 표시
+        } else {
+            notificationIconDefault.visibility = View.VISIBLE // 기본 아이콘 표시
+            notificationIconWithBadge.visibility = View.GONE // 배지 아이콘 숨기기
+        }
+    }
+
+    private fun loadImage(url: String?, imageView: ImageView) {
+        Glide.with(this)
+            .load(url)
+            .placeholder(R.drawable.signup_default_profile_image)
+            .error(R.drawable.signup_default_profile_image)
+            .into(imageView)
     }
 
     //svg 이미지를 가져오기 위한 함수
