@@ -134,7 +134,7 @@ class ShopMainFragment : Fragment() {
     private fun setupBannerViewPager() {
         // BannerItem 리스트 생성
         val items = listOf(
-            BannerItemV2(R.drawable.shop_banner1, null), // "보러가기" 버튼 없음
+//            BannerItemV2(R.drawable.shop_banner1, null), // "보러가기" 버튼 없음
             BannerItemV2(R.drawable.shop_new_character_banner, ShopBannerNewFragment::class.java.name)   // 신상품 페이지 이동
         )
         // 어댑터에 FragmentActivity와 items 리스트 전달
