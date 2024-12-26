@@ -23,18 +23,14 @@
             android:orientation="vertical">
 
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_logo_title"/>
-
-
-
             <!-- 로고 이미지 추가 -->
 
 
-
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_logo_new_title" />
 
             <EditText
                 android:id="@+id/logoin_input_id_et"
