@@ -69,7 +69,10 @@ class HomeFragment : Fragment() {
             (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
         }
 
-
+        //회원 추천 랠리 이동
+        binding.membersRallyLayout.setOnClickListener {
+            (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
+        }
 
         return binding.root
     }
