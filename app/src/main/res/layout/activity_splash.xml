@@ -26,13 +26,13 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
-        android:background="@color/white">
+        android:background="@color/main">
 
-        <ImageView
+    <ImageView
             android:id="@+id/splash2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_splash_2" />
+            android:src="@drawable/ic_new_splash_2" />
     </LinearLayout>
 
 
