@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
 //        clearAccessToken()
 
         // 신상품 페이지 이동
-        binding.homeNewItemMoreBtn.setOnClickListener {
+        binding.newitemlayout.setOnClickListener {
             // 바텀 네비게이션 바에서 상점 아이템을 선택된 상태로 설정
             (requireActivity() as MainActivity).setSelectedNavItem(R.id.shopFragment)
         }
