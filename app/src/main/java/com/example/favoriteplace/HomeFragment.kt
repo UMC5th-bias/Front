@@ -69,8 +69,13 @@ class HomeFragment : Fragment() {
             (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
         }
 
-        //회원 추천 랠리 이동
+        //회원 랠리 이동
         binding.membersRallyLayout.setOnClickListener {
+            (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
+        }
+
+        //하단 배너 랠리 이동
+        binding.homeBannerIv.setOnClickListener {
             (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
         }
 
@@ -89,12 +94,12 @@ class HomeFragment : Fragment() {
 
         homeService = retrofit.create(HomeService::class.java)
 
-
-        val bannerAdapter = BannerVPAdapter(this)
-        binding.homeBannerVp.adapter = bannerAdapter
-        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_banner1))
-        bannerAdapter.addFragment(BannerFragment(R.drawable.demo))
+//        val bannerAdapter = BannerVPAdapter(this)
+//
+//        binding.homeBannerVp.adapter = bannerAdapter
+//        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+//        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_banner1))
+//        bannerAdapter.addFragment(BannerFragment(R.drawable.demo))
 
 
         //로그인 버튼
@@ -149,7 +154,7 @@ class HomeFragment : Fragment() {
                     }
 
                     "성지순례 인증" -> Intent(context, MyGuestBookActivity::class.java).apply {
-                        putExtra("GUESTBOOK_ID", post.id) // "성지순례 인증"의 경우 "GUESTBOOK_ID" 사용
+                        putExtra("GUESTBOOK_ID", post.id.toLong()) // "성지순례 인증"의 경우 "GUESTBOOK_ID" 사용
                     }
 
                     else -> return
