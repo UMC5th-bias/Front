@@ -59,13 +59,6 @@ class HomeFragment : Fragment() {
 
         // 신상품 페이지 이동
         binding.homeNewItemMoreBtn.setOnClickListener {
-
-            val shopBannerNewFragment = ShopBannerNewFragment() // newItemFragment 인스턴스 생성
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.main_frameLayout, shopBannerNewFragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-
             // 바텀 네비게이션 바에서 상점 아이템을 선택된 상태로 설정
             (requireActivity() as MainActivity).setSelectedNavItem(R.id.shopFragment)
         }
