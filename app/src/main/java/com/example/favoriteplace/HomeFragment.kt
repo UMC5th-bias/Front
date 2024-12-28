@@ -58,26 +58,26 @@ class HomeFragment : Fragment() {
 //        clearAccessToken()
 
         // 신상품 페이지 이동
-        binding.homeNewItemMoreBtn.setOnClickListener {
-
-            val shopBannerNewFragment = ShopBannerNewFragment() // newItemFragment 인스턴스 생성
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.main_frameLayout, shopBannerNewFragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-
+        binding.newitemlayout.setOnClickListener {
             // 바텀 네비게이션 바에서 상점 아이템을 선택된 상태로 설정
             (requireActivity() as MainActivity).setSelectedNavItem(R.id.shopFragment)
         }
 
 
         // 추천 랠리 이동
-        binding.homeRecommendMoreBtn.setOnClickListener {
+        binding.nonMembersLayout.setOnClickListener {
             (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
-
         }
 
+        //회원 랠리 이동
+        binding.membersRallyLayout.setOnClickListener {
+            (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
+        }
 
+        //하단 배너 랠리 이동
+        binding.homeBannerIv.setOnClickListener {
+            (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
+        }
 
         return binding.root
     }
@@ -94,12 +94,12 @@ class HomeFragment : Fragment() {
 
         homeService = retrofit.create(HomeService::class.java)
 
-
-        val bannerAdapter = BannerVPAdapter(this)
-        binding.homeBannerVp.adapter = bannerAdapter
-        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_banner1))
-        bannerAdapter.addFragment(BannerFragment(R.drawable.demo))
+//        val bannerAdapter = BannerVPAdapter(this)
+//
+//        binding.homeBannerVp.adapter = bannerAdapter
+//        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+//        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_banner1))
+//        bannerAdapter.addFragment(BannerFragment(R.drawable.demo))
 
 
         //로그인 버튼
@@ -120,7 +120,8 @@ class HomeFragment : Fragment() {
 
     private fun checkLoginStatus() {
         // SharedPreferences에서 액세스 토큰 가져오기
-        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
         accessToken = sharedPreferences.getString(ACCESS_TOKEN_KEY, null)
         // TODO : 로그인 상태 다시 돌려놓기
@@ -151,9 +152,11 @@ class HomeFragment : Fragment() {
                     "자유게시판" -> Intent(context, PostDetailActivity::class.java).apply {
                         putExtra("POST_ID", post.id) // "자유게시판"의 경우 "POST_ID" 사용
                     }
+
                     "성지순례 인증" -> Intent(context, MyGuestBookActivity::class.java).apply {
-                        putExtra("GUESTBOOK_ID", post.id) // "성지순례 인증"의 경우 "GUESTBOOK_ID" 사용
+                        putExtra("GUESTBOOK_ID", post.id.toLong()) // "성지순례 인증"의 경우 "GUESTBOOK_ID" 사용
                     }
+
                     else -> return
                 }
                 startActivity(intent)
@@ -184,7 +187,8 @@ class HomeFragment : Fragment() {
     private fun getUserInfo(userToken: String) {
         lifecycleScope.launch {
             try {
-                val response: Response<HomeService.LoginResponse> = homeService.getUserInfo("Bearer $userToken")
+                val response: Response<HomeService.LoginResponse> =
+                    homeService.getUserInfo("Bearer $userToken")
                 if (response.isSuccessful) {
                     // 로그인 상태인 경우
                     // 서버로부터 사용자 정보를 성공적으로 받아왔을 때 UI 업데이트
@@ -336,7 +340,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun clearAccessToken() {
-        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.remove(ACCESS_TOKEN_KEY)  // 토큰 삭제
         editor.apply()  // 변경 사항을 적용
