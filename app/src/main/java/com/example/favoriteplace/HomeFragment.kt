@@ -65,9 +65,8 @@ class HomeFragment : Fragment() {
 
 
         // 추천 랠리 이동
-        binding.homeRecommendMoreBtn.setOnClickListener {
+        binding.nonMembersLayout.setOnClickListener {
             (requireActivity() as MainActivity).setRecommendRally(R.id.rallyhomeFragment)
-
         }
 
 
@@ -113,7 +112,8 @@ class HomeFragment : Fragment() {
 
     private fun checkLoginStatus() {
         // SharedPreferences에서 액세스 토큰 가져오기
-        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
         accessToken = sharedPreferences.getString(ACCESS_TOKEN_KEY, null)
         // TODO : 로그인 상태 다시 돌려놓기
@@ -144,9 +144,11 @@ class HomeFragment : Fragment() {
                     "자유게시판" -> Intent(context, PostDetailActivity::class.java).apply {
                         putExtra("POST_ID", post.id) // "자유게시판"의 경우 "POST_ID" 사용
                     }
+
                     "성지순례 인증" -> Intent(context, MyGuestBookActivity::class.java).apply {
                         putExtra("GUESTBOOK_ID", post.id) // "성지순례 인증"의 경우 "GUESTBOOK_ID" 사용
                     }
+
                     else -> return
                 }
                 startActivity(intent)
@@ -177,7 +179,8 @@ class HomeFragment : Fragment() {
     private fun getUserInfo(userToken: String) {
         lifecycleScope.launch {
             try {
-                val response: Response<HomeService.LoginResponse> = homeService.getUserInfo("Bearer $userToken")
+                val response: Response<HomeService.LoginResponse> =
+                    homeService.getUserInfo("Bearer $userToken")
                 if (response.isSuccessful) {
                     // 로그인 상태인 경우
                     // 서버로부터 사용자 정보를 성공적으로 받아왔을 때 UI 업데이트
@@ -329,7 +332,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun clearAccessToken() {
-        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.remove(ACCESS_TOKEN_KEY)  // 토큰 삭제
         editor.apply()  // 변경 사항을 적용
