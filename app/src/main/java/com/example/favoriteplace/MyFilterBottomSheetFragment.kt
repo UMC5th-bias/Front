@@ -46,16 +46,26 @@ class MyFilterBottomSheetFragment : BottomSheetDialogFragment() {
         binding.myFilterOptionsRg.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.myFilter_modify_rb -> {
-                    // 수정 처리
+                    // 게시글/댓글 수정 팝업 호출
+//                    val isPost = arguments?.getBoolean("isPost") ?: false
+//                    val modifyDialog = ModifyDialogFragment.newInstance(isPost)
+//                    modifyDialog.show(parentFragmentManager, "ModifyDialog")
                 }
                 R.id.myFilter_delete_rb -> {
-                    // 삭제 처리
+                    /// 게시글/댓글 삭제 팝업 호출
+                    val isPost = arguments?.getBoolean("isPost") ?: false
+                    val deleteDialog = DeleteDialogFragment.newInstance(isPost)
+                    deleteDialog.show(parentFragmentManager, "DeleteDialog")
                 }
                 R.id.myFilter_block_rb -> {
-                    // 차단 처리
+                    // 차단 팝업 호출
+                    val blockDialog = BlockDialogFragment() // 차단용 팝업 클래스
+                    blockDialog.show(parentFragmentManager, "BlockDialog")
                 }
                 R.id.myFilter_report_rb -> {
-                    // 신고 처리
+                    // 신고 팝업 호출
+                    val notifyDialog = NotifyDialogFragment() // 신고용 팝업 클래스
+                    notifyDialog.show(parentFragmentManager, "NotifyDialog")
                 }
             }
         }
