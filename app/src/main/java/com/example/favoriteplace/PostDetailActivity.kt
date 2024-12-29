@@ -96,7 +96,7 @@ class PostDetailActivity : AppCompatActivity() {
         val authorizationHeader : String?
 
         if(isLoggedIn()) {
-            authorizationHeader = "${getAccessToken()}"
+            authorizationHeader = "Bearer ${getAccessToken()}"
         } else {
             authorizationHeader = null
         }
@@ -195,7 +195,11 @@ class PostDetailActivity : AppCompatActivity() {
                     commentData.clear()
                     response.body()?.let{comment->
                         commentData.addAll(comment.parentComment)
+
+                        // 디버깅 로그로 응답 확인
+                        Log.d("PostDetailActivity", "Fetched Comments: ${comment.parentComment}")
                     }
+
 
                     //RVA 실행
                     val commentAdapter = CommentAdapter(commentData)

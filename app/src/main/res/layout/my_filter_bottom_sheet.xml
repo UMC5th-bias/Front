@@ -57,6 +57,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="삭제하기" />
+
+        <!-- 차단하기 (기본 숨김) -->
+        <RadioButton
+            android:id="@+id/myFilter_block_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:button="@drawable/bottomsheet_radiobutton"
+            android:text="차단하기"
+            android:visibility="gone" />
+
+        <!-- 신고하기 (기본 숨김) -->
+        <RadioButton
+            android:id="@+id/myFilter_report_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:button="@drawable/bottomsheet_radiobutton"
+            android:text="신고하기"
+            android:visibility="gone" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

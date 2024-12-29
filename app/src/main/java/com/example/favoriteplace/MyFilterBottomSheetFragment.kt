@@ -2,6 +2,7 @@ package com.example.favoriteplace
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,28 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class MyFilterBottomSheetFragment : BottomSheetDialogFragment() {
     lateinit var binding: MyFilterBottomSheetBinding
 
+    // 작성 여부를 결정하는 변수 (true: 내가 쓴 글/댓글, false: 다른 사람이 쓴 글/댓글)
+    private var isMyContent: Boolean = false
+    private var commentId: String? = null   // 댓글 ID
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            isMyContent = it.getBoolean("isMyContent", false) // 기본값 false
+            commentId = it.getString("commentId") // 댓글 ID
+            Log.d("MyFilterBottomSheet", "isMyContent: $isMyContent") // 디버깅 로그 추가
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = MyFilterBottomSheetBinding.inflate(inflater, container, false)
+
+        // UI 동적 설정
+        setupOptions()
 
         // cancelButton에 클릭 리스너 설정
         binding.myFilterBottomSheetCancelIv.setOnClickListener {
@@ -29,10 +46,16 @@ class MyFilterBottomSheetFragment : BottomSheetDialogFragment() {
         binding.myFilterOptionsRg.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.myFilter_modify_rb -> {
-                    // "제목" 정렬 선택 시 처리
+                    // 수정 처리
                 }
                 R.id.myFilter_delete_rb -> {
-                    // "내용" 정렬 선택 시 처리
+                    // 삭제 처리
+                }
+                R.id.myFilter_block_rb -> {
+                    // 차단 처리
+                }
+                R.id.myFilter_report_rb -> {
+                    // 신고 처리
                 }
             }
         }
@@ -40,9 +63,23 @@ class MyFilterBottomSheetFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    private fun setupOptions() {
+        if (isMyContent) {
+            // 내가 작성한 경우: 수정/삭제 표시
+            binding.myFilterModifyRb.visibility = View.VISIBLE
+            binding.myFilterDeleteRb.visibility = View.VISIBLE
+            binding.myFilterBlockRb.visibility = View.GONE
+            binding.myFilterReportRb.visibility = View.GONE
+        } else {
+            // 다른 사람이 작성한 경우: 차단/신고 표시
+            binding.myFilterModifyRb.visibility = View.GONE
+            binding.myFilterDeleteRb.visibility = View.GONE
+            binding.myFilterBlockRb.visibility = View.VISIBLE
+            binding.myFilterReportRb.visibility = View.VISIBLE
+        }
+    }
+
     companion object {
         const val TAG = "MyFilterBottomModalSheet"
     }
-
-
 }
